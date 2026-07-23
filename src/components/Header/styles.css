@@ -1,0 +1,264 @@
+.ikas-header {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--24KlcgGmm9);
+  color: var(--pxNuSoudLn);
+  height: var(--header-height, 60px);
+  z-index: 100;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.ikas-header--sticky {
+  position: sticky;
+  top: 0;
+}
+
+.ikas-header--scrolled {
+  border-bottom: 1px solid var(--gzj8Nhz1Gb);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.ikas-header__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--max-site-width, 1820px);
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 var(--section-padding-x, 1.25rem);
+  box-sizing: border-box;
+}
+
+/* 1. SOL KOLON: Logo & Hamburger */
+.ikas-header__left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 180px;
+}
+
+.ikas-header__hamburger {
+  display: none;
+  background: none;
+  border: none;
+  padding: 8px;
+  margin-left: -8px;
+  cursor: pointer;
+  color: var(--pxNuSoudLn);
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.ikas-header__hamburger:hover {
+  color: var(--sy8ZnXZdoG);
+}
+
+.ikas-header__logo-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--pxNuSoudLn);
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+}
+
+.ikas-header__logo-img {
+  display: block;
+  height: auto;
+  object-fit: contain;
+}
+
+/* 2. ORTA KOLON: Ana Navigasyon */
+.ikas-header__nav {
+  display: flex;
+  align-items: center;
+}
+
+.ikas-header__menu {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ikas-header__menu-item {
+  position: relative;
+}
+
+.ikas-header__menu-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 0;
+  color: var(--pxNuSoudLn);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.25s ease;
+}
+
+.ikas-header__menu-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--sy8ZnXZdoG);
+  transform: scaleX(0);
+  transform-origin: center right;
+  transition: var(--underline-transition, transform 0.25s ease);
+}
+
+.ikas-header__menu-link:hover {
+  color: var(--sy8ZnXZdoG);
+}
+
+.ikas-header__menu-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: center left;
+}
+
+/* 3. SAĞ KOLON: İkonlar (Arama, Hesap, Sepet) */
+.ikas-header__right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  min-width: 180px;
+}
+
+.ikas-header__icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 8px;
+  color: var(--pxNuSoudLn);
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.ikas-header__icon-btn:hover {
+  color: var(--sy8ZnXZdoG);
+}
+
+.ikas-header__cart-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background-color: var(--sy8ZnXZdoG);
+  color: var(--pxNuSoudLn);
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  box-sizing: border-box;
+}
+
+/* MOBİL SLIDE-OUT DRAWER (<768px) */
+.ikas-header__drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: var(--fRUyppFgyp, rgba(55, 67, 91, 0.75));
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.ikas-header__drawer-backdrop--open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.ikas-header__drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--drawer-width, 320px);
+  max-width: 85vw;
+  background-color: var(--24KlcgGmm9);
+  z-index: 1000;
+  transform: translateX(-100%);
+  transition: var(--drawer-transition, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1));
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.ikas-header__drawer--open {
+  transform: translateX(0);
+}
+
+.ikas-header__drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--gzj8Nhz1Gb);
+}
+
+.ikas-header__drawer-close {
+  background: none;
+  border: none;
+  padding: 8px;
+  color: var(--pxNuSoudLn);
+  cursor: pointer;
+}
+
+.ikas-header__drawer-nav {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.ikas-header__drawer-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ikas-header__drawer-link {
+  display: block;
+  padding: 8px 0;
+  color: var(--pxNuSoudLn);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.ikas-header__drawer-link:hover {
+  color: var(--sy8ZnXZdoG);
+}
+
+/* MOBİL SLIDE-OUT DRAWER (<768px) */
+/* RESPONSIVE BREAKPOINT (<768px - DESIGN.md 375px/768px/1440px spesifikasyonuna tam uyum) */
+@media (max-width: 767px) {
+  .ikas-header__hamburger {
+    display: inline-flex;
+  }
+
+  .ikas-header__nav {
+    display: none;
+  }
+
+  .ikas-header__container {
+    padding: 0 var(--mobile-padding-x, 16px);
+  }
+}

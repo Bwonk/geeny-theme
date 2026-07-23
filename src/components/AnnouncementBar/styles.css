@@ -1,0 +1,60 @@
+.ikas-announcement-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--pxNuSoudLn);
+  color: var(--24KlcgGmm9);
+  height: var(--announcement-height);
+  padding: 0 var(--section-padding-x);
+  text-align: center;
+  position: relative;
+  z-index: 101;
+  overflow: hidden;
+}
+
+.ikas-announcement-bar__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  transition: var(--announcement-transition);
+}
+
+.ikas-announcement-bar__link:hover {
+  opacity: 0.85;
+}
+
+.ikas-announcement-bar__text {
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+  transition: var(--announcement-transition);
+}
+
+/* Masaüstü Ekranlar (>=768px) */
+@media (min-width: 768px) {
+  .ikas-announcement-bar {
+    padding: 0 var(--section-padding-x);
+  }
+  .ikas-announcement-bar__text--mobile {
+    display: none;
+  }
+}
+
+/* Mobil Ekranlar (<768px) */
+@media (max-width: 767px) {
+  .ikas-announcement-bar {
+    padding: 0 var(--mobile-padding-x);
+  }
+  .ikas-announcement-bar__text--desktop {
+    display: none;
+  }
+}

@@ -151,6 +151,106 @@
           "description": "Buton metni, stili ve yönlendirme ayarları"
         }
       ]
+    },
+    {
+      "id": "e1iohf8g-AnnouncementBar",
+      "name": "Announcement Bar",
+      "entry": "./src/components/AnnouncementBar/index.tsx",
+      "styles": "./src/components/AnnouncementBar/styles.css",
+      "type": "section",
+      "isHeader": true,
+      "props": [
+        {
+          "name": "text",
+          "displayName": "Duyuru Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "500 TL Üzeri Siparişlerde Ücretsiz Kargo",
+          "description": "Sayfanın üstünde görünecek kampanya duyuru metni",
+          "groupId": "announcement_group"
+        },
+        {
+          "name": "link",
+          "displayName": "Duyuru Bağlantısı",
+          "type": "LINK",
+          "required": false,
+          "description": "Tıklandığında yönlendirilecek sayfa veya harici link",
+          "groupId": "announcement_group"
+        },
+        {
+          "name": "autoRotate",
+          "displayName": "Otomatik Döndür",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "description": "Birden fazla duyuru varsa otomatik geçiş yap",
+          "groupId": "announcement_group"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "announcement_group",
+          "name": "Duyuru Bandı Ayarları",
+          "description": "Sayfa üstü kampanya duyuru metni ve link ayarları"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-Header",
+      "name": "Header",
+      "entry": "./src/components/Header/index.tsx",
+      "styles": "./src/components/Header/styles.css",
+      "type": "section",
+      "isHeader": true,
+      "props": [
+        {
+          "name": "logo",
+          "displayName": "Marka Logosu",
+          "type": "IMAGE",
+          "required": false,
+          "description": "Header alanında görünecek marka logo görseli",
+          "groupId": "header_group"
+        },
+        {
+          "name": "logoWidth",
+          "displayName": "Logo Genişliği (px)",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 160,
+          "description": "Logonun piksel cinsinden genişlik boyutu",
+          "groupId": "header_group"
+        },
+        {
+          "name": "navigation",
+          "displayName": "Ana Menü Bağlantıları",
+          "type": "LIST_OF_LINK",
+          "required": false,
+          "defaultValue": {
+            "links": [
+              { "linkType": "PAGE", "label": "Ana Sayfa", "pageType": "INDEX", "subLinks": [] },
+              { "linkType": "PAGE", "label": "Tüm Ürünler", "pageType": "CATEGORY", "subLinks": [] }
+            ]
+          },
+          "description": "Header navigasyon menüsü bağlantıları",
+          "groupId": "header_group"
+        },
+        {
+          "name": "stickyHeader",
+          "displayName": "Sabit Header",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "description": "Sayfa kaydırıldığında header üstte sabit kalsın",
+          "groupId": "header_group"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "header_group",
+          "name": "Header ve Navigasyon Ayarları",
+          "description": "Logo, ana navigasyon bağlantıları ve sabit header ayarları"
+        }
+      ]
     }
   ]
 }
