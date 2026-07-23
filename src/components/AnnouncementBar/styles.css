@@ -10,7 +10,7 @@
   padding: 0 var(--section-padding-x);
   text-align: center;
   position: relative;
-  z-index: 101;
+  z-index: var(--z-index-announcement, 100);
   overflow: hidden;
 }
 

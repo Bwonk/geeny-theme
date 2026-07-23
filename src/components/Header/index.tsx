@@ -6,6 +6,7 @@ import {
   getThemeSetting,
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
+import { CartDrawer } from "../CartDrawer";
 
 export interface HeaderProps extends Props {
   className?: string;
@@ -192,7 +193,7 @@ export function Header({
             className="ikas-header__icon-btn"
             aria-label={`Sepet (${itemCount} Ürün)`}
             onClick={() => {
-              window.dispatchEvent(new CustomEvent("TOGGLE_CART_DRAWER"));
+              window.dispatchEvent(new CustomEvent("geeny:cart-drawer:toggle"));
             }}
           >
             <svg
@@ -273,6 +274,9 @@ export function Header({
           </ul>
         </nav>
       </div>
+
+      {/* 3. SLIDE-OUT CART DRAWER (Tüm sayfalarda aktif dinleyici ve overlay) */}
+      <CartDrawer />
     </header>
   );
 }

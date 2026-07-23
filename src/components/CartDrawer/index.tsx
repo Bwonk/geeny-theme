@@ -1,4 +1,5 @@
 import { useState, useEffect } from "preact/hooks";
+import { createPortal } from "preact/compat";
 import {
   cartStore,
   changeItemQuantity,
@@ -45,14 +46,14 @@ export function CartDrawer({
     const handleToggle = () => setActiveOpen((prev: boolean) => !prev);
     const handleClose = () => setActiveOpen(false);
 
-    window.addEventListener("OPEN_CART_DRAWER", handleOpen);
-    window.addEventListener("TOGGLE_CART_DRAWER", handleToggle);
-    window.addEventListener("CLOSE_CART_DRAWER", handleClose);
+    window.addEventListener("geeny:cart-drawer:open", handleOpen);
+    window.addEventListener("geeny:cart-drawer:toggle", handleToggle);
+    window.addEventListener("geeny:cart-drawer:close", handleClose);
 
     return () => {
-      window.removeEventListener("OPEN_CART_DRAWER", handleOpen);
-      window.removeEventListener("TOGGLE_CART_DRAWER", handleToggle);
-      window.removeEventListener("CLOSE_CART_DRAWER", handleClose);
+      window.removeEventListener("geeny:cart-drawer:open", handleOpen);
+      window.removeEventListener("geeny:cart-drawer:toggle", handleToggle);
+      window.removeEventListener("geeny:cart-drawer:close", handleClose);
     };
   }, []);
 
@@ -119,7 +120,7 @@ export function CartDrawer({
 
   const formattedTotal = cart ? getIkasOrderFormattedTotalFinalPrice(cart) : "0 TL";
 
-  return (
+  const content = (
     <>
       {/* BACKDROP OVERLAY */}
       <div
@@ -335,6 +336,12 @@ export function CartDrawer({
       </div>
     </>
   );
+
+  if (typeof document !== "undefined" && document.body) {
+    return createPortal(content, document.body);
+  }
+
+  return content;
 }
 
 export default CartDrawer;

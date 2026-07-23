@@ -83,7 +83,7 @@ export function ProductCard({
     setIsAdding(true);
     try {
       await addItemToCart(variant, product, 1);
-      window.dispatchEvent(new CustomEvent("OPEN_CART_DRAWER"));
+      window.dispatchEvent(new CustomEvent("geeny:cart-drawer:open"));
     } catch (err) {
       console.error("Quick add to cart error:", err);
     } finally {
