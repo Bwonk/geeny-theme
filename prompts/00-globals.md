@@ -1,13 +1,13 @@
 # PROMPT: Tema Global Token'larının Canlı Kurulumu (`prompts/00-globals.md`)
 
-> **Talimat:** Bu prompt çalıştırıldığında, [GLOBALS.md](file:///root/geeny/GLOBALS.md) dosyasındaki 55 adet global tasarım token'ını ikas editörü üzerinde canlı olarak `create_theme_global` aracıyla oluşturacaksın. Kod yazma ve bileşen düzenleme yapma.
+> **Talimat:** Bu prompt çalıştırıldığında, [GLOBALS.md](file:///root/geeny/GLOBALS.md) dosyasındaki 52 adet global tasarım token'ını ikas editörü üzerinde canlı olarak `create_theme_global` aracıyla oluşturacaksın. Kod yazma ve bileşen düzenleme yapma.
 
 ---
 
 ## 1. Hazırlık ve Mevcut Durum Okuma
-1. `list_theme_globals` MCP aracını `project_root` parametresi ile çağırarak editördeki mevcut tasarım token'larını ve global değişkenleri oku.
-2. [GLOBALS.md](file:///root/geeny/GLOBALS.md) dosyasındaki **55 token'lık liste** ile mevcut token'ları karşılaştır.
-3. Kullanıcıya kurulacak 55 token'ın özet listesini gruplar halinde göster ve **KULLANICI ONAYI BEKLE**.
+1. `list_theme_globals` MCP aracını `project_root: "/root/geeny"` parametresi ile çağırarak editördeki mevcut tasarım token'larını ve global değişkenleri oku.
+2. [GLOBALS.md](file:///root/geeny/GLOBALS.md) dosyasındaki **52 token'lık liste** ile mevcut token'ları karşılaştır.
+3. Kullanıcıya kurulacak 52 token'ın özet listesini göster ve **KULLANICI ONAYI BEKLE**.
 
 ---
 
@@ -15,8 +15,8 @@
 
 Kullanıcı onay verdikten sonra [GLOBALS.md](file:///root/geeny/GLOBALS.md) ve [IKAS.md](file:///root/geeny/IKAS.md) kurallarına göre `create_theme_global` aracını çalıştır:
 
-### A. Renkler — `kind: "color"`
-Aşağıdaki 12 renk token'ını sırayla oluştur:
+### A. Renkler — `kind: "color"` (9 Token)
+Aşağıdaki 9 renk token'ını sırayla oluştur:
 - `name: "Renkler / Ana Lacivert"`, `value: "#37435B"`
 - `name: "Renkler / Accent Sarı"`, `value: "#E3E045"`
 - `name: "Renkler / Açık Gri Mavi"`, `value: "#C8CFD0"`
@@ -24,17 +24,14 @@ Aşağıdaki 12 renk token'ını sırayla oluştur:
 - `name: "Renkler / Saf Beyaz"`, `value: "#FFFFFF"`
 - `name: "Renkler / Saf Siyah"`, `value: "#000000"`
 - `name: "Renkler / Overlay Siyah"`, `value: "rgba(55, 67, 91, 0.75)"`
-- `name: "Renkler / Şeffaf"`, `value: "transparent"`
 - `name: "Renkler / Sticky Header Çizgisi"`, `value: "rgba(0, 0, 0, 0.08)"`
-- `name: "Renkler / İndirim Rozet Metni"`, `value: "#37435B"`
-- `name: "Renkler / Swatch Ring"`, `value: "#37435B"`
 - `name: "Renkler / Kargo İlerleme Çubuğu"`, `value: "#E3E045"`
 
-### B. Tipografi — `kind: "typography"`
+### B. Tipografi — `kind: "typography"` (10 Token)
 Aşağıdaki 10 tipografi stilini sırayla oluştur:
 - `name: "Tipografi / Display Hero"`, `font_family: "Jost, sans-serif"`, `font_size: "54px"`, `font_weight: "500"`, `line_height: "64.8px"`
-- `name: "Tipografi / Başlık H1"`, `font_family: "Jost, sans-serif"`, `font_size: "36px"`, `font_weight: "500"`, `line_height: "46.8px"`
-- `name: "Tipografi / Başlık H2"`, `font_family: "Jost, sans-serif"`, `font_size: "48px"`, `font_weight: "500"`, `line_height: "62.5px"`
+- `name: "Tipografi / Başlık H1"`, `font_family: "Jost, sans-serif"`, `font_size: "48px"`, `font_weight: "500"`, `line_height: "62.5px"`
+- `name: "Tipografi / Başlık H2"`, `font_family: "Jost, sans-serif"`, `font_size: "36px"`, `font_weight: "500"`, `line_height: "46.8px"`
 - `name: "Tipografi / Başlık H3"`, `font_family: "Jost, sans-serif"`, `font_size: "30.2px"`, `font_weight: "500"`, `line_height: "39.3px"`
 - `name: "Tipografi / Başlık H4"`, `font_family: "Jost, sans-serif"`, `font_size: "27px"`, `font_weight: "500"`, `line_height: "35.1px"`
 - `name: "Tipografi / Kart ve Alt Başlık (lg)"`, `font_family: "Jost, sans-serif"`, `font_size: "24px"`, `font_weight: "500"`, `line_height: "31.2px"`
@@ -43,7 +40,7 @@ Aşağıdaki 10 tipografi stilini sırayla oluştur:
 - `name: "Tipografi / Etiket ve Rozet (xs)"`, `font_family: "Jost, sans-serif"`, `font_size: "13.5px"`, `font_weight: "500"`, `line_height: "18.9px"`
 - `name: "Tipografi / Mobil Duyuru Metni"`, `font_family: "Jost, sans-serif"`, `font_size: "12px"`, `font_weight: "500"`, `line_height: "16.8px"`
 
-### C. Boşluklar / Spacing — `kind: "globalVariable"`, `type: "TEXT"`
+### C. Boşluklar / Spacing — `kind: "globalVariable"`, `type: "TEXT"` (15 Token)
 Aşağıdaki 15 boşluk değişkenini oluştur:
 - `display_name: "Boşluk / Site Maksimum Genişliği"`, `type: "TEXT"`, `value: "1820px"`
 - `display_name: "Boşluk / Yatay Bölüm Padding"`, `type: "TEXT"`, `value: "1.25rem"`
@@ -61,7 +58,7 @@ Aşağıdaki 15 boşluk değişkenini oluştur:
 - `display_name: "Boşluk / Cart Drawer Genişliği"`, `type: "TEXT"`, `value: "420px"`
 - `display_name: "Boşluk / Mobile Drawer Genişliği"`, `type: "TEXT"`, `value: "320px"`
 
-### D. Radius — `kind: "globalVariable"`, `type: "TEXT"`
+### D. Radius — `kind: "globalVariable"`, `type: "TEXT"` (7 Token)
 Aşağıdaki 7 radius değişkenini oluştur:
 - `display_name: "Radius / Kart"`, `type: "TEXT"`, `value: "2rem"`
 - `display_name: "Radius / Medya"`, `type: "TEXT"`, `value: "2rem"`
@@ -71,14 +68,14 @@ Aşağıdaki 7 radius değişkenini oluştur:
 - `display_name: "Radius / Swatch Dairesel"`, `type: "TEXT"`, `value: "50%"`
 - `display_name: "Radius / Kargo İlerleme Çubuğu"`, `type: "TEXT"`, `value: "4px"`
 
-### E. Gölge / Shadow — `kind: "globalVariable"`, `type: "SHADOW"`
+### E. Gölge / Shadow — `kind: "globalVariable"`, `type: "SHADOW"` (4 Token)
 Aşağıdaki 4 shadow değişkenini JSON obje formatında oluştur:
 - `display_name: "Gölge / Buton Drop Shadow"`, `type: "SHADOW"`, `value: { "x": 0, "y": -1, "blur": 1, "spread": 0, "color": "rgba(227, 224, 69, 0.5)", "position": "outside" }`
 - `display_name: "Gölge / Kart Soft Shadow"`, `type: "SHADOW"`, `value: { "x": 0, "y": 4, "blur": 20, "spread": 0, "color": "rgba(55, 67, 91, 0.08)", "position": "outside" }`
 - `display_name: "Gölge / Sticky Header Shadow"`, `type: "SHADOW"`, `value: { "x": 0, "y": 2, "blur": 8, "spread": 0, "color": "rgba(0, 0, 0, 0.05)", "position": "outside" }`
 - `display_name: "Gölge / Swatch Odak Gölgesi"`, `type: "SHADOW"`, `value: { "x": 0, "y": 0, "blur": 0, "spread": 2, "color": "rgba(55, 67, 91, 1)", "position": "outside" }`
 
-### F. Animasyon — `kind: "globalVariable"`, `type: "TEXT"`
+### F. Animasyon — `kind: "globalVariable"`, `type: "TEXT"` (7 Token)
 Aşağıdaki 7 animasyon transition değişkenini oluştur:
 - `display_name: "Animasyon / Buton ve Hover"`, `type: "TEXT"`, `value: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"`
 - `display_name: "Animasyon / Drawer ve Modal"`, `type: "TEXT"`, `value: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)"`
@@ -93,5 +90,4 @@ Aşağıdaki 7 animasyon transition değişkenini oluştur:
 ## 3. Doğrulama ve Özet Tablo
 1. Kurulum bittikten sonra `list_theme_globals` MCP aracını tekrar çağır.
 2. Oluşan tüm token'ların `id`, `cssVar`, `className` veya `variableName` değerlerini oku.
-3. Kullanıcıya oluşturulan token'ların aşağıdaki formatta tam doğrulama tablosunu sun:
-   - `Token Adı | ID | cssVar / className / variableName | Kurulum Durumu (Başarılı)`
+3. Kullanıcıya oluşturulan 52 token'ın doğrulama özet tablosunu sun.

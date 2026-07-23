@@ -1,0 +1,120 @@
+.ikas-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  box-sizing: border-box;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  padding: 0 24px;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  vertical-align: middle;
+  height: var(--btn-height, 48px);
+  border-radius: var(--btn-radius, 8px);
+  transition: var(--btn-transition, all 0.3s cubic-bezier(0.4, 0, 0.2, 1));
+}
+
+/* Full Width Option */
+.ikas-btn--full-width {
+  width: 100%;
+}
+
+/* PRIMARY Variant */
+.ikas-btn--primary {
+  background-color: var(--pxNuSoudLn);
+  color: var(--24KlcgGmm9);
+  border: 1px solid transparent;
+}
+
+.ikas-btn--primary:hover:not(:disabled) {
+  background-color: var(--sy8ZnXZdoG);
+  color: var(--pxNuSoudLn);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(227, 224, 69, 0.3);
+}
+
+.ikas-btn--primary:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ACCENT Variant */
+.ikas-btn--accent {
+  background-color: var(--sy8ZnXZdoG);
+  color: var(--pxNuSoudLn);
+  border: 1px solid transparent;
+}
+
+.ikas-btn--accent:hover:not(:disabled) {
+  background-color: var(--pxNuSoudLn);
+  color: var(--24KlcgGmm9);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(55, 67, 91, 0.25);
+}
+
+.ikas-btn--accent:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+/* SECONDARY Variant */
+.ikas-btn--secondary {
+  background-color: transparent;
+  color: var(--pxNuSoudLn);
+  border: 1px solid var(--cdFDkBbKkc);
+}
+
+.ikas-btn--secondary:hover:not(:disabled) {
+  background-color: var(--pxNuSoudLn);
+  color: var(--24KlcgGmm9);
+  border-color: var(--pxNuSoudLn);
+  transform: translateY(-1px);
+}
+
+.ikas-btn--secondary:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Focus Visible State */
+.ikas-btn:focus-visible {
+  outline: 2px solid var(--sy8ZnXZdoG);
+  outline-offset: 2px;
+}
+
+/* Disabled State */
+.ikas-btn:disabled,
+.ikas-btn--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none;
+}
+
+/* Loading State */
+.ikas-btn--loading {
+  cursor: wait;
+  pointer-events: none;
+}
+
+.ikas-btn__spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: ikas-btn-spin 0.6s linear infinite;
+}
+
+@keyframes ikas-btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

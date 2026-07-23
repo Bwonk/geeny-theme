@@ -4,13 +4,13 @@
 Bu dosya, ikas MCP ile hangi global'in hangi değerle, hangi araçla oluşturulacağını ve bileşenlerde nasıl entegre edileceğini tarif eden tek kaynaktır. [DESIGN.md](file:///root/geeny/DESIGN.md)'deki analizden türetilmiştir; prompts/ klasöründeki tüm bileşen prompt'ları bu dosyadaki token adlarını ve değerlerini birebir referans alır.
 
 ## Durum
-Global'ler henüz canlı oluşturulmadı — canlı kurulum ayrı bir onaylı adımda, aşağıdaki tablolara birebir uyularak `create_theme_global` ile yapılacak.
+Global'ler henüz canlı oluşturulmadı — canlı kurulum ayrı bir onaylı adımda, aşağıdaki tablolara birebir uyularak `create_theme_global` ile yapılacaktır.
 
 ## Temel İlkeler
 1. **Global-first:** Her renk, tipografi, boşluk, radius, gölge ve animasyon bir global token'dır. Bileşenler asla ham değer kullanmaz — renk `var(--<id>)`, tipografi `className="_<id>"`, globalVariable'lar `getThemeSetting` ile okunup inline CSS değişkenine aktarılır (`style={{ "--token": setting.value }}`).
 2. **Türkçe zorunluluğu:** Token adları Türkçe ve `/` ile gruplu. Prop `displayName`/`description`/grup adları Türkçe.
 3. **Uppercase & Türkçe Harf Uyumu:** Metin büyük veya küçük harf serbestçe kullanılabilir; ANCAK Türkçe i/İ/ı/I harflerinin doğru dönüşmesi için HTML kök elementinde `lang="tr"` ZORUNLUDUR. Tipografi token'larında `text-transform` tanımlanmaz.
-4. **Font:** `Jost, sans-serif` — [DESIGN.md](file:///root/geeny/DESIGN.md)'den alınmıştır, ağırlık aralığı `400` (Regular) - `600` (Semi-Bold).
+4. **Font:** `Jost, sans-serif` — Google Fonts destekli, Türkçe karakter kümesini (İ, ı, Ş, Ğ, Ç, Ö, Ü) %100 destekleyen font ailesi. [DESIGN.md](file:///root/geeny/DESIGN.md)'den alınmıştır, ağırlık aralığı `400` (Regular) - `600` (Semi-Bold).
 5. **Kod İngilizce / Editör Türkçe:** Kod tanımlayıcıları İngilizce; editörde görünen her şey Türkçe.
 6. **cssVar Kuralı:** Renklerde `id` ile `cssVar` farklı büyük/küçük harf kullanabilir; bileşenler `list_theme_globals` çıktısındaki `cssVar` TAM değerini kullanır, id'den elle türetmez.
 
@@ -18,34 +18,33 @@ Global'ler henüz canlı oluşturulmadı — canlı kurulum ayrı bir onaylı ad
 
 ## Token Grupları
 
-### B1. Renkler — `create_theme_global` · `kind: color`
+### B1. Renkler — `create_theme_global` · `kind: color` (9 Token)
 > **Bağlama Kuralı:** Bileşenlerde CSS rengi olarak `var(--<cssVar>)` şeklinde tüketilir. `list_theme_globals` çıktısındaki tam `cssVar` adı kullanılacaktır. `kind: color` çağrılarında `value` olarak somut Hex/RGBA string'i verilir (`var(...)` referansı verilemez).
 
 | Ad | Değer | Kullanım |
 | :--- | :--- | :--- |
-| `Renkler / Ana Lacivert` | `#37435B` | Ana metinler, birincil butonlar, koyu arka plan bölümleri (Scheme 3/4), başlıklar, PDP fiyatı, kart başlıkları |
+| `Renkler / Ana Lacivert` | `#37435B` | Ana metinler, birincil butonlar, koyu arka plan bölümleri (Scheme 3/4), başlıklar, PDP fiyatı, kart başlıkları, indirim rozet metni, seçili swatch ring |
 | `Renkler / Accent Sarı` | `#E3E045` | Öne çıkan butonlar, indirim/promosyon rozetleri, vurgu alanları (Scheme 4), menü hover, buton hover arka planı |
 | `Renkler / Açık Gri Mavi` | `#C8CFD0` | İkincil arka planlar (Scheme 2), kart zeminleri, böleçler, input ve adet seçici kenarlıkları |
 | `Renkler / Yıldız Sarısı` | `#E3E062` | Ürün kartları ve PDP değerlendirme yıldızları (`--jdgm-star-color`) |
 | `Renkler / Saf Beyaz` | `#FFFFFF` | Ana sayfa varsayılan arka planı (Scheme 1), kart içerikleri, buton yazı renkleri, header zemin rengi |
 | `Renkler / Saf Siyah` | `#000000` | Yüksek kontrastlı metinler, alt çizgi vurguları, ikincil durumlar, Scheme 5 siyah zemin |
 | `Renkler / Overlay Siyah` | `rgba(55, 67, 91, 0.75)` | Drawer ve modal arkasındaki karartma katmanı (backdrop overlay) |
-| `Renkler / Şeffaf` | `transparent` | Saydam buton, kaplama zeminleri ve kenarlıklar |
 | `Renkler / Sticky Header Çizgisi` | `rgba(0, 0, 0, 0.08)` | Sayfa kaydırıldığında sabit duran header alt ayırıcı çizgisi |
-| `Renkler / İndirim Rozet Metni` | `#37435B` | İndirim badge rozeti üzerindeki yüksek kontrastlı metin rengi |
-| `Renkler / Swatch Ring` | `#37435B` | PDP seçili varyant renk swatch'ı etrafındaki halkanın rengi |
 | `Renkler / Kargo İlerleme Çubuğu` | `#E3E045` | Cart drawer içindeki ücretsiz kargo kalan tutar ilerleme çubuğu dolgu rengi |
+
+*Not: CSS `transparent` kelimesi ve mükerrer `#37435B` semantik token'ları (İndirim Rozet Metni, Swatch Ring) kaldırılmış; tam 9 renk token'ı olarak sabitlenmiştir.*
 
 ---
 
-### B2. Tipografi — `create_theme_global` · `kind: typography`
+### B2. Tipografi — `create_theme_global` · `kind: typography` (10 Token)
 > **Bağlama Kuralı:** Bileşenlerde ikas framework tarafında oluşturulan `className="_<id>"` stil sınıfı doğrudan elemana uygulanır. Font ailesi `Jost, sans-serif` olarak sabittir. `font_weight` sayısal değerdir (400, 500, 600).
 
 | Ad | Değer (Size / Weight / Line-Height) | Kullanım |
 | :--- | :--- | :--- |
 | `Tipografi / Display Hero` | Size: `54px`, Weight: `500`, Line-Height: `64.8px` | Masaüstü büyük sloganlar (Hero ana başlığı) |
-| `Tipografi / Başlık H1` | Size: `36px`, Weight: `500`, Line-Height: `46.8px` | Standard H1 başlıkları, PDP ürün başlığı, sayfa başlıkları |
-| `Tipografi / Başlık H2` | Size: `48px`, Weight: `500`, Line-Height: `62.5px` | H2 ve Hero alt bölüm ana başlıkları |
+| `Tipografi / Başlık H1` | Size: `48px`, Weight: `500`, Line-Height: `62.5px` | Ana sayfa ve bölüm ana başlıkları (En büyük h1 başlığı) |
+| `Tipografi / Başlık H2` | Size: `36px`, Weight: `500`, Line-Height: `46.8px` | Standard H2 başlıkları, PDP ürün başlığı, sayfa başlıkları |
 | `Tipografi / Başlık H3` | Size: `30.2px`, Weight: `500`, Line-Height: `39.3px` | Akordiyon başlıkları, mobil modal başlıkları |
 | `Tipografi / Başlık H4` | Size: `27px`, Weight: `500`, Line-Height: `35.1px` | Öne çıkan bölüm alt başlıkları |
 | `Tipografi / Kart ve Alt Başlık (lg)` | Size: `24px`, Weight: `500`, Line-Height: `31.2px` | Alt başlıklar, kart başlıkları, PDP fiyat etiketi |
@@ -56,7 +55,7 @@ Global'ler henüz canlı oluşturulmadı — canlı kurulum ayrı bir onaylı ad
 
 ---
 
-### B3. Boşluklar / Spacing — `create_theme_global` · `kind: globalVariable` · `type: TEXT`
+### B3. Boşluklar / Spacing — `create_theme_global` · `kind: globalVariable` · `type: TEXT` (15 Token)
 > **Bağlama Kuralı:** Bileşenlerde `getThemeSetting` ile okunup konteynırlara `style={{ "--section-x-padding": setting.value }}` veya inline padding/gap CSS değişkeni şeklinde aktarılır.
 
 | Ad | Değer | Kullanım |
@@ -79,7 +78,7 @@ Global'ler henüz canlı oluşturulmadı — canlı kurulum ayrı bir onaylı ad
 
 ---
 
-### B4. Radius — `create_theme_global` · `kind: globalVariable` · `type: TEXT`
+### B4. Radius — `create_theme_global` · `kind: globalVariable` · `type: TEXT` (7 Token)
 > **Bağlama Kuralı:** Bileşenlerde `getThemeSetting` ile okunup elemanlara `style={{ borderRadius: setting.value }}` şeklinde aktarılır.
 
 | Ad | Değer | Kullanım |
@@ -94,7 +93,7 @@ Global'ler henüz canlı oluşturulmadı — canlı kurulum ayrı bir onaylı ad
 
 ---
 
-### B5. Gölge / Shadow — `create_theme_global` · `kind: globalVariable` · `type: SHADOW`
+### B5. Gölge / Shadow — `create_theme_global` · `kind: globalVariable` · `type: SHADOW` (4 Token)
 > **Bağlama Kuralı:** Bileşenlerde `getThemeSetting` ile okunup `boxShadow` özelliğine aktarılır. Değerler ikas `SHADOW` JSON obje şemasına göredir (`x`, `y`, `blur`, `spread`, `color`, `position`).
 
 | Ad | Değer (JSON Obje) | Kullanım |
@@ -106,7 +105,7 @@ Global'ler henüz canlı oluşturulmadı — canlı kurulum ayrı bir onaylı ad
 
 ---
 
-### B6. Animasyon — `create_theme_global` · `kind: globalVariable` · `type: TEXT`
+### B6. Animasyon — `create_theme_global` · `kind: globalVariable` · `type: TEXT` (7 Token)
 > **Bağlama Kuralı:** Bileşenlerde `transition` CSS özelliğine veya `style={{ transition: setting.value }}` şeklinde uygulanır.
 
 | Ad | Değer | Kullanım |
@@ -131,14 +130,14 @@ Global'ler henüz canlı oluşturulmadı — canlı kurulum ayrı bir onaylı ad
 
 - **`<announcement-bar>`** → Kullanılan token'lar: `Renkler / Ana Lacivert`, `Renkler / Saf Beyaz`, `Tipografi / Mobil Duyuru Metni`, `Boşluk / Announcement Bar Yüksekliği`, `Animasyon / Fade Yumuşak`
 - **`<site-header>`** → Kullanılan token'lar: `Renkler / Saf Beyaz`, `Renkler / Ana Lacivert`, `Renkler / Accent Sarı`, `Renkler / Sticky Header Çizgisi`, `Tipografi / İkincil Metin (sm)`, `Boşluk / Header Yüksekliği`, `Boşluk / Mobile Drawer Genişliği`, `Animasyon / Menü Alt Çizgi`, `Animasyon / Drawer ve Modal`, `Gölge / Sticky Header Shadow`
-- **`<hero-banner>`** → Kullanılan token'lar: `Renkler / Saf Beyaz`, `Renkler / Ana Lacivert`, `Renkler / Accent Sarı`, `Tipografi / Display Hero`, `Tipografi / Başlık H2`, `Tipografi / Gövde Metni (base)`, `Radius / Buton`, `Boşluk / Buton Yüksekliği`, `Animasyon / Buton ve Hover`
-- **`<product-card>`** → Kullanılan token'lar: `Radius / Kart`, `Renkler / Accent Sarı`, `Renkler / İndirim Rozet Metni`, `Renkler / Yıldız Sarısı`, `Renkler / Ana Lacivert`, `Tipografi / Gövde Metni (base)`, `Tipografi / Etiket ve Rozet (xs)`, `Boşluk / Grid Gap`, `Animasyon / Görsel Scale Hover`, `Gölge / Kart Soft Shadow`
-- **`<product-detail-page>` (PDP)** → Kullanılan token'lar: `Tipografi / Başlık H1`, `Tipografi / Kart ve Alt Başlık (lg)`, `Renkler / Ana Lacivert`, `Renkler / Accent Sarı`, `Renkler / Swatch Ring`, `Radius / Swatch Dairesel`, `Radius / Medya`, `Boşluk / Buton Yüksekliği`, `Boşluk / Sticky Cart Bar Yüksekliği`, `Animasyon / Sticky Bar Belirme`, `Animasyon / Akordiyon Açılış`, `Gölge / Swatch Odak Gölgesi`
+- **`<hero-banner>`** → Kullanılan token'lar: `Renkler / Saf Beyaz`, `Renkler / Ana Lacivert`, `Renkler / Accent Sarı`, `Tipografi / Display Hero`, `Tipografi / Başlık H1`, `Tipografi / Gövde Metni (base)`, `Radius / Buton`, `Boşluk / Buton Yüksekliği`, `Animasyon / Buton ve Hover`
+- **`<product-card>`** → Kullanılan token'lar: `Radius / Kart`, `Renkler / Accent Sarı`, `Renkler / Ana Lacivert`, `Renkler / Yıldız Sarısı`, `Tipografi / Gövde Metni (base)`, `Tipografi / Etiket ve Rozet (xs)`, `Boşluk / Grid Gap`, `Animasyon / Görsel Scale Hover`, `Gölge / Kart Soft Shadow`
+- **`<product-detail-page>` (PDP)** → Kullanılan token'lar: `Tipografi / Başlık H2`, `Tipografi / Kart ve Alt Başlık (lg)`, `Renkler / Ana Lacivert`, `Renkler / Accent Sarı`, `Radius / Swatch Dairesel`, `Radius / Medya`, `Boşluk / Buton Yüksekliği`, `Boşluk / Sticky Cart Bar Yüksekliği`, `Animasyon / Sticky Bar Belirme`, `Animasyon / Akordiyon Açılış`, `Gölge / Swatch Odak Gölgesi`
 - **`<cart-drawer>`** → Kullanılan token'lar: `Boşluk / Cart Drawer Genişliği`, `Renkler / Kargo İlerleme Çubuğu`, `Radius / Kargo İlerleme Çubuğu`, `Radius / Sepet İtem Görseli`, `Boşluk / Checkout Buton Yüksekliği`, `Renkler / Overlay Siyah`, `Animasyon / Drawer ve Modal`
 - **`<customer-account-login>`** → Kullanılan token'lar: `Renkler / Açık Gri Mavi`, `Renkler / Ana Lacivert`, `Radius / Input ve Form`, `Boşluk / Buton Yüksekliği`, `Tipografi / İkincil Metin (sm)`, `Gölge / Swatch Odak Gölgesi`
 - **`<site-footer>`** → Kullanılan token'lar: `Renkler / Ana Lacivert`, `Renkler / Saf Beyaz`, `Renkler / Açık Gri Mavi`, `Tipografi / İkincil Metin (sm)`, `Radius / Input ve Form`, `Boşluk / Yatay Bölüm Padding`
 - **`<press-ticker>`** → Kullanılan token'lar: `Animasyon / Marquee Ticker`, `Boşluk / Yatay Bölüm Padding`
-- **`<search-and-404-pages>`** → Kullanılan token'lar: `Tipografi / Başlık H1`, `Tipografi / Gövde Metni (base)`, `Renkler / Ana Lacivert`, `Radius / Buton`
+- **`<search-and-404-pages>`** → Kullanılan token'lar: `Tipografi / Başlık H2`, `Tipografi / Gövde Metni (base)`, `Renkler / Ana Lacivert`, `Radius / Buton`
 
 ---
-*GLOBALS.md dosyası DESIGN.md ve IKAS.md dokümanlarına %100 sadık kalınarak güncellenmiştir.*
+*GLOBALS.md dosyası tam 9 renk token'ı ve toplam 52 token olarak netleştirilmiştir.*

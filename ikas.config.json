@@ -90,6 +90,67 @@
           "description": "Colors and visual style"
         }
       ]
+    },
+    {
+      "id": "e1iohf8g-Button",
+      "name": "Button",
+      "entry": "./src/components/Button/index.tsx",
+      "styles": "./src/components/Button/styles.css",
+      "props": [
+        {
+          "name": "text",
+          "displayName": "Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İncele",
+          "description": "Buton üzerinde görünecek metin",
+          "groupId": "button_group"
+        },
+        {
+          "name": "variant",
+          "displayName": "Buton Varyantı",
+          "type": "ENUM",
+          "options": ["PRIMARY", "SECONDARY", "ACCENT"],
+          "required": false,
+          "defaultValue": "PRIMARY",
+          "description": "Butonun görsel stili (Primary Navy, Accent Sarı veya Secondary Şeffaf)",
+          "groupId": "button_group"
+        },
+        {
+          "name": "link",
+          "displayName": "Buton Bağlantısı",
+          "type": "LINK",
+          "required": false,
+          "description": "Tıklandığında yönlendirilecek sayfa veya harici link",
+          "groupId": "button_group"
+        },
+        {
+          "name": "fullWidth",
+          "displayName": "Tam Genişlik",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "description": "Buton kapsayıcısının tüm genişliğini kaplasın",
+          "groupId": "button_group"
+        },
+        {
+          "name": "size",
+          "displayName": "Buton Boyutu",
+          "type": "ENUM",
+          "options": ["NORMAL", "LARGE"],
+          "required": false,
+          "defaultValue": "NORMAL",
+          "description": "Standart (48px) veya Geniş/Checkout (52px)",
+          "groupId": "button_group"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "button_group",
+          "name": "Buton Ayarları",
+          "description": "Buton metni, stili ve yönlendirme ayarları"
+        }
+      ]
     }
   ]
 }
