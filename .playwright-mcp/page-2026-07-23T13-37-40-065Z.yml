@@ -1,0 +1,34 @@
+- generic [ref=f15e2]:
+  - generic [ref=f15e7]:
+    - banner [ref=f15e8]:
+      - link [ref=f15e12] [cursor=pointer]:
+        - /url: https://infinitypillow.co/?country=US
+        - img "Infinity Travel Logo" [ref=f15e13]
+    - main [ref=f15e15]:
+      - generic [ref=f15e16]:
+        - heading "Sign in" [level=1] [ref=f15e17]
+        - paragraph [ref=f15e20]: Sign in or create an account
+      - generic [ref=f15e29]:
+        - text: or
+        - separator
+      - generic [ref=f15e32]:
+        - generic [ref=f15e34]:
+          - generic [ref=f15e35]:
+            - generic [ref=f15e37]:
+              - generic: Email
+              - textbox "Email" [active] [ref=f15e38]
+              - button "Continue" [ref=f15e40] [cursor=pointer]
+            - generic [ref=f15e42]:
+              - checkbox "Email me with news and offers" [checked] [ref=f15e44] [cursor=pointer]
+              - generic [ref=f15e45] [cursor=pointer]: Email me with news and offers
+          - paragraph [ref=f15e46]:
+            - text: By continuing, you agree to our
+            - button "Terms of service" [ref=f15e47] [cursor=pointer]
+        - button [ref=f15e49] [cursor=pointer]: Submit
+    - contentinfo [ref=f15e50]:
+      - button "Privacy policy" [ref=f15e52] [cursor=pointer]
+  - generic [ref=f15e53]: externalNewWindow
+  - generic [ref=f15e54]: newWindow
+  - generic [ref=f15e55]: external
+  - status [ref=f15e56]
+  - alert [ref=f15e57]

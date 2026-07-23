@@ -1,0 +1,140 @@
+- generic [active] [ref=f12e1]:
+  - link "Skip to content":
+    - /url: "#MainContent"
+  - banner [ref=f12e3]:
+    - generic [ref=f12e8]:
+      - generic [ref=f12e9]: Spend $50.00 to get free shipping
+      - generic [ref=f12e15]: Spend $50.00 to get free shipping
+      - generic [ref=f12e21]: Spend $50.00 to get free shipping
+      - generic [ref=f12e27]: Spend $50.00 to get free shipping
+      - generic [ref=f12e33]: Spend $50.00 to get free shipping
+      - generic [ref=f12e39]: Spend $50.00 to get free shipping
+      - generic [ref=f12e45]: Spend $50.00 to get free shipping
+      - generic [ref=f12e51]: Spend $50.00 to get free shipping
+      - generic [ref=f12e57]: Spend $50.00 to get free shipping
+      - generic [ref=f12e63]: Spend $50.00 to get free shipping
+    - generic [ref=f12e73]:
+      - generic [ref=f12e74]: Spend $50.00 to get free shipping
+      - generic [ref=f12e80]: Spend $50.00 to get free shipping
+      - generic [ref=f12e86]: Spend $50.00 to get free shipping
+      - generic [ref=f12e92]: Spend $50.00 to get free shipping
+      - generic [ref=f12e98]: Spend $50.00 to get free shipping
+      - generic [ref=f12e104]: Spend $50.00 to get free shipping
+      - generic [ref=f12e110]: Spend $50.00 to get free shipping
+      - generic [ref=f12e116]: Spend $50.00 to get free shipping
+      - generic [ref=f12e122]: Spend $50.00 to get free shipping
+      - generic [ref=f12e128]: Spend $50.00 to get free shipping
+  - banner [ref=f12e135]:
+    - generic [ref=f12e139]:
+      - navigation [ref=f12e142]:
+        - list [ref=f12e143]:
+          - listitem [ref=f12e144]:
+            - link "Shop" [ref=f12e145] [cursor=pointer]:
+              - /url: /collections/all
+          - listitem [ref=f12e146]:
+            - link "About" [ref=f12e147] [cursor=pointer]:
+              - /url: /pages/about
+      - link [ref=f12e150] [cursor=pointer]:
+        - /url: /
+        - img "Infinity Travel" [ref=f12e152]
+      - generic [ref=f12e153]:
+        - link "Log in" [ref=f12e155] [cursor=pointer]:
+          - /url: https://infinitypillow.co/customer_authentication/redirect?locale=en&region_country=US
+        - button "Search our site" [ref=f12e160] [cursor=pointer]
+        - button "Cart items" [ref=f12e166] [cursor=pointer]:
+          - generic:
+            - generic: Cart
+            - generic: items
+  - main [ref=f12e167]:
+    - banner [ref=f12e169]:
+      - generic [ref=f12e170]:
+        - 'heading "Search results: Search results" [level=1] [ref=f12e171]':
+          - generic [ref=f12e172]: "Search results:"
+          - text: Search results
+        - search [ref=f12e173]:
+          - generic [ref=f12e174]: Search
+          - searchbox "Search" [ref=f12e175] [cursor=pointer]: xyz12345nonexistent
+          - button "Search" [ref=f12e176] [cursor=pointer]
+        - generic [ref=f12e181]:
+          - status [ref=f12e183]: No results found for “xyz12345nonexistent”. Check the spelling or use a different word or phrase.
+          - generic:
+            - generic:
+              - list
+  - contentinfo [ref=f12e185]:
+    - generic [ref=f12e186]:
+      - generic [ref=f12e187]:
+        - generic [ref=f12e188]:
+          - generic [ref=f12e189]: Bon Voyage 🌎
+          - list
+        - list [ref=f12e193]:
+          - listitem [ref=f12e194]:
+            - link "About" [ref=f12e195] [cursor=pointer]:
+              - /url: /pages/about
+          - listitem [ref=f12e196]:
+            - link "Reviews" [ref=f12e197] [cursor=pointer]:
+              - /url: /pages/reviews
+          - listitem [ref=f12e198]:
+            - link "Contact" [ref=f12e199] [cursor=pointer]:
+              - /url: /pages/contact
+          - listitem [ref=f12e200]:
+            - link "Shipping Policy" [ref=f12e201] [cursor=pointer]:
+              - /url: /policies/shipping-policy
+          - listitem [ref=f12e202]:
+            - link "Return Policy" [ref=f12e203] [cursor=pointer]:
+              - /url: /policies/refund-policy
+          - listitem [ref=f12e204]:
+            - link "Terms of Service" [ref=f12e205] [cursor=pointer]:
+              - /url: /policies/terms-of-service
+          - listitem [ref=f12e206]:
+            - link "Contact Information" [ref=f12e207] [cursor=pointer]:
+              - /url: /policies/contact-information
+          - listitem [ref=f12e208]:
+            - link "Affiliate Program" [ref=f12e209] [cursor=pointer]:
+              - /url: /pages/affiliation
+          - listitem [ref=f12e210]:
+            - link "Wholesale" [ref=f12e211] [cursor=pointer]:
+              - /url: /pages/wholesale
+        - generic [ref=f12e213]:
+          - heading "Sign up to our newsletter" [level=2] [ref=f12e214]
+          - generic [ref=f12e216]:
+            - generic [ref=f12e217]: Email Address
+            - textbox "Email Address" [ref=f12e219] [cursor=pointer]:
+              - /placeholder: email@example.com
+            - button "Subscribe" [ref=f12e220] [cursor=pointer]
+      - generic [ref=f12e221]:
+        - paragraph [ref=f12e223]:
+          - text: © 2026,
+          - link "Infinity Travel" [ref=f12e224] [cursor=pointer]:
+            - /url: /
+          - text: .
+          - link "Made by Pinn" [ref=f12e227] [cursor=pointer]:
+            - /url: https://pinn.hk
+        - generic [ref=f12e228]:
+          - heading "Accepted Payments" [level=2] [ref=f12e229]
+          - list [ref=f12e230]:
+            - listitem [ref=f12e231]:
+              - img "American Express" [ref=f12e232]
+            - listitem [ref=f12e237]:
+              - img "Apple Pay" [ref=f12e238]
+            - listitem [ref=f12e249]:
+              - img "Bancontact" [ref=f12e250]
+            - listitem [ref=f12e257]:
+              - img "Google Pay" [ref=f12e258]
+            - listitem [ref=f12e266]:
+              - img "iDEAL Wero" [ref=f12e267]
+            - listitem [ref=f12e282]:
+              - img "Mastercard" [ref=f12e283]
+            - listitem [ref=f12e290]:
+              - img "Shop Pay" [ref=f12e291]
+            - listitem [ref=f12e295]:
+              - img "Union Pay" [ref=f12e296]
+            - listitem [ref=f12e302]:
+              - img "Visa" [ref=f12e303]
+        - generic [ref=f12e310]:
+          - heading "Country/region" [level=2] [ref=f12e311]
+          - button "United States (USD $)" [ref=f12e313] [cursor=pointer]
+  - status [ref=f12e318]
+  - complementary
+  - complementary
+  - complementary
+  - complementary

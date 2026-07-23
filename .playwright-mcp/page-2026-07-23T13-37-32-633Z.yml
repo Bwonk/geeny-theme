@@ -1,0 +1,172 @@
+- generic [active] [ref=f9e1]:
+  - link "Skip to content":
+    - /url: "#MainContent"
+  - banner [ref=f9e3]:
+    - generic [ref=f9e8]:
+      - generic [ref=f9e9]: Spend $50.00 to get free shipping
+      - generic [ref=f9e15]: Spend $50.00 to get free shipping
+      - generic [ref=f9e21]: Spend $50.00 to get free shipping
+      - generic [ref=f9e27]: Spend $50.00 to get free shipping
+      - generic [ref=f9e33]: Spend $50.00 to get free shipping
+      - generic [ref=f9e39]: Spend $50.00 to get free shipping
+      - generic [ref=f9e45]: Spend $50.00 to get free shipping
+      - generic [ref=f9e51]: Spend $50.00 to get free shipping
+      - generic [ref=f9e57]: Spend $50.00 to get free shipping
+      - generic [ref=f9e63]: Spend $50.00 to get free shipping
+    - generic [ref=f9e73]:
+      - generic [ref=f9e74]: Spend $50.00 to get free shipping
+      - generic [ref=f9e80]: Spend $50.00 to get free shipping
+      - generic [ref=f9e86]: Spend $50.00 to get free shipping
+      - generic [ref=f9e92]: Spend $50.00 to get free shipping
+      - generic [ref=f9e98]: Spend $50.00 to get free shipping
+      - generic [ref=f9e104]: Spend $50.00 to get free shipping
+      - generic [ref=f9e110]: Spend $50.00 to get free shipping
+      - generic [ref=f9e116]: Spend $50.00 to get free shipping
+      - generic [ref=f9e122]: Spend $50.00 to get free shipping
+      - generic [ref=f9e128]: Spend $50.00 to get free shipping
+  - banner [ref=f9e135]:
+    - generic [ref=f9e139]:
+      - navigation [ref=f9e142]:
+        - list [ref=f9e143]:
+          - listitem [ref=f9e144]:
+            - link "Shop" [ref=f9e145] [cursor=pointer]:
+              - /url: /collections/all
+          - listitem [ref=f9e146]:
+            - link "About" [ref=f9e147] [cursor=pointer]:
+              - /url: /pages/about
+      - link [ref=f9e150] [cursor=pointer]:
+        - /url: /
+        - img "Infinity Travel" [ref=f9e152]
+      - generic [ref=f9e153]:
+        - link "Log in" [ref=f9e155] [cursor=pointer]:
+          - /url: https://infinitypillow.co/customer_authentication/redirect?locale=en&region_country=US
+        - button "Search our site" [ref=f9e160] [cursor=pointer]
+        - button "Cart items" [ref=f9e166] [cursor=pointer]:
+          - generic:
+            - generic: Cart
+            - generic: items
+  - main [ref=f9e167]:
+    - banner [ref=f9e169]:
+      - generic [ref=f9e170]:
+        - 'heading "Search results: Search results" [level=1] [ref=f9e171]':
+          - generic [ref=f9e172]: "Search results:"
+          - text: Search results
+        - search [ref=f9e173]:
+          - generic [ref=f9e174]: Search
+          - searchbox "Search" [ref=f9e175] [cursor=pointer]: pillow
+          - button "Search" [ref=f9e176] [cursor=pointer]
+        - generic [ref=f9e181]:
+          - status [ref=f9e183]: 4 results
+          - list [ref=f9e186]:
+            - listitem [ref=f9e187]:
+              - generic [ref=f9e188]:
+                - img "Infinity Pillow" [ref=f9e192]
+                - generic [ref=f9e193]:
+                  - link "Infinity Pillow" [ref=f9e194] [cursor=pointer]:
+                    - /url: /products/infinity-pillow?_pos=1&_sid=4ff79d744&_ss=r
+                  - heading "Infinity Pillow" [level=3] [ref=f9e196]
+                  - generic [ref=f9e199]:
+                    - generic [ref=f9e200]: Regular price
+                    - text: $55.00 USD
+            - listitem [ref=f9e201]:
+              - generic [ref=f9e202]:
+                - img "Infinity Pillow Mini" [ref=f9e206]
+                - generic [ref=f9e207]:
+                  - link "Infinity Pillow Mini" [ref=f9e208] [cursor=pointer]:
+                    - /url: /products/infinity-pillow-mini?_pos=2&_sid=4ff79d744&_ss=r
+                  - heading "Infinity Pillow Mini" [level=3] [ref=f9e210]
+                  - generic [ref=f9e213]:
+                    - generic [ref=f9e214]: Regular price
+                    - text: $45.00 USD
+            - listitem [ref=f9e215]:
+              - generic [ref=f9e216]:
+                - img "Travel Case for Infinity Pillow" [ref=f9e220]
+                - generic [ref=f9e221]:
+                  - link "Travel Case for Infinity Pillow" [ref=f9e222] [cursor=pointer]:
+                    - /url: /products/travel-case-infinity-pillow?_pos=3&_sid=4ff79d744&_ss=r
+                  - heading "Travel Case for Infinity Pillow" [level=3] [ref=f9e224]
+                  - generic [ref=f9e227]:
+                    - generic [ref=f9e228]: Regular price
+                    - text: $12.50 USD
+            - listitem [ref=f9e229]:
+              - heading [level=3] [ref=f9e232]:
+                - link "About" [ref=f9e233] [cursor=pointer]:
+                  - /url: /pages/about?_pos=4&_sid=4ff79d744&_ss=r
+  - contentinfo [ref=f9e236]:
+    - generic [ref=f9e237]:
+      - generic [ref=f9e238]:
+        - generic [ref=f9e239]:
+          - generic [ref=f9e240]: Bon Voyage 🌎
+          - list
+        - list [ref=f9e244]:
+          - listitem [ref=f9e245]:
+            - link "About" [ref=f9e246] [cursor=pointer]:
+              - /url: /pages/about
+          - listitem [ref=f9e247]:
+            - link "Reviews" [ref=f9e248] [cursor=pointer]:
+              - /url: /pages/reviews
+          - listitem [ref=f9e249]:
+            - link "Contact" [ref=f9e250] [cursor=pointer]:
+              - /url: /pages/contact
+          - listitem [ref=f9e251]:
+            - link "Shipping Policy" [ref=f9e252] [cursor=pointer]:
+              - /url: /policies/shipping-policy
+          - listitem [ref=f9e253]:
+            - link "Return Policy" [ref=f9e254] [cursor=pointer]:
+              - /url: /policies/refund-policy
+          - listitem [ref=f9e255]:
+            - link "Terms of Service" [ref=f9e256] [cursor=pointer]:
+              - /url: /policies/terms-of-service
+          - listitem [ref=f9e257]:
+            - link "Contact Information" [ref=f9e258] [cursor=pointer]:
+              - /url: /policies/contact-information
+          - listitem [ref=f9e259]:
+            - link "Affiliate Program" [ref=f9e260] [cursor=pointer]:
+              - /url: /pages/affiliation
+          - listitem [ref=f9e261]:
+            - link "Wholesale" [ref=f9e262] [cursor=pointer]:
+              - /url: /pages/wholesale
+        - generic [ref=f9e264]:
+          - heading "Sign up to our newsletter" [level=2] [ref=f9e265]
+          - generic [ref=f9e267]:
+            - generic [ref=f9e268]: Email Address
+            - textbox "Email Address" [ref=f9e270] [cursor=pointer]:
+              - /placeholder: email@example.com
+            - button "Subscribe" [ref=f9e271] [cursor=pointer]
+      - generic [ref=f9e272]:
+        - paragraph [ref=f9e274]:
+          - text: © 2026,
+          - link "Infinity Travel" [ref=f9e275] [cursor=pointer]:
+            - /url: /
+          - text: .
+          - link "Made by Pinn" [ref=f9e278] [cursor=pointer]:
+            - /url: https://pinn.hk
+        - generic [ref=f9e279]:
+          - heading "Accepted Payments" [level=2] [ref=f9e280]
+          - list [ref=f9e281]:
+            - listitem [ref=f9e282]:
+              - img "American Express" [ref=f9e283]
+            - listitem [ref=f9e288]:
+              - img "Apple Pay" [ref=f9e289]
+            - listitem [ref=f9e300]:
+              - img "Bancontact" [ref=f9e301]
+            - listitem [ref=f9e308]:
+              - img "Google Pay" [ref=f9e309]
+            - listitem [ref=f9e317]:
+              - img "iDEAL Wero" [ref=f9e318]
+            - listitem [ref=f9e333]:
+              - img "Mastercard" [ref=f9e334]
+            - listitem [ref=f9e341]:
+              - img "Shop Pay" [ref=f9e342]
+            - listitem [ref=f9e346]:
+              - img "Union Pay" [ref=f9e347]
+            - listitem [ref=f9e353]:
+              - img "Visa" [ref=f9e354]
+        - generic [ref=f9e361]:
+          - heading "Country/region" [level=2] [ref=f9e362]
+          - button "United States (USD $)" [ref=f9e364] [cursor=pointer]
+  - status [ref=f9e369]
+  - complementary
+  - complementary
+  - complementary
+  - complementary

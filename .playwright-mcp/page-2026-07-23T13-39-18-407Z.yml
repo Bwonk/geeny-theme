@@ -1,0 +1,49 @@
+- generic [ref=f18e2]:
+  - generic [ref=f18e7]:
+    - generic [ref=f18e8]:
+      - link "Skip to content" [ref=f18e9] [cursor=pointer]:
+        - /url: "#main-content"
+      - generic [ref=f18e11]:
+        - banner [ref=f18e14]:
+          - generic [ref=f18e18]:
+            - link [ref=f18e19] [cursor=pointer]:
+              - /url: https://infinitypillow.co/?country=US&sso=silent
+              - img "Infinity Travel logo" [ref=f18e21]
+            - link "Profile" [ref=f18e23] [cursor=pointer]:
+              - /url: /profile
+              - generic [ref=f18e24]: Loading
+        - generic [ref=f18e32]:
+          - navigation "Main navigation" [ref=f18e36]:
+            - list [ref=f18e37]:
+              - listitem [ref=f18e38]:
+                - link "Orders" [ref=f18e39] [cursor=pointer]:
+                  - /url: /orders
+              - listitem [ref=f18e40]:
+                - link "Profile" [ref=f18e41] [cursor=pointer]:
+                  - /url: /profile
+          - main [ref=f18e42]:
+            - generic [ref=f18e48]:
+              - generic: Loading
+              - generic [ref=f18e50]:
+                - generic [ref=f18e51]:
+                  - generic [ref=f18e54]:
+                    - generic [ref=f18e55]: Loading
+                    - paragraph [ref=f18e59]
+                  - generic [ref=f18e71]:
+                    - generic [ref=f18e72]: Loading
+                    - paragraph [ref=f18e76]
+                - generic [ref=f18e86]: Loading
+    - contentinfo [ref=f18e87]:
+      - navigation [ref=f18e93]:
+        - generic [ref=f18e94]:
+          - button "United States" [ref=f18e95] [cursor=pointer]
+          - button "Refund policy" [ref=f18e96] [cursor=pointer]
+          - button "Shipping" [ref=f18e97] [cursor=pointer]
+          - button "Privacy policy" [ref=f18e98] [cursor=pointer]
+          - button "Terms of service" [ref=f18e99] [cursor=pointer]
+          - button "Contact information" [ref=f18e100] [cursor=pointer]
+  - generic [ref=f18e101]: Opens external website in a new window.
+  - generic [ref=f18e102]: Opens in a new window.
+  - generic [ref=f18e103]: Opens external website.
+  - status [ref=f18e104]
+  - alert [ref=f18e105]

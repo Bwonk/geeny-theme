@@ -1,0 +1,285 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content":
+    - /url: "#MainContent"
+  - banner [ref=e3]:
+    - generic [ref=e8]:
+      - generic [ref=e9]: Spend $50.00 to get free shipping
+      - generic [ref=e15]: Spend $50.00 to get free shipping
+      - generic [ref=e21]: Spend $50.00 to get free shipping
+      - generic [ref=e27]: Spend $50.00 to get free shipping
+      - generic [ref=e33]: Spend $50.00 to get free shipping
+      - generic [ref=e39]: Spend $50.00 to get free shipping
+      - generic [ref=e45]: Spend $50.00 to get free shipping
+      - generic [ref=e51]: Spend $50.00 to get free shipping
+      - generic [ref=e57]: Spend $50.00 to get free shipping
+      - generic [ref=e63]: Spend $50.00 to get free shipping
+    - generic [ref=e73]:
+      - generic [ref=e74]: Spend $50.00 to get free shipping
+      - generic [ref=e80]: Spend $50.00 to get free shipping
+      - generic [ref=e86]: Spend $50.00 to get free shipping
+      - generic [ref=e92]: Spend $50.00 to get free shipping
+      - generic [ref=e98]: Spend $50.00 to get free shipping
+      - generic [ref=e104]: Spend $50.00 to get free shipping
+      - generic [ref=e110]: Spend $50.00 to get free shipping
+      - generic [ref=e116]: Spend $50.00 to get free shipping
+      - generic [ref=e122]: Spend $50.00 to get free shipping
+      - generic [ref=e128]: Spend $50.00 to get free shipping
+  - banner [ref=e134]:
+    - generic [ref=e138]:
+      - navigation [ref=e141]:
+        - list [ref=e142]:
+          - listitem [ref=e143]:
+            - link "Shop" [ref=e144] [cursor=pointer]:
+              - /url: /collections/all
+          - listitem [ref=e145]:
+            - link "About" [ref=e146] [cursor=pointer]:
+              - /url: /pages/about
+      - heading [level=1] [ref=e148]:
+        - link [ref=e149] [cursor=pointer]:
+          - /url: /
+          - img "Infinity Travel" [ref=e151]
+      - generic [ref=e152]:
+        - link "Log in" [ref=e154] [cursor=pointer]:
+          - /url: https://infinitypillow.co/customer_authentication/redirect?locale=en&region_country=US
+        - button "Search our site" [ref=e159] [cursor=pointer]
+        - button "Cart items" [ref=e165] [cursor=pointer]:
+          - generic:
+            - generic: Cart
+            - generic: items
+  - main [ref=e166]:
+    - heading "We make well-designed products for travel and everyday. Endlessly versatile and incredibly ingenious designs that take you fun places." [level=2] [ref=e180]
+    - list [ref=e186]:
+      - listitem [ref=e187]:
+        - generic [ref=e190]:
+          - link [ref=e191] [cursor=pointer]:
+            - /url: /products/infinity-pillow
+            - generic [ref=e194]:
+              - img "Infinity Pillow" [ref=e195]
+              - generic:
+                - img "Infinity Pillow"
+              - img "Infinity Pillow" [ref=e197]
+              - generic:
+                - img "Infinity Pillow"
+              - generic:
+                - img "Infinity Pillow"
+              - generic:
+                - img "Infinity Pillow"
+              - generic:
+                - img "Infinity Pillow"
+              - generic:
+                - img "Infinity Pillow"
+              - generic:
+                - img "Infinity Pillow"
+              - generic:
+                - img "Infinity Pillow"
+          - link "Infinity Pillow $55.00 USD" [ref=e199] [cursor=pointer]:
+            - /url: /products/infinity-pillow
+            - heading "Infinity Pillow" [level=3] [ref=e200]
+            - generic [ref=e201]: $55.00 USD
+          - generic [ref=e204]:
+            - combobox "Variant Variant Variant" [ref=e206] [cursor=pointer]:
+              - option "Navy" [selected]
+              - option "Grey"
+              - option "Pine Green"
+              - option "Midnight Grey"
+              - option "Terracotta"
+              - option "Airy Blue" [disabled]
+              - option "Purple" [disabled]
+              - option "Ochre Yellow"
+              - option "Rose" [disabled]
+            - generic [ref=e207]: Regular price
+            - button "Add to Cart , Infinity Pillow" [ref=e209] [cursor=pointer]:
+              - generic: Add to Cart
+              - generic [ref=e210]: ", Infinity Pillow"
+      - listitem [ref=e211]:
+        - generic [ref=e214]:
+          - link [ref=e215] [cursor=pointer]:
+            - /url: /products/packable-blanket
+            - generic [ref=e218]:
+              - img "Packable Blanket" [ref=e219]
+              - generic:
+                - img "Packable Blanket"
+              - img "Packable Blanket" [ref=e221]
+              - generic:
+                - img "Packable Blanket"
+              - generic:
+                - img "Packable Blanket"
+          - link "Packable Blanket $65.00 USD" [ref=e223] [cursor=pointer]:
+            - /url: /products/packable-blanket
+            - heading "Packable Blanket" [level=3] [ref=e224]
+            - generic [ref=e225]: $65.00 USD
+          - generic [ref=e228]:
+            - combobox [ref=e230] [cursor=pointer]:
+              - option "Ochre Yellow" [disabled]
+              - option "Navy" [selected]
+              - option "Pine Green"
+              - option "Terracotta"
+            - generic [ref=e231]: Regular price
+            - button "Add to Cart , Packable Blanket" [ref=e233] [cursor=pointer]:
+              - generic: Add to Cart
+              - generic [ref=e234]: ", Packable Blanket"
+      - listitem [ref=e235]:
+        - generic [ref=e238]:
+          - link [ref=e239] [cursor=pointer]:
+            - /url: /products/packable-travel-bag
+            - generic [ref=e242]:
+              - img "Packable Travel Bag" [ref=e243]
+              - img "Packable Travel Bag" [ref=e245]
+              - generic:
+                - img "Packable Travel Bag"
+              - generic:
+                - img "Packable Travel Bag"
+          - link "Packable Travel Bag $60.00 USD" [ref=e247] [cursor=pointer]:
+            - /url: /products/packable-travel-bag
+            - heading "Packable Travel Bag" [level=3] [ref=e248]
+            - generic [ref=e249]: $60.00 USD
+          - generic [ref=e252]:
+            - combobox [ref=e254] [cursor=pointer]:
+              - option "Olive" [selected]
+              - option "Navy"
+              - option "Cloud"
+            - generic [ref=e255]: Regular price
+            - button "Add to Cart , Packable Travel Bag" [ref=e257] [cursor=pointer]:
+              - generic: Add to Cart
+              - generic [ref=e258]: ", Packable Travel Bag"
+    - generic [ref=e264]:
+      - heading "As seen in" [level=2] [ref=e265]
+      - list [ref=e267]:
+        - listitem [ref=e268]
+        - listitem [ref=e269]
+        - listitem [ref=e270]
+        - listitem [ref=e271]
+        - listitem [ref=e272]
+        - listitem [ref=e273]
+    - generic [ref=e279]:
+      - heading "@infinitypillow around the world" [level=2] [ref=e281]
+      - region [ref=e282]:
+        - generic [ref=e283]:
+          - group [ref=e284]:
+            - generic [ref=e285]: In the air
+          - group [ref=e290]:
+            - generic [ref=e291]: At the airport
+          - group [ref=e296]:
+            - generic [ref=e297]: Out and about
+          - group [ref=e302]:
+            - generic [ref=e303]: Outdoors
+          - group [ref=e308]:
+            - generic [ref=e309]: At home
+          - group [ref=e314]:
+            - generic [ref=e315]: For your next trip
+          - group "1 of 6" [ref=e320]:
+            - generic [ref=e321]: In the air
+          - group "2 of 6" [ref=e326]:
+            - generic [ref=e327]: At the airport
+          - group "3 of 6" [ref=e332]:
+            - generic [ref=e333]: Out and about
+          - group "4 of 6" [ref=e338]:
+            - generic [ref=e339]: Outdoors
+          - group [ref=e344]:
+            - generic [ref=e345]: At home
+          - group [ref=e350]:
+            - generic [ref=e351]: For your next trip
+          - group [ref=e356]:
+            - generic [ref=e357]: In the air
+          - group [ref=e362]:
+            - generic [ref=e363]: At the airport
+          - group [ref=e368]:
+            - generic [ref=e369]: Out and about
+          - group [ref=e374]:
+            - generic [ref=e375]: Outdoors
+          - group [ref=e380]:
+            - generic [ref=e381]: At home
+          - group [ref=e386]:
+            - generic [ref=e387]: For your next trip
+        - generic [ref=e394]:
+          - button "Go to last slide" [ref=e395] [cursor=pointer]:
+            - generic [ref=e396]: Previous slide
+          - button "Next slide" [ref=e397] [cursor=pointer]
+    - list [ref=e404]:
+      - listitem [ref=e405]:
+        - paragraph [ref=e410]: Versatile designs for travel and everyday
+      - listitem [ref=e411]:
+        - paragraph [ref=e416]: Better materials that you can see and feel
+      - listitem [ref=e417]:
+        - paragraph [ref=e422]: Fun colors that look good anywhere
+      - listitem [ref=e423]:
+        - paragraph [ref=e428]: Tested by frequent flyers and travel pros
+    - banner [ref=e433]
+  - contentinfo [ref=e437]:
+    - generic [ref=e438]:
+      - generic [ref=e439]:
+        - generic [ref=e440]:
+          - generic [ref=e441]: Bon Voyage 🌎
+          - list
+        - list [ref=e445]:
+          - listitem [ref=e446]:
+            - link "About" [ref=e447] [cursor=pointer]:
+              - /url: /pages/about
+          - listitem [ref=e448]:
+            - link "Reviews" [ref=e449] [cursor=pointer]:
+              - /url: /pages/reviews
+          - listitem [ref=e450]:
+            - link "Contact" [ref=e451] [cursor=pointer]:
+              - /url: /pages/contact
+          - listitem [ref=e452]:
+            - link "Shipping Policy" [ref=e453] [cursor=pointer]:
+              - /url: /policies/shipping-policy
+          - listitem [ref=e454]:
+            - link "Return Policy" [ref=e455] [cursor=pointer]:
+              - /url: /policies/refund-policy
+          - listitem [ref=e456]:
+            - link "Terms of Service" [ref=e457] [cursor=pointer]:
+              - /url: /policies/terms-of-service
+          - listitem [ref=e458]:
+            - link "Contact Information" [ref=e459] [cursor=pointer]:
+              - /url: /policies/contact-information
+          - listitem [ref=e460]:
+            - link "Affiliate Program" [ref=e461] [cursor=pointer]:
+              - /url: /pages/affiliation
+          - listitem [ref=e462]:
+            - link "Wholesale" [ref=e463] [cursor=pointer]:
+              - /url: /pages/wholesale
+        - generic [ref=e465]:
+          - heading "Sign up to our newsletter" [level=2] [ref=e466]
+          - generic [ref=e468]:
+            - generic [ref=e469]: Email Address
+            - textbox "Email Address" [ref=e471] [cursor=pointer]:
+              - /placeholder: email@example.com
+            - button "Subscribe" [ref=e472] [cursor=pointer]
+      - generic [ref=e473]:
+        - paragraph [ref=e475]:
+          - text: © 2026,
+          - link "Infinity Travel" [ref=e476] [cursor=pointer]:
+            - /url: /
+          - text: .
+          - link "Made by Pinn" [ref=e479] [cursor=pointer]:
+            - /url: https://pinn.hk
+        - generic [ref=e480]:
+          - heading "Accepted Payments" [level=2] [ref=e481]
+          - list [ref=e482]:
+            - listitem [ref=e483]:
+              - img "American Express" [ref=e484]
+            - listitem [ref=e489]:
+              - img "Apple Pay" [ref=e490]
+            - listitem [ref=e501]:
+              - img "Bancontact" [ref=e502]
+            - listitem [ref=e509]:
+              - img "Google Pay" [ref=e510]
+            - listitem [ref=e518]:
+              - img "iDEAL Wero" [ref=e519]
+            - listitem [ref=e534]:
+              - img "Mastercard" [ref=e535]
+            - listitem [ref=e542]:
+              - img "Shop Pay" [ref=e543]
+            - listitem [ref=e547]:
+              - img "Union Pay" [ref=e548]
+            - listitem [ref=e554]:
+              - img "Visa" [ref=e555]
+        - generic [ref=e562]:
+          - heading "Country/region" [level=2] [ref=e563]
+          - button "United States (USD $)" [ref=e565] [cursor=pointer]
+  - status [ref=e570]
+  - complementary
+  - complementary
+  - complementary
+  - complementary

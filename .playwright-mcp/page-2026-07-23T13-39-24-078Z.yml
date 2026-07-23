@@ -1,0 +1,48 @@
+- generic [ref=f20e2]:
+  - generic [ref=f20e7]:
+    - generic [ref=f20e8]:
+      - link "Skip to content" [ref=f20e9] [cursor=pointer]:
+        - /url: "#main-content"
+      - generic [ref=f20e11]:
+        - banner [ref=f20e14]:
+          - generic [ref=f20e18]:
+            - link [ref=f20e19] [cursor=pointer]:
+              - /url: https://infinitypillow.co/?country=US&sso=silent
+              - img "Infinity Travel logo" [ref=f20e21]
+            - link "Profile" [ref=f20e23] [cursor=pointer]:
+              - /url: /profile
+              - generic [ref=f20e24]: Loading
+        - generic [ref=f20e32]:
+          - navigation "Main navigation" [ref=f20e36]:
+            - list [ref=f20e37]:
+              - listitem [ref=f20e38]:
+                - link "Orders" [ref=f20e39] [cursor=pointer]:
+                  - /url: /orders
+              - listitem [ref=f20e40]:
+                - link "Profile" [ref=f20e41] [cursor=pointer]:
+                  - /url: /profile
+          - main [ref=f20e42]:
+            - generic [ref=f20e48]:
+              - heading "Profile" [level=1] [ref=f20e50]
+              - generic [ref=f20e51]:
+                - generic [ref=f20e54]:
+                  - generic [ref=f20e62]:
+                    - term [ref=f20e63]
+                    - definition [ref=f20e66]
+                  - status [ref=f20e69]: Loading account information
+                - region "Sign out" [ref=f20e70]:
+                  - heading "Sign out" [level=2] [ref=f20e72]
+    - contentinfo [ref=f20e78]:
+      - navigation [ref=f20e84]:
+        - generic [ref=f20e85]:
+          - button "United States" [ref=f20e86] [cursor=pointer]
+          - button "Refund policy" [ref=f20e87] [cursor=pointer]
+          - button "Shipping" [ref=f20e88] [cursor=pointer]
+          - button "Privacy policy" [ref=f20e89] [cursor=pointer]
+          - button "Terms of service" [ref=f20e90] [cursor=pointer]
+          - button "Contact information" [ref=f20e91] [cursor=pointer]
+  - generic [ref=f20e92]: Opens external website in a new window.
+  - generic [ref=f20e93]: Opens in a new window.
+  - generic [ref=f20e94]: Opens external website.
+  - status [ref=f20e95]
+  - alert [ref=f20e96]
