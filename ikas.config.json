@@ -251,6 +251,89 @@
           "description": "Logo, ana navigasyon bağlantıları ve sabit header ayarları"
         }
       ]
+    },
+    {
+      "id": "e1iohf8g-ProductCard",
+      "name": "Product Card",
+      "entry": "./src/components/ProductCard/index.tsx",
+      "styles": "./src/components/ProductCard/styles.css",
+      "props": [
+        {
+          "name": "product",
+          "displayName": "Ürün",
+          "type": "PRODUCT",
+          "required": false,
+          "description": "Kartta gösterilecek ikas ürünü",
+          "groupId": "product_card_group"
+        },
+        {
+          "name": "showRating",
+          "displayName": "Yıldız Puanını Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "description": "Ürünün değerlendirme puanını kartta göster",
+          "groupId": "product_card_group"
+        },
+        {
+          "name": "showQuickAdd",
+          "displayName": "Hızlı Sepete Ekle Butonu",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "description": "Kart üzerinde hızlı ekle butonunu aktif et",
+          "groupId": "product_card_group"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "product_card_group",
+          "name": "Ürün Kartı Ayarları",
+          "description": "Kart ürünü, yıldız puanı ve hızlı ekle ayarları"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-CartDrawer",
+      "name": "Cart Drawer",
+      "entry": "./src/components/CartDrawer/index.tsx",
+      "styles": "./src/components/CartDrawer/styles.css",
+      "props": [
+        {
+          "name": "freeShippingThreshold",
+          "displayName": "Ücretsiz Kargo Limiti (TL)",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 500,
+          "description": "Ücretsiz kargo barı için hedef tutar",
+          "groupId": "cart_drawer_group"
+        },
+        {
+          "name": "emptyCartTitle",
+          "displayName": "Boş Sepet Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sepetiniz Şu Anda Boş",
+          "description": "Sepet boşken gösterilecek başlık",
+          "groupId": "cart_drawer_group"
+        },
+        {
+          "name": "emptyCartButtonText",
+          "displayName": "Alışverişe Devam Et Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Alışverişe Başla",
+          "description": "Boş sepet buton metni",
+          "groupId": "cart_drawer_group"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "cart_drawer_group",
+          "name": "Sepet Çekmecesi Ayarları",
+          "description": "Ücretsiz kargo barı ve boş sepet metin ayarları"
+        }
+      ]
     }
   ]
 }

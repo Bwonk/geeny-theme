@@ -1,0 +1,163 @@
+.ikas-product-card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--24KlcgGmm9);
+  border-radius: var(--card-radius, 2rem);
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--pxNuSoudLn);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ikas-product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(55, 67, 91, 0.1);
+}
+
+/* 1. GÖRSEL KONTEYNERİ */
+.ikas-product-card__image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--card-radius, 2rem);
+  overflow: hidden;
+  background-color: var(--cdFDkBbKkc);
+}
+
+.ikas-product-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: var(--image-hover-transition, transform 0.5s ease-out);
+}
+
+.ikas-product-card:hover .ikas-product-card__image {
+  transform: scale(1.05);
+}
+
+.ikas-product-card__image--secondary {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.5s ease-out;
+}
+
+.ikas-product-card:hover .ikas-product-card__image--secondary {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* 2. ROZETLER (Sol Üst) */
+.ikas-product-card__badge-wrapper {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 2;
+}
+
+.ikas-product-card__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--sy8ZnXZdoG);
+  color: var(--pxNuSoudLn);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  line-height: 1;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ikas-product-card__badge--out-of-stock {
+  background-color: var(--pxNuSoudLn);
+  color: var(--24KlcgGmm9);
+}
+
+/* 3. KART İÇERİĞİ */
+.ikas-product-card__content {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 12px 12px 12px;
+  gap: 8px;
+  flex: 1;
+}
+
+/* 4. YILDIZ DEĞERLENDİRMESİ */
+.ikas-product-card__rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--cGupQGnbYq);
+}
+
+.ikas-product-card__rating-star {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.ikas-product-card__rating-score {
+  color: var(--pxNuSoudLn);
+  margin-left: 2px;
+  font-weight: 500;
+}
+
+.ikas-product-card__rating-count {
+  color: var(--pxNuSoudLn);
+  opacity: 0.7;
+}
+
+/* 5. ÜRÜN BAŞLIĞI */
+.ikas-product-card__title {
+  margin: 0;
+  padding: 0;
+  color: var(--pxNuSoudLn);
+  font-weight: 500;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.35;
+}
+
+/* 6. FİYAT ALANI */
+.ikas-product-card__price-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.ikas-product-card__final-price {
+  font-weight: 600;
+  color: var(--pxNuSoudLn);
+}
+
+.ikas-product-card__old-price {
+  text-decoration: line-through;
+  color: var(--pxNuSoudLn);
+  opacity: 0.55;
+}
+
+/* 7. HIZLI SEPETE EKLE BUTONU */
+.ikas-product-card__quick-add {
+  margin-top: 8px;
+  width: 100%;
+}
+
+/* RESPONSIVE BREAKPOINT (<768px DESIGN.md) */
+@media (max-width: 767px) {
+  .ikas-product-card__content {
+    padding: 12px 8px 8px 8px;
+    gap: 6px;
+  }
+}

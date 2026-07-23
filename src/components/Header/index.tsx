@@ -5,7 +5,11 @@ import {
   Router,
   getThemeSetting,
 } from "@ikas/bp-storefront";
-import { HeaderProps } from "./types";
+import { Props } from "./types";
+
+export interface HeaderProps extends Props {
+  className?: string;
+}
 
 export function Header({
   logo,
@@ -187,7 +191,9 @@ export function Header({
             type="button"
             className="ikas-header__icon-btn"
             aria-label={`Sepet (${itemCount} Ürün)`}
-            onClick={() => Router.navigateToPage("CART")}
+            onClick={() => {
+              window.dispatchEvent(new CustomEvent("TOGGLE_CART_DRAWER"));
+            }}
           >
             <svg
               width="22"
