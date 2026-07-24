@@ -26,6 +26,7 @@ export function HeroBanner({
   const mediaRadiusSetting = getThemeSetting("_YFQAxlLvZl"); // Radius / Medya (2rem / 32px)
   const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1820px)
   const cardShadowSetting = getThemeSetting("_yyUleMlhR4"); // Gölge / Kart Soft Shadow
+  const gridGapSetting = getThemeSetting("_4Ud47RIVna"); // Boşluk / Grid Gap (20px)
 
   const sectionPy = verticalPySetting?.value || "48px";
   const sectionPyMobile = verticalPyMobileSetting?.value || "32px";
@@ -33,6 +34,7 @@ export function HeroBanner({
   const mobilePx = mobilePxSetting?.value || "16px";
   const mediaRadius = mediaRadiusSetting?.value || "32px";
   const maxSiteWidth = siteWidthSetting?.value || "1820px";
+  const gridGap = gridGapSetting?.value || "20px";
   const cardShadow = formatShadow(cardShadowSetting?.value, "0 4px 20px rgba(55, 67, 91, 0.08)");
 
   const inlineStyles = {
@@ -43,6 +45,7 @@ export function HeroBanner({
     "--mobile-px": mobilePx,
     "--media-radius": mediaRadius,
     "--max-site-width": maxSiteWidth,
+    "--grid-gap": gridGap,
     "--card-shadow": cardShadow,
   };
 
@@ -52,6 +55,7 @@ export function HeroBanner({
     <section
       className={`ikas-hero ${className}`.trim()}
       style={inlineStyles}
+      lang="tr"
     >
       <div className="ikas-hero__container">
         {/* SOL KOLON: HİTAB VE EYLEM */}

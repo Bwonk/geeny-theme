@@ -51,9 +51,12 @@ export function PressTicker({
       className={`ikas-press-ticker ${className}`.trim()}
       style={inlineStyles}
       aria-label="Basın Logoları"
+      lang="tr"
     >
       {title && (
-        <span className="ikas-press-ticker__title _eZyocyyd0F">{title}</span>
+        <span className="ikas-press-ticker__title _eZyocyyd0F" lang="tr">
+          {typeof title === "string" ? title.toLocaleUpperCase("tr-TR") : title}
+        </span>
       )}
 
       <div className="ikas-press-ticker__track-wrapper">

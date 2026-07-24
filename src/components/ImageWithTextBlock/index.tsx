@@ -66,6 +66,7 @@ export function ImageWithTextBlock({
     <section
       className={`ikas-image-text ${className}`.trim()}
       style={inlineStyles}
+      lang="tr"
     >
       <div
         className={`ikas-image-text__container ${
@@ -90,8 +91,8 @@ export function ImageWithTextBlock({
         {/* METİN KOLONU */}
         <div className="ikas-image-text__content">
           {badgeText && (
-            <span className="ikas-image-text__badge _eZyocyyd0F">
-              {badgeText}
+            <span className="ikas-image-text__badge _eZyocyyd0F" lang="tr">
+              {typeof badgeText === "string" ? badgeText.toLocaleUpperCase("tr-TR") : badgeText}
             </span>
           )}
 

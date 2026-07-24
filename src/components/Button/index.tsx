@@ -49,10 +49,13 @@ export function Button({
     "--btn-transition": btnTransition,
   };
 
+  const rawText = children || text;
+  const formattedText = typeof rawText === "string" ? rawText.toLocaleUpperCase("tr-TR") : rawText;
+
   const content = (
     <>
       {loading && <span className="ikas-btn__spinner" aria-hidden="true" />}
-      <span>{children || text}</span>
+      <span>{formattedText}</span>
     </>
   );
 
@@ -65,7 +68,8 @@ export function Button({
         href={href}
         className={combinedClassName}
         style={inlineStyles}
-        aria-label={ariaLabel || text}
+        lang="tr"
+        aria-label={typeof (ariaLabel || text) === "string" ? (ariaLabel || text).toLocaleUpperCase("tr-TR") : (ariaLabel || text)}
         onClick={onClick}
       >
         {content}
@@ -79,10 +83,11 @@ export function Button({
       type="button"
       className={combinedClassName}
       style={inlineStyles}
+      lang="tr"
       disabled={disabled || loading}
       aria-disabled={disabled || loading}
       aria-busy={loading}
-      aria-label={ariaLabel || text}
+      aria-label={typeof (ariaLabel || text) === "string" ? (ariaLabel || text).toLocaleUpperCase("tr-TR") : (ariaLabel || text)}
       onClick={onClick}
     >
       {content}
