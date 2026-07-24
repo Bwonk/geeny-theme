@@ -8,6 +8,7 @@ import { Button } from "../Button";
 import { Props } from "./types";
 
 export interface PaginationLoadMoreProps extends Props {
+  loadingText?: string;
   className?: string;
 }
 

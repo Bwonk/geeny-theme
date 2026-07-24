@@ -9,6 +9,7 @@ import { Button } from "../Button";
 import { Props } from "./types";
 
 export interface ProductGridProps extends Props {
+  products?: IkasProduct[];
   className?: string;
 }
 
