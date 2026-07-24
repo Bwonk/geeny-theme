@@ -1,12 +1,13 @@
+// This file is auto-generated — do not edit manually.
 import type { IkasProductList } from "@ikas/bp-storefront";
 
 export interface Props {
-  /** Koleksiyon / Kategori ikas Ürün Listesi */
-  productList?: IkasProductList | null;
-  /** Özel Koleksiyon Başlığı (opsiyonel) */
+  /** Koleksiyon ikas ürün listesi verisi */
+  productList?: IkasProductList;
+  /** Opsiyonel özel koleksiyon başlığı */
   title?: string;
-  /** Özel Açıklama (opsiyonel) */
+  /** Opsiyonel özel koleksiyon açıklaması */
   description?: string;
-  /** Arka Plan Rengi */
+  /** Bölüm zemin rengi */
   backgroundColor?: string;
 }

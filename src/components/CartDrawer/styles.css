@@ -134,8 +134,8 @@
 }
 
 .ikas-cart-drawer__item-img-wrapper {
-  width: 80px;
-  height: 80px;
+  width: var(--cart-item-image-size, 80px);
+  height: var(--cart-item-image-size, 80px);
   flex-shrink: 0;
   border-radius: var(--item-img-radius, 12px);
   overflow: hidden;

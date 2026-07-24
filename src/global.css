@@ -41,4 +41,7 @@
 
   /* Varyant Renk Swatch Boyutu */
   --swatch-size: 36px;
+
+  /* Sepet İtem Görsel Boyutu (CartDrawer ve Sepet Tablosu) */
+  --cart-item-image-size: 80px;
 }

@@ -1,0 +1,140 @@
+.ikas-cart-table {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ikas-cart-table__item {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 16px;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid var(--cdFDkBbKkc);
+  border-radius: var(--item-img-radius, 12px);
+  background-color: var(--24KlcgGmm9);
+  box-sizing: border-box;
+}
+
+.ikas-cart-table__img-wrapper {
+  width: var(--cart-item-image-size, 80px);
+  height: var(--cart-item-image-size, 80px);
+  border-radius: var(--item-img-radius, 8px);
+  overflow: hidden;
+  background-color: var(--cdFDkBbKkc);
+  flex-shrink: 0;
+}
+
+.ikas-cart-table__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ikas-cart-table__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  word-break: break-word;
+}
+
+.ikas-cart-table__name {
+  margin: 0;
+  color: var(--pxNuSoudLn);
+  font-weight: 500;
+}
+
+.ikas-cart-table__variant {
+  color: var(--pxNuSoudLn);
+  opacity: 0.7;
+  margin: 0;
+}
+
+.ikas-cart-table__price {
+  color: var(--pxNuSoudLn);
+  font-weight: 600;
+  margin: 0;
+}
+
+.ikas-cart-table__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ikas-cart-table__qty {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--cdFDkBbKkc);
+  border-radius: var(--form-radius, 8px);
+  overflow: hidden;
+}
+
+.ikas-cart-table__qty-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--pxNuSoudLn);
+  font-size: 16px;
+  transition: background 0.2s ease;
+}
+
+.ikas-cart-table__qty-btn:hover:not(:disabled) {
+  background-color: var(--cdFDkBbKkc);
+}
+
+.ikas-cart-table__qty-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ikas-cart-table__qty-val {
+  padding: 0 12px;
+  font-weight: 500;
+  color: var(--pxNuSoudLn);
+}
+
+.ikas-cart-table__remove {
+  background: transparent;
+  border: none;
+  color: #EF4444;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+  border-radius: 4px;
+}
+
+.ikas-cart-table__remove:hover {
+  opacity: 0.75;
+}
+
+@media (max-width: 600px) {
+  .ikas-cart-table__item {
+    grid-template-columns: 64px 1fr;
+    gap: 12px;
+  }
+
+  .ikas-cart-table__img-wrapper {
+    width: 64px;
+    height: 64px;
+  }
+
+  .ikas-cart-table__actions {
+    grid-column: span 2;
+    justify-content: space-between;
+    padding-top: 8px;
+    border-top: 1px solid var(--cdFDkBbKkc);
+  }
+}

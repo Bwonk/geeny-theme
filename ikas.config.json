@@ -1337,6 +1337,87 @@
           "description": "Bölüm zemin rengi"
         }
       ]
+    },
+    {
+      "id": "e1iohf8g-CartItemsList",
+      "name": "Cart Items List",
+      "entry": "./src/components/CartItemsList/index.tsx",
+      "styles": "./src/components/CartItemsList/styles.css",
+      "type": "component",
+      "props": []
+    },
+    {
+      "id": "e1iohf8g-CartOrderNote",
+      "name": "Cart Order Note",
+      "entry": "./src/components/CartOrderNote/index.tsx",
+      "styles": "./src/components/CartOrderNote/styles.css",
+      "type": "component",
+      "props": [
+        {
+          "name": "label",
+          "displayName": "Not Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sipariş Notu Ekleyin",
+          "description": "Not alanı etiketi"
+        },
+        {
+          "name": "placeholder",
+          "displayName": "Yer Tutucu Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Hediyelik paket talebi veya kargo teslimat notlarınızı buraya yazabilirsiniz...",
+          "description": "Textarea placeholder metni"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-CartSummaryCard",
+      "name": "Cart Summary Card",
+      "entry": "./src/components/CartSummaryCard/index.tsx",
+      "styles": "./src/components/CartSummaryCard/styles.css",
+      "type": "component",
+      "props": []
+    },
+    {
+      "id": "e1iohf8g-CartPageSection",
+      "name": "Cart Page Section",
+      "entry": "./src/components/CartPageSection/index.tsx",
+      "styles": "./src/components/CartPageSection/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "title",
+          "displayName": "Sayfa Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Alışveriş Sepetiniz",
+          "description": "Sepet sayfasının ana başlığı"
+        },
+        {
+          "name": "emptyCartTitle",
+          "displayName": "Boş Sepet Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sepetiniz Şu Anda Boş",
+          "description": "Sepet boşken gösterilecek başlık"
+        },
+        {
+          "name": "emptyCartButtonText",
+          "displayName": "Boş Sepet Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Alışverişe Başla",
+          "description": "Sepet boşken gösterilecek buton metni"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "description": "Bölüm zemin rengi"
+        }
+      ]
     }
   ]
 }

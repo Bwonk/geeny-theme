@@ -1,10 +1,9 @@
+// This file is auto-generated — do not edit manually.
 import type { IkasProductList } from "@ikas/bp-storefront";
 
 export interface Props {
-  /** ikas ürün listesi objesi */
-  productList?: IkasProductList | null;
-  /** Yükle buton metni */
+  /** Sayfalama için ikas ürün listesi objesi */
+  productList?: IkasProductList;
+  /** Yükleme butonu başlığı */
   loadMoreText?: string;
-  /** Yükleniyor metni */
-  loadingText?: string;
 }
