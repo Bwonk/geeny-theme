@@ -1,0 +1,48 @@
+@import "../ProductCard/styles.css";
+
+.ikas-related-products {
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--section-py, 48px) var(--section-px, 20px);
+  background-color: var(--24KlcgGmm9);
+}
+
+.ikas-related-products__container {
+  max-width: var(--max-site-width, 1820px);
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  box-sizing: border-box;
+}
+
+.ikas-related-products__title {
+  margin: 0;
+  color: var(--pxNuSoudLn);
+  text-align: center;
+}
+
+.ikas-related-products__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--grid-gap, 20px);
+  width: 100%;
+}
+
+@media (max-width: 991px) {
+  .ikas-related-products__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .ikas-related-products {
+    padding: var(--section-py-mobile, 32px) var(--mobile-px, 16px);
+  }
+
+  .ikas-related-products__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--mobile-grid-gap, 12px);
+  }
+}

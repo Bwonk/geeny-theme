@@ -987,6 +987,202 @@
           "description": "Video kaynağı, kapak görseli ve otomatik oynat ayarları"
         }
       ]
+    },
+    {
+      "id": "e1iohf8g-BreadcrumbNav",
+      "name": "Breadcrumb Nav",
+      "entry": "./src/components/BreadcrumbNav/index.tsx",
+      "styles": "./src/components/BreadcrumbNav/styles.css",
+      "type": "component",
+      "props": [
+        {
+          "name": "product",
+          "displayName": "Ürün",
+          "type": "PRODUCT",
+          "required": false,
+          "description": "Breadcrumb navigasyonu için ürün objesi"
+        },
+        {
+          "name": "homepageText",
+          "displayName": "Ana Sayfa Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ana Sayfa",
+          "description": "İlk adım ana sayfa etiketi"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-ProductMediaGallery",
+      "name": "Product Media Gallery",
+      "entry": "./src/components/ProductMediaGallery/index.tsx",
+      "styles": "./src/components/ProductMediaGallery/styles.css",
+      "type": "component",
+      "props": [
+        {
+          "name": "product",
+          "displayName": "Ürün",
+          "type": "PRODUCT",
+          "required": false,
+          "description": "Görsel galerisi için ürün objesi"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-ProductBuyBox",
+      "name": "Product Buy Box",
+      "entry": "./src/components/ProductBuyBox/index.tsx",
+      "styles": "./src/components/ProductBuyBox/styles.css",
+      "type": "component",
+      "props": [
+        {
+          "name": "product",
+          "displayName": "Ürün",
+          "type": "PRODUCT",
+          "required": false,
+          "description": "Satın alma alanı için ürün objesi"
+        },
+        {
+          "name": "showBuyNow",
+          "displayName": "Hemen Satın Al Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "description": "İkincil satın alma butonunu göster"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-StickyAddToCartBar",
+      "name": "Sticky Add To Cart Bar",
+      "entry": "./src/components/StickyAddToCartBar/index.tsx",
+      "styles": "./src/components/StickyAddToCartBar/styles.css",
+      "type": "component",
+      "props": [
+        {
+          "name": "product",
+          "displayName": "Ürün",
+          "type": "PRODUCT",
+          "required": false,
+          "description": "Sabit bar için ürün objesi"
+        },
+        {
+          "name": "targetElementId",
+          "displayName": "İzlenecek Eleman ID",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "product-buy-box-target",
+          "description": "Görünürlük tetiklemesi için izlenecek elemanın ID'si"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-ProductValueAccordions",
+      "name": "Product Value Accordions",
+      "entry": "./src/components/ProductValueAccordions/index.tsx",
+      "styles": "./src/components/ProductValueAccordions/styles.css",
+      "type": "component",
+      "props": [
+        {
+          "name": "product",
+          "displayName": "Ürün",
+          "type": "PRODUCT",
+          "required": false,
+          "description": "Akordiyonlar için ürün objesi"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-CustomerReviewsSection",
+      "name": "Customer Reviews Section",
+      "entry": "./src/components/CustomerReviewsSection/index.tsx",
+      "styles": "./src/components/CustomerReviewsSection/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "heading",
+          "displayName": "Bölüm Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Müşteri Değerlendirmeleri",
+          "description": "Bölümün ana başlık metni"
+        },
+        {
+          "name": "product",
+          "displayName": "Ürün",
+          "type": "PRODUCT",
+          "required": false,
+          "description": "Değerlendirmeler için ürün objesi"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "description": "Bölüm zemin rengi"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-RelatedProductsCarousel",
+      "name": "Related Products Carousel",
+      "entry": "./src/components/RelatedProductsCarousel/index.tsx",
+      "styles": "./src/components/RelatedProductsCarousel/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "title",
+          "displayName": "Bölüm Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bunları da Beğenebilirsiniz",
+          "description": "Bölümün ana başlık metni"
+        },
+        {
+          "name": "productList",
+          "displayName": "Önerilen Ürünler Listesi",
+          "type": "PRODUCT_LIST",
+          "required": false,
+          "description": "Önerilen ürünlerin ikas liste seçeneği"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "description": "Bölüm zemin rengi"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-ProductDetailSection",
+      "name": "Product Detail Section",
+      "entry": "./src/components/ProductDetailSection/index.tsx",
+      "styles": "./src/components/ProductDetailSection/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "product",
+          "displayName": "Ürün",
+          "type": "PRODUCT",
+          "required": false,
+          "description": "PDP ana ürün objesi"
+        },
+        {
+          "name": "relatedProducts",
+          "displayName": "Önerilen Ürünler Listesi",
+          "type": "PRODUCT_LIST",
+          "required": false,
+          "description": "İlişkili ürünler ikas liste seçeneği"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "description": "Bölüm zemin rengi"
+        }
+      ]
     }
   ]
 }

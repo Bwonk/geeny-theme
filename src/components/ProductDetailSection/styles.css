@@ -1,0 +1,63 @@
+@import "../BreadcrumbNav/styles.css";
+@import "../ProductMediaGallery/styles.css";
+@import "../ProductBuyBox/styles.css";
+@import "../StickyAddToCartBar/styles.css";
+@import "../ProductValueAccordions/styles.css";
+@import "../CustomerReviewsSection/styles.css";
+@import "../RelatedProductsCarousel/styles.css";
+
+.ikas-pdp {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--24KlcgGmm9);
+  color: var(--pxNuSoudLn);
+}
+
+.ikas-pdp__container {
+  max-width: var(--max-site-width, 1820px);
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 var(--section-px, 20px) var(--section-py, 48px);
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  box-sizing: border-box;
+}
+
+.ikas-pdp__main-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 40px;
+  align-items: start;
+  width: 100%;
+}
+
+.ikas-pdp__left {
+  width: 100%;
+  min-width: 0;
+  position: sticky;
+  top: 80px;
+}
+
+.ikas-pdp__right {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (max-width: 991px) {
+  .ikas-pdp__main-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .ikas-pdp__left {
+    position: static;
+  }
+
+  .ikas-pdp__container {
+    padding: 0 var(--mobile-px, 16px) var(--section-py-mobile, 32px);
+  }
+}
