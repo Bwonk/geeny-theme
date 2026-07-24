@@ -33,19 +33,22 @@ Site 6 farklı tema şeması (`colorScheme`) kullanmaktadır:
 
 ---
 
-### Tipografi Sistemi (`Jost, sans-serif`)
-Tipografi temel font ailesi `Jost, sans-serif` üzerinedir. Taban font boyutu varsayılan `18px` (`112.5%`) ve line-height `1.4` (`25.2px`) değerindedir.
+### Tipografi Sistemi (`Onest`, `Roboto Flex`, `Roboto Mono`)
+Tipografi sistemi 3 uyumlu font ailesinin rol bazlı ayrışması üzerine kuruludur:
+- **Başlıklar & Display (`Onest`):** Geometrik, modern ve karakterli marka duruşu.
+- **Gövde Metinleri (`Roboto Flex`):** Yüksek ekranda okunabilirlik ve dengeli x-height ritmi.
+- **Vurgu & Teknik Metinler (`Roboto Mono`):** Fiyatlar, indirim rozetleri, teknik etiketler ve sayılarda mühendislik hassasiyeti ve lüks ekipman hissi.
 
 #### Type Scale (Tipografi Ölçeği)
-- **`xs` (13.5px / `0.749rem`):** Alt etiketler, küçük rozetler, kargo bildirimleri
-- **`sm` (16px / `0.891rem`):** İkincil açıklamalar, input metinleri, footer alt bağlantıları
-- **`base` (18px / `1rem`):** Paragraf ve gövde metinleri (`line-height: 25.2px`)
-- **`lg` (24px / `1.335rem`):** Alt başlıklar, kart başlıkları, fiyat etiketi
-- **`xl` (27px / `1.498rem`):** Öne çıkan bölüm alt başlıkları
-- **`2xl` (30.2px / `1.682rem`):** Akordiyon başlıkları, mobil modal başlıkları
-- **`3xl` (36px / `2rem`):** Standard H1 başlıkları (`line-height: 46.8px`, `font-weight: 500`)
-- **`4xl` (48px / `2.67rem`):** H2 ve Hero ana başlıkları (`line-height: 62.5px`, `font-weight: 500`)
-- **`5xl` (54px / `3rem`):** Masaüstü büyük sloganlar
+- **`xs` (13.5px / `Roboto Mono` 500):** Alt etiketler, indirim rozetleri, teknik detaylar, fiyatlar
+- **`sm` (16px / `Roboto Flex` 400):** İkincil açıklamalar, input metinleri, footer alt bağlantıları
+- **`base` (18px / `Roboto Flex` 400):** Paragraf ve gövde metinleri (`line-height: 25.2px`), buton metinleri
+- **`lg` (24px / `Onest` 500):** Alt başlıklar, kart başlıkları
+- **`xl` (27px / `Onest` 500):** Öne çıkan bölüm alt başlıkları
+- **`2xl` (30.2px / `Onest` 500):** Akordiyon başlıkları, mobil modal başlıkları
+- **`3xl` (36px / `Onest` 500):** Standard H2 başlıkları, PDP ürün başlığı (`line-height: 46.8px`)
+- **`4xl` (48px / `Onest` 500):** H1 başlıkları (`line-height: 62.5px`)
+- **`5xl` (54px / `Onest` 500):** Hero büyük sloganları (`Display Hero`)
 
 ---
 

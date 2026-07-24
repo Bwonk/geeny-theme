@@ -38,21 +38,22 @@ Global'ler henüz canlı oluşturulmadı — canlı kurulum ayrı bir onaylı ad
 
 ---
 
-### B2. Tipografi — `create_theme_global` · `kind: typography` (10 Token)
-> **Bağlama Kuralı:** Bileşenlerde ikas framework tarafında oluşturulan `className="_<id>"` stil sınıfı doğrudan elemana uygulanır. Font ailesi `Jost, sans-serif` olarak sabittir. `font_weight` sayısal değerdir (400, 500, 600).
+### B2. Tipografi — `create_theme_global` / `update_text_style` · `kind: typography` (10 Token)
+> **Bağlama Kuralı:** Bileşenlerde ikas framework tarafında oluşturulan `className="_<id>"` stil sınıfı doğrudan elemana uygulanır. 3 uyumlu font ailesi kullanılır: **`Onest`** (Başlıklar), **`Roboto Flex`** (Gövde metinleri), **`Roboto Mono`** (Teknik metinler, rozetler, fiyatlar).
 
-| Ad | Değer (Size / Weight / Line-Height) | Kullanım |
-| :--- | :--- | :--- |
-| `Tipografi / Display Hero` | Size: `54px`, Weight: `500`, Line-Height: `64.8px` | Masaüstü büyük sloganlar (Hero ana başlığı) |
-| `Tipografi / Başlık H1` | Size: `48px`, Weight: `500`, Line-Height: `62.5px` | Ana sayfa ve bölüm ana başlıkları (En büyük h1 başlığı) |
-| `Tipografi / Başlık H2` | Size: `36px`, Weight: `500`, Line-Height: `46.8px` | Standard H2 başlıkları, PDP ürün başlığı, sayfa başlıkları |
-| `Tipografi / Başlık H3` | Size: `30.2px`, Weight: `500`, Line-Height: `39.3px` | Akordiyon başlıkları, mobil modal başlıkları |
-| `Tipografi / Başlık H4` | Size: `27px`, Weight: `500`, Line-Height: `35.1px` | Öne çıkan bölüm alt başlıkları |
-| `Tipografi / Kart ve Alt Başlık (lg)` | Size: `24px`, Weight: `500`, Line-Height: `31.2px` | Alt başlıklar, kart başlıkları, PDP fiyat etiketi |
-| `Tipografi / Gövde Metni (base)` | Size: `18px`, Weight: `400`, Line-Height: `25.2px` | Paragraf ve gövde metinleri, ürün kartı başlığı, CTA buton metni |
-| `Tipografi / İkincil Metin (sm)` | Size: `16px`, Weight: `400`, Line-Height: `22.4px` | İkincil açıklamalar, input metinleri, footer alt bağlantıları, menü linkleri (`weight: 500`) |
-| `Tipografi / Etiket ve Rozet (xs)` | Size: `13.5px`, Weight: `500`, Line-Height: `18.9px` | Alt etiketler, küçük indirim rozetleri, kargo bildirimleri |
-| `Tipografi / Mobil Duyuru Metni` | Size: `12px`, Weight: `500`, Line-Height: `16.8px` | Mobil breakpoint announcement bar duyuru metni |
+| Token Adı | ID | Canlı `className` | Font Ailesi | Değer (Size / Weight / Line-Height) | Kullanım |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `Tipografi / Display Hero` | `78XkSXv7w4` | `_78XkSXv7w4` | `Onest` | Size: `54px`, Weight: `500`, Line-Height: `64.8px` | Masaüstü büyük sloganlar (Hero ana başlığı) |
+| `Tipografi / Başlık H1` | `DusX6I08Pv` | `_DusX6I08Pv` | `Onest` | Size: `48px`, Weight: `500`, Line-Height: `62.5px` | Ana sayfa ve bölüm ana başlıkları (En büyük h1 başlığı) |
+| `Tipografi / Başlık H2` | `sKAMD8d1LA` | `_sKAMD8d1LA` | `Onest` | Size: `36px`, Weight: `500`, Line-Height: `46.8px` | Standard H2 başlıkları, PDP ürün başlığı, sayfa başlıkları |
+| `Tipografi / Başlık H3` | `AHnMWYqzuI` | `_AHnMWYqzuI` | `Onest` | Size: `30.2px`, Weight: `500`, Line-Height: `39.3px` | Akordiyon başlıkları, mobil modal başlıkları |
+| `Tipografi / Başlık H4` | `f7x3iMRFDx` | `_f7x3iMRFDx` | `Onest` | Size: `27px`, Weight: `500`, Line-Height: `35.1px` | Öne çıkan bölüm alt başlıkları |
+| `Tipografi / Kart ve Alt Başlık (lg)` | `AZR1yL8GrK` | `_AZR1yL8GrK` | `Onest` | Size: `24px`, Weight: `500`, Line-Height: `31.2px` | Alt başlıklar, kart başlıkları, PDP fiyat etiketi |
+| `Tipografi / Gövde Metni (base)` | `VcfI5D07Nt` | `_VcfI5D07Nt` | `Roboto Flex` | Size: `18px`, Weight: `400`, Line-Height: `25.2px` | Paragraf ve gövde metinleri, ürün kartı başlığı, CTA buton metni |
+| `Tipografi / İkincil Metin (sm)` | `C0OZ8W7vYS` | `_C0OZ8W7vYS` | `Roboto Flex` | Size: `16px`, Weight: `400`, Line-Height: `22.4px` | İkincil açıklamalar, input metinleri, footer alt bağlantıları, menü linkleri |
+| `Tipografi / Etiket ve Rozet (xs)` | `eZyocyyd0F` | `_eZyocyyd0F` | `Roboto Mono` | Size: `13.5px`, Weight: `500`, Line-Height: `18.9px` | Alt etiketler, indirim rozetleri, teknik detaylar, fiyatlar, kargo bildirimleri |
+| `Tipografi / Mobil Duyuru Metni` | `8BUF3YKi2n` | `_8BUF3YKi2n` | `Roboto Flex` | Size: `12px`, Weight: `400`, Line-Height: `16.8px` | Mobil breakpoint announcement bar duyuru metni |
+
 
 ---
 
