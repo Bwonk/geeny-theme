@@ -77,8 +77,8 @@
 
 .ikas-buy-box__swatch-btn {
   display: block;
-  width: 36px;
-  height: 36px;
+  width: var(--swatch-size, 36px);
+  height: var(--swatch-size, 36px);
   border-radius: var(--swatch-radius, 50%);
   border: 2px solid transparent;
   padding: 2px;

@@ -27,7 +27,7 @@
  *
  * Component-scoped styles naturally override these globals.
  */
-/* KATMAN (Z-INDEX) HİYERARŞİ SİSTEMİ */
+/* KATMAN (Z-INDEX) VE BİLEŞEN BOYUT HİYERARŞİ SİSTEMİ */
 :root {
   --z-index-base: 1;
   --z-index-dropdown: 50;
@@ -38,4 +38,7 @@
   --z-index-drawer: 10000;
   --z-index-modal: 10000;
   --z-index-toast: 10050;
+
+  /* Varyant Renk Swatch Boyutu */
+  --swatch-size: 36px;
 }
