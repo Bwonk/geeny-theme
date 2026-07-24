@@ -38,6 +38,8 @@ export type ThemeSettingName =
   | "_mfIn0YsoTT"
   /** Boşluk / Yatay Bölüm Padding (TEXT) */
   | "_Nd1XnRyZlx"
+  /** Animasyon / Marquee Ticker (TEXT) */
+  | "_NTIrquacoN"
   /** Animasyon / Menü Alt Çizgi (TEXT) */
   | "_NXa706BcQP"
   /** Boşluk / Header Yüksekliği (TEXT) */
@@ -90,6 +92,7 @@ type ThemeSettingValueMap = {
   "_lTnQi8nt1z": any;
   "_mfIn0YsoTT": string;
   "_Nd1XnRyZlx": string;
+  "_NTIrquacoN": string;
   "_NXa706BcQP": string;
   "_OQlsoCe9ah": string;
   "_QzHzEnrknJ": string;

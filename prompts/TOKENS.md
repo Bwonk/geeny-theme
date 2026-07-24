@@ -1,4 +1,4 @@
-# TOKENS.md — Canlı ikas Tema Global Token Eşleşme Tablosu
+# TOKENS.md — Canlı ikas Tema Global Token Eşleşme Tablosu (`prompts/TOKENS.md`)
 
 Bu dosya, ikas editöründe canlı olarak oluşturulan 52 adet tasarım token'ının `list_theme_globals` çıktısından okunan gerçek canlı `id`, `cssVar`, `className` ve `variableName` değerlerini içerir. Bileşen kodlamalarında canlı değerler doğrudan buradan referans alınır.
 
@@ -16,6 +16,7 @@ Bu dosya, ikas editöründe canlı olarak oluşturulan 52 adet tasarım token'ı
 | `Renkler / Overlay Siyah` | `fRUyppFgyp` | `var(--fRUyppFgyp)` |
 | `Renkler / Sticky Header Çizgisi` | `Gzj8nhz1gb` | `var(--gzj8Nhz1Gb)` |
 | `Renkler / Kargo İlerleme Çubuğu` | `AP8FzMh9vN` | `var(--ap8FzMh9VN)` |
+| `Renkler / Koyu Zemin Çizgisi` | `PFqY0xGDSq` | `var(--pFqY0XGdSq)` |
 
 ---
 
@@ -89,3 +90,4 @@ Bu dosya, ikas editöründe canlı olarak oluşturulan 52 adet tasarım token'ı
 | `Animasyon / Akordiyon Açılış` | `_QzHzEnrknJ` |
 | `Animasyon / Sticky Bar Belirme` | `_z2WqA2GtRY` |
 | `Animasyon / Fade Yumuşak` | `_AwVN6G9Zib` |
+| `Animasyon / Marquee Ticker` | `_NTIrquacoN` |

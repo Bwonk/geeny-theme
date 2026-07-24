@@ -3,4 +3,12 @@ dist/
 .DS_Store
 *.log
 .ikas-dev-state.json
-asd
+asd 
+
+# Credential içeren script'ler ve geçici dosyalar
+scripts/
+.env
+.env.local
+*.jpg
+*.jpeg
+*.png

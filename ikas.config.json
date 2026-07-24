@@ -334,6 +334,659 @@
           "description": "Ücretsiz kargo barı ve boş sepet metin ayarları"
         }
       ]
+    },
+    {
+      "id": "e1iohf8g-NewsletterSection",
+      "name": "Newsletter Section",
+      "entry": "./src/components/NewsletterSection/index.tsx",
+      "styles": "./src/components/NewsletterSection/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "title",
+          "displayName": "Bölüm Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Yeniliklerden ve Fırsatlardan Haberdar Olun",
+          "description": "Bülten kayıt alanı başlığı",
+          "groupId": "newsletter_group"
+        },
+        {
+          "name": "subtitle",
+          "displayName": "Alt Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "E-posta adresinizle kayıt olun, ilk siparişinizde %10 indirim kazanın.",
+          "description": "Bülten kayıt alanı alt metni",
+          "groupId": "newsletter_group"
+        },
+        {
+          "name": "placeholder",
+          "displayName": "Girdi İpucu Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "E-posta adresinizi giriniz",
+          "description": "E-posta kutusu içindeki ipucu metni",
+          "groupId": "newsletter_group"
+        },
+        {
+          "name": "buttonText",
+          "displayName": "Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Abone Ol",
+          "description": "Form gönderme butonu metni",
+          "groupId": "newsletter_group"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "description": "Bölüm arka plan rengi",
+          "groupId": "newsletter_group"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "newsletter_group",
+          "name": "E-Bülten Form Ayarları",
+          "description": "Bülten başlığı, alt açıklaması, ipucu metni ve buton ayarları"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-Footer",
+      "name": "Footer",
+      "entry": "./src/components/Footer/index.tsx",
+      "styles": "./src/components/Footer/styles.css",
+      "type": "section",
+      "isFooter": true,
+      "props": [
+        {
+          "name": "copyrightText",
+          "displayName": "Telif Hakkı Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "© 2026 Infinity Pillow. Tüm hakları saklıdır.",
+          "description": "Footer en altındaki telif metni",
+          "groupId": "footer_group"
+        },
+        {
+          "name": "quickLinks",
+          "displayName": "Hızlı Linkler Menüsü",
+          "type": "LIST_OF_LINK",
+          "required": false,
+          "defaultValue": {
+            "links": [
+              { "linkType": "PAGE", "label": "Ana Sayfa", "pageType": "INDEX", "subLinks": [] },
+              { "linkType": "PAGE", "label": "Tüm Ürünler", "pageType": "CATEGORY", "subLinks": [] },
+              { "linkType": "PAGE", "label": "Hakkımızda", "pageType": "ACCOUNT", "subLinks": [] }
+            ]
+          },
+          "description": "Footer hızlı erişim menü bağlantıları",
+          "groupId": "footer_group"
+        },
+        {
+          "name": "customerServiceLinks",
+          "displayName": "Müşteri Hizmetleri Menüsü",
+          "type": "LIST_OF_LINK",
+          "required": false,
+          "defaultValue": {
+            "links": [
+              { "linkType": "PAGE", "label": "Sıkça Sorulan Sorular", "pageType": "SEARCH", "subLinks": [] },
+              { "linkType": "PAGE", "label": "Kargo ve Teslimat", "pageType": "ACCOUNT", "subLinks": [] },
+              { "linkType": "PAGE", "label": "İade Politikası", "pageType": "ACCOUNT", "subLinks": [] }
+            ]
+          },
+          "description": "Yardım ve politika bağlantıları",
+          "groupId": "footer_group"
+        },
+        {
+          "name": "showPaymentIcons",
+          "displayName": "Ödeme İkonlarını Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "description": "Alt bantta ödeme kartı ikonlarını göster",
+          "groupId": "footer_group"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "description": "Bölüm arka plan rengi",
+          "groupId": "footer_group"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "footer_group",
+          "name": "Footer Ayarları",
+          "description": "Telif metni, menü bağlantıları ve ödeme ikon ayarları"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-HeroBanner",
+      "name": "Hero Banner",
+      "entry": "./src/components/HeroBanner/index.tsx",
+      "styles": "./src/components/HeroBanner/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "title",
+          "displayName": "Hero Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Her Yerde Kusursuz Uyku ve Seyahat Konforu",
+          "description": "Ana sayfa en üst büyük slogan başlığı",
+          "groupId": "hero_group"
+        },
+        {
+          "name": "subtitle",
+          "displayName": "Alt Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Patentli ergonomik tasarımı ile boynunuzu destekler, seyahatlerinizi keyfe dönüştürür.",
+          "description": "Başlık altındaki açıklama paragrafı",
+          "groupId": "hero_group"
+        },
+        {
+          "name": "primaryButtonText",
+          "displayName": "Birincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Şimdi Keşfet",
+          "description": "Ana eylem butonu yazısı",
+          "groupId": "hero_group"
+        },
+        {
+          "name": "primaryButtonLink",
+          "displayName": "Birincil Buton Linki",
+          "type": "LINK",
+          "required": false,
+          "description": "Ana buton yönlendirme bağlantısı",
+          "groupId": "hero_group"
+        },
+        {
+          "name": "secondaryButtonText",
+          "displayName": "İkincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ürünü İncele",
+          "description": "İkinci eylem butonu yazısı",
+          "groupId": "hero_group"
+        },
+        {
+          "name": "secondaryButtonLink",
+          "displayName": "İkincil Buton Linki",
+          "type": "LINK",
+          "required": false,
+          "description": "İkinci buton yönlendirme bağlantısı",
+          "groupId": "hero_group"
+        },
+        {
+          "name": "image",
+          "displayName": "Hero Görseli",
+          "type": "IMAGE",
+          "required": false,
+          "description": "Hero alanında gösterilecek ana görsel",
+          "groupId": "hero_group"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "description": "Bölüm zemin rengi",
+          "groupId": "hero_group"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "hero_group",
+          "name": "Hero Banner Ayarları",
+          "description": "Slogan, açıklama, eylem butonları ve görsel ayarları"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-PressTicker",
+      "name": "Press Ticker",
+      "entry": "./src/components/PressTicker/index.tsx",
+      "styles": "./src/components/PressTicker/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "title",
+          "displayName": "Bölüm Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "BASINDA BİZ",
+          "description": "Basın bandı üzerindeki etiket metni",
+          "groupId": "press_ticker_group"
+        },
+        {
+          "name": "logos",
+          "displayName": "Basın Logoları",
+          "type": "IMAGE_LIST",
+          "required": false,
+          "description": "Bantta kayacak marka logo görselleri",
+          "groupId": "press_ticker_group"
+        },
+        {
+          "name": "speed",
+          "displayName": "Kayış Hızı (saniye)",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 25,
+          "description": "Döngünün bir tam tur süresi",
+          "groupId": "press_ticker_group"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "description": "Bölüm zemin rengi",
+          "groupId": "press_ticker_group"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "press_ticker_group",
+          "name": "Basın Bandı Ayarları",
+          "description": "Marquee logosu, hız ve renk ayarları"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-FeaturedCollectionGrid",
+      "name": "Featured Collection Grid",
+      "entry": "./src/components/FeaturedCollectionGrid/index.tsx",
+      "styles": "./src/components/FeaturedCollectionGrid/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "title",
+          "displayName": "Bölüm Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "En Çok Tercih Edilen Ürünlerimiz",
+          "description": "Koleksiyon alanı ana başlığı",
+          "groupId": "featured_collection_group"
+        },
+        {
+          "name": "subtitle",
+          "displayName": "Alt Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Seyahatlerinizde maksimum boyun desteği sağlayan patentli modellerimiz.",
+          "description": "Koleksiyon alanı alt açıklama metni",
+          "groupId": "featured_collection_group"
+        },
+        {
+          "name": "products",
+          "displayName": "Ürün Listesi",
+          "type": "PRODUCT_LIST",
+          "required": false,
+          "description": "Izgarada gösterilecek ikas ürünleri",
+          "groupId": "featured_collection_group"
+        },
+        {
+          "name": "itemCount",
+          "displayName": "Gösterilecek Ürün Sayısı",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 4,
+          "description": "Maksimum ürün adedi",
+          "groupId": "featured_collection_group"
+        },
+        {
+          "name": "showViewAllButton",
+          "displayName": "Tümünü Gör Butonunu Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "description": "Alt eylem butonunu görünür yap",
+          "groupId": "featured_collection_group"
+        },
+        {
+          "name": "viewAllButtonText",
+          "displayName": "Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Tüm Modelleri İncele",
+          "description": "Tüm koleksiyonu incele buton metni",
+          "groupId": "featured_collection_group"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "description": "Bölüm zemin rengi",
+          "groupId": "featured_collection_group"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "featured_collection_group",
+          "name": "Öne Çıkan Koleksiyon Ayarları",
+          "description": "Başlık, ürün seçimi ve alt buton ayarları"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-ImageWithTextBlock",
+      "name": "Image With Text Block",
+      "entry": "./src/components/ImageWithTextBlock/index.tsx",
+      "styles": "./src/components/ImageWithTextBlock/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "badgeText",
+          "displayName": "Üst Rozet Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ERGONOMİK MÜKEMMELLİK",
+          "description": "Başlık üzerindeki küçük etiket",
+          "groupId": "image_with_text_group"
+        },
+        {
+          "name": "title",
+          "displayName": "Bölüm Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "360° Boyun Desteği İle Seyahat Rahatlığı",
+          "description": "Hikaye bloğu ana başlığı",
+          "groupId": "image_with_text_group"
+        },
+        {
+          "name": "description",
+          "displayName": "Açıklama Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Özel hafızalı sünger yapısı sayesinde baş ve boyun bölgenize tam uyum sağlar. Uçak, tren veya araba seyahatlerinde omurga duruşunuzu korur.",
+          "description": "Detaylı ürün ve hikaye anlatım metni",
+          "groupId": "image_with_text_group"
+        },
+        {
+          "name": "buttonText",
+          "displayName": "Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Tasarım Hikayesini Keşfet",
+          "description": "Eyleme çağrı buton yazısı",
+          "groupId": "image_with_text_group"
+        },
+        {
+          "name": "buttonLink",
+          "displayName": "Buton Linki",
+          "type": "LINK",
+          "required": false,
+          "description": "Yönlendirme bağlantısı",
+          "groupId": "image_with_text_group"
+        },
+        {
+          "name": "image",
+          "displayName": "Görsel",
+          "type": "IMAGE",
+          "required": false,
+          "description": "Bloğun yanında gösterilecek detay görseli",
+          "groupId": "image_with_text_group"
+        },
+        {
+          "name": "imagePosition",
+          "displayName": "Görsel Konumu",
+          "type": "ENUM",
+          "options": ["LEFT", "RIGHT"],
+          "required": false,
+          "defaultValue": "LEFT",
+          "description": "Görselin solda mı sağda mı yer alacağı",
+          "groupId": "image_with_text_group"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "description": "Bölüm zemin rengi",
+          "groupId": "image_with_text_group"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "image_with_text_group",
+          "name": "Görsel ve Metin Bloğu Ayarları",
+          "description": "Hikaye metni, etiket, buton ve görsel konumu ayarları"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-ProductFeaturesIcons",
+      "name": "Product Features Icons",
+      "entry": "./src/components/ProductFeaturesIcons/index.tsx",
+      "styles": "./src/components/ProductFeaturesIcons/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "feature1Title",
+          "displayName": "1. Özellik Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ergonomik Destek",
+          "description": "İlk özellik kartının başlığı",
+          "groupId": "product_features_group"
+        },
+        {
+          "name": "feature1Desc",
+          "displayName": "1. Özellik Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Patentli form yapısı ile omurga duruşunuzu destekler.",
+          "description": "İlk özellik kartının açıklama metni",
+          "groupId": "product_features_group"
+        },
+        {
+          "name": "feature2Title",
+          "displayName": "2. Özellik Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Nefes Alabilir Kumaş",
+          "description": "İkinci özellik kartının başlığı",
+          "groupId": "product_features_group"
+        },
+        {
+          "name": "feature2Desc",
+          "displayName": "2. Özellik Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Terletmeyen kılıf yapısı ile her mevsim ferah kullanım.",
+          "description": "İkinci özellik kartının açıklama metni",
+          "groupId": "product_features_group"
+        },
+        {
+          "name": "feature3Title",
+          "displayName": "3. Özellik Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Hızlı & Ücretsiz Kargo",
+          "description": "Üçüncü özellik kartının başlığı",
+          "groupId": "product_features_group"
+        },
+        {
+          "name": "feature3Desc",
+          "displayName": "3. Özellik Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "500 TL üzeri siparişlerde aynı gün kargo avantajı.",
+          "description": "Üçüncü özellik kartının açıklama metni",
+          "groupId": "product_features_group"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "description": "Bölüm zemin rengi",
+          "groupId": "product_features_group"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "product_features_group",
+          "name": "Özellik İkonları Ayarları",
+          "description": "Ürün avantajları, ikon kartları ve açıklama ayarları"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-TestimonialsCarousel",
+      "name": "Testimonials Carousel",
+      "entry": "./src/components/TestimonialsCarousel/index.tsx",
+      "styles": "./src/components/TestimonialsCarousel/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "title",
+          "displayName": "Bölüm Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Kullanıcılarımızın Deneyimleri",
+          "description": "Müşteri yorumları başlığı",
+          "groupId": "testimonials_group"
+        },
+        {
+          "name": "subtitle",
+          "displayName": "Alt Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Binlerce mutlu gezginin seyahat deneyimleri hakkındaki görüşleri.",
+          "description": "Bölüm alt metni",
+          "groupId": "testimonials_group"
+        },
+        {
+          "name": "testimonial1Text",
+          "displayName": "1. Yorum Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "12 saatlik uçak yolculuğunda ilk defa boyun ağrısı çekmeden uyudum. Harika bir tasarım!",
+          "description": "İlk müşteri yorumu",
+          "groupId": "testimonials_group"
+        },
+        {
+          "name": "testimonial1Author",
+          "displayName": "1. Yorum Yapan",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Zeynep A. — Doğrulanmış Alıcı",
+          "description": "Müşteri adı",
+          "groupId": "testimonials_group"
+        },
+        {
+          "name": "testimonial2Text",
+          "displayName": "2. Yorum Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Kumaş kalitesi ve katlanabilir olması çok pratik. Çantamdan hiç ayırmıyorum.",
+          "description": "İkinci müşteri yorumu",
+          "groupId": "testimonials_group"
+        },
+        {
+          "name": "testimonial2Author",
+          "displayName": "2. Yorum Yapan",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Caner T. — Sık Seyahat Eden",
+          "description": "Müşteri adı",
+          "groupId": "testimonials_group"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "description": "Bölüm zemin rengi",
+          "groupId": "testimonials_group"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "testimonials_group",
+          "name": "Müşteri Yorumları Ayarları",
+          "description": "Yorum metinleri, müşteri adları ve başlık ayarları"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-VideoDemoSection",
+      "name": "Video Demo Section",
+      "entry": "./src/components/VideoDemoSection/index.tsx",
+      "styles": "./src/components/VideoDemoSection/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "title",
+          "displayName": "Bölüm Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Infinity Pillow Nasıl Kullanılır?",
+          "description": "Video alanı başlığı",
+          "groupId": "video_demo_group"
+        },
+        {
+          "name": "subtitle",
+          "displayName": "Alt Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Saniyeler içinde katlayın, çantanıza koyun ve konforun tadını çıkarın.",
+          "description": "Video alt açıklama metni",
+          "groupId": "video_demo_group"
+        },
+        {
+          "name": "video",
+          "displayName": "Tanıtım Videosu",
+          "type": "VIDEO",
+          "required": false,
+          "description": "Gösterilecek video kaynağı",
+          "groupId": "video_demo_group"
+        },
+        {
+          "name": "coverImage",
+          "displayName": "Kapak Görseli",
+          "type": "IMAGE",
+          "required": false,
+          "description": "Video oynatılmadan önce görünecek kapak fotoğrafı",
+          "groupId": "video_demo_group"
+        },
+        {
+          "name": "autoplay",
+          "displayName": "Otomatik Oynat",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "description": "Sayfa açıldığında sessiz otomatik oynat",
+          "groupId": "video_demo_group"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "description": "Bölüm zemin rengi",
+          "groupId": "video_demo_group"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "video_demo_group",
+          "name": "Video Tanıtım Ayarları",
+          "description": "Video kaynağı, kapak görseli ve otomatik oynat ayarları"
+        }
+      ]
     }
   ]
 }

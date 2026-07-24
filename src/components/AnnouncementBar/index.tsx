@@ -1,3 +1,4 @@
+import { useState } from "preact/hooks";
 import { getThemeSetting } from "@ikas/bp-storefront";
 import { Props } from "./types";
 

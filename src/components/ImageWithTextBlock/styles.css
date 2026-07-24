@@ -1,0 +1,106 @@
+@import "../Button/styles.css";
+
+.ikas-image-text {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--24KlcgGmm9);
+  color: var(--pxNuSoudLn);
+  padding: var(--section-py, 48px) var(--section-px, 20px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ikas-image-text__container {
+  max-width: var(--max-site-width, 1820px);
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-areas: "media content";
+  gap: 48px;
+  align-items: center;
+}
+
+.ikas-image-text__container--reverse {
+  grid-template-areas: "content media";
+}
+
+.ikas-image-text__media {
+  width: 100%;
+  min-width: 0;
+  grid-area: media;
+}
+
+.ikas-image-text__img-wrapper {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--media-radius, 32px);
+  overflow: hidden;
+  box-shadow: var(--card-shadow, 0 4px 20px rgba(55, 67, 91, 0.08));
+}
+
+.ikas-image-text__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ikas-image-text__img-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--pxNuSoudLn) 0%, var(--vluFeuIeFs) 100%);
+  border-radius: var(--media-radius, 32px);
+}
+
+.ikas-image-text__content {
+  grid-area: content;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  width: 100%;
+  min-width: 0;
+}
+
+.ikas-image-text__badge {
+  color: var(--badge-color, var(--sy8ZnXZdoG));
+  background-color: var(--badge-bg, var(--pxNuSoudLn));
+  padding: 6px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.ikas-image-text__title {
+  margin: 0;
+  color: inherit;
+  line-height: 1.2;
+}
+
+.ikas-image-text__desc {
+  margin: 0;
+  color: inherit;
+  opacity: 0.85;
+  line-height: 1.6;
+}
+
+/* RESPONSIVE BREAKPOINT (<768px DESIGN.md) */
+@media (max-width: 767px) {
+  .ikas-image-text {
+    padding: var(--section-py-mobile, 32px) var(--mobile-px, 16px);
+  }
+
+  .ikas-image-text__container,
+  .ikas-image-text__container--reverse {
+    grid-template-columns: 1fr;
+    grid-template-areas: "media" "content";
+    gap: 28px;
+  }
+
+  .ikas-image-text__content {
+    align-items: flex-start;
+  }
+}

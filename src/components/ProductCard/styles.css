@@ -1,8 +1,12 @@
+@import "../Button/styles.css";
+
 .ikas-product-card {
   display: flex;
   flex-direction: column;
   position: relative;
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
   box-sizing: border-box;
   background-color: var(--24KlcgGmm9);
   border-radius: var(--card-radius, 2rem);
@@ -17,8 +21,9 @@
   box-shadow: 0 12px 24px rgba(55, 67, 91, 0.1);
 }
 
-/* 1. GÖRSEL KONTEYNERİ */
+/* 1. GÖRSEL KONTEYNERİ (display: block kuralı <a> etiketi için ZORUNLUDUR) */
 .ikas-product-card__image-wrapper {
+  display: block;
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
@@ -84,6 +89,9 @@
 .ikas-product-card__content {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   padding: 16px 12px 12px 12px;
   gap: 8px;
   flex: 1;
@@ -95,12 +103,15 @@
   align-items: center;
   gap: 4px;
   color: var(--cGupQGnbYq);
+  width: 100%;
+  min-width: 0;
 }
 
 .ikas-product-card__rating-star {
   width: 16px;
   height: 16px;
   fill: currentColor;
+  flex-shrink: 0;
 }
 
 .ikas-product-card__rating-score {
@@ -126,6 +137,9 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   line-height: 1.35;
+  width: 100%;
+  min-width: 0;
+  word-break: break-word;
 }
 
 /* 6. FİYAT ALANI */
@@ -135,6 +149,9 @@
   gap: 8px;
   margin-top: auto;
   padding-top: 4px;
+  width: 100%;
+  min-width: 0;
+  flex-wrap: wrap;
 }
 
 .ikas-product-card__final-price {
@@ -152,6 +169,7 @@
 .ikas-product-card__quick-add {
   margin-top: 8px;
   width: 100%;
+  min-width: 0;
 }
 
 /* RESPONSIVE BREAKPOINT (<768px DESIGN.md) */

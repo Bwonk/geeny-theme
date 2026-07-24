@@ -1,0 +1,125 @@
+.ikas-video-demo {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--24KlcgGmm9);
+  color: var(--pxNuSoudLn);
+  padding: var(--section-py, 48px) var(--section-px, 20px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ikas-video-demo__container {
+  max-width: var(--max-site-width, 1820px);
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.ikas-video-demo__header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  max-width: 640px;
+}
+
+.ikas-video-demo__title {
+  margin: 0;
+  color: var(--pxNuSoudLn);
+}
+
+.ikas-video-demo__subtitle {
+  margin: 0;
+  color: var(--pxNuSoudLn);
+  opacity: 0.8;
+}
+
+.ikas-video-demo__player-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--media-radius, 32px);
+  overflow: hidden;
+  box-shadow: var(--card-shadow, 0 8px 30px rgba(55, 67, 91, 0.12));
+  background-color: var(--pxNuSoudLn);
+}
+
+.ikas-video-demo__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ikas-video-demo__overlay {
+  position: absolute;
+  inset: 0;
+  background-color: var(--fRUyppFgyp, rgba(55, 67, 91, 0.6));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  cursor: pointer;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.ikas-video-demo__overlay--hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.ikas-video-demo__play-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: var(--sy8ZnXZdoG);
+  color: var(--pxNuSoudLn);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 20px var(--sy8ZnXZdoG);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.ikas-video-demo__play-btn:hover {
+  transform: scale(1.1);
+  background-color: var(--24KlcgGmm9);
+}
+
+.ikas-video-demo__play-icon {
+  width: 28px;
+  height: 28px;
+  fill: currentColor;
+  margin-left: 4px;
+}
+
+/* RESPONSIVE BREAKPOINT (<768px DESIGN.md) */
+@media (max-width: 767px) {
+  .ikas-video-demo {
+    padding: var(--section-py-mobile, 32px) var(--mobile-px, 16px);
+  }
+
+  .ikas-video-demo__container {
+    gap: 20px;
+  }
+
+  .ikas-video-demo__play-btn {
+    width: 60px;
+    height: 60px;
+  }
+
+  .ikas-video-demo__play-icon {
+    width: 20px;
+    height: 20px;
+  }
+}

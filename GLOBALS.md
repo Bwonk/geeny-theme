@@ -32,8 +32,9 @@ Global'ler henüz canlı oluşturulmadı — canlı kurulum ayrı bir onaylı ad
 | `Renkler / Overlay Siyah` | `rgba(55, 67, 91, 0.75)` | Drawer ve modal arkasındaki karartma katmanı (backdrop overlay) |
 | `Renkler / Sticky Header Çizgisi` | `rgba(0, 0, 0, 0.08)` | Sayfa kaydırıldığında sabit duran header alt ayırıcı çizgisi |
 | `Renkler / Kargo İlerleme Çubuğu` | `#E3E045` | Cart drawer içindeki ücretsiz kargo kalan tutar ilerleme çubuğu dolgu rengi |
+| `Renkler / Koyu Zemin Çizgisi` | `rgba(255, 255, 255, 0.12)` | Footer ve koyu zeminli bölümler için beyaz transparan ayırıcı çizgi (Canlı kurulum bekliyor) |
 
-*Not: CSS `transparent` kelimesi ve mükerrer `#37435B` semantik token'ları (İndirim Rozet Metni, Swatch Ring) kaldırılmış; tam 9 renk token'ı olarak sabitlenmiştir.*
+*Not: CSS `transparent` kelimesi ve mükerrer `#37435B` semantik token'ları (İndirim Rozet Metni, Swatch Ring) kaldırılmış; 10 renk token'ı olarak güncellenmiştir.*
 
 ---
 
@@ -117,10 +118,11 @@ Global'ler henüz canlı oluşturulmadı — canlı kurulum ayrı bir onaylı ad
 | `Animasyon / Akordiyon Açılış` | `max-height 0.35s ease-in-out` | PDP collapsible tabs ve akordiyon içerik açılış yüksekliği geçişi |
 | `Animasyon / Sticky Bar Belirme` | `transform 0.3s ease, opacity 0.3s ease` | PDP scroll edildiğinde sabit alt barın alttan belirmesi geçişi |
 | `Animasyon / Fade Yumuşak` | `opacity 0.3s ease-in-out` | Announcement bar metin değişimi ve thumbnail switch yumuşak görünürlük geçişi |
+| `Animasyon / Marquee Ticker` | `transform 25s linear infinite` | Press ticker kayan marka logoları bandı sonsuz kaydırma geçişi (Canlı kurulum bekliyor) |
 
 #### Sürekli Keyframe Animasyonları
 - **`Animasyon / Marquee Ticker`**: `transform 25s linear infinite`
-  - **Bileşen Notu:** `<press-ticker>` medya logoları bandında `@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-100%); } }` biçiminde CSS utility ile veya inline style olarak ele alınacaktır.
+  - **Bileşen Notu:** `<press-ticker>` medya logoları bandında `@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-100%); } }` biçiminde CSS utility veya inline style ile canlı token olarak ele alınacaktır.
 
 ---
 

@@ -1,3 +1,5 @@
+@import "../Button/styles.css";
+
 /* BACKDROP OVERLAY */
 .ikas-cart-drawer__backdrop {
   position: fixed;

@@ -1,0 +1,210 @@
+{
+  "data": {
+    "__type": {
+      "name": "CreateProductInput",
+      "inputFields": [
+        {
+          "name": "attributes",
+          "type": {
+            "name": null,
+            "kind": "LIST",
+            "ofType": {
+              "name": null,
+              "kind": "NON_NULL",
+              "ofType": {
+                "name": "ProductAttributeValueInput",
+                "kind": "INPUT_OBJECT"
+              }
+            }
+          }
+        },
+        {
+          "name": "baseUnit",
+          "type": {
+            "name": "ProductBaseUnitInput",
+            "kind": "INPUT_OBJECT",
+            "ofType": null
+          }
+        },
+        {
+          "name": "brand",
+          "type": {
+            "name": "ProductProductBrandInput",
+            "kind": "INPUT_OBJECT",
+            "ofType": null
+          }
+        },
+        {
+          "name": "categories",
+          "type": {
+            "name": null,
+            "kind": "LIST",
+            "ofType": {
+              "name": null,
+              "kind": "NON_NULL",
+              "ofType": {
+                "name": "ProductCategoryInput",
+                "kind": "INPUT_OBJECT"
+              }
+            }
+          }
+        },
+        {
+          "name": "description",
+          "type": {
+            "name": "String",
+            "kind": "SCALAR",
+            "ofType": null
+          }
+        },
+        {
+          "name": "dynamicPriceListIds",
+          "type": {
+            "name": null,
+            "kind": "LIST",
+            "ofType": {
+              "name": null,
+              "kind": "NON_NULL",
+              "ofType": {
+                "name": "String",
+                "kind": "SCALAR"
+              }
+            }
+          }
+        },
+        {
+          "name": "googleTaxonomyId",
+          "type": {
+            "name": "String",
+            "kind": "SCALAR",
+            "ofType": null
+          }
+        },
+        {
+          "name": "groupVariantsByVariantTypeName",
+          "type": {
+            "name": "String",
+            "kind": "SCALAR",
+            "ofType": null
+          }
+        },
+        {
+          "name": "metaData",
+          "type": {
+            "name": "CreateHTMLMetaDataInput",
+            "kind": "INPUT_OBJECT",
+            "ofType": null
+          }
+        },
+        {
+          "name": "name",
+          "type": {
+            "name": null,
+            "kind": "NON_NULL",
+            "ofType": {
+              "name": "String",
+              "kind": "SCALAR",
+              "ofType": null
+            }
+          }
+        },
+        {
+          "name": "productOptionSetId",
+          "type": {
+            "name": "String",
+            "kind": "SCALAR",
+            "ofType": null
+          }
+        },
+        {
+          "name": "salesChannels",
+          "type": {
+            "name": null,
+            "kind": "LIST",
+            "ofType": {
+              "name": null,
+              "kind": "NON_NULL",
+              "ofType": {
+                "name": "ProductSalesChannelInput",
+                "kind": "INPUT_OBJECT"
+              }
+            }
+          }
+        },
+        {
+          "name": "tags",
+          "type": {
+            "name": null,
+            "kind": "LIST",
+            "ofType": {
+              "name": null,
+              "kind": "NON_NULL",
+              "ofType": {
+                "name": "ProductProductTagsInput",
+                "kind": "INPUT_OBJECT"
+              }
+            }
+          }
+        },
+        {
+          "name": "translations",
+          "type": {
+            "name": null,
+            "kind": "LIST",
+            "ofType": {
+              "name": null,
+              "kind": "NON_NULL",
+              "ofType": {
+                "name": "ProductTranslationInput",
+                "kind": "INPUT_OBJECT"
+              }
+            }
+          }
+        },
+        {
+          "name": "type",
+          "type": {
+            "name": null,
+            "kind": "NON_NULL",
+            "ofType": {
+              "name": "ProductTypeEnum",
+              "kind": "ENUM",
+              "ofType": null
+            }
+          }
+        },
+        {
+          "name": "variants",
+          "type": {
+            "name": null,
+            "kind": "LIST",
+            "ofType": {
+              "name": null,
+              "kind": "NON_NULL",
+              "ofType": {
+                "name": "CreateProductVariantInput",
+                "kind": "INPUT_OBJECT"
+              }
+            }
+          }
+        },
+        {
+          "name": "vendor",
+          "type": {
+            "name": "ProductVendorInput",
+            "kind": "INPUT_OBJECT",
+            "ofType": null
+          }
+        },
+        {
+          "name": "weight",
+          "type": {
+            "name": "Float",
+            "kind": "SCALAR",
+            "ofType": null
+          }
+        }
+      ]
+    }
+  }
+}
