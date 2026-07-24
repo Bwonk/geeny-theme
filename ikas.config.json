@@ -1183,6 +1183,160 @@
           "description": "Bölüm zemin rengi"
         }
       ]
+    },
+    {
+      "id": "e1iohf8g-CollectionHero",
+      "name": "Collection Hero",
+      "entry": "./src/components/CollectionHero/index.tsx",
+      "styles": "./src/components/CollectionHero/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "title",
+          "displayName": "Koleksiyon Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "description": "Koleksiyonun H1 başlık metni"
+        },
+        {
+          "name": "description",
+          "displayName": "Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "description": "Koleksiyonun kısa açıklaması"
+        },
+        {
+          "name": "productList",
+          "displayName": "Ürün Listesi / Kategori",
+          "type": "PRODUCT_LIST",
+          "required": false,
+          "description": "Koleksiyon kategori verisi"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "description": "Bölüm zemin rengi"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-FilterAndSortBar",
+      "name": "Filter And Sort Bar",
+      "entry": "./src/components/FilterAndSortBar/index.tsx",
+      "styles": "./src/components/FilterAndSortBar/styles.css",
+      "type": "component",
+      "props": [
+        {
+          "name": "productList",
+          "displayName": "Ürün Listesi",
+          "type": "PRODUCT_LIST",
+          "required": false,
+          "description": "Sıralama ve filtreleme için ürün listesi"
+        },
+        {
+          "name": "filterTitle",
+          "displayName": "Filtre Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Filtrele",
+          "description": "Filtre butonu başlığı"
+        },
+        {
+          "name": "sortTitle",
+          "displayName": "Sıralama Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sırala",
+          "description": "Sıralama etiketi"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-ProductGrid",
+      "name": "Product Grid",
+      "entry": "./src/components/ProductGrid/index.tsx",
+      "styles": "./src/components/ProductGrid/styles.css",
+      "type": "component",
+      "props": [
+        {
+          "name": "productList",
+          "displayName": "Ürün Listesi",
+          "type": "PRODUCT_LIST",
+          "required": false,
+          "description": "Izgara için ikas ürün listesi objesi"
+        },
+        {
+          "name": "emptyMessage",
+          "displayName": "Boş Durum Mesajı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Aradığınız kriterlere uygun ürün bulunamadı.",
+          "description": "Filtre sonucu ürün bulunamadığında gösterilecek metin"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-PaginationLoadMore",
+      "name": "Pagination Load More",
+      "entry": "./src/components/PaginationLoadMore/index.tsx",
+      "styles": "./src/components/PaginationLoadMore/styles.css",
+      "type": "component",
+      "props": [
+        {
+          "name": "productList",
+          "displayName": "Ürün Listesi",
+          "type": "PRODUCT_LIST",
+          "required": false,
+          "description": "Sayfalama için ikas ürün listesi objesi"
+        },
+        {
+          "name": "loadMoreText",
+          "displayName": "Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Daha Fazla Göster",
+          "description": "Yükleme butonu başlığı"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-CollectionSection",
+      "name": "Collection Section",
+      "entry": "./src/components/CollectionSection/index.tsx",
+      "styles": "./src/components/CollectionSection/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "productList",
+          "displayName": "Ürün Listesi / Kategori",
+          "type": "PRODUCT_LIST",
+          "required": false,
+          "description": "Koleksiyon ikas ürün listesi verisi"
+        },
+        {
+          "name": "title",
+          "displayName": "Özel Başlık",
+          "type": "TEXT",
+          "required": false,
+          "description": "Opsiyonel özel koleksiyon başlığı"
+        },
+        {
+          "name": "description",
+          "displayName": "Özel Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "description": "Opsiyonel özel koleksiyon açıklaması"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "description": "Bölüm zemin rengi"
+        }
+      ]
     }
   ]
 }

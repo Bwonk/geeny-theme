@@ -1,0 +1,20 @@
+@import "../CollectionHero/styles.css";
+@import "../FilterAndSortBar/styles.css";
+@import "../ProductGrid/styles.css";
+@import "../PaginationLoadMore/styles.css";
+
+.ikas-collection-section {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--24KlcgGmm9);
+  color: var(--pxNuSoudLn);
+}
+
+.ikas-collection-section__container {
+  max-width: var(--max-site-width, 1820px);
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}

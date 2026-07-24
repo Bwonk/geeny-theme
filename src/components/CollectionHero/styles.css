@@ -1,0 +1,44 @@
+.ikas-collection-hero {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--cdFDkBbKkc);
+  color: var(--pxNuSoudLn);
+  padding: var(--section-py, 48px) var(--section-px, 20px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.ikas-collection-hero__container {
+  max-width: var(--max-site-width, 1820px);
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+.ikas-collection-hero__title {
+  margin: 0;
+  color: var(--pxNuSoudLn);
+  word-break: break-word;
+}
+
+.ikas-collection-hero__desc {
+  margin: 0;
+  color: var(--pxNuSoudLn);
+  opacity: 0.85;
+  max-width: 680px;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+@media (max-width: 767px) {
+  .ikas-collection-hero {
+    padding: var(--section-py-mobile, 32px) var(--mobile-px, 16px);
+  }
+}

@@ -1,0 +1,70 @@
+@import "../ProductCard/styles.css";
+@import "../Button/styles.css";
+
+.ikas-product-grid {
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--section-py, 32px) var(--section-px, 20px);
+  background-color: var(--24KlcgGmm9);
+}
+
+.ikas-product-grid__container {
+  max-width: var(--max-site-width, 1820px);
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.ikas-product-grid__list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--grid-gap, 20px);
+  width: 100%;
+}
+
+.ikas-product-grid__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 16px;
+  padding: 64px 20px;
+  background-color: var(--cdFDkBbKkc);
+  border-radius: var(--media-radius, 32px);
+  margin: 32px 0;
+  box-sizing: border-box;
+}
+
+.ikas-product-grid__empty-title {
+  margin: 0;
+  color: var(--pxNuSoudLn);
+}
+
+.ikas-product-grid__empty-text {
+  margin: 0;
+  color: var(--pxNuSoudLn);
+  opacity: 0.85;
+  max-width: 480px;
+}
+
+@media (max-width: 991px) {
+  .ikas-product-grid__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .ikas-product-grid {
+    padding: var(--section-py-mobile, 24px) var(--mobile-px, 16px);
+  }
+
+  .ikas-product-grid__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--mobile-grid-gap, 12px);
+  }
+
+  .ikas-product-grid__empty {
+    padding: 40px 16px;
+  }
+}
