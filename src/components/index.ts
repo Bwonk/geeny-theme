@@ -1,5 +1,3 @@
-export { ExampleComponent } from "./ExampleComponent/index";
-export { ExampleSection } from "./ExampleSection/index";
 export { AnnouncementBar } from "./AnnouncementBar/index";
 export { Header } from "./Header/index";
 export { NewsletterSection } from "./NewsletterSection/index";
