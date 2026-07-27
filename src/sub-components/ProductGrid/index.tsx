@@ -3,13 +3,16 @@ import {
   hasProductListAppliedFilters,
   clearProductListFilters,
   IkasProduct,
+  IkasProductList,
 } from "@ikas/bp-storefront";
-import { ProductCard } from "../ProductCard";
-import { Button } from "../Button";
-import { Props } from "./types";
+import { observer } from "@ikas/component-utils";
+import { ProductCard } from "../../components/ProductCard";
+import { Button } from "../../components/Button";
 
-export interface ProductGridProps extends Props {
+export interface Props {
+  productList?: IkasProductList;
   products?: IkasProduct[];
+  emptyMessage?: string;
   className?: string;
 }
 
@@ -18,7 +21,7 @@ export function ProductGrid({
   products,
   emptyMessage = "Aradığınız kriterlere uygun ürün bulunamadı.",
   className = "",
-}: ProductGridProps) {
+}: Props) {
   // Read live theme global settings via getThemeSetting
   const verticalPySetting = getThemeSetting("_Kl0my3VVMA"); // Boşluk / Masaüstü Dikey Spacing (48px)
   const verticalPyMobileSetting = getThemeSetting("_5Fdl1j6UHQ"); // Boşluk / Dikey Bölüm Spacing (2rem / 32px)
@@ -96,4 +99,4 @@ export function ProductGrid({
   );
 }
 
-export default ProductGrid;
+export default observer(ProductGrid);

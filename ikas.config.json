@@ -1126,30 +1126,6 @@
       ]
     },
     {
-      "id": "e1iohf8g-ProductGrid",
-      "name": "Product Grid",
-      "entry": "./src/components/ProductGrid/index.tsx",
-      "styles": "./src/components/ProductGrid/styles.css",
-      "type": "component",
-      "props": [
-        {
-          "name": "productList",
-          "displayName": "Ürün Listesi",
-          "type": "PRODUCT_LIST",
-          "required": false,
-          "description": "Izgara için ikas ürün listesi objesi"
-        },
-        {
-          "name": "emptyMessage",
-          "displayName": "Boş Durum Mesajı",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Aradığınız kriterlere uygun ürün bulunamadı.",
-          "description": "Filtre sonucu ürün bulunamadığında gösterilecek metin"
-        }
-      ]
-    },
-    {
       "id": "e1iohf8g-CollectionSection",
       "name": "Collection Section",
       "entry": "./src/components/CollectionSection/index.tsx",
@@ -1223,22 +1199,6 @@
           "type": "COLOR",
           "required": false,
           "description": "Bölüm zemin rengi"
-        }
-      ]
-    },
-    {
-      "id": "e1iohf8g-SearchResultsGrid",
-      "name": "Search Results Grid",
-      "entry": "./src/components/SearchResultsGrid/index.tsx",
-      "styles": "./src/components/SearchResultsGrid/styles.css",
-      "type": "component",
-      "props": [
-        {
-          "name": "title",
-          "displayName": "Arama Sonuç Başlığı",
-          "type": "TEXT",
-          "required": false,
-          "description": "Özel arama sonuç başlığı metni"
         }
       ]
     },

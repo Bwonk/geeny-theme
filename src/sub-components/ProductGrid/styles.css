@@ -1,5 +1,5 @@
-@import "../ProductCard/styles.css";
-@import "../Button/styles.css";
+@import "../../components/ProductCard/styles.css";
+@import "../../components/Button/styles.css";
 
 .ikas-product-grid {
   width: 100%;

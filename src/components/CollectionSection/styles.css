@@ -1,6 +1,6 @@
 @import "../CollectionHero/styles.css";
 @import "../../sub-components/FilterAndSortBar/styles.css";
-@import "../ProductGrid/styles.css";
+@import "../../sub-components/ProductGrid/styles.css";
 @import "../../sub-components/PaginationLoadMore/styles.css";
 
 .ikas-collection-section {

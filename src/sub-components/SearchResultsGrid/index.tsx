@@ -1,9 +1,10 @@
 import { getThemeSetting, IkasProduct, IkasProductList, hasProductListNextPage } from "@ikas/bp-storefront";
-import { ProductCard } from "../ProductCard";
-import PaginationLoadMore from "../../sub-components/PaginationLoadMore";
-import { Props } from "./types";
+import { observer } from "@ikas/component-utils";
+import { ProductCard } from "../../components/ProductCard";
+import PaginationLoadMore from "../PaginationLoadMore";
 
-export interface SearchResultsGridProps extends Props {
+export interface Props {
+  title?: string;
   searchKeyword?: string;
   productList?: IkasProductList;
   products?: IkasProduct[];
@@ -17,7 +18,7 @@ export function SearchResultsGrid({
   productList,
   products,
   className = "",
-}: SearchResultsGridProps) {
+}: Props) {
   // Read live global settings via getThemeSetting using exact variableNames from prompts/TOKENS.md
   const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1820px)
   const gridGapSetting = getThemeSetting("_4Ud47RIVna"); // Boşluk / Grid Gap (20px)
@@ -94,5 +95,5 @@ export function SearchResultsGrid({
   );
 }
 
-export default SearchResultsGrid;
+export default observer(SearchResultsGrid);
 

@@ -1,5 +1,0 @@
-// This file is auto-generated — do not edit manually.
-export interface Props {
-  /** Özel arama sonuç başlığı metni */
-  title?: string;
-}
