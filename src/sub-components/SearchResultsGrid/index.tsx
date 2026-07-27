@@ -1,6 +1,6 @@
 import { getThemeSetting, IkasProduct, IkasProductList, hasProductListNextPage } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
-import { ProductCard } from "../../components/ProductCard";
+import ProductCard from "../ProductCard";
 import PaginationLoadMore from "../PaginationLoadMore";
 
 export interface Props {

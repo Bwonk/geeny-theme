@@ -10,11 +10,15 @@ import {
   addItemToCart,
   getSelectedProductVariantHref,
   getThemeSetting,
+  IkasProduct,
 } from "@ikas/bp-storefront";
-import { Button } from "../Button";
-import { Props } from "./types";
+import { observer } from "@ikas/component-utils";
+import Button from "../Button";
 
-export interface ProductCardProps extends Props {
+export interface Props {
+  product?: IkasProduct | null;
+  showRating?: boolean;
+  showQuickAdd?: boolean;
   className?: string;
 }
 
@@ -23,7 +27,7 @@ export function ProductCard({
   showRating = true,
   showQuickAdd = true,
   className = "",
-}: ProductCardProps) {
+}: Props) {
   const [isAdding, setIsAdding] = useState(false);
 
   // If product is missing or null, render empty fallback card
@@ -195,4 +199,4 @@ export function ProductCard({
   );
 }
 
-export default ProductCard;
+export default observer(ProductCard);

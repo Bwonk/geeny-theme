@@ -1,6 +1,6 @@
 import { getThemeSetting, getDefaultSrc, Router } from "@ikas/bp-storefront";
 import { formatShadow } from "../../utils/theme";
-import { Button } from "../Button";
+import Button from "../../sub-components/Button";
 import { Props } from "./types";
 
 export interface ImageWithTextBlockProps extends Props {

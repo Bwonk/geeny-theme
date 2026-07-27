@@ -1,6 +1,6 @@
 import { getThemeSetting, Router } from "@ikas/bp-storefront";
-import { ProductCard } from "../ProductCard";
-import { Button } from "../Button";
+import ProductCard from "../../sub-components/ProductCard";
+import Button from "../../sub-components/Button";
 import { Props } from "./types";
 
 export interface FeaturedCollectionGridProps extends Props {

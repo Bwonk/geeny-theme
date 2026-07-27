@@ -6,8 +6,8 @@ import {
   IkasProductList,
 } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
-import { ProductCard } from "../../components/ProductCard";
-import { Button } from "../../components/Button";
+import ProductCard from "../ProductCard";
+import Button from "../Button";
 
 export interface Props {
   productList?: IkasProductList;

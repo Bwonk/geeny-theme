@@ -12,7 +12,7 @@ import {
   getThemeSetting,
 } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
-import { Button } from "../../components/Button";
+import Button from "../Button";
 
 export interface Props {
   freeShippingThreshold?: number;

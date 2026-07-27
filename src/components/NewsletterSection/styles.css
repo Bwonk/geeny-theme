@@ -1,4 +1,4 @@
-@import "../Button/styles.css";
+@import "../../sub-components/Button/styles.css";
 
 .ikas-newsletter {
   width: 100%;

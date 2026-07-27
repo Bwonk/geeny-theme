@@ -1,7 +1,12 @@
-import { getThemeSetting } from "@ikas/bp-storefront";
-import { Props } from "./types";
+import { getThemeSetting, IkasNavigationLink } from "@ikas/bp-storefront";
+import { observer } from "@ikas/component-utils";
 
-export interface ButtonProps extends Props {
+export interface Props {
+  text?: string;
+  variant?: string;
+  link?: IkasNavigationLink | null;
+  fullWidth?: boolean;
+  size?: string;
   disabled?: boolean;
   loading?: boolean;
   className?: string;
@@ -22,7 +27,7 @@ export function Button({
   onClick,
   children,
   ariaLabel,
-}: ButtonProps) {
+}: Props) {
   // Read live global settings via getThemeSetting using exact variableNames from prompts/TOKENS.md
   const heightSetting = getThemeSetting(
     size === "LARGE" ? "_RtoVmtuDGF" : "_2xLGYXCG2n"
@@ -95,5 +100,5 @@ export function Button({
   );
 }
 
-export default Button;
+export default observer(Button);
 

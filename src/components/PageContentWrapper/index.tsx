@@ -11,7 +11,7 @@ import {
   setContactFormMessage,
   getThemeSetting,
 } from "@ikas/bp-storefront";
-import { Button } from "../Button";
+import Button from "../../sub-components/Button";
 import { Props } from "./types";
 
 export function PageContentWrapper({

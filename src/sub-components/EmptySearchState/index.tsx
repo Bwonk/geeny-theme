@@ -1,7 +1,7 @@
 import { useCallback } from "preact/hooks";
 import { searchProductList, getThemeSetting, IkasProduct, IkasProductList } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
-import { ProductCard } from "../../components/ProductCard";
+import ProductCard from "../ProductCard";
 
 export interface Props {
   title?: string;

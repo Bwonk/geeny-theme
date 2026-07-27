@@ -1,4 +1,4 @@
-@import "../../components/Button/styles.css";
+@import "../Button/styles.css";
 
 .ikas-buy-box {
   display: flex;

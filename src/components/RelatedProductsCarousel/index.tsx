@@ -1,5 +1,5 @@
 import { getThemeSetting, IkasProduct } from "@ikas/bp-storefront";
-import { ProductCard } from "../ProductCard";
+import ProductCard from "../../sub-components/ProductCard";
 import { Props } from "./types";
 
 export interface RelatedProductsCarouselProps extends Props {

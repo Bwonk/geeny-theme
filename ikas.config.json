@@ -92,74 +92,6 @@
       ]
     },
     {
-      "id": "e1iohf8g-Button",
-      "name": "Button",
-      "entry": "./src/components/Button/index.tsx",
-      "styles": "./src/components/Button/styles.css",
-      "props": [
-        {
-          "name": "text",
-          "displayName": "Buton Metni",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "İncele",
-          "description": "Buton üzerinde görünecek metin",
-          "groupId": "button_group"
-        },
-        {
-          "name": "variant",
-          "displayName": "Buton Varyantı",
-          "type": "ENUM",
-          "options": [
-            "PRIMARY",
-            "SECONDARY",
-            "ACCENT"
-          ],
-          "required": false,
-          "defaultValue": "PRIMARY",
-          "description": "Butonun görsel stili (Primary Navy, Accent Sarı veya Secondary Şeffaf)",
-          "groupId": "button_group"
-        },
-        {
-          "name": "link",
-          "displayName": "Buton Bağlantısı",
-          "type": "LINK",
-          "required": false,
-          "description": "Tıklandığında yönlendirilecek sayfa veya harici link",
-          "groupId": "button_group"
-        },
-        {
-          "name": "fullWidth",
-          "displayName": "Tam Genişlik",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": false,
-          "description": "Buton kapsayıcısının tüm genişliğini kaplasın",
-          "groupId": "button_group"
-        },
-        {
-          "name": "size",
-          "displayName": "Buton Boyutu",
-          "type": "ENUM",
-          "options": [
-            "NORMAL",
-            "LARGE"
-          ],
-          "required": false,
-          "defaultValue": "NORMAL",
-          "description": "Standart (48px) veya Geniş/Checkout (52px)",
-          "groupId": "button_group"
-        }
-      ],
-      "propGroups": [
-        {
-          "id": "button_group",
-          "name": "Buton Ayarları",
-          "description": "Buton metni, stili ve yönlendirme ayarları"
-        }
-      ]
-    },
-    {
       "id": "e1iohf8g-AnnouncementBar",
       "name": "Announcement Bar",
       "entry": "./src/components/AnnouncementBar/index.tsx",
@@ -266,47 +198,6 @@
           "id": "header_group",
           "name": "Header ve Navigasyon Ayarları",
           "description": "Logo, ana navigasyon bağlantıları ve sabit header ayarları"
-        }
-      ]
-    },
-    {
-      "id": "e1iohf8g-ProductCard",
-      "name": "Product Card",
-      "entry": "./src/components/ProductCard/index.tsx",
-      "styles": "./src/components/ProductCard/styles.css",
-      "props": [
-        {
-          "name": "product",
-          "displayName": "Ürün",
-          "type": "PRODUCT",
-          "required": false,
-          "description": "Kartta gösterilecek ikas ürünü",
-          "groupId": "product_card_group"
-        },
-        {
-          "name": "showRating",
-          "displayName": "Yıldız Puanını Göster",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": true,
-          "description": "Ürünün değerlendirme puanını kartta göster",
-          "groupId": "product_card_group"
-        },
-        {
-          "name": "showQuickAdd",
-          "displayName": "Hızlı Sepete Ekle Butonu",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": true,
-          "description": "Kart üzerinde hızlı ekle butonunu aktif et",
-          "groupId": "product_card_group"
-        }
-      ],
-      "propGroups": [
-        {
-          "id": "product_card_group",
-          "name": "Ürün Kartı Ayarları",
-          "description": "Kart ürünü, yıldız puanı ve hızlı ekle ayarları"
         }
       ]
     },

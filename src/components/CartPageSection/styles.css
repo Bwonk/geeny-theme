@@ -1,7 +1,7 @@
 @import "../../sub-components/CartItemsList/styles.css";
 @import "../../sub-components/CartOrderNote/styles.css";
 @import "../../sub-components/CartSummaryCard/styles.css";
-@import "../Button/styles.css";
+@import "../../sub-components/Button/styles.css";
 
 .ikas-cart-page {
   width: 100%;

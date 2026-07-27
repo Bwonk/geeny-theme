@@ -1,4 +1,4 @@
-@import "../ProductCard/styles.css";
+@import "../../sub-components/ProductCard/styles.css";
 
 .ikas-featured-grid {
   width: 100%;
