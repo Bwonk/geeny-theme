@@ -7,17 +7,19 @@ import {
   getSrc,
   getThumbnailSrc,
   IkasImage,
+  IkasProduct,
 } from "@ikas/bp-storefront";
-import { Props } from "./types";
+import { observer } from "@ikas/component-utils";
 
-export interface ProductMediaGalleryProps extends Props {
+export interface Props {
+  product?: IkasProduct | null;
   className?: string;
 }
 
 export function ProductMediaGallery({
   product,
   className = "",
-}: ProductMediaGalleryProps) {
+}: Props) {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
   const mobileGridGapSetting = getThemeSetting("_dBvnJWALXD"); // Boşluk / Mobil Grid Gap (12px)
@@ -108,4 +110,4 @@ export function ProductMediaGallery({
   );
 }
 
-export default ProductMediaGallery;
+export default observer(ProductMediaGallery);

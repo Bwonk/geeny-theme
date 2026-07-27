@@ -1,7 +1,9 @@
-import { getProductCategoryPath, getIkasCategoryPathItemHref, Router } from "@ikas/bp-storefront";
-import { Props } from "./types";
+import { getProductCategoryPath, getIkasCategoryPathItemHref, Router, IkasProduct } from "@ikas/bp-storefront";
+import { observer } from "@ikas/component-utils";
 
-export interface BreadcrumbNavProps extends Props {
+export interface Props {
+  product?: IkasProduct | null;
+  homepageText?: string;
   className?: string;
 }
 
@@ -9,7 +11,7 @@ export function BreadcrumbNav({
   product,
   homepageText = "Ana Sayfa",
   className = "",
-}: BreadcrumbNavProps) {
+}: Props) {
   const categoryPath = product ? getProductCategoryPath(product) : [];
 
   return (
@@ -68,4 +70,4 @@ export function BreadcrumbNav({
   );
 }
 
-export default BreadcrumbNav;
+export default observer(BreadcrumbNav);

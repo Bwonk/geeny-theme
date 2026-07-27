@@ -1,8 +1,10 @@
 import { useState } from "preact/hooks";
 import { getThemeSetting } from "@ikas/bp-storefront";
-import { Props } from "./types";
+import { observer } from "@ikas/component-utils";
 
-export interface CartOrderNoteProps extends Props {
+export interface Props {
+  label?: string;
+  placeholder?: string;
   className?: string;
   onNoteChange?: (note: string) => void;
 }
@@ -12,7 +14,7 @@ export function CartOrderNote({
   placeholder = "Hediyelik paket talebi veya kargo teslimat notlarınızı buraya yazabilirsiniz...",
   className = "",
   onNoteChange,
-}: CartOrderNoteProps) {
+}: Props) {
   const [note, setNote] = useState<string>("");
 
   // Read live theme global setting via getThemeSetting
@@ -46,4 +48,4 @@ export function CartOrderNote({
   );
 }
 
-export default CartOrderNote;
+export default observer(CartOrderNote);

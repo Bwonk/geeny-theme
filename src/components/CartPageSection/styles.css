@@ -1,5 +1,5 @@
-@import "../CartItemsList/styles.css";
-@import "../CartOrderNote/styles.css";
+@import "../../sub-components/CartItemsList/styles.css";
+@import "../../sub-components/CartOrderNote/styles.css";
 @import "../CartSummaryCard/styles.css";
 @import "../Button/styles.css";
 

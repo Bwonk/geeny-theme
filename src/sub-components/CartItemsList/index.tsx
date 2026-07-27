@@ -8,15 +8,14 @@ import {
   getDefaultSrc,
   getThemeSetting,
 } from "@ikas/bp-storefront";
-import { Props } from "./types";
+import { observer } from "@ikas/component-utils";
 
-export interface CartItemsListProps extends Props {
+export interface Props {
   cart?: any;
   className?: string;
 }
 
-
-export function CartItemsList({ cart, className = "" }: CartItemsListProps) {
+export function CartItemsList({ cart, className = "" }: Props) {
   const [updatingId, setUpdatingId] = useState<string | null>(null);
 
   // Read live global settings via getThemeSetting
@@ -157,4 +156,4 @@ export function CartItemsList({ cart, className = "" }: CartItemsListProps) {
   );
 }
 
-export default CartItemsList;
+export default observer(CartItemsList);

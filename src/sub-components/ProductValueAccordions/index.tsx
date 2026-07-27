@@ -1,6 +1,6 @@
 import { useState } from "preact/hooks";
-import { getThemeSetting } from "@ikas/bp-storefront";
-import { Props } from "./types";
+import { getThemeSetting, IkasProduct } from "@ikas/bp-storefront";
+import { observer } from "@ikas/component-utils";
 
 export interface AccordionItem {
   id?: string;
@@ -8,7 +8,8 @@ export interface AccordionItem {
   content: string;
 }
 
-export interface ProductValueAccordionsProps extends Props {
+export interface Props {
+  product?: IkasProduct | null;
   items?: AccordionItem[];
   className?: string;
 }
@@ -17,7 +18,7 @@ export function ProductValueAccordions({
   items,
   product,
   className = "",
-}: ProductValueAccordionsProps) {
+}: Props) {
   const [openState, setOpenState] = useState<Record<string, boolean>>({ item0: true });
 
   const accordionAnimSetting = getThemeSetting("_QzHzEnrknJ"); // Animasyon / Akordiyon Açılış
@@ -100,4 +101,4 @@ export function ProductValueAccordions({
   );
 }
 
-export default ProductValueAccordions;
+export default observer(ProductValueAccordions);

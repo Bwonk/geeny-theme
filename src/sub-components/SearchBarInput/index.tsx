@@ -1,10 +1,10 @@
 import { useState, useCallback } from "preact/hooks";
 import { searchProductList, getThemeSetting, IkasProductList } from "@ikas/bp-storefront";
+import { observer } from "@ikas/component-utils";
 
-import { Props } from "./types";
-
-
-export interface SearchBarInputProps extends Props {
+export interface Props {
+  placeholder?: string;
+  buttonText?: string;
   productList?: IkasProductList;
   onSearch?: (keyword: string) => void;
   className?: string;
@@ -16,7 +16,7 @@ export function SearchBarInput({
   productList,
   onSearch,
   className = "",
-}: SearchBarInputProps) {
+}: Props) {
 
   const [keyword, setKeyword] = useState<string>("");
 
@@ -104,4 +104,4 @@ export function SearchBarInput({
   );
 }
 
-export default SearchBarInput;
+export default observer(SearchBarInput);

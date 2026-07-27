@@ -1039,46 +1039,6 @@
       ]
     },
     {
-      "id": "e1iohf8g-BreadcrumbNav",
-      "name": "Breadcrumb Nav",
-      "entry": "./src/components/BreadcrumbNav/index.tsx",
-      "styles": "./src/components/BreadcrumbNav/styles.css",
-      "type": "component",
-      "props": [
-        {
-          "name": "product",
-          "displayName": "Ürün",
-          "type": "PRODUCT",
-          "required": false,
-          "description": "Breadcrumb navigasyonu için ürün objesi"
-        },
-        {
-          "name": "homepageText",
-          "displayName": "Ana Sayfa Metni",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Ana Sayfa",
-          "description": "İlk adım ana sayfa etiketi"
-        }
-      ]
-    },
-    {
-      "id": "e1iohf8g-ProductMediaGallery",
-      "name": "Product Media Gallery",
-      "entry": "./src/components/ProductMediaGallery/index.tsx",
-      "styles": "./src/components/ProductMediaGallery/styles.css",
-      "type": "component",
-      "props": [
-        {
-          "name": "product",
-          "displayName": "Ürün",
-          "type": "PRODUCT",
-          "required": false,
-          "description": "Görsel galerisi için ürün objesi"
-        }
-      ]
-    },
-    {
       "id": "e1iohf8g-ProductBuyBox",
       "name": "Product Buy Box",
       "entry": "./src/components/ProductBuyBox/index.tsx",
@@ -1123,22 +1083,6 @@
           "required": false,
           "defaultValue": "product-buy-box-target",
           "description": "Görünürlük tetiklemesi için izlenecek elemanın ID'si"
-        }
-      ]
-    },
-    {
-      "id": "e1iohf8g-ProductValueAccordions",
-      "name": "Product Value Accordions",
-      "entry": "./src/components/ProductValueAccordions/index.tsx",
-      "styles": "./src/components/ProductValueAccordions/styles.css",
-      "type": "component",
-      "props": [
-        {
-          "name": "product",
-          "displayName": "Ürün",
-          "type": "PRODUCT",
-          "required": false,
-          "description": "Akordiyonlar için ürün objesi"
         }
       ]
     },
@@ -1389,39 +1333,6 @@
       ]
     },
     {
-      "id": "e1iohf8g-CartItemsList",
-      "name": "Cart Items List",
-      "entry": "./src/components/CartItemsList/index.tsx",
-      "styles": "./src/components/CartItemsList/styles.css",
-      "type": "component",
-      "props": []
-    },
-    {
-      "id": "e1iohf8g-CartOrderNote",
-      "name": "Cart Order Note",
-      "entry": "./src/components/CartOrderNote/index.tsx",
-      "styles": "./src/components/CartOrderNote/styles.css",
-      "type": "component",
-      "props": [
-        {
-          "name": "label",
-          "displayName": "Not Etiketi",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Sipariş Notu Ekleyin",
-          "description": "Not alanı etiketi"
-        },
-        {
-          "name": "placeholder",
-          "displayName": "Yer Tutucu Metin",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Hediyelik paket talebi veya kargo teslimat notlarınızı buraya yazabilirsiniz...",
-          "description": "Textarea placeholder metni"
-        }
-      ]
-    },
-    {
       "id": "e1iohf8g-CartSummaryCard",
       "name": "Cart Summary Card",
       "entry": "./src/components/CartSummaryCard/index.tsx",
@@ -1466,31 +1377,6 @@
           "type": "COLOR",
           "required": false,
           "description": "Bölüm zemin rengi"
-        }
-      ]
-    },
-    {
-      "id": "e1iohf8g-SearchBarInput",
-      "name": "Search Bar Input",
-      "entry": "./src/components/SearchBarInput/index.tsx",
-      "styles": "./src/components/SearchBarInput/styles.css",
-      "type": "component",
-      "props": [
-        {
-          "name": "placeholder",
-          "displayName": "Arama Kutusu Placeholder",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Ürün veya kategori ara...",
-          "description": "Arama kutusu içinde görünecek ipucu metni"
-        },
-        {
-          "name": "buttonText",
-          "displayName": "Arama Buton Metni",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Ara",
-          "description": "Arama butonunda görünecek metin"
         }
       ]
     },
