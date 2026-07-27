@@ -1163,6 +1163,67 @@
           "description": "Bölüm arka plan rengi"
         }
       ]
+    },
+    {
+      "id": "e1iohf8g-SearchPageSection",
+      "name": "Search Page Section",
+      "entry": "./src/components/SearchPageSection/index.tsx",
+      "styles": "./src/components/SearchPageSection/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "productList",
+          "displayName": "Ürün Listesi / Arama",
+          "type": "PRODUCT_LIST",
+          "required": false,
+          "description": "Arama sonuçları ikas ürün listesi verisi"
+        },
+        {
+          "name": "title",
+          "displayName": "Özel Başlık",
+          "type": "TEXT",
+          "required": false,
+          "description": "Opsiyonel arama sonuçları başlığı"
+        },
+        {
+          "name": "searchPlaceholder",
+          "displayName": "Arama Girdi Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ürün veya kategori ara...",
+          "description": "Arama çubuğu yer tutucu metni"
+        },
+        {
+          "name": "searchButtonText",
+          "displayName": "Arama Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ara",
+          "description": "Arama butonunda görünecek metin"
+        },
+        {
+          "name": "emptyTitle",
+          "displayName": "Boş Durum Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sonuç Bulunamadı",
+          "description": "Arama sonucu olmadığında gösterilecek başlık"
+        },
+        {
+          "name": "emptyDescription",
+          "displayName": "Boş Durum Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "description": "Arama sonucu olmadığında gösterilecek açıklama"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "description": "Bölüm arka plan rengi"
+        }
+      ]
     }
   ]
 }

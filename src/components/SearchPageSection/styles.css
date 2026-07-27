@@ -1,0 +1,65 @@
+@import "../../sub-components/SearchBarInput/styles.css";
+@import "../../sub-components/SearchResultsGrid/styles.css";
+@import "../../sub-components/EmptySearchState/styles.css";
+@import "../../sub-components/ProductCard/styles.css";
+@import "../../sub-components/PaginationLoadMore/styles.css";
+@import "../../sub-components/Button/styles.css";
+
+.geeny-search-page {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--24KlcgGmm9);
+  padding-top: var(--section-py-mobile, 32px);
+  padding-bottom: var(--section-py-mobile, 32px);
+  padding-left: var(--mobile-px, 16px);
+  padding-right: var(--mobile-px, 16px);
+}
+
+@media (min-width: 768px) {
+  .geeny-search-page {
+    padding-top: var(--section-py, 48px);
+    padding-bottom: var(--section-py, 48px);
+    padding-left: var(--section-px, 20px);
+    padding-right: var(--section-px, 20px);
+  }
+}
+
+.geeny-search-page__container {
+  width: 100%;
+  max-width: var(--max-site-width, 1820px);
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--grid-gap, 20px);
+}
+
+.geeny-search-page__search-bar-wrapper {
+  width: 100%;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.geeny-search-page__loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 48px 0;
+  width: 100%;
+}
+
+.geeny-search-page__spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--cdFDkBbKkc);
+  border-top-color: var(--pxNuSoudLn);
+  border-radius: 50%;
+  animation: geeny-spin 0.8s linear infinite;
+}
+
+@keyframes geeny-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

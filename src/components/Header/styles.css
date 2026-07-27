@@ -1,4 +1,5 @@
 @import "../../sub-components/CartDrawer/styles.css";
+@import "../../sub-components/Button/styles.css";
 
 .ikas-header {
   position: relative;

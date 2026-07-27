@@ -18,3 +18,5 @@ export { CartPageSection } from "./CartPageSection/index";
 export { PageHeader } from "./PageHeader/index";
 export { PageContentWrapper } from "./PageContentWrapper/index";
 export { NotFoundContainer } from "./NotFoundContainer/index";
+export { SearchPageSection } from "./SearchPageSection/index";
+

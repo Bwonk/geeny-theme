@@ -2,6 +2,8 @@
 @import "../../sub-components/FilterAndSortBar/styles.css";
 @import "../../sub-components/ProductGrid/styles.css";
 @import "../../sub-components/PaginationLoadMore/styles.css";
+@import "../../sub-components/ProductCard/styles.css";
+@import "../../sub-components/Button/styles.css";
 
 .ikas-collection-section {
   width: 100%;
