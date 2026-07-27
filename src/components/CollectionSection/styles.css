@@ -1,7 +1,7 @@
 @import "../CollectionHero/styles.css";
-@import "../FilterAndSortBar/styles.css";
+@import "../../sub-components/FilterAndSortBar/styles.css";
 @import "../ProductGrid/styles.css";
-@import "../PaginationLoadMore/styles.css";
+@import "../../sub-components/PaginationLoadMore/styles.css";
 
 .ikas-collection-section {
   width: 100%;

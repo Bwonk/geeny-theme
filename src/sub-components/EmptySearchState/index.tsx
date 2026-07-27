@@ -1,9 +1,14 @@
 import { useCallback } from "preact/hooks";
 import { searchProductList, getThemeSetting, IkasProduct, IkasProductList } from "@ikas/bp-storefront";
-import { ProductCard } from "../ProductCard";
-import { Props } from "./types";
+import { observer } from "@ikas/component-utils";
+import { ProductCard } from "../../components/ProductCard";
 
-export interface EmptySearchStateProps extends Props {
+export interface Props {
+  title?: string;
+  description?: string;
+  suggestedKeywordsTitle?: string;
+  suggestedKeywords?: string;
+  recommendedProductsTitle?: string;
   searchKeyword?: string;
   onSelectKeyword?: (keyword: string) => void;
   recommendedProducts?: IkasProduct[];
@@ -25,7 +30,7 @@ export function EmptySearchState({
   productList,
   onSelectKeyword,
   className = "",
-}: EmptySearchStateProps) {
+}: Props) {
   // Read live global settings via getThemeSetting using exact variableNames from prompts/TOKENS.md
   const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1820px)
   const gridGapSetting = getThemeSetting("_4Ud47RIVna"); // Boşluk / Grid Gap (20px)
@@ -156,4 +161,4 @@ export function EmptySearchState({
   );
 }
 
-export default EmptySearchState;
+export default observer(EmptySearchState);

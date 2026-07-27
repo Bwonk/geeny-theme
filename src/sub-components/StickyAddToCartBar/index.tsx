@@ -9,11 +9,14 @@ import {
   isAddToCartEnabled,
   addItemToCart,
   IkasImage,
+  IkasProduct,
 } from "@ikas/bp-storefront";
-import { Button } from "../Button";
-import { Props } from "./types";
+import { observer } from "@ikas/component-utils";
+import { Button } from "../../components/Button";
 
-export interface StickyAddToCartBarProps extends Props {
+export interface Props {
+  product?: IkasProduct | null;
+  targetElementId?: string;
   className?: string;
 }
 
@@ -21,7 +24,7 @@ export function StickyAddToCartBar({
   product,
   targetElementId = "product-buy-box-target",
   className = "",
-}: StickyAddToCartBarProps) {
+}: Props) {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [isAdding, setIsAdding] = useState<boolean>(false);
 
@@ -144,4 +147,4 @@ export function StickyAddToCartBar({
   );
 }
 
-export default StickyAddToCartBar;
+export default observer(StickyAddToCartBar);

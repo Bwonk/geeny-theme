@@ -11,11 +11,14 @@ import {
   isAddToCartEnabled,
   addItemToCart,
   isColorVariantValue,
+  IkasProduct,
 } from "@ikas/bp-storefront";
-import { Button } from "../Button";
-import { Props } from "./types";
+import { observer } from "@ikas/component-utils";
+import { Button } from "../../components/Button";
 
-export interface ProductBuyBoxProps extends Props {
+export interface Props {
+  product?: IkasProduct | null;
+  showBuyNow?: boolean;
   className?: string;
 }
 
@@ -23,7 +26,7 @@ export function ProductBuyBox({
   product,
   showBuyNow = true,
   className = "",
-}: ProductBuyBoxProps) {
+}: Props) {
   const [quantity, setQuantity] = useState<number>(1);
   const [isAdding, setIsAdding] = useState<boolean>(false);
 
@@ -217,4 +220,4 @@ export function ProductBuyBox({
   );
 }
 
-export default ProductBuyBox;
+export default observer(ProductBuyBox);

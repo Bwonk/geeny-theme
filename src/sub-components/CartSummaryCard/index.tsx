@@ -4,21 +4,20 @@ import {
   Router,
   getThemeSetting,
 } from "@ikas/bp-storefront";
-import { Button } from "../Button";
-import { Props } from "./types";
+import { observer } from "@ikas/component-utils";
+import { Button } from "../../components/Button";
 
-export interface CartSummaryCardProps extends Props {
+export interface Props {
   cart?: any;
   freeShippingThreshold?: number;
   className?: string;
 }
 
-
 export function CartSummaryCard({
   cart,
   freeShippingThreshold = 500,
   className = "",
-}: CartSummaryCardProps) {
+}: Props) {
   // Read live global settings via getThemeSetting
   const checkoutBtnHeightSetting = getThemeSetting("_RtoVmtuDGF"); // Boşluk / Checkout Buton Yüksekliği (52px)
   const shippingBarRadiusSetting = getThemeSetting("_6yX0RuKGDr"); // Radius / Kargo İlerleme Çubuğu (4px)
@@ -110,4 +109,4 @@ export function CartSummaryCard({
   );
 }
 
-export default CartSummaryCard;
+export default observer(CartSummaryCard);

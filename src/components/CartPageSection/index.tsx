@@ -1,7 +1,7 @@
 import { cartStore, Router, getThemeSetting } from "@ikas/bp-storefront";
 import CartItemsList from "../../sub-components/CartItemsList";
 import CartOrderNote from "../../sub-components/CartOrderNote";
-import { CartSummaryCard } from "../CartSummaryCard";
+import CartSummaryCard from "../../sub-components/CartSummaryCard";
 import { Button } from "../Button";
 import { Props } from "./types";
 

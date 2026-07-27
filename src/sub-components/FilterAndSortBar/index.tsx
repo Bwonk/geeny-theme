@@ -9,11 +9,15 @@ import {
   clearProductListFilters,
   hasProductListAppliedFilters,
   isProductListFilterable,
+  IkasProductList,
 } from "@ikas/bp-storefront";
-import { Button } from "../Button";
-import { Props } from "./types";
+import { observer } from "@ikas/component-utils";
+import { Button } from "../../components/Button";
 
-export interface FilterAndSortBarProps extends Props {
+export interface Props {
+  productList?: IkasProductList;
+  filterTitle?: string;
+  sortTitle?: string;
   className?: string;
 }
 
@@ -22,7 +26,7 @@ export function FilterAndSortBar({
   filterTitle = "Filtrele",
   sortTitle = "Sırala",
   className = "",
-}: FilterAndSortBarProps) {
+}: Props) {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
   // Read theme global settings via getThemeSetting
@@ -216,4 +220,4 @@ export function FilterAndSortBar({
   );
 }
 
-export default FilterAndSortBar;
+export default observer(FilterAndSortBar);

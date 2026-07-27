@@ -1,4 +1,4 @@
-@import "../ProductCard/styles.css";
+@import "../../components/ProductCard/styles.css";
 
 .geeny-empty-search {
   width: 100%;

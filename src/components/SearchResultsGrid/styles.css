@@ -1,5 +1,5 @@
 @import "../ProductCard/styles.css";
-@import "../PaginationLoadMore/styles.css";
+@import "../../sub-components/PaginationLoadMore/styles.css";
 
 .geeny-search-results {
   width: 100%;

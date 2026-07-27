@@ -3,11 +3,14 @@ import {
   getThemeSetting,
   hasProductListNextPage,
   getProductListNextPage,
+  IkasProductList,
 } from "@ikas/bp-storefront";
-import { Button } from "../Button";
-import { Props } from "./types";
+import { observer } from "@ikas/component-utils";
+import { Button } from "../../components/Button";
 
-export interface PaginationLoadMoreProps extends Props {
+export interface Props {
+  productList?: IkasProductList;
+  loadMoreText?: string;
   loadingText?: string;
   className?: string;
 }
@@ -17,7 +20,7 @@ export function PaginationLoadMore({
   loadMoreText = "Daha Fazla Göster",
   loadingText = "Yükleniyor...",
   className = "",
-}: PaginationLoadMoreProps) {
+}: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Read live theme global settings via getThemeSetting
@@ -90,4 +93,4 @@ export function PaginationLoadMore({
   );
 }
 
-export default PaginationLoadMore;
+export default observer(PaginationLoadMore);

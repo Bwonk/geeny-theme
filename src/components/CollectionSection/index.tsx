@@ -1,8 +1,8 @@
 import { getThemeSetting } from "@ikas/bp-storefront";
 import { CollectionHero } from "../CollectionHero";
-import { FilterAndSortBar } from "../FilterAndSortBar";
+import FilterAndSortBar from "../../sub-components/FilterAndSortBar";
 import { ProductGrid } from "../ProductGrid";
-import { PaginationLoadMore } from "../PaginationLoadMore";
+import PaginationLoadMore from "../../sub-components/PaginationLoadMore";
 import { Props } from "./types";
 
 export interface CollectionSectionProps extends Props {

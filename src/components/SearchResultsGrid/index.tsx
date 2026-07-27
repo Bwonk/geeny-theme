@@ -1,6 +1,6 @@
 import { getThemeSetting, IkasProduct, IkasProductList, hasProductListNextPage } from "@ikas/bp-storefront";
 import { ProductCard } from "../ProductCard";
-import { PaginationLoadMore } from "../PaginationLoadMore";
+import PaginationLoadMore from "../../sub-components/PaginationLoadMore";
 import { Props } from "./types";
 
 export interface SearchResultsGridProps extends Props {

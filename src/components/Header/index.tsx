@@ -6,7 +6,7 @@ import {
   getThemeSetting,
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
-import { CartDrawer } from "../CartDrawer";
+import CartDrawer from "../../sub-components/CartDrawer";
 
 export interface HeaderProps extends Props {
   className?: string;

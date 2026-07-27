@@ -1,8 +1,8 @@
 import { getThemeSetting } from "@ikas/bp-storefront";
 import BreadcrumbNav from "../../sub-components/BreadcrumbNav";
 import ProductMediaGallery from "../../sub-components/ProductMediaGallery";
-import { ProductBuyBox } from "../ProductBuyBox";
-import { StickyAddToCartBar } from "../StickyAddToCartBar";
+import ProductBuyBox from "../../sub-components/ProductBuyBox";
+import StickyAddToCartBar from "../../sub-components/StickyAddToCartBar";
 import ProductValueAccordions from "../../sub-components/ProductValueAccordions";
 import { CustomerReviewsSection } from "../CustomerReviewsSection";
 import { RelatedProductsCarousel } from "../RelatedProductsCarousel";

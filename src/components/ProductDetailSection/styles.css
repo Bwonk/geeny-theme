@@ -1,7 +1,7 @@
 @import "../../sub-components/BreadcrumbNav/styles.css";
 @import "../../sub-components/ProductMediaGallery/styles.css";
-@import "../ProductBuyBox/styles.css";
-@import "../StickyAddToCartBar/styles.css";
+@import "../../sub-components/ProductBuyBox/styles.css";
+@import "../../sub-components/StickyAddToCartBar/styles.css";
 @import "../../sub-components/ProductValueAccordions/styles.css";
 @import "../CustomerReviewsSection/styles.css";
 @import "../RelatedProductsCarousel/styles.css";

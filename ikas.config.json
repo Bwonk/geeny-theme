@@ -311,48 +311,6 @@
       ]
     },
     {
-      "id": "e1iohf8g-CartDrawer",
-      "name": "Cart Drawer",
-      "entry": "./src/components/CartDrawer/index.tsx",
-      "styles": "./src/components/CartDrawer/styles.css",
-      "props": [
-        {
-          "name": "freeShippingThreshold",
-          "displayName": "Ücretsiz Kargo Limiti (TL)",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 500,
-          "description": "Ücretsiz kargo barı için hedef tutar",
-          "groupId": "cart_drawer_group"
-        },
-        {
-          "name": "emptyCartTitle",
-          "displayName": "Boş Sepet Başlığı",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Sepetiniz Şu Anda Boş",
-          "description": "Sepet boşken gösterilecek başlık",
-          "groupId": "cart_drawer_group"
-        },
-        {
-          "name": "emptyCartButtonText",
-          "displayName": "Alışverişe Devam Et Metni",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Alışverişe Başla",
-          "description": "Boş sepet buton metni",
-          "groupId": "cart_drawer_group"
-        }
-      ],
-      "propGroups": [
-        {
-          "id": "cart_drawer_group",
-          "name": "Sepet Çekmecesi Ayarları",
-          "description": "Ücretsiz kargo barı ve boş sepet metin ayarları"
-        }
-      ]
-    },
-    {
       "id": "e1iohf8g-NewsletterSection",
       "name": "Newsletter Section",
       "entry": "./src/components/NewsletterSection/index.tsx",
@@ -1039,54 +997,6 @@
       ]
     },
     {
-      "id": "e1iohf8g-ProductBuyBox",
-      "name": "Product Buy Box",
-      "entry": "./src/components/ProductBuyBox/index.tsx",
-      "styles": "./src/components/ProductBuyBox/styles.css",
-      "type": "component",
-      "props": [
-        {
-          "name": "product",
-          "displayName": "Ürün",
-          "type": "PRODUCT",
-          "required": false,
-          "description": "Satın alma alanı için ürün objesi"
-        },
-        {
-          "name": "showBuyNow",
-          "displayName": "Hemen Satın Al Göster",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": true,
-          "description": "İkincil satın alma butonunu göster"
-        }
-      ]
-    },
-    {
-      "id": "e1iohf8g-StickyAddToCartBar",
-      "name": "Sticky Add To Cart Bar",
-      "entry": "./src/components/StickyAddToCartBar/index.tsx",
-      "styles": "./src/components/StickyAddToCartBar/styles.css",
-      "type": "component",
-      "props": [
-        {
-          "name": "product",
-          "displayName": "Ürün",
-          "type": "PRODUCT",
-          "required": false,
-          "description": "Sabit bar için ürün objesi"
-        },
-        {
-          "name": "targetElementId",
-          "displayName": "İzlenecek Eleman ID",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "product-buy-box-target",
-          "description": "Görünürlük tetiklemesi için izlenecek elemanın ID'si"
-        }
-      ]
-    },
-    {
       "id": "e1iohf8g-CustomerReviewsSection",
       "name": "Customer Reviews Section",
       "entry": "./src/components/CustomerReviewsSection/index.tsx",
@@ -1216,38 +1126,6 @@
       ]
     },
     {
-      "id": "e1iohf8g-FilterAndSortBar",
-      "name": "Filter And Sort Bar",
-      "entry": "./src/components/FilterAndSortBar/index.tsx",
-      "styles": "./src/components/FilterAndSortBar/styles.css",
-      "type": "component",
-      "props": [
-        {
-          "name": "productList",
-          "displayName": "Ürün Listesi",
-          "type": "PRODUCT_LIST",
-          "required": false,
-          "description": "Sıralama ve filtreleme için ürün listesi"
-        },
-        {
-          "name": "filterTitle",
-          "displayName": "Filtre Buton Metni",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Filtrele",
-          "description": "Filtre butonu başlığı"
-        },
-        {
-          "name": "sortTitle",
-          "displayName": "Sıralama Metni",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Sırala",
-          "description": "Sıralama etiketi"
-        }
-      ]
-    },
-    {
       "id": "e1iohf8g-ProductGrid",
       "name": "Product Grid",
       "entry": "./src/components/ProductGrid/index.tsx",
@@ -1268,30 +1146,6 @@
           "required": false,
           "defaultValue": "Aradığınız kriterlere uygun ürün bulunamadı.",
           "description": "Filtre sonucu ürün bulunamadığında gösterilecek metin"
-        }
-      ]
-    },
-    {
-      "id": "e1iohf8g-PaginationLoadMore",
-      "name": "Pagination Load More",
-      "entry": "./src/components/PaginationLoadMore/index.tsx",
-      "styles": "./src/components/PaginationLoadMore/styles.css",
-      "type": "component",
-      "props": [
-        {
-          "name": "productList",
-          "displayName": "Ürün Listesi",
-          "type": "PRODUCT_LIST",
-          "required": false,
-          "description": "Sayfalama için ikas ürün listesi objesi"
-        },
-        {
-          "name": "loadMoreText",
-          "displayName": "Buton Metni",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Daha Fazla Göster",
-          "description": "Yükleme butonu başlığı"
         }
       ]
     },
@@ -1331,14 +1185,6 @@
           "description": "Bölüm zemin rengi"
         }
       ]
-    },
-    {
-      "id": "e1iohf8g-CartSummaryCard",
-      "name": "Cart Summary Card",
-      "entry": "./src/components/CartSummaryCard/index.tsx",
-      "styles": "./src/components/CartSummaryCard/styles.css",
-      "type": "component",
-      "props": []
     },
     {
       "id": "e1iohf8g-CartPageSection",
@@ -1393,53 +1239,6 @@
           "type": "TEXT",
           "required": false,
           "description": "Özel arama sonuç başlığı metni"
-        }
-      ]
-    },
-    {
-      "id": "e1iohf8g-EmptySearchState",
-      "name": "Empty Search State",
-      "entry": "./src/components/EmptySearchState/index.tsx",
-      "styles": "./src/components/EmptySearchState/styles.css",
-      "type": "component",
-      "props": [
-        {
-          "name": "title",
-          "displayName": "Boş Durum Başlığı",
-          "type": "TEXT",
-          "required": false,
-          "description": "Arama sonucu olmadığında beliren başlık"
-        },
-        {
-          "name": "description",
-          "displayName": "Boş Durum Açıklaması",
-          "type": "TEXT",
-          "required": false,
-          "description": "Boş durum açıklama metni"
-        },
-        {
-          "name": "suggestedKeywordsTitle",
-          "displayName": "Öneri Kelime Başlığı",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Popüler Aramalar:",
-          "description": "Öneri çipleri üstündeki etiket metni"
-        },
-        {
-          "name": "suggestedKeywords",
-          "displayName": "Popüler Öneri Kelimeleri",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Seyahat Yastığı, Uyku Maskesi, Boyun Destek, Seyahat Seti",
-          "description": "Virgülle ayrılmış popüler arama etiketleri"
-        },
-        {
-          "name": "recommendedProductsTitle",
-          "displayName": "Önerilen Ürünler Başlığı",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "SİZİN İÇİN SEÇTİKLERİMİZ",
-          "description": "Öneri ürünleri başlığı"
         }
       ]
     },

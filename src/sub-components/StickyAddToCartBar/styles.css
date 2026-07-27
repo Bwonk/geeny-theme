@@ -1,4 +1,4 @@
-@import "../Button/styles.css";
+@import "../../components/Button/styles.css";
 
 .ikas-sticky-cart {
   position: fixed;

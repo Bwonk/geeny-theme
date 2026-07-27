@@ -11,10 +11,13 @@ import {
   Router,
   getThemeSetting,
 } from "@ikas/bp-storefront";
-import { Button } from "../Button";
-import { Props } from "./types";
+import { observer } from "@ikas/component-utils";
+import { Button } from "../../components/Button";
 
-export interface CartDrawerProps extends Props {
+export interface Props {
+  freeShippingThreshold?: number;
+  emptyCartTitle?: string;
+  emptyCartButtonText?: string;
   isOpen?: boolean;
   className?: string;
   onClose?: () => void;
@@ -27,7 +30,7 @@ export function CartDrawer({
   isOpen = false,
   className = "",
   onClose,
-}: CartDrawerProps) {
+}: Props) {
   const [activeOpen, setActiveOpen] = useState(isOpen);
 
   // Sync prop isOpen with internal state
@@ -344,4 +347,4 @@ export function CartDrawer({
   return content;
 }
 
-export default CartDrawer;
+export default observer(CartDrawer);
