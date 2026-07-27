@@ -1,4 +1,4 @@
-# PROMPT: Ortak Bileşen — Button (`prompts/ortak/button.md`)
+# PROMPT: Ortak Bileşen — Button (`)
 
 ## A) 7 TEMEL KURAL (ZORUNLU)
 1. **Referans Dosyalar:** [DESIGN.md](file:///root/geeny/DESIGN.md), [GLOBALS.md](file:///root/geeny/GLOBALS.md) ve [IKAS.md](file:///root/geeny/IKAS.md) dosyalarını baştan sona referans al.

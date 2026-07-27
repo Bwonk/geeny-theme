@@ -110,7 +110,11 @@
           "name": "variant",
           "displayName": "Buton Varyantı",
           "type": "ENUM",
-          "options": ["PRIMARY", "SECONDARY", "ACCENT"],
+          "options": [
+            "PRIMARY",
+            "SECONDARY",
+            "ACCENT"
+          ],
           "required": false,
           "defaultValue": "PRIMARY",
           "description": "Butonun görsel stili (Primary Navy, Accent Sarı veya Secondary Şeffaf)",
@@ -137,7 +141,10 @@
           "name": "size",
           "displayName": "Buton Boyutu",
           "type": "ENUM",
-          "options": ["NORMAL", "LARGE"],
+          "options": [
+            "NORMAL",
+            "LARGE"
+          ],
           "required": false,
           "defaultValue": "NORMAL",
           "description": "Standart (48px) veya Geniş/Checkout (52px)",
@@ -227,8 +234,18 @@
           "required": false,
           "defaultValue": {
             "links": [
-              { "linkType": "PAGE", "label": "Ana Sayfa", "pageType": "INDEX", "subLinks": [] },
-              { "linkType": "PAGE", "label": "Tüm Ürünler", "pageType": "CATEGORY", "subLinks": [] }
+              {
+                "linkType": "PAGE",
+                "label": "Ana Sayfa",
+                "pageType": "INDEX",
+                "subLinks": []
+              },
+              {
+                "linkType": "PAGE",
+                "label": "Tüm Ürünler",
+                "pageType": "CATEGORY",
+                "subLinks": []
+              }
             ]
           },
           "description": "Header navigasyon menüsü bağlantıları",
@@ -419,9 +436,24 @@
           "required": false,
           "defaultValue": {
             "links": [
-              { "linkType": "PAGE", "label": "Ana Sayfa", "pageType": "INDEX", "subLinks": [] },
-              { "linkType": "PAGE", "label": "Tüm Ürünler", "pageType": "CATEGORY", "subLinks": [] },
-              { "linkType": "PAGE", "label": "Hakkımızda", "pageType": "ACCOUNT", "subLinks": [] }
+              {
+                "linkType": "PAGE",
+                "label": "Ana Sayfa",
+                "pageType": "INDEX",
+                "subLinks": []
+              },
+              {
+                "linkType": "PAGE",
+                "label": "Tüm Ürünler",
+                "pageType": "CATEGORY",
+                "subLinks": []
+              },
+              {
+                "linkType": "PAGE",
+                "label": "Hakkımızda",
+                "pageType": "ACCOUNT",
+                "subLinks": []
+              }
             ]
           },
           "description": "Footer hızlı erişim menü bağlantıları",
@@ -434,9 +466,24 @@
           "required": false,
           "defaultValue": {
             "links": [
-              { "linkType": "PAGE", "label": "Sıkça Sorulan Sorular", "pageType": "SEARCH", "subLinks": [] },
-              { "linkType": "PAGE", "label": "Kargo ve Teslimat", "pageType": "ACCOUNT", "subLinks": [] },
-              { "linkType": "PAGE", "label": "İade Politikası", "pageType": "ACCOUNT", "subLinks": [] }
+              {
+                "linkType": "PAGE",
+                "label": "Sıkça Sorulan Sorular",
+                "pageType": "SEARCH",
+                "subLinks": []
+              },
+              {
+                "linkType": "PAGE",
+                "label": "Kargo ve Teslimat",
+                "pageType": "ACCOUNT",
+                "subLinks": []
+              },
+              {
+                "linkType": "PAGE",
+                "label": "İade Politikası",
+                "pageType": "ACCOUNT",
+                "subLinks": []
+              }
             ]
           },
           "description": "Yardım ve politika bağlantıları",
@@ -742,7 +789,10 @@
           "name": "imagePosition",
           "displayName": "Görsel Konumu",
           "type": "ENUM",
-          "options": ["LEFT", "RIGHT"],
+          "options": [
+            "LEFT",
+            "RIGHT"
+          ],
           "required": false,
           "defaultValue": "LEFT",
           "description": "Görselin solda mı sağda mı yer alacağı",
@@ -1416,6 +1466,252 @@
           "type": "COLOR",
           "required": false,
           "description": "Bölüm zemin rengi"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-SearchBarInput",
+      "name": "Search Bar Input",
+      "entry": "./src/components/SearchBarInput/index.tsx",
+      "styles": "./src/components/SearchBarInput/styles.css",
+      "type": "component",
+      "props": [
+        {
+          "name": "placeholder",
+          "displayName": "Arama Kutusu Placeholder",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ürün veya kategori ara...",
+          "description": "Arama kutusu içinde görünecek ipucu metni"
+        },
+        {
+          "name": "buttonText",
+          "displayName": "Arama Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ara",
+          "description": "Arama butonunda görünecek metin"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-SearchResultsGrid",
+      "name": "Search Results Grid",
+      "entry": "./src/components/SearchResultsGrid/index.tsx",
+      "styles": "./src/components/SearchResultsGrid/styles.css",
+      "type": "component",
+      "props": [
+        {
+          "name": "title",
+          "displayName": "Arama Sonuç Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "description": "Özel arama sonuç başlığı metni"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-EmptySearchState",
+      "name": "Empty Search State",
+      "entry": "./src/components/EmptySearchState/index.tsx",
+      "styles": "./src/components/EmptySearchState/styles.css",
+      "type": "component",
+      "props": [
+        {
+          "name": "title",
+          "displayName": "Boş Durum Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "description": "Arama sonucu olmadığında beliren başlık"
+        },
+        {
+          "name": "description",
+          "displayName": "Boş Durum Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "description": "Boş durum açıklama metni"
+        },
+        {
+          "name": "suggestedKeywordsTitle",
+          "displayName": "Öneri Kelime Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Popüler Aramalar:",
+          "description": "Öneri çipleri üstündeki etiket metni"
+        },
+        {
+          "name": "suggestedKeywords",
+          "displayName": "Popüler Öneri Kelimeleri",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Seyahat Yastığı, Uyku Maskesi, Boyun Destek, Seyahat Seti",
+          "description": "Virgülle ayrılmış popüler arama etiketleri"
+        },
+        {
+          "name": "recommendedProductsTitle",
+          "displayName": "Önerilen Ürünler Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SİZİN İÇİN SEÇTİKLERİMİZ",
+          "description": "Öneri ürünleri başlığı"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-xdhA6rEuWe",
+      "name": "PageHeader",
+      "entry": "./src/components/PageHeader/index.tsx",
+      "styles": "./src/components/PageHeader/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "title",
+          "displayName": "Title",
+          "type": "TEXT",
+          "required": false,
+          "description": "H1 Başlık Metni",
+          "defaultValue": "SAYFA BAŞLIĞI"
+        },
+        {
+          "name": "description",
+          "displayName": "Description",
+          "type": "TEXT",
+          "required": false,
+          "description": "Başlık altındaki açıklama metni",
+          "defaultValue": ""
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "description": "Bölüm arka plan rengi"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-f914fUAbAU",
+      "name": "PageContentWrapper",
+      "entry": "./src/components/PageContentWrapper/index.tsx",
+      "styles": "./src/components/PageContentWrapper/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "content",
+          "displayName": "Content",
+          "type": "RICH_TEXT",
+          "required": false,
+          "description": "Zengin metin / HTML içeriği"
+        },
+        {
+          "name": "showContactForm",
+          "displayName": "Show Contact Form",
+          "type": "BOOLEAN",
+          "required": false,
+          "description": "İletişim formu gösterilsin mi?",
+          "defaultValue": false
+        },
+        {
+          "name": "formTitle",
+          "displayName": "Form Title",
+          "type": "TEXT",
+          "required": false,
+          "description": "İletişim formu başlığı",
+          "defaultValue": "İLETİŞİME GEÇİN"
+        },
+        {
+          "name": "formDescription",
+          "displayName": "Form Description",
+          "type": "TEXT",
+          "required": false,
+          "description": "Form altındaki açıklama metni",
+          "defaultValue": "Sorularınız ve önerileriniz için aşağıdaki formu doldurabilirsiniz."
+        },
+        {
+          "name": "submitButtonText",
+          "displayName": "Submit Button Text",
+          "type": "TEXT",
+          "required": false,
+          "description": "Gönder buton metni",
+          "defaultValue": "GÖNDER"
+        },
+        {
+          "name": "successMessage",
+          "displayName": "Success Message",
+          "type": "TEXT",
+          "required": false,
+          "description": "Form gönderimi başarılı mesajı",
+          "defaultValue": "Mesajınız başarıyla iletilmiştir. En kısa sürede dönüş yapacağız."
+        },
+        {
+          "name": "errorMessage",
+          "displayName": "Error Message",
+          "type": "TEXT",
+          "required": false,
+          "description": "Form doğrulama hatası mesajı",
+          "defaultValue": "Lütfen tüm zorunlu alanları eksiksiz ve doğru doldurunuz."
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "description": "Bölüm arka plan rengi"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-rGLNaGHKX4",
+      "name": "NotFoundContainer",
+      "entry": "./src/components/NotFoundContainer/index.tsx",
+      "styles": "./src/components/NotFoundContainer/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "codeText",
+          "displayName": "Code Text",
+          "type": "TEXT",
+          "required": false,
+          "description": "Büyük hata kodu metni",
+          "defaultValue": "404"
+        },
+        {
+          "name": "title",
+          "displayName": "Title",
+          "type": "TEXT",
+          "required": false,
+          "description": "H1 Hata başlığı",
+          "defaultValue": "SAYFA BULUNAMADI"
+        },
+        {
+          "name": "subtitle",
+          "displayName": "Subtitle",
+          "type": "TEXT",
+          "required": false,
+          "description": "Alt açıklama paragrafı",
+          "defaultValue": "Aradığınız sayfa kaldırılmış, adı değiştirilmiş veya geçici olarak kullanım dışı kalmış olabilir."
+        },
+        {
+          "name": "buttonText",
+          "displayName": "Button Text",
+          "type": "TEXT",
+          "required": false,
+          "description": "Ana sayfaya dönüş buton metni",
+          "defaultValue": "ANA SAYFAYA DÖN"
+        },
+        {
+          "name": "buttonLink",
+          "displayName": "Button Link",
+          "type": "LINK",
+          "required": false,
+          "description": "Ana sayfa yönlendirme bağlantısı"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "description": "Bölüm arka plan rengi"
         }
       ]
     }

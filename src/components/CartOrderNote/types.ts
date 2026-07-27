@@ -1,6 +1,7 @@
+// This file is auto-generated — do not edit manually.
 export interface Props {
   /** Not alanı etiketi */
   label?: string;
-  /** Input yer tutucu (placeholder) metni */
+  /** Textarea placeholder metni */
   placeholder?: string;
 }

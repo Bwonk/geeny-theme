@@ -1,0 +1,82 @@
+@import "../ProductCard/styles.css";
+@import "../PaginationLoadMore/styles.css";
+
+.geeny-search-results {
+  width: 100%;
+  max-width: var(--max-site-width, 1820px);
+  margin: 0 auto;
+  padding: var(--section-py, 48px) var(--section-px, 20px);
+}
+
+@media (max-width: 768px) {
+  .geeny-search-results {
+    padding: var(--section-py-mobile, 32px) var(--mobile-px, 16px);
+  }
+}
+
+.geeny-search-results__header {
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.geeny-search-results__title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.geeny-search-results__title {
+  color: var(--pxNuSoudLn);
+  margin: 0;
+}
+
+.geeny-search-results__count-badge {
+  background-color: var(--cdFDkBbKkc);
+  color: var(--pxNuSoudLn);
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+}
+
+.geeny-search-results__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--grid-gap, 20px);
+  width: 100%;
+}
+
+.geeny-search-results__grid-item {
+  min-width: 0; /* Prevents CSS Grid item overflow/blowout */
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .geeny-search-results__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .geeny-search-results__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--mobile-grid-gap, 12px);
+  }
+}
+
+@media (max-width: 480px) {
+  .geeny-search-results__grid {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+.geeny-search-results__pagination {
+  margin-top: 48px;
+  display: flex;
+  justify-content: center;
+}

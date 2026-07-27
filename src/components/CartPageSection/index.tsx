@@ -6,6 +6,7 @@ import { Button } from "../Button";
 import { Props } from "./types";
 
 export interface CartPageSectionProps extends Props {
+  cart?: any;
   className?: string;
 }
 
@@ -44,7 +45,8 @@ export function CartPageSection({
 
   const activeCart = cart || cartStore.cart;
   const lineItems = activeCart?.orderLineItems ?? [];
-  const itemCount = lineItems.reduce((acc, item) => acc + (item.quantity ?? 1), 0);
+  const itemCount = lineItems.reduce((acc: number, item: any) => acc + (item.quantity ?? 1), 0);
+
   const isEmpty = itemCount === 0;
 
   return (

@@ -11,8 +11,10 @@ import {
 import { Props } from "./types";
 
 export interface CartItemsListProps extends Props {
+  cart?: any;
   className?: string;
 }
+
 
 export function CartItemsList({ cart, className = "" }: CartItemsListProps) {
   const [updatingId, setUpdatingId] = useState<string | null>(null);

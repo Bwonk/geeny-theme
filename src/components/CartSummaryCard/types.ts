@@ -1,8 +1,3 @@
-import type { IkasCart } from "@ikas/bp-storefront";
-
+// This file is auto-generated — do not edit manually.
 export interface Props {
-  /** ikas sepet objesi */
-  cart?: IkasCart | null;
-  /** Ücretsiz kargo barı eşik tutarı (TL) */
-  freeShippingThreshold?: number;
 }

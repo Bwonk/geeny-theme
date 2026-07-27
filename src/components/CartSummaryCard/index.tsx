@@ -8,8 +8,11 @@ import { Button } from "../Button";
 import { Props } from "./types";
 
 export interface CartSummaryCardProps extends Props {
+  cart?: any;
+  freeShippingThreshold?: number;
   className?: string;
 }
+
 
 export function CartSummaryCard({
   cart,

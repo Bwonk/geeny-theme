@@ -1,14 +1,11 @@
-import type { IkasCart } from "@ikas/bp-storefront";
-
+// This file is auto-generated — do not edit manually.
 export interface Props {
-  /** ikas sepet objesi */
-  cart?: IkasCart | null;
-  /** Sayfa ana başlığı */
+  /** Sepet sayfasının ana başlığı */
   title?: string;
-  /** Boş sepet durum metni */
+  /** Sepet boşken gösterilecek başlık */
   emptyCartTitle?: string;
-  /** Boş sepet buton metni */
+  /** Sepet boşken gösterilecek buton metni */
   emptyCartButtonText?: string;
-  /** Arka plan rengi */
+  /** Bölüm zemin rengi */
   backgroundColor?: string;
 }

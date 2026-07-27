@@ -1,0 +1,61 @@
+@import "../Button/styles.css";
+
+.geeny-not-found {
+  width: 100%;
+  padding: var(--section-py-mobile, 48px) var(--mobile-px, 16px);
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .geeny-not-found {
+    padding: var(--section-py, 80px) var(--section-px, 20px);
+  }
+}
+
+.geeny-not-found__container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.geeny-not-found__code {
+  font-size: 80px;
+  line-height: 1;
+  font-weight: 800;
+  color: var(--pxNuSoudLn, #0a192f);
+  margin-bottom: 16px;
+  letter-spacing: -0.04em;
+  opacity: 0.9;
+  user-select: none;
+}
+
+@media (min-width: 768px) {
+  .geeny-not-found__code {
+    font-size: 120px;
+    margin-bottom: 24px;
+  }
+}
+
+.geeny-not-found__title {
+  margin: 0 0 16px 0;
+  color: var(--pxNuSoudLn, #0a192f);
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.geeny-not-found__subtitle {
+  margin: 0 0 32px 0;
+  color: var(--vluFeuIeFs, #333333);
+  max-width: 560px;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+.geeny-not-found__action {
+  display: flex;
+  justify-content: center;
+}
