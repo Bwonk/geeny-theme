@@ -15,8 +15,17 @@ import {
 import { observer } from "@ikas/component-utils";
 import Button from "../Button";
 
+export interface ColorSwatch {
+  color: string;
+  label: string;
+  active?: boolean;
+}
+
 export interface Props {
   product?: IkasProduct | null;
+  subtitle?: string;
+  badgeText?: string;
+  swatches?: ColorSwatch[];
   showRating?: boolean;
   showQuickAdd?: boolean;
   /** Buton görsel üzerinde slide-up overlay olarak belirsin mi? (Anasayfa.dc.html tasarımı) */
@@ -26,6 +35,9 @@ export interface Props {
 
 export function ProductCard({
   product,
+  subtitle,
+  badgeText,
+  swatches,
   showRating = false,
   showQuickAdd = true,
   overlayQuickAdd = true,
@@ -34,7 +46,7 @@ export function ProductCard({
   const [isAdding, setIsAdding] = useState(false);
 
   // Read live global settings via getThemeSetting using exact variableNames from prompts/TOKENS.md
-  const radiusSetting = getThemeSetting("_WyFUVwOpPk"); // Radius / Kart (24px / 2rem)
+  const radiusSetting = getThemeSetting("_WyFUVwOpPk"); // Radius / Kart (24px)
   const hoverAnimSetting = getThemeSetting("_Z1JfmMfgtb"); // Animasyon / Görsel Scale Hover
 
   const cardRadius = radiusSetting?.value || "24px";
@@ -45,8 +57,18 @@ export function ProductCard({
     "--image-hover-transition": hoverAnim,
   };
 
-  // If product is missing or null, render high quality demo product card
+  // Fallback demo card if product is missing
   if (!product) {
+    const demoTitle = "Infinity Pillow";
+    const demoSubtitle = subtitle || "Klasik boyun ve baş desteği";
+    const demoBadge = badgeText || "EN ÇOK SATAN";
+    const demoPrice = "₺1.290";
+    const demoSwatches: ColorSwatch[] = swatches || [
+      { color: "#37435B", label: "LACİVERT", active: true },
+      { color: "#385244", label: "ZEYTİN" },
+    ];
+    const activeSwatch = demoSwatches.find((s) => s.active) || demoSwatches[0];
+
     return (
       <article
         className={`ikas-product-card ${overlayQuickAdd ? "ikas-product-card--overlay-mode" : ""} ${className}`.trim()}
@@ -54,9 +76,11 @@ export function ProductCard({
       >
         <div className="ikas-product-card__image-wrapper">
           <div className="ikas-product-card__image-placeholder" style={{ backgroundColor: "#C8CFD0" }} />
-          <div className="ikas-product-card__badge-wrapper">
-            <span className="ikas-product-card__badge">EN ÇOK SATAN</span>
-          </div>
+          {demoBadge && (
+            <div className="ikas-product-card__badge-wrapper">
+              <span className="ikas-product-card__badge">{demoBadge}</span>
+            </div>
+          )}
 
           {showQuickAdd && overlayQuickAdd && (
             <div className="ikas-product-card__overlay-quick-add">
@@ -76,10 +100,33 @@ export function ProductCard({
         </div>
 
         <div className="ikas-product-card__content">
-          <h3 className="ikas-product-card__title">Infinity Pillow · Klasik</h3>
-          <div className="ikas-product-card__price-wrapper">
-            <span className="ikas-product-card__final-price">₺1.290</span>
+          <div className="ikas-product-card__header-row">
+            <h3 className="ikas-product-card__title">{demoTitle}</h3>
+            <div className="ikas-product-card__price-wrapper">
+              <span className="ikas-product-card__final-price">{demoPrice}</span>
+            </div>
           </div>
+
+          {demoSubtitle && (
+            <div className="ikas-product-card__subtitle">{demoSubtitle}</div>
+          )}
+
+          {demoSwatches && demoSwatches.length > 0 && (
+            <div className="ikas-product-card__swatches">
+              {demoSwatches.map((swatch, idx) => (
+                <span
+                  key={idx}
+                  className={`ikas-product-card__swatch ${swatch.active ? "ikas-product-card__swatch--active" : ""}`}
+                  style={{ backgroundColor: swatch.color }}
+                />
+              ))}
+              {activeSwatch && (
+                <span className="ikas-product-card__swatch-label">
+                  {activeSwatch.label.toLocaleUpperCase("tr-TR")}
+                </span>
+              )}
+            </div>
+          )}
         </div>
       </article>
     );
@@ -99,6 +146,7 @@ export function ProductCard({
 
   const href = getSelectedProductVariantHref(product) || "#";
   const title = product.name || "Ürün Adı";
+  const displaySubtitle = subtitle || (product as any).shortDescription || "";
 
   // Price formatting using verified ikas storefront functions
   const finalPrice = variant ? (getProductVariantFormattedFinalPrice(variant) as unknown as string) : "";
@@ -115,6 +163,9 @@ export function ProductCard({
     reviewCount > 0
       ? (reviews.reduce((acc: number, r: any) => acc + (r.star || 5), 0) / reviewCount).toFixed(1)
       : null;
+
+  // Swatches processing
+  const activeSwatch = swatches?.find((s) => s.active) || swatches?.[0];
 
   // Handle Quick Add to Cart
   const handleQuickAdd = async (e: Event) => {
@@ -170,11 +221,11 @@ export function ProductCard({
             <span className="ikas-product-card__badge ikas-product-card__badge--out-of-stock">
               TÜKENDİ
             </span>
+          ) : badgeText ? (
+            <span className="ikas-product-card__badge">{badgeText}</span>
           ) : (
             hasDiscount && (
-              <span className="ikas-product-card__badge">
-                İNDİRİM
-              </span>
+              <span className="ikas-product-card__badge">İNDİRİM</span>
             )
           )}
         </div>
@@ -195,45 +246,58 @@ export function ProductCard({
         )}
       </a>
 
-      {/* 2. KART İÇERİĞİ (BAŞLIK, FİYAT, OPSİYONEL ALT BUTON) */}
+      {/* 2. KART İÇERİĞİ (BAŞLIK + FİYAT YAN YANA, ALT AÇIKLAMA, COLOR SWATCHES) */}
       <div className="ikas-product-card__content">
         {/* YILDIZ DEĞERLENDİRMESİ */}
         {showRating && averageRating && (
           <div className="ikas-product-card__rating">
-            <svg
-              className="ikas-product-card__rating-star"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
+            <svg className="ikas-product-card__rating-star" viewBox="0 0 24 24" aria-hidden="true">
               <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
             </svg>
-            <span className="ikas-product-card__rating-score">
-              {averageRating}
-            </span>
-            <span className="ikas-product-card__rating-count">
-              ({reviewCount})
-            </span>
+            <span className="ikas-product-card__rating-score">{averageRating}</span>
+            <span className="ikas-product-card__rating-count">({reviewCount})</span>
           </div>
         )}
 
-        {/* ÜRÜN BAŞLIĞI */}
-        <h3 className="ikas-product-card__title">
-          <a href={href} style={{ color: "inherit", textDecoration: "none" }}>
-            {title}
-          </a>
-        </h3>
-
-        {/* FİYAT ALANI */}
-        <div className="ikas-product-card__price-wrapper">
-          <span className="ikas-product-card__final-price">{finalPrice}</span>
-          {hasDiscount && sellPrice && (
-            <span className="ikas-product-card__old-price">
-              {sellPrice}
-            </span>
-          )}
+        {/* BAŞLIK & FİYAT SATIRI (YAN YANA) */}
+        <div className="ikas-product-card__header-row">
+          <h3 className="ikas-product-card__title">
+            <a href={href} style={{ color: "inherit", textDecoration: "none" }}>
+              {title}
+            </a>
+          </h3>
+          <div className="ikas-product-card__price-wrapper">
+            {hasDiscount && sellPrice && (
+              <span className="ikas-product-card__old-price">{sellPrice}</span>
+            )}
+            <span className="ikas-product-card__final-price">{finalPrice}</span>
+          </div>
         </div>
 
-        {/* KLASİK ALT SEPETE EKLE BUTONU (overlayQuickAdd=false ise gösterilir) */}
+        {/* KISA AÇIKLAMA */}
+        {displaySubtitle && (
+          <div className="ikas-product-card__subtitle">{displaySubtitle}</div>
+        )}
+
+        {/* RENK SWATCH'LARI */}
+        {swatches && swatches.length > 0 && (
+          <div className="ikas-product-card__swatches">
+            {swatches.map((swatch, idx) => (
+              <span
+                key={idx}
+                className={`ikas-product-card__swatch ${swatch.active ? "ikas-product-card__swatch--active" : ""}`}
+                style={{ backgroundColor: swatch.color }}
+              />
+            ))}
+            {activeSwatch && (
+              <span className="ikas-product-card__swatch-label">
+                {activeSwatch.label.toLocaleUpperCase("tr-TR")}
+              </span>
+            )}
+          </div>
+        )}
+
+        {/* KLASİK ALT SEPETE EKLE BUTONU (overlayQuickAdd=false ise) */}
         {showQuickAdd && !overlayQuickAdd && (
           <div className="ikas-product-card__quick-add">
             <Button
