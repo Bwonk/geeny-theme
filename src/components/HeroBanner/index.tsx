@@ -72,7 +72,7 @@ export function HeroBanner({
             {primaryButtonText && (
               <Button
                 text={primaryButtonText}
-                variant="PRIMARY"
+                variant="PILL_PRIMARY"
                 size="LARGE"
                 onClick={() => {
                   const pLink = primaryButtonLink as any;

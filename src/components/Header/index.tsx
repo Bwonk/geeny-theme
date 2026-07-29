@@ -7,11 +7,23 @@ import {
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
 import CartDrawer from "../../sub-components/CartDrawer";
+import SearchOverlay from "../../sub-components/SearchOverlay";
 
 export interface HeaderProps extends Props {
   className?: string;
 }
 
+/**
+ * Header — Floating Pill Navbar (Anasayfa.dc.html referansına uygun)
+ *
+ * Özellikler:
+ * - Koyu lacivert (var(--pxNuSoudLn)) pill container (9999px radius)
+ * - Sağ tarafa hizalı floating pill yapısı (sol taraf ferah)
+ * - Üst kısım sticky, alt zemin gradient fade-out
+ * - Logo (Onest 700 + tracking), navigasyon linkleri (hover: accent sarı)
+ * - İkonlar: Arama, Hesap ve Accent Sarı Sepet butonu + Roboto Mono sayaç badge
+ * - Entegre CartDrawer ve SearchOverlay tetikleyicileri
+ */
 export function Header({
   logo,
   logoWidth = 160,
@@ -22,22 +34,20 @@ export function Header({
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Read live global settings via getThemeSetting using exact variableNames from prompts/TOKENS.md
-  const heightSetting = getThemeSetting("_OQlsoCe9ah"); // Boşluk / Header Yüksekliği (60px)
-  const paddingXSetting = getThemeSetting("_Nd1XnRyZlx"); // Boşluk / Yatay Bölüm Padding (20px)
-  const mobilePaddingXSetting = getThemeSetting("_uRDipxnxkx"); // Boşluk / Mobil Yatay Padding (16px)
-  const drawerWidthSetting = getThemeSetting("_Bw7ChF0VC8"); // Boşluk / Mobile Drawer Genişliği (320px)
-  const underlineAnimSetting = getThemeSetting("_NXa706BcQP"); // Animasyon / Menü Alt Çizgi
-  const drawerAnimSetting = getThemeSetting("_rTI75Www8J"); // Animasyon / Drawer ve Modal
+  // Read live global settings via getThemeSetting
+  const heightSetting = getThemeSetting("_OQlsoCe9ah");
+  const paddingXSetting = getThemeSetting("_Nd1XnRyZlx");
+  const mobilePaddingXSetting = getThemeSetting("_uRDipxnxkx");
+  const drawerWidthSetting = getThemeSetting("_Bw7ChF0VC8");
+  const drawerAnimSetting = getThemeSetting("_rTI75Www8J");
 
   const headerHeight = heightSetting?.value || "60px";
   const sectionPadX = paddingXSetting?.value || "1.25rem";
   const mobilePadX = mobilePaddingXSetting?.value || "16px";
   const drawerWidth = drawerWidthSetting?.value || "320px";
-  const underlineAnim = underlineAnimSetting?.value || "transform 0.25s ease";
   const drawerAnim = drawerAnimSetting?.value || "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)";
 
-  // Scroll listener for sticky header background / shadow toggle
+  // Scroll listener for sticky shadow/state
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -58,7 +68,7 @@ export function Header({
     };
   }, [isDrawerOpen]);
 
-  // Cart total item count (reactive read from MobX cartStore)
+  // Reactive cart item count read
   const cartItems = cartStore.cart?.orderLineItems ?? [];
   const itemCount = cartItems.reduce((acc, item) => acc + (item.quantity ?? 1), 0);
 
@@ -70,7 +80,6 @@ export function Header({
     "--section-padding-x": sectionPadX,
     "--mobile-padding-x": mobilePadX,
     "--drawer-width": drawerWidth,
-    "--underline-transition": underlineAnim,
     "--drawer-transition": drawerAnim,
   };
 
@@ -80,140 +89,120 @@ export function Header({
 
   return (
     <header className={combinedClassName} style={inlineStyles}>
-      <div className="ikas-header__container">
-        {/* 1. SOL KOLON: Mobil Hamburger + Logo */}
-        <div className="ikas-header__left">
-          <button
-            type="button"
-            className="ikas-header__hamburger"
-            aria-label="Menüyü Aç/Kapat"
-            aria-expanded={isDrawerOpen}
-            aria-controls="mobile-navigation-drawer"
-            onClick={() => setIsDrawerOpen(true)}
-          >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <line x1="3" y1="12" x2="21" y2="12" />
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <line x1="3" y1="18" x2="21" y2="18" />
-            </svg>
-          </button>
+      <div className="ikas-header__wrapper">
+        <div className="ikas-header__pill-wrapper">
+          <div className="ikas-header__pill">
+            
+            {/* SOL ALAN: Mobil Hamburger + Logo + Masaüstü Navigasyon */}
+            <div className="ikas-header__left-section">
+              {/* Mobil Hamburger Butonu */}
+              <button
+                type="button"
+                className="ikas-header__hamburger"
+                aria-label="Menüyü Aç/Kapat"
+                aria-expanded={isDrawerOpen}
+                aria-controls="mobile-navigation-drawer"
+                onClick={() => setIsDrawerOpen(true)}
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="3" y1="12" x2="21" y2="12" />
+                  <line x1="3" y1="6" x2="21" y2="6" />
+                  <line x1="3" y1="18" x2="21" y2="18" />
+                </svg>
+              </button>
 
-          <a href="/" className="ikas-header__logo-link" aria-label="Ana Sayfa">
-            {logoSrc ? (
-              <img
-                src={logoSrc}
-                alt="Logo"
-                className="ikas-header__logo-img"
-                style={{ width: `${logoWidth}px` }}
-              />
-            ) : (
-              <span>INFINITY PILLOW</span>
-            )}
-          </a>
-        </div>
+              {/* Logo Linki */}
+              <a href="/" className="ikas-header__logo-link" aria-label="Ana Sayfa">
+                {logoSrc ? (
+                  <img
+                    src={logoSrc}
+                    alt="Logo"
+                    className="ikas-header__logo-img"
+                    style={{ width: `${logoWidth}px` }}
+                  />
+                ) : (
+                  <span className="ikas-header__logo-text">INFINITY</span>
+                )}
+              </a>
 
-        {/* 2. ORTA KOLON: Masaüstü Navigasyon Menüsü */}
-        <nav className="ikas-header__nav" aria-label="Ana Menü">
-          <ul className="ikas-header__menu">
-            {links.map((item: any, index: number) => {
-              const href = item.href || item.externalLink || "#";
-              const label = item.label || item.title || "Bağlantı";
-              return (
-                <li key={index} className="ikas-header__menu-item">
-                  <a
-                    href={href}
-                    className="ikas-header__menu-link _C0OZ8W7vYS"
-                  >
-                    {label}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
+              {/* Masaüstü Navigasyon Menüsü */}
+              <nav className="ikas-header__nav" aria-label="Ana Menü">
+                <ul className="ikas-header__menu">
+                  {links.map((item: any, index: number) => {
+                    const href = item.href || item.externalLink || "#";
+                    const label = item.label || item.title || "Bağlantı";
+                    return (
+                      <li key={index} className="ikas-header__menu-item">
+                        <a href={href} className="ikas-header__menu-link">
+                          {label}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </nav>
+            </div>
 
-        {/* 3. SAĞ KOLON: Arama, Hesap ve Sepet Butonları */}
-        <div className="ikas-header__right">
-          {/* Arama İkonu */}
-          <button
-            type="button"
-            className="ikas-header__icon-btn"
-            aria-label="Arama Yap"
-            onClick={() => Router.navigateToPage("SEARCH")}
-          >
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-          </button>
+            {/* SAĞ ALAN: Arama, Hesap ve Sepet Butonları */}
+            <div className="ikas-header__right-section">
+              {/* Arama Butonu */}
+              <button
+                type="button"
+                className="ikas-header__icon-btn"
+                aria-label="Ara"
+                title="Ürün Ara"
+                onClick={() => window.dispatchEvent(new CustomEvent("geeny:search-overlay:open"))}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="m20 20-3.6-3.6" />
+                </svg>
+              </button>
 
-          {/* Hesap Giriş İkonu */}
-          <button
-            type="button"
-            className="ikas-header__icon-btn"
-            aria-label="Müşteri Hesabı"
-            onClick={() => Router.navigateToPage("ACCOUNT")}
-          >
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-          </button>
+              {/* Müşteri Hesabı Butonu */}
+              <button
+                type="button"
+                className="ikas-header__icon-btn"
+                aria-label="Hesabım"
+                title="Müşteri Hesabı"
+                onClick={() => Router.navigateToPage("ACCOUNT")}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <circle cx="12" cy="8" r="3.6" />
+                  <path d="M4.5 20c.6-3.8 3.8-5.8 7.5-5.8s6.9 2 7.5 5.8" />
+                </svg>
+              </button>
 
-          {/* Sepet İkonu & Sayaç Rozeti */}
-          <button
-            type="button"
-            className="ikas-header__icon-btn"
-            aria-label={`Sepet (${itemCount} Ürün)`}
-            onClick={() => {
-              window.dispatchEvent(new CustomEvent("geeny:cart-drawer:toggle"));
-            }}
-          >
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <path d="M16 10a4 4 0 0 1-8 0" />
-            </svg>
-            {itemCount > 0 && (
-              <span className="ikas-header__cart-badge">{itemCount}</span>
-            )}
-          </button>
+              {/* Accent Sarı Sepet Butonu */}
+              <button
+                type="button"
+                className="ikas-header__cart-btn"
+                aria-label={`Sepet (${itemCount} Ürün)`}
+                title="Alışveriş Sepeti"
+                onClick={() => {
+                  window.dispatchEvent(new CustomEvent("geeny:cart-drawer:toggle"));
+                }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <path d="M6 7.5h12l1 12.5H5z" />
+                  <path d="M9.2 7.5a2.8 2.8 0 0 1 5.6 0" />
+                </svg>
+                {itemCount > 0 && (
+                  <span className="ikas-header__cart-badge">{itemCount}</span>
+                )}
+              </button>
+            </div>
+
+          </div>
         </div>
       </div>
 
@@ -232,7 +221,7 @@ export function Header({
         aria-hidden={!isDrawerOpen}
       >
         <div className="ikas-header__drawer-header">
-          <span className="ikas-header__logo-link">MENÜ</span>
+          <span className="ikas-header__logo-text">MENÜ</span>
           <button
             type="button"
             className="ikas-header__drawer-close"
@@ -263,7 +252,7 @@ export function Header({
                 <li key={index}>
                   <a
                     href={href}
-                    className="ikas-header__drawer-link _C0OZ8W7vYS"
+                    className="ikas-header__drawer-link"
                     onClick={() => setIsDrawerOpen(false)}
                   >
                     {label}
@@ -275,8 +264,9 @@ export function Header({
         </nav>
       </div>
 
-      {/* 3. SLIDE-OUT CART DRAWER (Tüm sayfalarda aktif dinleyici ve overlay) */}
+      {/* ENTEGRE ALT BİLEŞENLER */}
       <CartDrawer />
+      <SearchOverlay />
     </header>
   );
 }

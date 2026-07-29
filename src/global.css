@@ -1,3 +1,17 @@
+/* ═══════════════════════════════════════════════════════════════════════
+ * FONT YÜKLEME — @import kuralları CSS'te en üstte olmalıdır.
+ * ikas code components'ta @import scoping dışında kalır (global yüklenir).
+ *
+ * Fontlar (Anasayfa tasarım referansı):
+ *   • Onest 400/500/600/700 — Başlıklar, logo, buton metni, kart başlıkları
+ *   • Roboto Flex 300–700 (variable) — Gövde metni, paragraflar, açıklamalar
+ *   • Roboto Mono 400/500 — Etiketler, fiyatlar, badge'ler, mono UI metinleri
+ *
+ * Türkçe karakter desteği: Üç font da latin-ext subset içerir →
+ *   ğ, ş, İ, ı, ç, ö, ü tam desteklenir.
+ * ═══════════════════════════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Roboto+Flex:opsz,wght@8..144,300..700&family=Roboto+Mono:wght@400;500&display=swap');
+
 /*
  * Global styles for your ikas code components project.
  *
@@ -27,8 +41,19 @@
  *
  * Component-scoped styles naturally override these globals.
  */
+
+/* ═══════════════════════════════════════════════════════════════════════
+ * FONT-FAMİLY STACK'LERİ — Bileşenler bu CSS var'larını referans alır.
+ * Tipografi token'ları (TOKENS.md className'leri) ikas editöründen
+ * font-family atamasını alır; bu var'lar ek fallback katmanıdır.
+ * ═══════════════════════════════════════════════════════════════════════ */
+
 /* KATMAN (Z-INDEX) VE BİLEŞEN BOYUT HİYERARŞİ SİSTEMİ */
 :root {
+  /* Font Family Stacks */
+  --font-heading: 'Onest', system-ui, -apple-system, sans-serif;
+  --font-body: 'Roboto Flex', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Roboto Mono', ui-monospace, 'Cascadia Code', 'Fira Mono', monospace;
   --z-index-base: 1;
   --z-index-dropdown: 50;
   --z-index-announcement: 100;

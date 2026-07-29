@@ -13,8 +13,21 @@ export interface Props {
   onClick?: (e: any) => void;
   children?: any;
   ariaLabel?: string;
+  /** Opsiyonel ikon — buton metninin sağına eklenir (SVG element) */
+  icon?: any;
 }
 
+/**
+ * Button — Tüm section'larda kullanılan merkezi buton bileşeni.
+ *
+ * Variant'lar:
+ *   PRIMARY        — Lacivert bg, hover → sarı bg swap
+ *   ACCENT         — Sarı bg, hover → lacivert bg swap
+ *   SECONDARY      — Transparent, hover → lacivert fill
+ *   PILL_PRIMARY   — Pill Grow: lacivert bg, hover → merkezden sarı grow
+ *   PILL_ACCENT    — Pill Grow: sarı bg, hover → merkezden lacivert grow
+ *   PILL_SECONDARY — Pill Grow: beyaz bg, hover → merkezden lacivert grow
+ */
 export function Button({
   text = "İncele",
   variant = "PRIMARY",
@@ -27,8 +40,9 @@ export function Button({
   onClick,
   children,
   ariaLabel,
+  icon,
 }: Props) {
-  // Read live global settings via getThemeSetting using exact variableNames from prompts/TOKENS.md
+  // Read live global settings via getThemeSetting — TOKENS.md variableName'leri
   const heightSetting = getThemeSetting(
     size === "LARGE" ? "_RtoVmtuDGF" : "_2xLGYXCG2n"
   );
@@ -36,19 +50,34 @@ export function Button({
   const transitionSetting = getThemeSetting("_bNtMCrOBsE");
 
   const btnHeight = heightSetting?.value || (size === "LARGE" ? "52px" : "48px");
-  const btnRadius = radiusSetting?.value || "0.5rem";
   const btnTransition = transitionSetting?.value || "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)";
 
   const variantStr = typeof variant === "string" ? variant : "PRIMARY";
+  const isPill = variantStr.startsWith("PILL_");
+
+  // Pill variant'ları border-radius'u CSS'ten alır (9999px), klasikler token'dan
+  const btnRadius = isPill ? "9999px" : (radiusSetting?.value || "0.5rem");
+
   const variantClass = `ikas-btn--${variantStr.toLowerCase()}`;
   const fullWidthClass = fullWidth ? "ikas-btn--full-width" : "";
   const disabledClass = disabled ? "ikas-btn--disabled" : "";
   const loadingClass = loading ? "ikas-btn--loading" : "";
 
-  // Apply typography global class "_VcfI5D07Nt" (Gövde Metni base) + custom styles
-  const combinedClassName = `ikas-btn ${variantClass} _VcfI5D07Nt ${fullWidthClass} ${disabledClass} ${loadingClass} ${className}`.trim();
+  // Tipografi: pill butonlar kendi font/size/weight'ini CSS'ten alır,
+  // klasikler Gövde Metni className'ini kullanır
+  const typoClass = isPill ? "" : "_VcfI5D07Nt";
 
-  const inlineStyles = {
+  const combinedClassName = [
+    "ikas-btn",
+    variantClass,
+    typoClass,
+    fullWidthClass,
+    disabledClass,
+    loadingClass,
+    className,
+  ].filter(Boolean).join(" ");
+
+  const inlineStyles: Record<string, string> = {
     "--btn-height": btnHeight,
     "--btn-radius": btnRadius,
     "--btn-transition": btnTransition,
@@ -61,6 +90,7 @@ export function Button({
     <>
       {loading && <span className="ikas-btn__spinner" aria-hidden="true" />}
       <span>{formattedText}</span>
+      {icon && icon}
     </>
   );
 
@@ -74,7 +104,7 @@ export function Button({
         className={combinedClassName}
         style={inlineStyles}
         lang="tr"
-        aria-label={typeof (ariaLabel || text) === "string" ? (ariaLabel || text).toLocaleUpperCase("tr-TR") : (ariaLabel || text)}
+        aria-label={typeof (ariaLabel || text) === "string" ? (ariaLabel || text)!.toLocaleUpperCase("tr-TR") : (ariaLabel || text)}
         onClick={onClick}
       >
         {content}
@@ -92,7 +122,7 @@ export function Button({
       disabled={disabled || loading}
       aria-disabled={disabled || loading}
       aria-busy={loading}
-      aria-label={typeof (ariaLabel || text) === "string" ? (ariaLabel || text).toLocaleUpperCase("tr-TR") : (ariaLabel || text)}
+      aria-label={typeof (ariaLabel || text) === "string" ? (ariaLabel || text)!.toLocaleUpperCase("tr-TR") : (ariaLabel || text)}
       onClick={onClick}
     >
       {content}
@@ -101,4 +131,3 @@ export function Button({
 }
 
 export default observer(Button);
-
