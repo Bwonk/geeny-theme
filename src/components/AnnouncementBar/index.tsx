@@ -1,4 +1,3 @@
-import { useState } from "preact/hooks";
 import { getThemeSetting } from "@ikas/bp-storefront";
 import { Props } from "./types";
 
@@ -6,76 +5,90 @@ export interface AnnouncementBarProps extends Props {
   className?: string;
 }
 
+/**
+ * AnnouncementBar — Sayfa Üstü Duyuru Bandı (Anasayfa.dc.html referansına uygun)
+ *
+ * Özellikler:
+ * - Koyu lacivert zemin (var(--pxNuSoudLn)), beyaz metin (var(--24KlcgGmm9))
+ * - Roboto Mono font (11px, 0.14em tracking)
+ * - 3 duyuru mesajı desteği (noktalı ayraç `·` ile ayrılmış)
+ * - 3. duyuru mesajında Accent Sarı (var(--sy8ZnXZdoG)) vurgusu
+ * - Türkçe karakter dostu toLocaleUpperCase("tr-TR") dönüşümü
+ */
 export function AnnouncementBar({
-  text = "500 TL Üzeri Siparişlerde Ücretsiz Kargo",
+  text = "500 ₺ ÜZERİ ÜCRETSİZ KARGO",
+  text2 = "30 GÜN KOŞULSUZ İADE",
+  text3 = "2 YIL GARANTİ",
   link,
-  autoRotate = true,
   className = "",
 }: AnnouncementBarProps) {
-  // Edge Case: If text is empty or missing, do not render announcement bar
-  if (!text || text.trim() === "") {
+  const msg1 = text?.trim() ? text.trim().toLocaleUpperCase("tr-TR") : "";
+  const msg2 = text2?.trim() ? text2.trim().toLocaleUpperCase("tr-TR") : "";
+  const msg3 = text3?.trim() ? text3.trim().toLocaleUpperCase("tr-TR") : "";
+
+  // Eğer hiçbir duyuru metni girilmemişse bileşeni işleme
+  if (!msg1 && !msg2 && !msg3) {
     return null;
   }
 
-  // Read live global settings via getThemeSetting using exact variableNames from prompts/TOKENS.md
-  const heightSetting = getThemeSetting("_YvGykMxQWI"); // Boşluk / Announcement Bar Yüksekliği (38px)
-  const paddingXSetting = getThemeSetting("_Nd1XnRyZlx"); // Boşluk / Yatay Bölüm Padding (20px)
-  const mobilePaddingXSetting = getThemeSetting("_uRDipxnxkx"); // Boşluk / Mobil Yatay Padding (16px)
-  const transitionSetting = getThemeSetting("_AwVN6G9Zib"); // Animasyon / Fade Yumuşak (opacity 0.3s ease-in-out)
-
+  // Live theme settings
+  const heightSetting = getThemeSetting("_YvGykMxQWI");
   const barHeight = heightSetting?.value || "38px";
-  const sectionPadX = paddingXSetting?.value || "1.25rem";
-  const mobilePadX = mobilePaddingXSetting?.value || "16px";
-  const barTransition = transitionSetting?.value || "opacity 0.3s ease-in-out";
 
   const inlineStyles = {
     "--announcement-height": barHeight,
-    "--section-padding-x": sectionPadX,
-    "--mobile-padding-x": mobilePadX,
-    "--announcement-transition": barTransition,
   };
 
-  // Check link property safely
   const linkObj = link as any;
   const href = linkObj?.href || linkObj?.externalLink || null;
 
-  // A11y: Both visual paragraphs have aria-hidden="true" to prevent screen reader duplication.
-  // The outer <aside> carries the exact announcement text in aria-label for single screen reader reading.
-  // Desktop Announcement Bar typography: _eZyocyyd0F (Etiket ve Rozet xs -> 13.5px/14px, weight: 500 per DESIGN.md)
-  // Mobile Announcement Bar typography: _8BUF3YKi2n (Mobil Duyuru Metni -> 12px, weight: 500)
-  const visualContent = (
-    <>
-      <p
-        className="ikas-announcement-bar__text ikas-announcement-bar__text--desktop _eZyocyyd0F"
-        aria-hidden="true"
-      >
-        {text}
-      </p>
-      <p
-        className="ikas-announcement-bar__text ikas-announcement-bar__text--mobile _8BUF3YKi2n"
-        aria-hidden="true"
-      >
-        {text}
-      </p>
-    </>
+  const activeMessages = [
+    msg1 ? { text: msg1, isHighlight: false } : null,
+    msg2 ? { text: msg2, isHighlight: false } : null,
+    msg3 ? { text: msg3, isHighlight: true } : null,
+  ].filter(Boolean) as { text: string; isHighlight: boolean }[];
+
+  const fullText = activeMessages.map((m) => m.text).join(" · ");
+
+  const innerContent = (
+    <div className="ikas-announcement-bar__content">
+      {activeMessages.map((msg, index) => (
+        <span key={index} className="ikas-announcement-bar__item">
+          {index > 0 && (
+            <span className="ikas-announcement-bar__dot" aria-hidden="true">
+              ·
+            </span>
+          )}
+          <span
+            className={
+              msg.isHighlight
+                ? "ikas-announcement-bar__msg ikas-announcement-bar__msg--highlight"
+                : "ikas-announcement-bar__msg"
+            }
+          >
+            {msg.text}
+          </span>
+        </span>
+      ))}
+    </div>
   );
 
   return (
     <aside
       className={`ikas-announcement-bar ${className}`.trim()}
       style={inlineStyles}
-      aria-label={`Duyuru Bandı: ${text}`}
+      aria-label={`Duyuru Bandı: ${fullText}`}
     >
       {href ? (
         <a
           href={href}
           className="ikas-announcement-bar__link"
-          aria-label={text}
+          aria-label={fullText}
         >
-          {visualContent}
+          {innerContent}
         </a>
       ) : (
-        visualContent
+        innerContent
       )}
     </aside>
   );

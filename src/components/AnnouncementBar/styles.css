@@ -1,13 +1,25 @@
+/* ═══════════════════════════════════════════════════════════════════════
+ * ANNOUNCEMENT BAR — Anasayfa.dc.html Uyumlu Duyuru Bandı
+ *
+ * Renkler — TOKENS.md cssVar referansları:
+ *   Ana Lacivert: var(--pxNuSoudLn)     TOKENS.md satır 10
+ *   Accent Sarı:  var(--sy8ZnXZdoG)     TOKENS.md satır 11
+ *   Saf Beyaz:    var(--24KlcgGmm9)     TOKENS.md satır 14
+ * ═══════════════════════════════════════════════════════════════════════ */
+
 .ikas-announcement-bar {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   box-sizing: border-box;
-  background-color: var(--pxNuSoudLn);
-  color: var(--24KlcgGmm9);
-  height: var(--announcement-height);
-  padding: 0 var(--section-padding-x);
+  background-color: var(--pxNuSoudLn);  /* Ana Lacivert — TOKENS.md satır 10 */
+  color: var(--24KlcgGmm9);             /* Saf Beyaz — TOKENS.md satır 14 */
+  min-height: var(--announcement-height, 38px);
+  padding: 10px clamp(16px, 4vw, 40px);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
   text-align: center;
   position: relative;
   z-index: var(--z-index-announcement, 100);
@@ -21,40 +33,39 @@
   color: inherit;
   text-decoration: none;
   width: 100%;
-  height: 100%;
-  transition: var(--announcement-transition);
+  transition: opacity 0.2s ease;
 }
 
 .ikas-announcement-bar__link:hover {
-  opacity: 0.85;
+  opacity: 0.88;
 }
 
-.ikas-announcement-bar__text {
-  margin: 0;
-  padding: 0;
+.ikas-announcement-bar__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 2vw, 28px);
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.ikas-announcement-bar__item {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 28px);
+}
+
+.ikas-announcement-bar__dot {
+  opacity: 0.4;
+  user-select: none;
+}
+
+.ikas-announcement-bar__msg {
   white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-width: 100%;
-  transition: var(--announcement-transition);
 }
 
-/* Masaüstü Ekranlar (>=768px) */
-@media (min-width: 768px) {
-  .ikas-announcement-bar {
-    padding: 0 var(--section-padding-x);
-  }
-  .ikas-announcement-bar__text--mobile {
-    display: none;
-  }
-}
-
-/* Mobil Ekranlar (<768px) */
-@media (max-width: 767px) {
-  .ikas-announcement-bar {
-    padding: 0 var(--mobile-padding-x);
-  }
-  .ikas-announcement-bar__text--desktop {
-    display: none;
-  }
+/* Vurgulu 3. Mesaj (Accent Sarı) */
+.ikas-announcement-bar__msg--highlight {
+  color: var(--sy8ZnXZdoG);             /* Accent Sarı — TOKENS.md satır 11 */
+  font-weight: 500;
 }

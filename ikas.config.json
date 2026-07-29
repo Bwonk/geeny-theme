@@ -14,11 +14,29 @@
       "props": [
         {
           "name": "text",
-          "displayName": "Duyuru Metni",
+          "displayName": "1. Duyuru Metni",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "500 TL Üzeri Siparişlerde Ücretsiz Kargo",
-          "description": "Sayfanın üstünde görünecek kampanya duyuru metni",
+          "defaultValue": "500 ₺ ÜZERİ ÜCRETSİZ KARGO",
+          "description": "Duyuru bandı ilk mesajı",
+          "groupId": "announcement_group"
+        },
+        {
+          "name": "text2",
+          "displayName": "2. Duyuru Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "30 GÜN KOŞULSUZ İADE",
+          "description": "Duyuru bandı ikinci mesajı",
+          "groupId": "announcement_group"
+        },
+        {
+          "name": "text3",
+          "displayName": "3. Duyuru Metni (Vurgulu)",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "2 YIL GARANTİ",
+          "description": "Sarı renkle vurgulanacak 3. duyuru mesajı",
           "groupId": "announcement_group"
         },
         {
