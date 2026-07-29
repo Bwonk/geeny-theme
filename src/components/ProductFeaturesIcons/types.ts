@@ -1,17 +1,21 @@
 // This file is auto-generated — do not edit manually.
 export interface Props {
-  /** İlk özellik kartının başlığı */
+  /** İlk özellik üst monospace etiketi */
+  feature1Tag?: string;
+  /** İlk özellik kartının ana başlığı */
   feature1Title?: string;
-  /** İlk özellik kartının açıklama metni */
-  feature1Desc?: string;
-  /** İkinci özellik kartının başlığı */
+  /** İkinci özellik üst monospace etiketi */
+  feature2Tag?: string;
+  /** İkinci özellik kartının ana başlığı */
   feature2Title?: string;
-  /** İkinci özellik kartının açıklama metni */
-  feature2Desc?: string;
-  /** Üçüncü özellik kartının başlığı */
+  /** Üçüncü özellik üst monospace etiketi */
+  feature3Tag?: string;
+  /** Üçüncü özellik kartının ana başlığı */
   feature3Title?: string;
-  /** Üçüncü özellik kartının açıklama metni */
-  feature3Desc?: string;
+  /** Dördüncü özellik üst monospace etiketi */
+  feature4Tag?: string;
+  /** Dördüncü özellik kartının ana başlığı */
+  feature4Title?: string;
   /** Bölüm zemin rengi */
   backgroundColor?: string;
 }

@@ -1,5 +1,5 @@
+import { useRef, useEffect } from "preact/hooks";
 import { getThemeSetting, getDefaultSrc, Router } from "@ikas/bp-storefront";
-import { formatShadow } from "../../utils/theme";
 import Button from "../../sub-components/Button";
 import { Props } from "./types";
 
@@ -7,65 +7,131 @@ export interface HeroBannerProps extends Props {
   className?: string;
 }
 
+/**
+ * HeroBanner — SS26 Seyahat Serisi Ana Hero Bölümü (Anasayfa.dc.html Uyumlu)
+ *
+ * Özellikler:
+ * - 2 Kolonlu Responsive Izgara (Sol Metin, Sağ 4:5 Dikey Medya)
+ * - Kelime Bazlı Word Reveal Animasyonu (@keyframes wordReveal + stagger gecikme)
+ * - İki Tonlu H1 Başlık (İlk kelime Ana Lacivert, kalan kelimeler Soft Gri Mavi)
+ * - Scroll Parallax Efekti (Sağ medya görseli scroll'a bağlı ±22px yumuşak hareket)
+ * - Sosyal Kanıt Overlay Kartı (Avatar Stack + Yıldız Puanı + Müşteri Adedi)
+ * - PILL_PRIMARY ve Çizgili İkincil Eylem Butonu
+ * - prefers-reduced-motion Erişilebilirlik Desteği
+ */
 export function HeroBanner({
-  title = "Her Yerde Kusursuz Uyku ve Seyahat Konforu",
-  subtitle = "Patentli ergonomik tasarımı ile boynunuzu destekler, seyahatlerinizi keyfe dönüştürür.",
-  primaryButtonText = "Şimdi Keşfet",
+  tagText = "SS26 · SEYAHAT SERİSİ",
+  title = "Uykunu yanında taşı.",
+  subtitle = "Tek parça, katlanabilir boyun desteği. Uçakta, trende ve arada kalan her yerde omurganı hizada tutar — sekiz saatlik bir yolculuktan sonra bile.",
+  primaryButtonText = "KEŞFET",
   primaryButtonLink,
-  secondaryButtonText = "Ürünü İncele",
+  secondaryButtonText = "NASIL ÇALIŞIR",
   secondaryButtonLink,
+  socialProofTitle = "140.000+ mutlu yolcu",
+  socialProofSubtitle = "4,8 / 5 · 2.412 DEĞERLENDİRME",
   image,
   backgroundColor,
   className = "",
 }: HeroBannerProps) {
-  // Read live global settings via getThemeSetting using exact variableNames from prompts/TOKENS.md
-  const verticalPySetting = getThemeSetting("_Kl0my3VVMA"); // Boşluk / Masaüstü Dikey Spacing (48px)
-  const verticalPyMobileSetting = getThemeSetting("_5Fdl1j6UHQ"); // Boşluk / Dikey Bölüm Spacing (2rem / 32px)
-  const sectionPxSetting = getThemeSetting("_Nd1XnRyZlx"); // Boşluk / Masaüstü Yatay Bölüm Padding (20px)
-  const mobilePxSetting = getThemeSetting("_uRDipxnxkx"); // Boşluk / Mobil Yatay Padding (16px)
-  const mediaRadiusSetting = getThemeSetting("_YFQAxlLvZl"); // Radius / Medya (2rem / 32px)
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1820px)
-  const cardShadowSetting = getThemeSetting("_yyUleMlhR4"); // Gölge / Kart Soft Shadow
-  const gridGapSetting = getThemeSetting("_4Ud47RIVna"); // Boşluk / Grid Gap (20px)
+  const parallaxRef = useRef<HTMLDivElement>(null);
 
-  const sectionPy = verticalPySetting?.value || "48px";
-  const sectionPyMobile = verticalPyMobileSetting?.value || "32px";
-  const sectionPx = sectionPxSetting?.value || "20px";
-  const mobilePx = mobilePxSetting?.value || "16px";
-  const mediaRadius = mediaRadiusSetting?.value || "32px";
-  const maxSiteWidth = siteWidthSetting?.value || "1820px";
-  const gridGap = gridGapSetting?.value || "20px";
-  const cardShadow = formatShadow(cardShadowSetting?.value, "0 4px 20px rgba(55, 67, 91, 0.08)");
+  // Scroll Parallax Efekti (GSAP Yok, Native IntersectionObserver + requestAnimationFrame)
+  useEffect(() => {
+    const el = parallaxRef.current;
+    if (!el) return;
+
+    // Azaltılmış hareket tercihi varsa parallax çalışmasın
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    let animationFrameId: number;
+    let queued = false;
+
+    const paint = () => {
+      queued = false;
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight || 1;
+      // Görsel ekranda değilse performans için hesaplama yapma
+      if (rect.bottom < -80 || rect.top > vh + 80) return;
+      const k = (vh * 0.5 - (rect.top + rect.height / 2)) / vh;
+      el.style.transform = `translate3d(0, ${(k * -22).toFixed(2)}px, 0)`;
+    };
+
+    const onScroll = () => {
+      if (!queued) {
+        queued = true;
+        animationFrameId = requestAnimationFrame(paint);
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    paint();
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, []);
+
+  // Live global settings
+  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Site Maksimum Genişliği (1560px)
+  const maxSiteWidth = siteWidthSetting?.value || "1560px";
 
   const inlineStyles = {
     backgroundColor: backgroundColor || undefined,
-    "--section-py": sectionPy,
-    "--section-py-mobile": sectionPyMobile,
-    "--section-px": sectionPx,
-    "--mobile-px": mobilePx,
-    "--media-radius": mediaRadius,
     "--max-site-width": maxSiteWidth,
-    "--grid-gap": gridGap,
-    "--card-shadow": cardShadow,
   };
 
   const imgSrc = image ? getDefaultSrc(image) : null;
 
+  // Başlığı kelimelerine bölerek Word Reveal & İki Tonlama yapısı oluşturma
+  const titleWords = title ? title.split(" ") : [];
+
   return (
     <section
+      id="top"
       className={`ikas-hero ${className}`.trim()}
       style={inlineStyles}
       lang="tr"
     >
       <div className="ikas-hero__container">
-        {/* SOL KOLON: HİTAB VE EYLEM */}
+        {/* 1. SOL KOLON: Metin, H1 Word Reveal, CTA Butonları */}
         <div className="ikas-hero__content">
+          {tagText && (
+            <div className="ikas-hero__tag _eZyocyyd0F">
+              {tagText.toLocaleUpperCase("tr-TR")}
+            </div>
+          )}
+
           {title && (
-            <h1 className="ikas-hero__title _78XkSXv7w4">{title}</h1>
+            <h1 className="ikas-hero__title">
+              {titleWords.map((word, idx) => {
+                // İlk kelime ana lacivert, sonrakiler soft gri-mavi
+                const isFirstWord = idx === 0;
+                const wordClass = isFirstWord
+                  ? "ikas-hero__word ikas-hero__word--primary"
+                  : "ikas-hero__word ikas-hero__word--muted";
+
+                return (
+                  <span
+                    key={idx}
+                    className={wordClass}
+                    style={{ animationDelay: `${60 + idx * 90}ms` }}
+                  >
+                    {word}{idx < titleWords.length - 1 ? "\u00A0" : ""}
+                  </span>
+                );
+              })}
+            </h1>
           )}
 
           {subtitle && (
-            <p className="ikas-hero__subtitle _VcfI5D07Nt">{subtitle}</p>
+            <p className="ikas-hero__subtitle _VcfI5D07Nt">
+              {subtitle}
+            </p>
           )}
 
           <div className="ikas-hero__actions">
@@ -74,6 +140,11 @@ export function HeroBanner({
                 text={primaryButtonText}
                 variant="PILL_PRIMARY"
                 size="LARGE"
+                icon={
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M4 12h15M13 6l6 6-6 6" />
+                  </svg>
+                }
                 onClick={() => {
                   const pLink = primaryButtonLink as any;
                   if (pLink?.href) {
@@ -88,10 +159,9 @@ export function HeroBanner({
             )}
 
             {secondaryButtonText && (
-              <Button
-                text={secondaryButtonText}
-                variant="ACCENT"
-                size="LARGE"
+              <button
+                type="button"
+                className="ikas-hero__secondary-link"
                 onClick={() => {
                   const sLink = secondaryButtonLink as any;
                   if (sLink?.href) {
@@ -99,27 +169,68 @@ export function HeroBanner({
                   } else if (sLink?.pageType) {
                     Router.navigateToPage(sLink.pageType, sLink.params);
                   } else {
-                    Router.navigateToPage("PRODUCT");
+                    const el = document.getElementById("hikaye");
+                    if (el) el.scrollIntoView({ behavior: "smooth" });
                   }
                 }}
-              />
+              >
+                {secondaryButtonText.toLocaleUpperCase("tr-TR")}
+              </button>
             )}
           </div>
         </div>
 
-        {/* SAĞ KOLON: MEDYA GÖRSELİ */}
-        <div className="ikas-hero__media">
-          <div className="ikas-hero__img-wrapper">
+        {/* 2. SAĞ KOLON: 4:5 Dikey Görsel + Parallax + Sosyal Kanıt Kartı */}
+        <div className="ikas-hero__media-column">
+          <div
+            ref={parallaxRef}
+            className="ikas-hero__media-wrapper"
+            data-hero-par="1"
+          >
             {imgSrc ? (
               <img
                 src={imgSrc}
-                alt={title || "Hero Banner Görseli"}
+                alt={title || "SS26 Seyahat Serisi Hero Görseli"}
                 className="ikas-hero__img"
               />
             ) : (
               <div className="ikas-hero__img-placeholder" />
             )}
           </div>
+
+          {/* Sosyal Kanıt Floating Kartı */}
+          {(socialProofTitle || socialProofSubtitle) && (
+            <div className="ikas-hero__social-proof-card">
+              {/* Avatarlar */}
+              <div className="ikas-hero__avatar-stack">
+                <span className="ikas-hero__avatar ikas-hero__avatar--1" />
+                <span className="ikas-hero__avatar ikas-hero__avatar--2" />
+                <span className="ikas-hero__avatar ikas-hero__avatar--3" />
+              </div>
+
+              {/* Bilgi Metinleri */}
+              <div className="ikas-hero__social-proof-info">
+                {socialProofTitle && (
+                  <div className="ikas-hero__social-proof-title">
+                    {socialProofTitle}
+                  </div>
+                )}
+                {socialProofSubtitle && (
+                  <div className="ikas-hero__social-proof-subtitle _eZyocyyd0F">
+                    {socialProofSubtitle.toLocaleUpperCase("tr-TR")}
+                  </div>
+                )}
+              </div>
+
+              {/* Yıldız Puanı */}
+              <span
+                className="ikas-hero__stars"
+                aria-label="5 üzerinden 5 yıldız"
+              >
+                ★★★★★
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </section>

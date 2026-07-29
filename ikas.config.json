@@ -303,11 +303,20 @@
       "type": "section",
       "props": [
         {
+          "name": "tagText",
+          "displayName": "Üst Etiket Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SS26 · SEYAHAT SERİSİ",
+          "description": "Başlığın üzerindeki monospace etiket",
+          "groupId": "hero_group"
+        },
+        {
           "name": "title",
           "displayName": "Hero Başlığı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Her Yerde Kusursuz Uyku ve Seyahat Konforu",
+          "defaultValue": "Uykunu yanında taşı.",
           "description": "Ana sayfa en üst büyük slogan başlığı",
           "groupId": "hero_group"
         },
@@ -316,7 +325,7 @@
           "displayName": "Alt Açıklama",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Patentli ergonomik tasarımı ile boynunuzu destekler, seyahatlerinizi keyfe dönüştürür.",
+          "defaultValue": "Tek parça, katlanabilir boyun desteği. Uçakta, trende ve arada kalan her yerde omurganı hizada tutar — sekiz saatlik bir yolculuktan sonra bile.",
           "description": "Başlık altındaki açıklama paragrafı",
           "groupId": "hero_group"
         },
@@ -325,7 +334,7 @@
           "displayName": "Birincil Buton Metni",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Şimdi Keşfet",
+          "defaultValue": "KEŞFET",
           "description": "Ana eylem butonu yazısı",
           "groupId": "hero_group"
         },
@@ -342,7 +351,7 @@
           "displayName": "İkincil Buton Metni",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Ürünü İncele",
+          "defaultValue": "NASIL ÇALIŞIR",
           "description": "İkinci eylem butonu yazısı",
           "groupId": "hero_group"
         },
@@ -355,11 +364,29 @@
           "groupId": "hero_group"
         },
         {
+          "name": "socialProofTitle",
+          "displayName": "Sosyal Kanıt Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "140.000+ mutlu yolcu",
+          "description": "Görsel üzerindeki sosyal kanıt kartı ana metni",
+          "groupId": "hero_group"
+        },
+        {
+          "name": "socialProofSubtitle",
+          "displayName": "Sosyal Kanıt Alt Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "4,8 / 5 · 2.412 DEĞERLENDİRME",
+          "description": "Sosyal kanıt kartı alt puan metni",
+          "groupId": "hero_group"
+        },
+        {
           "name": "image",
           "displayName": "Hero Görseli",
           "type": "IMAGE",
           "required": false,
-          "description": "Hero alanında gösterilecek ana görsel",
+          "description": "Hero alanında gösterilecek dikey görsel",
           "groupId": "hero_group"
         },
         {
@@ -375,7 +402,139 @@
         {
           "id": "hero_group",
           "name": "Hero Banner Ayarları",
-          "description": "Slogan, açıklama, eylem butonları ve görsel ayarları"
+          "description": "Ana sayfa en üst görsel ve başlık ayarları"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-EditorialBridge",
+      "name": "Editorial Bridge",
+      "entry": "./src/components/EditorialBridge/index.tsx",
+      "styles": "./src/components/EditorialBridge/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "descriptionText",
+          "displayName": "Açıklama Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İyi tasarlanmış seyahat ve uyku ürünleri — İzmir'de dokundu, İstanbul'da tasarlandı.",
+          "description": "Sol tarafta görünecek editorial slogan metni",
+          "groupId": "editorial_group"
+        },
+        {
+          "name": "metaText",
+          "displayName": "Tarih ve Bilgi Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "TEMMUZ 2026 · INFINITY SLEEP GOODS",
+          "description": "Sağ tarafta görünecek tarih ve marka künye metni",
+          "groupId": "editorial_group"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "description": "Bölüm zemin rengi",
+          "groupId": "editorial_group"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "editorial_group",
+          "name": "Editorial Köprü Ayarları",
+          "description": "Sayfa bölümleri arası geçiş sloganı ve künye ayarları"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-CurvedMarquee",
+      "name": "Curved Marquee",
+      "entry": "./src/components/CurvedMarquee/index.tsx",
+      "styles": "./src/components/CurvedMarquee/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "text",
+          "displayName": "Kayan Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SS26 · SEYAHAT SERİSİ · UYKUNU YANINDA TAŞI ·",
+          "description": "SVG eğrisi üzerinde akacak kampanya metni",
+          "groupId": "marquee_group"
+        },
+        {
+          "name": "color",
+          "displayName": "Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "description": "Akan metnin rengi (varsayılan lacivert)",
+          "groupId": "marquee_group"
+        },
+        {
+          "name": "speed",
+          "displayName": "Animasyon Süresi (Saniye)",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 26,
+          "description": "Tur süresi saniye (düşük = hızlı, yüksek = yavaş)",
+          "groupId": "marquee_group"
+        },
+        {
+          "name": "direction",
+          "displayName": "Akış Yönü",
+          "type": "ENUM",
+          "options": [
+            "LEFT",
+            "RIGHT"
+          ],
+          "required": false,
+          "defaultValue": "LEFT",
+          "description": "Metnin kayma yönü (Sola / Sağa)",
+          "groupId": "marquee_group"
+        },
+        {
+          "name": "curveAmount",
+          "displayName": "Eğri Miktarı",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 20,
+          "description": "Eğrinin kavis miktarı (0 = Düz çizgi, 20 = Hafif zarif kavis)",
+          "groupId": "marquee_group"
+        },
+        {
+          "name": "fontSize",
+          "displayName": "Metin Boyutu (px)",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 38,
+          "description": "Font punto büyüklüğü (px)",
+          "groupId": "marquee_group"
+        },
+        {
+          "name": "fadeEdges",
+          "displayName": "Kenar Solması (Fade)",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "description": "Sol ve sağ kenarlarda soluklaşma maskesi göster",
+          "groupId": "marquee_group"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "description": "Bölüm zemin rengi",
+          "groupId": "marquee_group"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "marquee_group",
+          "name": "Kavisli Marquee Ayarları",
+          "description": "SVG kavisli kayan metin bant ayarları"
         }
       ]
     },
@@ -603,21 +762,30 @@
       "type": "section",
       "props": [
         {
+          "name": "feature1Tag",
+          "displayName": "1. Özellik Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "TASARIM",
+          "description": "İlk özellik üst monospace etiketi",
+          "groupId": "product_features_group"
+        },
+        {
           "name": "feature1Title",
           "displayName": "1. Özellik Başlığı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Ergonomik Destek",
-          "description": "İlk özellik kartının başlığı",
+          "description": "İlk özellik kartının ana başlığı",
           "groupId": "product_features_group"
         },
         {
-          "name": "feature1Desc",
-          "displayName": "1. Özellik Açıklaması",
+          "name": "feature2Tag",
+          "displayName": "2. Özellik Etiketi",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Patentli form yapısı ile omurga duruşunuzu destekler.",
-          "description": "İlk özellik kartının açıklama metni",
+          "defaultValue": "KUMAŞ",
+          "description": "İkinci özellik üst monospace etiketi",
           "groupId": "product_features_group"
         },
         {
@@ -625,17 +793,17 @@
           "displayName": "2. Özellik Başlığı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Nefes Alabilir Kumaş",
-          "description": "İkinci özellik kartının başlığı",
+          "defaultValue": "Nefes Alan Örgü",
+          "description": "İkinci özellik kartının ana başlığı",
           "groupId": "product_features_group"
         },
         {
-          "name": "feature2Desc",
-          "displayName": "2. Özellik Açıklaması",
+          "name": "feature3Tag",
+          "displayName": "3. Özellik Etiketi",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Terletmeyen kılıf yapısı ile her mevsim ferah kullanım.",
-          "description": "İkinci özellik kartının açıklama metni",
+          "defaultValue": "KULLANIM",
+          "description": "Üçüncü özellik üst monospace etiketi",
           "groupId": "product_features_group"
         },
         {
@@ -643,17 +811,26 @@
           "displayName": "3. Özellik Başlığı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Hızlı & Ücretsiz Kargo",
-          "description": "Üçüncü özellik kartının başlığı",
+          "defaultValue": "Katlanabilir & Hafif",
+          "description": "Üçüncü özellik kartının ana başlığı",
           "groupId": "product_features_group"
         },
         {
-          "name": "feature3Desc",
-          "displayName": "3. Özellik Açıklaması",
+          "name": "feature4Tag",
+          "displayName": "4. Özellik Etiketi",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "500 TL üzeri siparişlerde aynı gün kargo avantajı.",
-          "description": "Üçüncü özellik kartının açıklama metni",
+          "defaultValue": "GARANTİ",
+          "description": "Dördüncü özellik üst monospace etiketi",
+          "groupId": "product_features_group"
+        },
+        {
+          "name": "feature4Title",
+          "displayName": "4. Özellik Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "2 Yıl Değişim Garantisi",
+          "description": "Dördüncü özellik kartının ana başlığı",
           "groupId": "product_features_group"
         },
         {

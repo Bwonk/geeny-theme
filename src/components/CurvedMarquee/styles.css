@@ -1,0 +1,66 @@
+/* ═══════════════════════════════════════════════════════════════════════
+ * CURVED MARQUEE — ZARİF KAVİSLİ ATMOSFERİK ŞERİT
+ *
+ * Renkler — TOKENS.md cssVar referansları:
+ *   Ana Lacivert: var(--pxNuSoudLn)     TOKENS.md satır 10
+ *   Saf Beyaz:   var(--24KlcgGmm9)     TOKENS.md satır 14
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+.ikas-curved-marquee {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(32px, 4vw, 60px) 0;
+  background-color: var(--24KlcgGmm9);  /* Saf Beyaz — TOKENS.md satır 14 */
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Sol ve Sağ Kenar Fade Mask Overlay */
+.ikas-curved-marquee__overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(
+    90deg,
+    var(--24KlcgGmm9) 0%,
+    rgba(255, 255, 255, 0) 10%,
+    rgba(255, 255, 255, 0) 90%,
+    var(--24KlcgGmm9) 100%
+  );
+}
+
+/* SVG Çizim Alanı */
+.ikas-curved-marquee__svg {
+  width: 100%;
+  height: clamp(65px, 6.5vw, 95px);
+  display: block;
+  overflow: visible;
+}
+
+/* SVG Metin Stili (Harf Geometrisinin Bozulmaması İçin Nötr Letter Spacing) */
+.ikas-curved-marquee__text {
+  font-family: Onest, var(--font-heading), sans-serif;
+  font-weight: 600;
+  font-size: var(--marquee-font-size, 38px);
+  letter-spacing: 0;
+  fill: var(--marquee-color, var(--pxNuSoudLn)); /* Ana Lacivert fallback — TOKENS.md satır 10 */
+}
+
+/* Erişilebilirlik: Azaltılmış Hareket Tercihi */
+@media (prefers-reduced-motion: reduce) {
+  .ikas-curved-marquee__text animate {
+    display: none !important;
+  }
+}
+
+/* RESPONSIVE (<768px) */
+@media (max-width: 767px) {
+  .ikas-curved-marquee {
+    padding: 24px 0;
+  }
+
+  .ikas-curved-marquee__svg {
+    height: 55px;
+  }
+}

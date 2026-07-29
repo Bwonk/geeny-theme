@@ -1,3 +1,12 @@
+/* ═══════════════════════════════════════════════════════════════════════
+ * PRODUCT CARD — Anasayfa.dc.html Uyumlu Ürün Kartı Stilleri
+ *
+ * Renkler — TOKENS.md cssVar referansları:
+ *   Ana Lacivert:  var(--pxNuSoudLn)     TOKENS.md satır 10
+ *   Accent Sarı:   var(--sy8ZnXZdoG)     TOKENS.md satır 11
+ *   Açık Gri Mavi: var(--cdFDkBbKkc)     TOKENS.md satır 12
+ *   Saf Beyaz:     var(--24KlcgGmm9)     TOKENS.md satır 14
+ * ═══════════════════════════════════════════════════════════════════════ */
 
 .ikas-product-card {
   display: flex;
@@ -7,28 +16,35 @@
   min-width: 0;
   max-width: 100%;
   box-sizing: border-box;
-  background-color: var(--24KlcgGmm9);
-  border-radius: var(--card-radius, 2rem);
-  overflow: hidden;
+  background-color: transparent;
   text-decoration: none;
   color: var(--pxNuSoudLn);
+  gap: 12px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.ikas-product-card:hover {
+/* Klasik Mod (görsel üstü overlay buton aktif DEĞİLSE kart hafif yükselir) */
+.ikas-product-card:not(.ikas-product-card--overlay-mode):hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 24px rgba(55, 67, 91, 0.1);
 }
 
-/* 1. GÖRSEL KONTEYNERİ (display: block kuralı <a> etiketi için ZORUNLUDUR) */
+/* Overlay Mode (Kart yükselmez, gölge değişmez — Sade ve Temiz) */
+.ikas-product-card--overlay-mode {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* 1. GÖRSEL KONTEYNERİ (1:1 Aspect Ratio, 24px Yuvarlak Köşe) */
 .ikas-product-card__image-wrapper {
   display: block;
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
-  border-radius: var(--card-radius, 2rem);
+  border-radius: var(--card-radius, 24px);
   overflow: hidden;
   background-color: var(--cdFDkBbKkc);
+  text-decoration: none;
 }
 
 .ikas-product-card__image {
@@ -39,8 +55,14 @@
   transition: var(--image-hover-transition, transform 0.5s ease-out);
 }
 
+.ikas-product-card__image-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: #C8CFD0;
+}
+
 .ikas-product-card:hover .ikas-product-card__image {
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 
 .ikas-product-card__image--secondary {
@@ -52,10 +74,10 @@
 
 .ikas-product-card:hover .ikas-product-card__image--secondary {
   opacity: 1;
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 
-/* 2. ROZETLER (Sol Üst) */
+/* 2. ROZETLER (Accent Sarı Pill, Sol Üst) */
 .ikas-product-card__badge-wrapper {
   position: absolute;
   top: 12px;
@@ -63,20 +85,22 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  z-index: 2;
+  z-index: 3;
 }
 
 .ikas-product-card__badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--sy8ZnXZdoG);
-  color: var(--pxNuSoudLn);
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-weight: 600;
+  background-color: var(--sy8ZnXZdoG);  /* Accent Sarı — TOKENS.md satır 11 */
+  color: #101418;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  padding: 6px 10px;
+  border-radius: 9999px;
+  font-weight: 500;
   line-height: 1;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .ikas-product-card__badge--out-of-stock {
@@ -84,19 +108,67 @@
   color: var(--24KlcgGmm9);
 }
 
-/* 3. KART İÇERİĞİ */
+/* 3. GÖRSEL ÜSTÜ HOVER SLIDE-UP SEPETE EKLE BUTONU */
+.ikas-product-card__overlay-quick-add {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  z-index: 4;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.ikas-product-card__image-wrapper:hover .ikas-product-card__overlay-quick-add,
+.ikas-product-card:hover .ikas-product-card__overlay-quick-add {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.ikas-product-card__overlay-btn {
+  width: 100%;
+  height: 44px;
+  border: 0;
+  border-radius: 9999px;
+  background-color: var(--pxNuSoudLn);  /* Ana Lacivert — TOKENS.md satır 10 */
+  color: var(--24KlcgGmm9);             /* Saf Beyaz — TOKENS.md satır 14 */
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.ikas-product-card__overlay-btn:hover {
+  background-color: #101418;
+}
+
+.ikas-product-card__overlay-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* 4. KART İÇERİĞİ */
 .ikas-product-card__content {
   display: flex;
   flex-direction: column;
   width: 100%;
   min-width: 0;
   box-sizing: border-box;
-  padding: 16px 12px 12px 12px;
-  gap: 8px;
-  flex: 1;
+  padding: 0;
+  gap: 4px;
 }
 
-/* 4. YILDIZ DEĞERLENDİRMESİ */
+/* 5. YILDIZ DEĞERLENDİRMESİ */
 .ikas-product-card__rating {
   display: flex;
   align-items: center;
@@ -104,18 +176,18 @@
   color: var(--cGupQGnbYq);
   width: 100%;
   min-width: 0;
+  font-size: 12px;
 }
 
 .ikas-product-card__rating-star {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   fill: currentColor;
   flex-shrink: 0;
 }
 
 .ikas-product-card__rating-score {
   color: var(--pxNuSoudLn);
-  margin-left: 2px;
   font-weight: 500;
 }
 
@@ -124,57 +196,61 @@
   opacity: 0.7;
 }
 
-/* 5. ÜRÜN BAŞLIĞI */
+/* 6. ÜRÜN BAŞLIĞI */
 .ikas-product-card__title {
   margin: 0;
   padding: 0;
-  color: var(--pxNuSoudLn);
+  font-family: var(--font-heading);
   font-weight: 500;
-  display: -webkit-box;
-  line-clamp: 2;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  font-size: 16px;
+  color: var(--pxNuSoudLn);             /* Ana Lacivert — TOKENS.md satır 10 */
   line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   width: 100%;
   min-width: 0;
-  word-break: break-word;
 }
 
-/* 6. FİYAT ALANI */
+/* 7. FİYAT ALANI */
 .ikas-product-card__price-wrapper {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: auto;
-  padding-top: 4px;
   width: 100%;
   min-width: 0;
-  flex-wrap: wrap;
 }
 
 .ikas-product-card__final-price {
-  font-weight: 600;
-  color: var(--pxNuSoudLn);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--pxNuSoudLn);             /* Ana Lacivert — TOKENS.md satır 10 */
 }
 
 .ikas-product-card__old-price {
+  font-family: var(--font-mono);
+  font-size: 13px;
   text-decoration: line-through;
   color: var(--pxNuSoudLn);
   opacity: 0.55;
 }
 
-/* 7. HIZLI SEPETE EKLE BUTONU */
+/* 8. HIZLI SEPETE EKLE (KLASİK MOD) */
 .ikas-product-card__quick-add {
   margin-top: 8px;
   width: 100%;
   min-width: 0;
 }
 
-/* RESPONSIVE BREAKPOINT (<768px DESIGN.md) */
-@media (max-width: 767px) {
-  .ikas-product-card__content {
-    padding: 12px 8px 8px 8px;
-    gap: 6px;
+/* Erişilebilirlik: Azaltılmış Hareket Tercihi */
+@media (prefers-reduced-motion: reduce) {
+  .ikas-product-card__overlay-quick-add {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .ikas-product-card__image {
+    transition: none !important;
   }
 }

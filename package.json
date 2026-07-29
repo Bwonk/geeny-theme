@@ -9,6 +9,7 @@
     "publish": "ikas-component publish"
   },
   "dependencies": {
+    "dompurify": "^3.4.12",
     "jsdom": "^29.1.1",
     "preact": "^10.19.3"
   },

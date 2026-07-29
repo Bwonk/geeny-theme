@@ -1,113 +1,298 @@
 @import "../../sub-components/Button/styles.css";
 
+/* ═══════════════════════════════════════════════════════════════════════
+ * HERO BANNER — Anasayfa.dc.html Uyumlu 2 Kolonlu Hero Alanı
+ *
+ * Renkler — TOKENS.md cssVar referansları:
+ *   Ana Lacivert:  var(--pxNuSoudLn)     TOKENS.md satır 10
+ *   Accent Sarı:   var(--sy8ZnXZdoG)     TOKENS.md satır 11
+ *   Açık Gri Mavi: var(--cdFDkBbKkc)     TOKENS.md satır 12
+ *   Saf Beyaz:     var(--24KlcgGmm9)     TOKENS.md satır 14
+ * ═══════════════════════════════════════════════════════════════════════ */
+
 .ikas-hero {
-  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: clamp(20px, 3vw, 44px) clamp(20px, 5vw, 64px) clamp(28px, 3.4vw, 52px);
+  background-color: var(--24KlcgGmm9);  /* Saf Beyaz — TOKENS.md satır 14 */
   box-sizing: border-box;
-  background-color: var(--24KlcgGmm9);
-  color: var(--pxNuSoudLn);
-  padding: var(--section-py, 36px) var(--section-px, 20px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow: hidden;
 }
 
 .ikas-hero__container {
-  max-width: var(--max-site-width, 1820px);
-  width: 100%;
+  max-width: var(--max-site-width, 1560px);
   margin: 0 auto;
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--grid-gap, 24px);
+  gap: clamp(28px, 4vw, 72px);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 430px), 1fr));
   align-items: center;
+  animation: heroFadeUp 0.7s cubic-bezier(0.2, 0.8, 0.25, 1) both;
 }
 
+/* 1. SOL KOLON: Metin İçeriği ve CTA */
 .ikas-hero__content {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  align-items: flex-start;
-  width: 100%;
+  gap: clamp(18px, 2vw, 28px);
   min-width: 0;
+  align-items: flex-start;
 }
 
+.ikas-hero__tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: #8C97A5;
+}
+
+/* İki Tonlu H1 Başlık & Word Reveal */
 .ikas-hero__title {
   margin: 0;
-  color: var(--pxNuSoudLn);
-  line-height: 1.15;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(40px, 6.6vw, 92px);
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+  color: var(--pxNuSoudLn);             /* Ana Lacivert — TOKENS.md satır 10 */
+}
+
+.ikas-hero__word {
+  display: inline-block;
+  animation: wordReveal 0.74s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.ikas-hero__word--primary {
+  color: var(--pxNuSoudLn);             /* Ana Lacivert — TOKENS.md satır 10 */
+}
+
+.ikas-hero__word--muted {
+  color: #AEB8C6;
 }
 
 .ikas-hero__subtitle {
   margin: 0;
-  color: var(--pxNuSoudLn);
-  opacity: 0.85;
-  line-height: 1.5;
-  max-width: 540px;
+  font-family: var(--font-body);
+  font-size: clamp(14.5px, 1.15vw, 17.5px);
+  line-height: 1.62;
+  color: #6E7A8C;
+  max-width: 44ch;
+  text-wrap: pretty;
 }
 
 .ikas-hero__actions {
   display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-top: 4px;
   flex-wrap: wrap;
-}
-
-.ikas-hero__media {
-  width: 100%;
-  min-width: 0;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  gap: clamp(12px, 1.6vw, 22px);
+  margin-top: 4px;
 }
 
-.ikas-hero__img-wrapper {
+/* İkincil Alt Çizgili Buton/Link */
+.ikas-hero__secondary-link {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--pxNuSoudLn);             /* Ana Lacivert — TOKENS.md satır 10 */
+  border-bottom: 2px solid var(--sy8ZnXZdoG); /* Accent Sarı — TOKENS.md satır 11 */
+  padding-bottom: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  background: transparent;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  transition: color 0.22s ease, border-color 0.22s ease;
+}
+
+.ikas-hero__secondary-link:hover {
+  color: var(--sy8ZnXZdoG);             /* Accent Sarı — TOKENS.md satır 11 */
+}
+
+/* 2. SAĞ KOLON: 4:5 Dikey Görsel & Parallax */
+.ikas-hero__media-column {
   position: relative;
+  min-width: 0;
   width: 100%;
-  max-height: 420px;
-  aspect-ratio: 16 / 10;
-  border-radius: var(--media-radius, 32px);
+}
+
+.ikas-hero__media-wrapper {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: clamp(20px, 2.4vw, 34px);
   overflow: hidden;
-  box-shadow: var(--card-shadow, 0 4px 20px rgba(55, 67, 91, 0.08));
+  background-color: var(--cdFDkBbKkc);  /* Açık Gri Mavi — TOKENS.md satır 12 */
+  will-change: transform;
 }
 
 .ikas-hero__img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
 }
 
 .ikas-hero__img-placeholder {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, var(--pxNuSoudLn) 0%, var(--vluFeuIeFs) 100%);
-  border-radius: var(--media-radius, 32px);
+  background: linear-gradient(135deg, var(--pxNuSoudLn) 0%, var(--cdFDkBbKkc) 100%);
 }
 
-/* RESPONSIVE BREAKPOINT (<768px DESIGN.md) */
+/* Sosyal Kanıt Floating Kartı */
+.ikas-hero__social-proof-card {
+  position: absolute;
+  left: clamp(12px, 1.6vw, 22px);
+  bottom: clamp(12px, 1.6vw, 22px);
+  right: clamp(12px, 1.6vw, 22px);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 9999px;
+  padding: 9px 18px 9px 12px;
+  box-shadow: 0 14px 34px rgba(19, 25, 36, 0.16);
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+.ikas-hero__avatar-stack {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.ikas-hero__avatar {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  border-radius: 9999px;
+  overflow: hidden;
+  border: 2px solid var(--24KlcgGmm9);  /* Saf Beyaz — TOKENS.md satır 14 */
+  display: block;
+}
+
+.ikas-hero__avatar--1 {
+  background-color: var(--cdFDkBbKkc);  /* Açık Gri Mavi — TOKENS.md satır 12 */
+}
+
+.ikas-hero__avatar--2 {
+  background-color: #AEB8C6;
+  margin-left: -11px;
+}
+
+.ikas-hero__avatar--3 {
+  background-color: #8C97A5;
+  margin-left: -11px;
+}
+
+.ikas-hero__social-proof-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ikas-hero__social-proof-title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 13.5px;
+  letter-spacing: -0.01em;
+  color: var(--pxNuSoudLn);             /* Ana Lacivert — TOKENS.md satır 10 */
+}
+
+.ikas-hero__social-proof-subtitle {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  color: #8C97A5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ikas-hero__stars {
+  flex: 0 0 auto;
+  color: var(--sy8ZnXZdoG);             /* Accent Sarı — TOKENS.md satır 11 */
+  font-size: 13px;
+  letter-spacing: 1.5px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+ * ANİMASYONLAR
+ * ═══════════════════════════════════════════════════════════════════════ */
+@keyframes wordReveal {
+  from {
+    transform: translateY(100%);
+    filter: blur(12px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
+@keyframes heroFadeUp {
+  from {
+    transform: translateY(18px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Erişilebilirlik: Azaltılmış Hareket Tercihi */
+@media (prefers-reduced-motion: reduce) {
+  .ikas-hero__container,
+  .ikas-hero__word,
+  .ikas-hero__media-wrapper {
+    animation: none !important;
+    transform: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+ * RESPONSIVE (DÜZENLEME <768px)
+ * ═══════════════════════════════════════════════════════════════════════ */
 @media (max-width: 767px) {
   .ikas-hero {
-    padding: var(--section-py-mobile, 32px) var(--mobile-px, 16px);
+    padding: 24px 16px 36px;
   }
 
   .ikas-hero__container {
     grid-template-columns: 1fr;
-    gap: 28px;
-    text-align: center;
+    gap: 32px;
   }
 
   .ikas-hero__content {
-    align-items: center;
+    align-items: flex-start;
   }
 
   .ikas-hero__actions {
     width: 100%;
     flex-direction: column;
-    gap: 12px;
+    align-items: stretch;
+    gap: 14px;
   }
 
-  .ikas-hero__actions > * {
-    width: 100%;
+  .ikas-hero__social-proof-card {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .ikas-hero__stars {
+    display: none;
   }
 }

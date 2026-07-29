@@ -1,73 +1,118 @@
+/* ═══════════════════════════════════════════════════════════════════════
+ * PRODUCT FEATURES ICONS — 4 Kolonlu Feature Bar
+ *
+ * Renkler — TOKENS.md cssVar referansları:
+ *   Ana Lacivert:  var(--pxNuSoudLn)     TOKENS.md satır 10
+ *   Açık Gri Mavi: var(--cdFDkBbKkc)     TOKENS.md satır 12
+ *   Saf Beyaz:     var(--24KlcgGmm9)     TOKENS.md satır 14
+ * ═══════════════════════════════════════════════════════════════════════ */
+
 .ikas-features {
   width: 100%;
   box-sizing: border-box;
-  background-color: var(--24KlcgGmm9);
-  color: var(--pxNuSoudLn);
-  padding: var(--section-py, 48px) var(--section-px, 20px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: var(--24KlcgGmm9);  /* Saf Beyaz — TOKENS.md satır 14 */
+  color: var(--pxNuSoudLn);             /* Ana Lacivert — TOKENS.md satır 10 */
+  border-top: 1px solid var(--cdFDkBbKkc);  /* Açık Gri Mavi — TOKENS.md satır 12 */
+  border-bottom: 1px solid var(--cdFDkBbKkc);
+  padding: clamp(22px, 2.4vw, 36px) clamp(20px, 5vw, 64px);
+  overflow: hidden;
 }
 
 .ikas-features__container {
-  max-width: var(--max-site-width, 1820px);
-  width: 100%;
+  max-width: var(--max-site-width, 1560px);
   margin: 0 auto;
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--grid-gap, 20px);
+  gap: clamp(16px, 2vw, 32px);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: center;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s cubic-bezier(0.2, 0.8, 0.25, 1), transform 0.6s cubic-bezier(0.2, 0.8, 0.25, 1);
 }
 
-.ikas-features__card {
-  background-color: var(--24KlcgGmm9);
-  border-radius: var(--card-radius, 32px);
-  padding: 32px 24px;
+.ikas-features--visible .ikas-features__container {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ikas-features__col {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  text-align: center;
   gap: 16px;
-  box-shadow: var(--card-shadow, 0 4px 20px rgba(55, 67, 91, 0.08));
-  border: 1px solid var(--cdFDkBbKkc);
-  transition: var(--hover-transition, transform 0.3s ease, box-shadow 0.3s ease);
-  width: 100%;
+  padding-right: clamp(12px, 1.6vw, 24px);
+  border-right: 1px solid #EDF0F0;
   min-width: 0;
-  max-width: 100%;
   box-sizing: border-box;
 }
 
-.ikas-features__card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--card-shadow, 0 12px 30px rgba(55, 67, 91, 0.12));
+.ikas-features__col:last-child {
+  border-right: none;
+  padding-right: 0;
 }
 
-.ikas-features__icon-circle {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background-color: var(--sy8ZnXZdoG);
-  color: var(--pxNuSoudLn);
+.ikas-features__icon-wrapper {
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  color: var(--pxNuSoudLn);             /* Ana Lacivert — TOKENS.md satır 10 */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.ikas-features__text-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.ikas-features__tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: #8C97A5;
+  white-space: nowrap;
+}
+
 .ikas-features__title {
-  margin: 0;
-  color: var(--pxNuSoudLn);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--pxNuSoudLn);             /* Ana Lacivert — TOKENS.md satır 10 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.ikas-features__desc {
-  margin: 0;
-  color: var(--pxNuSoudLn);
-  opacity: 0.8;
-  line-height: 1.5;
+/* Erişilebilirlik: Azaltılmış Hareket Tercihi */
+@media (prefers-reduced-motion: reduce) {
+  .ikas-features__container {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
-/* RESPONSIVE BREAKPOINT (<768px DESIGN.md) */
+/* ═══════════════════════════════════════════════════════════════════════
+ * RESPONSIVE DÜZENLEME (<1024px & <768px)
+ * ═══════════════════════════════════════════════════════════════════════ */
+@media (max-width: 1023px) {
+  .ikas-features__container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .ikas-features__col:nth-child(2n) {
+    border-right: none;
+    padding-right: 0;
+  }
+}
+
 @media (max-width: 767px) {
   .ikas-features {
-    padding: var(--section-py-mobile, 32px) var(--mobile-px, 16px);
+    padding: 20px 16px;
   }
 
   .ikas-features__container {
@@ -75,7 +120,15 @@
     gap: 16px;
   }
 
-  .ikas-features__card {
-    padding: 24px 20px;
+  .ikas-features__col {
+    border-right: none;
+    border-bottom: 1px solid #EDF0F0;
+    padding-right: 0;
+    padding-bottom: 14px;
+  }
+
+  .ikas-features__col:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
   }
 }

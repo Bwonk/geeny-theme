@@ -1,105 +1,139 @@
+import { useRef, useEffect, useState } from "preact/hooks";
 import { getThemeSetting } from "@ikas/bp-storefront";
-import { formatShadow } from "../../utils/theme";
 import { Props } from "./types";
 
 export interface ProductFeaturesIconsProps extends Props {
   className?: string;
 }
 
+/**
+ * ProductFeaturesIcons — 4 Kolonlu Feature Bar (Anasayfa.dc.html Uyumlu)
+ *
+ * Özellikler:
+ * - Tam Genişlik Yatay Bant (İnce üst ve alt kenarlık)
+ * - 4 Kolonlu Izgara Yapısı (İnce dikey ayraç çizgileri)
+ * - Sol Çizgi İkon + Sağ Üst Monospace Etiket + Ana Başlık
+ * - IntersectionObserver ile Scroll-Reveal (fadeUp geçişi)
+ * - prefers-reduced-motion Erişilebilirlik Desteği
+ * - TOKENS.md cssVar Kullanımı (Ana Lacivert var(--pxNuSoudLn), Saf Beyaz var(--24KlcgGmm9))
+ */
 export function ProductFeaturesIcons({
+  feature1Tag = "TASARIM",
   feature1Title = "Ergonomik Destek",
-  feature1Desc = "Patentli form yapısı ile omurga duruşunuzu destekler.",
-  feature2Title = "Nefes Alabilir Kumaş",
-  feature2Desc = "Terletmeyen kılıf yapısı ile her mevsim ferah kullanım.",
-  feature3Title = "Hızlı & Ücretsiz Kargo",
-  feature3Desc = "500 TL üzeri siparişlerde aynı gün kargo avantajı.",
+  feature2Tag = "KUMAŞ",
+  feature2Title = "Nefes Alan Örgü",
+  feature3Tag = "KULLANIM",
+  feature3Title = "Katlanabilir & Hafif",
+  feature4Tag = "GARANTİ",
+  feature4Title = "2 Yıl Değişim Garantisi",
   backgroundColor,
   className = "",
 }: ProductFeaturesIconsProps) {
-  // Read live global settings via getThemeSetting using exact variableNames from prompts/TOKENS.md
-  const verticalPySetting = getThemeSetting("_Kl0my3VVMA"); // Boşluk / Masaüstü Dikey Spacing (48px)
-  const verticalPyMobileSetting = getThemeSetting("_5Fdl1j6UHQ"); // Boşluk / Dikey Bölüm Spacing (2rem / 32px)
-  const sectionPxSetting = getThemeSetting("_Nd1XnRyZlx"); // Boşluk / Masaüstü Yatay Bölüm Padding (20px)
-  const mobilePxSetting = getThemeSetting("_uRDipxnxkx"); // Boşluk / Mobil Yatay Padding (16px)
-  const cardRadiusSetting = getThemeSetting("_WyFUVwOpPk"); // Radius / Kart (2rem / 32px)
-  const gridGapSetting = getThemeSetting("_4Ud47RIVna"); // Boşluk / Grid Gap (20px)
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1820px)
-  const cardShadowSetting = getThemeSetting("_yyUleMlhR4"); // Gölge / Kart Soft Shadow
-  const hoverAnimSetting = getThemeSetting("_bNtMCrOBsE"); // Animasyon / Buton ve Hover
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
-  const sectionPy = verticalPySetting?.value || "48px";
-  const sectionPyMobile = verticalPyMobileSetting?.value || "32px";
-  const sectionPx = sectionPxSetting?.value || "20px";
-  const mobilePx = mobilePxSetting?.value || "16px";
-  const cardRadius = cardRadiusSetting?.value || "32px";
-  const gridGap = gridGapSetting?.value || "20px";
-  const maxSiteWidth = siteWidthSetting?.value || "1820px";
-  const cardShadow = formatShadow(cardShadowSetting?.value, "0 4px 20px rgba(55, 67, 91, 0.08)");
-  const hoverTransition = hoverAnimSetting?.value || "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)";
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setIsVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(el);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ");
+  const maxSiteWidth = siteWidthSetting?.value || "1560px";
 
   const inlineStyles = {
     backgroundColor: backgroundColor || undefined,
-    "--section-py": sectionPy,
-    "--section-py-mobile": sectionPyMobile,
-    "--section-px": sectionPx,
-    "--mobile-px": mobilePx,
-    "--card-radius": cardRadius,
-    "--grid-gap": gridGap,
     "--max-site-width": maxSiteWidth,
-    "--card-shadow": cardShadow,
-    "--hover-transition": hoverTransition,
   };
 
   const features = [
     {
+      tag: feature1Tag ? feature1Tag.trim().toLocaleUpperCase("tr-TR") : "TASARIM",
       title: feature1Title,
-      desc: feature1Desc,
       icon: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 2v20M2 12h20M5 5l14 14M19 5L5 19" />
         </svg>
       ),
     },
     {
+      tag: feature2Tag ? feature2Tag.trim().toLocaleUpperCase("tr-TR") : "KUMAŞ",
       title: feature2Title,
-      desc: feature2Desc,
       icon: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 3v18M3 12h18M6.3 6.3l11.4 11.4M17.7 6.3L6.3 17.7" />
+          <circle cx="12" cy="12" r="9" />
         </svg>
       ),
     },
     {
+      tag: feature3Tag ? feature3Tag.trim().toLocaleUpperCase("tr-TR") : "KULLANIM",
       title: feature3Title,
-      desc: feature3Desc,
       icon: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <rect x="1" y="3" width="15" height="13" />
-          <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
-          <circle cx="5.5" cy="18.5" r="2.5" />
-          <circle cx="18.5" cy="18.5" r="2.5" />
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="4" y="4" width="16" height="16" rx="3" />
+          <path d="M9 4v16M15 4v16M4 9h16M4 15h16" />
+        </svg>
+      ),
+    },
+    {
+      tag: feature4Tag ? feature4Tag.trim().toLocaleUpperCase("tr-TR") : "GARANTİ",
+      title: feature4Title,
+      icon: (
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
         </svg>
       ),
     },
   ];
 
+  const visibleClass = isVisible ? "ikas-features--visible" : "";
+
   return (
     <section
-      className={`ikas-features ${className}`.trim()}
+      ref={sectionRef}
+      className={`ikas-features ${visibleClass} ${className}`.trim()}
       style={inlineStyles}
+      lang="tr"
     >
       <div className="ikas-features__container">
         {features.map((feat, idx) => (
-          <div key={idx} className="ikas-features__card">
-            <div className="ikas-features__icon-circle">{feat.icon}</div>
-            {feat.title && (
-              <h3 className="ikas-features__title _AZR1yL8GrK">
-                {feat.title}
-              </h3>
-            )}
-            {feat.desc && (
-              <p className="ikas-features__desc _C0OZ8W7vYS">{feat.desc}</p>
-            )}
+          <div key={idx} className="ikas-features__col">
+            <div className="ikas-features__icon-wrapper">{feat.icon}</div>
+            <div className="ikas-features__text-group">
+              {feat.tag && (
+                <div className="ikas-features__tag _eZyocyyd0F">
+                  {feat.tag}
+                </div>
+              )}
+              {feat.title && (
+                <div className="ikas-features__title _AZR1yL8GrK">
+                  {feat.title}
+                </div>
+              )}
+            </div>
           </div>
         ))}
       </div>
