@@ -14,17 +14,16 @@ export interface FeaturedCollectionGridProps extends Props {
  * FeaturedCollectionGrid — 01 · ÖNE ÇIKANLAR 4'lü Ürün Izgarası (Anasayfa.dc.html Uyumlu)
  *
  * Özellikler:
- * - Üst Monospace Etiket ("01 · ÖNE ÇIKANLAR") + H2 Başlık ("En çok yola çıkan dördü") + Sağ Link ("TÜM ÜRÜNLER (8)")
- * - 4 Kolonlu Ürün Izgarası
+ * - Üst Monospace Etiket ("01 · ÖNE ÇIKANLAR") + H2 Başlık + Sağ Link ("TÜM ÜRÜNLER (8)")
+ * - 4 Kolonlu Ürün Izgarası (repeat(auto-fill, minmax(min(100%, 268px), 1fr)))
  * - ProductCard Görsel Üstünde Slide-Up "SEPETE EKLE" Buton Hover Efekti
- * - Başlık & Fiyat Yan Yana, Alt Açıklama ve Renk Swatch'ları
  * - IntersectionObserver ile Kademeli Fade-Up (Stagger ~70ms) Animasyonu
  * - prefers-reduced-motion Erişilebilirlik Desteği
  * - TOKENS.md cssVar Kullanımı (Ana Lacivert var(--pxNuSoudLn), Accent Sarı var(--sy8ZnXZdoG))
  */
 export function FeaturedCollectionGrid({
   tag = "01 · ÖNE ÇIKANLAR",
-  title = "En çok yola çıkan dördü",
+  title = "Tüm seyahatler için tek koleksiyon.",
   viewAllText = "TÜM ÜRÜNLER (8)",
   viewAllUrl = "/products",
   products,
@@ -74,40 +73,9 @@ export function FeaturedCollectionGrid({
   const productList = products?.data || [];
   const displayProducts = productList.slice(0, itemCount);
 
-  // Demo fallback cards if product list is empty in editor (Anasayfa.dc.html birebir demoları)
+  // Demo fallback cards if product list is empty in editor
   const hasProducts = displayProducts.length > 0;
-  const demoFallbackCards = [
-    {
-      subtitle: "Klasik boyun ve baş desteği",
-      badgeText: "EN ÇOK SATAN",
-      swatches: [
-        { color: "#37435B", label: "LACİVERT", active: true },
-        { color: "#385244", label: "ZEYTİN" },
-      ],
-    },
-    {
-      subtitle: "Çocuklar için mini boy",
-      swatches: [
-        { color: "#37435B", label: "LACİVERT", active: true },
-        { color: "#C05638", label: "Kiremit" },
-      ],
-    },
-    {
-      subtitle: "%100 ışık geçirmez, ipek astar",
-      badgeText: "YENİ",
-      swatches: [
-        { color: "#101418", label: "SİYAH", active: true },
-        { color: "#DCD8CD", label: "Krem" },
-      ],
-    },
-    {
-      subtitle: "Pamuklu büzgülü kese",
-      swatches: [
-        { color: "#E0DDD5", label: "HAM BEZ", active: true },
-        { color: "#37435B", label: "Lacivert" },
-      ],
-    },
-  ];
+  const fallbackList = Array.from({ length: itemCount }).map((_, i) => i);
 
   const visibleClass = isVisible ? "ikas-featured-grid--visible" : "";
 
@@ -168,16 +136,13 @@ export function FeaturedCollectionGrid({
                   />
                 </div>
               ))
-            : demoFallbackCards.slice(0, itemCount).map((demo, idx) => (
+            : fallbackList.map((id, idx) => (
                 <div
-                  key={idx}
+                  key={id}
                   className="ikas-featured-grid__item"
                   style={{ transitionDelay: `${idx * 70}ms` }}
                 >
                   <ProductCard
-                    subtitle={demo.subtitle}
-                    badgeText={demo.badgeText}
-                    swatches={demo.swatches}
                     showRating={false}
                     showQuickAdd={true}
                     overlayQuickAdd={true}
