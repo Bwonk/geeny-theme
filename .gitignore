@@ -9,6 +9,9 @@ asd
 scripts/
 .env
 .env.local
+
+# MCP sunucu tanımları admin token içerir; şablonu .mcp.json.example
+.mcp.json
 *.jpg
 *.jpeg
 *.png
