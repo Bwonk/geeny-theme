@@ -106,16 +106,20 @@
   color: var(--24KlcgGmm9);             /* Saf Beyaz — TOKENS.md satır 14 */
   padding: 14px 0;
   transform: rotate(-1deg);
-  width: 106%;
-  margin-left: -3%;
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
   overflow: hidden;
   pointer-events: none;
+  box-sizing: border-box;
 }
 
 .ikas-story__belt-track {
   display: flex;
   white-space: nowrap;
   will-change: transform;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .ikas-story__belt-text {
@@ -125,6 +129,7 @@
   color: var(--24KlcgGmm9);             /* Saf Beyaz — TOKENS.md satır 14 */
   white-space: nowrap;
   flex-shrink: 0;
+  max-width: 100%;
 }
 
 /* Erişilebilirlik: Azaltılmış Hareket Tercihi */

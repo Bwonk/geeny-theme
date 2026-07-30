@@ -18,6 +18,7 @@
     "@ikas/code-components-mcp": "^2.6.1",
     "@ikas/component-cli": "^2.6.1",
     "@preact/preset-vite": "^2.10.3",
+    "playwright": "^1.62.0",
     "typescript": "^5.3.3",
     "vite": "^5.0.0"
   }

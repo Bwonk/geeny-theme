@@ -9,6 +9,7 @@
 .ikas-curved-marquee {
   position: relative;
   overflow: hidden;
+  max-width: 100%;
   padding: clamp(20px, 2.5vw, 40px) 0;
   background-color: var(--24KlcgGmm9);  /* Saf Beyaz — TOKENS.md satır 14 */
   box-sizing: border-box;
@@ -33,9 +34,11 @@
 /* SVG Çizim Alanı */
 .ikas-curved-marquee__svg {
   width: 100%;
+  max-width: 100%;
   height: auto;
   aspect-ratio: 1600 / 200;
   display: block;
+  overflow: hidden;
 }
 
 /* SVG Metin Stili (Harf Geometrisinin Bozulmaması İçin Nötr Letter Spacing) */
