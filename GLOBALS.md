@@ -3,14 +3,44 @@
 ## Amaç
 Bu dosya, ikas MCP ile hangi global'in hangi değerle, hangi araçla oluşturulacağını ve bileşenlerde nasıl entegre edileceğini tarif eden tek kaynaktır. [DESIGN.md](file:///root/geeny/DESIGN.md)'deki analizden türetilmiştir; prompts/ klasöründeki tüm bileşen prompt'ları bu dosyadaki token adlarını ve değerlerini birebir referans alır.
 
-## Durum
-Global'ler henüz canlı oluşturulmadı — canlı kurulum ayrı bir onaylı adımda, aşağıdaki tablolara birebir uyularak `create_theme_global` ile yapılacaktır.
+## Durum — **kurulum tamamlandı**
+
+Aşağıdaki tabloların tamamı ikas temasında **canlı olarak kuruludur**
+(`list_theme_globals` ile doğrulanmıştır): 10 renk, 10 tipografi, 15 boşluk, 7 radius, 4 gölge,
+8 animasyon token'ı.
+
+> **Bileşen kodlarken bu dosyayı değil `prompts/TOKENS.md`'yi referans alın.** Bu doküman token'ların
+> *niyetini ve değerini* anlatır; canlı `id` / `cssVar` / `className` / `variableName` eşleşmelerinin
+> tek doğru kaynağı `prompts/TOKENS.md`'dir (doğrudan `list_theme_globals` çıktısından yazılmıştır).
+
+`prompts/00-globals.md` kurulum runbook'u **çalıştırılmış ve tüketilmiştir**; yeniden çalıştırmak
+mevcut token'ları kopyalar.
+
+## Bilinen Boşluklar
+
+Bu üç madde bilinçli olarak açıktır ve ayrı iş kalemidir:
+
+1. **Nötr gri skalası token değil.** `Anasayfa.dc.html` referansının editoryal grileri
+   (`#8C97A5`, `#E4E7E8`, `#6E7A8C`, `#DCE0E1`, `#101418`, `#F4F5F5`, `#EDEFF0`, `#5A6472`)
+   bileşen CSS'lerinde ham hex olarak yazılıdır — tek başına `#8C97A5` 19, `#E4E7E8` 10 yerde geçer.
+   Bu, "bileşenler asla ham değer kullanmaz" ilkesinin bilinen ihlalidir. Çözüm: `Renkler / Nötr …`
+   grubunda token'lar açıp CSS'lerdeki hex'leri `cssVar` ile değiştirmek.
+2. **`breakpoints`, `keyframes` ve `colorSchemes` boş.** Responsive kırılımlar tema token'ı değil,
+   bileşen CSS'lerinde `clamp()` ve `@media (max-width: 767px)` ile yönetiliyor. `DESIGN.md`'de
+   öngörülen 6 şemalı `colorScheme` yapısı kurulmadı; bölüm zeminleri section başına
+   `backgroundColor` COLOR prop'u ile yönetiliyor.
+3. **`Boşluk / Site Maksimum Genişliği` referansla çelişiyor.** Canlı değer `1820px`, referans
+   tasarım `1560px` kurguluyor (bkz. DESIGN.md → Spacing Ritmi).
 
 ## Temel İlkeler
 1. **Global-first:** Her renk, tipografi, boşluk, radius, gölge ve animasyon bir global token'dır. Bileşenler asla ham değer kullanmaz — renk `var(--<id>)`, tipografi `className="_<id>"`, globalVariable'lar `getThemeSetting` ile okunup inline CSS değişkenine aktarılır (`style={{ "--token": setting.value }}`).
 2. **Türkçe zorunluluğu:** Token adları Türkçe ve `/` ile gruplu. Prop `displayName`/`description`/grup adları Türkçe.
 3. **Uppercase & Türkçe Harf Uyumu:** Metin büyük veya küçük harf serbestçe kullanılabilir; ANCAK Türkçe i/İ/ı/I harflerinin doğru dönüşmesi için HTML kök elementinde `lang="tr"` ZORUNLUDUR. Tipografi token'larında `text-transform` tanımlanmaz.
-4. **Font:** `Jost, sans-serif` — Google Fonts destekli, Türkçe karakter kümesini (İ, ı, Ş, Ğ, Ç, Ö, Ü) %100 destekleyen font ailesi. [DESIGN.md](file:///root/geeny/DESIGN.md)'den alınmıştır, ağırlık aralığı `400` (Regular) - `600` (Semi-Bold).
+4. **Fontlar — 3 aileli sistem:** başlıklarda `Onest`, gövdede `Roboto Flex`, etiket/rozet ve mono
+   UI'da `Roboto Mono`. Üçü de Google Fonts üzerinden `latin-ext` alt kümesiyle yüklenir ve Türkçe
+   karakterleri (İ, ı, Ş, Ğ, Ç, Ö, Ü) tam destekler; `src/global.css` içinde `--font-heading`,
+   `--font-body`, `--font-mono` değişkenlerine bağlıdır. **`Roboto Flex` yalnızca `400` ağırlığını
+   destekler** (`supportedFontWeights: [400]`) — başka bir ağırlık yazmak reddedilir.
 5. **Kod İngilizce / Editör Türkçe:** Kod tanımlayıcıları İngilizce; editörde görünen her şey Türkçe.
 6. **cssVar Kuralı:** Renklerde `id` ile `cssVar` farklı büyük/küçük harf kullanabilir; bileşenler `list_theme_globals` çıktısındaki `cssVar` TAM değerini kullanır, id'den elle türetmez.
 
@@ -18,7 +48,7 @@ Global'ler henüz canlı oluşturulmadı — canlı kurulum ayrı bir onaylı ad
 
 ## Token Grupları
 
-### B1. Renkler — `create_theme_global` · `kind: color` (9 Token)
+### B1. Renkler — `kind: color` (10 Token · canlı)
 > **Bağlama Kuralı:** Bileşenlerde CSS rengi olarak `var(--<cssVar>)` şeklinde tüketilir. `list_theme_globals` çıktısındaki tam `cssVar` adı kullanılacaktır. `kind: color` çağrılarında `value` olarak somut Hex/RGBA string'i verilir (`var(...)` referansı verilemez).
 
 | Ad | Değer | Kullanım |
@@ -32,31 +62,31 @@ Global'ler henüz canlı oluşturulmadı — canlı kurulum ayrı bir onaylı ad
 | `Renkler / Overlay Siyah` | `rgba(55, 67, 91, 0.75)` | Drawer ve modal arkasındaki karartma katmanı (backdrop overlay) |
 | `Renkler / Sticky Header Çizgisi` | `rgba(0, 0, 0, 0.08)` | Sayfa kaydırıldığında sabit duran header alt ayırıcı çizgisi |
 | `Renkler / Kargo İlerleme Çubuğu` | `#E3E045` | Cart drawer içindeki ücretsiz kargo kalan tutar ilerleme çubuğu dolgu rengi |
-| `Renkler / Koyu Zemin Çizgisi` | `rgba(255, 255, 255, 0.12)` | Footer ve koyu zeminli bölümler için beyaz transparan ayırıcı çizgi (Canlı kurulum bekliyor) |
+| `Renkler / Koyu Zemin Çizgisi` | `rgba(255, 255, 255, 0.12)` | Footer ve koyu zeminli bölümler için beyaz transparan ayırıcı çizgi |
 
 *Not: CSS `transparent` kelimesi ve mükerrer `#37435B` semantik token'ları (İndirim Rozet Metni, Swatch Ring) kaldırılmış; 10 renk token'ı olarak güncellenmiştir.*
 
 ---
 
-### B2. Tipografi — `create_theme_global` · `kind: typography` (10 Token)
-> **Bağlama Kuralı:** Bileşenlerde ikas framework tarafında oluşturulan `className="_<id>"` stil sınıfı doğrudan elemana uygulanır. Font ailesi `Jost, sans-serif` olarak sabittir. `font_weight` sayısal değerdir (400, 500, 600).
+### B2. Tipografi — `kind: typography` (10 Token · canlı)
+> **Bağlama Kuralı:** Bileşenlerde ikas framework tarafında oluşturulan `className="_<id>"` stil sınıfı doğrudan elemana uygulanır. `font_weight` sayısal değerdir. Aşağıdaki değerler **canlı durumdur**.
 
-| Ad | Değer (Size / Weight / Line-Height) | Kullanım |
-| :--- | :--- | :--- |
-| `Tipografi / Display Hero` | Size: `54px`, Weight: `500`, Line-Height: `64.8px` | Masaüstü büyük sloganlar (Hero ana başlığı) |
-| `Tipografi / Başlık H1` | Size: `48px`, Weight: `500`, Line-Height: `62.5px` | Ana sayfa ve bölüm ana başlıkları (En büyük h1 başlığı) |
-| `Tipografi / Başlık H2` | Size: `36px`, Weight: `500`, Line-Height: `46.8px` | Standard H2 başlıkları, PDP ürün başlığı, sayfa başlıkları |
-| `Tipografi / Başlık H3` | Size: `30.2px`, Weight: `500`, Line-Height: `39.3px` | Akordiyon başlıkları, mobil modal başlıkları |
-| `Tipografi / Başlık H4` | Size: `27px`, Weight: `500`, Line-Height: `35.1px` | Öne çıkan bölüm alt başlıkları |
-| `Tipografi / Kart ve Alt Başlık (lg)` | Size: `24px`, Weight: `500`, Line-Height: `31.2px` | Alt başlıklar, kart başlıkları, PDP fiyat etiketi |
-| `Tipografi / Gövde Metni (base)` | Size: `18px`, Weight: `400`, Line-Height: `25.2px` | Paragraf ve gövde metinleri, ürün kartı başlığı, CTA buton metni |
-| `Tipografi / İkincil Metin (sm)` | Size: `16px`, Weight: `400`, Line-Height: `22.4px` | İkincil açıklamalar, input metinleri, footer alt bağlantıları, menü linkleri (`weight: 500`) |
-| `Tipografi / Etiket ve Rozet (xs)` | Size: `13.5px`, Weight: `500`, Line-Height: `18.9px` | Alt etiketler, küçük indirim rozetleri, kargo bildirimleri |
-| `Tipografi / Mobil Duyuru Metni` | Size: `12px`, Weight: `500`, Line-Height: `16.8px` | Mobil breakpoint announcement bar duyuru metni |
+| Ad | `className` | Aile | Size / Weight / Line-Height | Kullanım |
+| :--- | :--- | :--- | :--- | :--- |
+| `Tipografi / Display Hero` | `_78XkSXv7w4` | Onest | `54px` / `600` / `64.8px` | Masaüstü büyük sloganlar (Hero ana başlığı) |
+| `Tipografi / Başlık H1` | `_DusX6I08Pv` | Onest | `48px` / `600` / `62.5px` | Sayfa ve bölüm ana başlıkları |
+| `Tipografi / Başlık H2` | `_sKAMD8d1LA` | Onest | `36px` / `600` / `46.8px` | Bölüm başlıkları, PDP ürün başlığı |
+| `Tipografi / Başlık H3` | `_AHnMWYqzuI` | Onest | `30.2px` / `500` / `39.3px` | Akordiyon başlıkları, mobil modal başlıkları |
+| `Tipografi / Başlık H4` | `_f7x3iMRFDx` | Onest | `27px` / `500` / `35.1px` | Öne çıkan bölüm alt başlıkları |
+| `Tipografi / Kart ve Alt Başlık (lg)` | `_AZR1yL8GrK` | Onest | `24px` / `500` / `31.2px` | Kart başlıkları, PDP fiyat etiketi |
+| `Tipografi / Gövde Metni (base)` | `_VcfI5D07Nt` | Roboto Flex | `18px` / `400` / `25.2px` | Paragraf ve gövde metinleri |
+| `Tipografi / İkincil Metin (sm)` | `_C0OZ8W7vYS` | Roboto Flex | `16px` / `400` / `22.4px` | İkincil açıklamalar, input metinleri, footer bağlantıları |
+| `Tipografi / Etiket ve Rozet (xs)` | `_eZyocyyd0F` | Roboto Mono | `13.5px` / `400` / `18.9px` | Mono bölüm etiketleri, rozetler, meta satırları |
+| `Tipografi / Mobil Duyuru Metni` | `_8BUF3YKi2n` | Roboto Mono | `12px` / `400` / `16.8px` | Mobil breakpoint duyuru bandı metni |
 
 ---
 
-### B3. Boşluklar / Spacing — `create_theme_global` · `kind: globalVariable` · `type: TEXT` (15 Token)
+### B3. Boşluklar / Spacing — `globalVariable` · `TEXT` (15 Token · canlı)
 > **Bağlama Kuralı:** Bileşenlerde `getThemeSetting` ile okunup konteynırlara `style={{ "--section-x-padding": setting.value }}` veya inline padding/gap CSS değişkeni şeklinde aktarılır.
 
 | Ad | Değer | Kullanım |
@@ -79,7 +109,7 @@ Global'ler henüz canlı oluşturulmadı — canlı kurulum ayrı bir onaylı ad
 
 ---
 
-### B4. Radius — `create_theme_global` · `kind: globalVariable` · `type: TEXT` (7 Token)
+### B4. Radius — `globalVariable` · `TEXT` (7 Token · canlı)
 > **Bağlama Kuralı:** Bileşenlerde `getThemeSetting` ile okunup elemanlara `style={{ borderRadius: setting.value }}` şeklinde aktarılır.
 
 | Ad | Değer | Kullanım |
@@ -94,7 +124,7 @@ Global'ler henüz canlı oluşturulmadı — canlı kurulum ayrı bir onaylı ad
 
 ---
 
-### B5. Gölge / Shadow — `create_theme_global` · `kind: globalVariable` · `type: SHADOW` (4 Token)
+### B5. Gölge / Shadow — `globalVariable` · `SHADOW` (4 Token · canlı)
 > **Bağlama Kuralı:** Bileşenlerde `getThemeSetting` ile okunup `boxShadow` özelliğine aktarılır. Değerler ikas `SHADOW` JSON obje şemasına göredir (`x`, `y`, `blur`, `spread`, `color`, `position`).
 
 | Ad | Değer (JSON Obje) | Kullanım |
@@ -106,7 +136,7 @@ Global'ler henüz canlı oluşturulmadı — canlı kurulum ayrı bir onaylı ad
 
 ---
 
-### B6. Animasyon — `create_theme_global` · `kind: globalVariable` · `type: TEXT` (7 Token)
+### B6. Animasyon — `globalVariable` · `TEXT` (8 Token · canlı)
 > **Bağlama Kuralı:** Bileşenlerde `transition` CSS özelliğine veya `style={{ transition: setting.value }}` şeklinde uygulanır.
 
 | Ad | Değer | Kullanım |
@@ -118,7 +148,7 @@ Global'ler henüz canlı oluşturulmadı — canlı kurulum ayrı bir onaylı ad
 | `Animasyon / Akordiyon Açılış` | `max-height 0.35s ease-in-out` | PDP collapsible tabs ve akordiyon içerik açılış yüksekliği geçişi |
 | `Animasyon / Sticky Bar Belirme` | `transform 0.3s ease, opacity 0.3s ease` | PDP scroll edildiğinde sabit alt barın alttan belirmesi geçişi |
 | `Animasyon / Fade Yumuşak` | `opacity 0.3s ease-in-out` | Announcement bar metin değişimi ve thumbnail switch yumuşak görünürlük geçişi |
-| `Animasyon / Marquee Ticker` | `transform 25s linear infinite` | Press ticker kayan marka logoları bandı sonsuz kaydırma geçişi (Canlı kurulum bekliyor) |
+| `Animasyon / Marquee Ticker` | `transform 25s linear infinite` | Press ticker kayan marka logoları bandı sonsuz kaydırma geçişi |
 
 #### Sürekli Keyframe Animasyonları
 - **`Animasyon / Marquee Ticker`**: `transform 25s linear infinite`

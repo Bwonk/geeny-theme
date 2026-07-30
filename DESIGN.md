@@ -1,56 +1,115 @@
 # DESIGN.md — Infinity Pillow Tema Tasarım Dokümanı
 
-> **Not:** Bu doküman `https://infinitypillow.co/` referans sitesinin Playwright ile 375px (Mobil), 768px (Tablet) ve 1440px (Masaüstü) breakpoint'lerinde DOM computed style, layout ve etkileşim analizlerinden elde edilen **tek tasarım kaynağıdır (Single Source of Truth)**. ikas Theme Store geliştirmelerinde tüm bileşenler, stiller ve animasyonlar bu kılavuza ve [IKAS.md](file:///root/geeny/IKAS.md) altyapı yeteneklerine göre inşa edilecektir. Merchant içerikleri (metinler, görseller, ürün fiyatları) dinamik/editable prop olarak kurgulanacaktır.
+> **Güncel tasarım kaynağı:** `prompts/referans/Anasayfa.dc.html` (Claude Design çıktısı) ve
+> `prompts/referans/SearchMinimal.dc.html`. Bunlar **hedef görsellerdir** — `sc-if` / `{{ }}` şablon
+> sözdizimi içerdikleri için kodları ikas'a taşınmaz, yalnızca görsel dil, ölçü ve etkileşim referansı
+> olarak okunur.
+>
+> **Tarihçe:** Bu dokümanın ilk sürümü `https://infinitypillow.co/` sitesinin Playwright analizinden
+> üretilmişti. Marka kimliği (lacivert/sarı ikilisi, yumuşak köşeler, seyahat teması) oradan gelmeye
+> devam ediyor; ancak **tipografi, nötr renk skalası ve ana sayfa bölüm dizilimi** artık
+> `Anasayfa.dc.html` referansından geliyor. Bölüm 5'teki eski URL listesi arşiv niteliğindedir.
+>
+> **Uygulanan gerçek:** Canlı tema token'ları için tek doğru kaynak `prompts/TOKENS.md`'dir
+> (`list_theme_globals` çıktısından okunur). Bu dokümandaki ham hex/px değerleri tasarım niyetini
+> anlatır; **koda hardcode edilmez**, token üzerinden bağlanır. Teknik sınırlar için
+> [IKAS.md](file:///root/geeny/IKAS.md), token kurulumu için [GLOBALS.md](file:///root/geeny/GLOBALS.md).
+> Merchant içerikleri (metinler, görseller, ürün fiyatları) editable prop olarak kurgulanır.
 
 ---
 
 ## 1. Genel Tasarım Dili
 
 ### Karakter ve Estetik Yaklaşım
-Infinity Pillow tasarımı; modern, ferah, seyahat ve konfor odaklı, premium bir e-ticaret estetiğine sahiptir. Tasarım dili yumuşatılmış köşeler (2rem/32px radius kartlar ve medya blokları), yüksek kontrastlı tipografi (`Jost` font ailesi), derin lacivert ve canlı limon sarısı accent renk ikilisi ile dinamik mikro-etkileşimler üzerine kuruludur.
+Infinity Pillow tasarımı; modern, ferah, seyahat ve konfor odaklı, premium bir e-ticaret estetiğine sahiptir. Tasarım dili yumuşatılmış köşeler (2rem/32px radius kartlar ve medya blokları), editoryal tipografi karşıtlığı (başlıklarda geometrik `Onest`, gövdede `Roboto Flex`, etiket/rozette `Roboto Mono`), derin lacivert ve canlı limon sarısı accent renk ikilisi ile dinamik mikro-etkileşimler üzerine kuruludur.
 
-### Renk Paleti (Exact Hex Listesi)
-Tüm renkler DOM computed style okumalarından elde edilmiştir:
+### Renk Paleti
 
-| Renk Tanımı | RGB Değeri | Hex Kodu | ikas Bağlama Karşılığı ([IKAS.md](file:///root/geeny/IKAS.md)) | Kullanım Alanı |
-| :--- | :--- | :--- | :--- | :--- |
-| **Primary Navy (Derin Lacivert)** | `rgb(55, 67, 91)` | `#37435B` | `kind: color` (`var(--color_37435b)`) | Ana metinler, birincil butonlar, koyu arka plan bölümleri (Scheme 3/4), başlıklar |
-| **Accent Yellow (Limon Sarısı)** | `rgb(227, 224, 69)` | `#E3E045` | `kind: color` (`var(--color_e3e045)`) | Öne çıkan butonlar, indirim/promosyon rozetleri, vurgu alanları (Scheme 4) |
-| **Light Slate Gray (Açık Gri/Mavi)**| `rgb(200, 207, 208)`| `#C8CFD0` | `kind: color` (`var(--color_c8cfd0)`) | İkincil arka planlar (Scheme 2), kart zeminleri, böleçler |
-| **Review Star Yellow (Yıldız Sarısı)**| `rgb(227, 224, 98)`| `#E3E062` | `kind: color` (`--jdgm-star-color`) | Ürün kartları ve değerlendirme yıldızları (`--jdgm-star-color`) |
-| **Pure White (Saf Beyaz)** | `rgb(255, 255, 255)` | `#FFFFFF` | `kind: color` | Ana sayfa arka planı (Scheme 1), kart içerikleri, buton yazı renkleri |
-| **Pure Black (Siyah)** | `rgb(0, 0, 0)` | `#000000` | `kind: color` | Yüksek kontrastlı metinler, alt çizgi vurguları, ikincil durumlar |
-| **Overlay Black (%75)** | `rgba(55, 67, 91, 0.75)` | `#37435BBF` | `kind: color` | Drawer ve modal arkasındaki karartma katmanı (backdrop overlay) |
+#### Marka Renkleri — canlı tema token'ı olarak kurulu
+Bu 10 renk ikas temasında `kind: color` token'ı olarak mevcuttur. Bileşenlerde **birebir `cssVar`
+değeriyle** kullanılır; hex değeri koda yazılmaz. Canlı `id`/`cssVar` listesi: `prompts/TOKENS.md`.
 
-#### Color Scheme Yapısı
-Site 6 farklı tema şeması (`colorScheme`) kullanmaktadır:
-- **Scheme 1 (Light Default):** Arka plan `#FFFFFF`, Metin `#37435B`, Accent 1 `#37435B`, Accent 2 `#E3E045`
-- **Scheme 2 (Light Slate):** Arka plan `#C8CFD0`, Metin `#37435B`, Accent 1 `#37435B`
-- **Scheme 3 (Dark Navy):** Arka plan `#37435B`, Metin `#C8CFD0`, Accent 1 `#E3E045`
-- **Scheme 4 (Accent Yellow Block):** Arka plan `#37435B`, Metin `#E3E045`, Accent 1 `#E3E045`
-- **Scheme 5 (Dark Black):** Arka plan `#000000`, Metin `#FFFFFF`
-- **Scheme 6 (Clean White):** Arka plan `#FFFFFF`, Metin `#000000`
+| Renk Tanımı | Hex / RGBA | Canlı `cssVar` | Kullanım Alanı |
+| :--- | :--- | :--- | :--- |
+| **Ana Lacivert** | `#37435B` | `var(--pxNuSoudLn)` | Ana metinler, birincil butonlar, koyu zeminli bölümler, başlıklar |
+| **Accent Sarı** | `#E3E045` | `var(--sy8ZnXZdoG)` | Öne çıkan butonlar, sepet butonu, rozet ve vurgu alanları |
+| **Açık Gri Mavi** | `#C8CFD0` | `var(--cdFDkBbKkc)` | İkincil zeminler, kart arka planları, bölücüler |
+| **Yıldız Sarısı** | `#E3E062` | `var(--cGupQGnbYq)` | Değerlendirme yıldızları |
+| **Saf Beyaz** | `#FFFFFF` | `var(--24KlcgGmm9)` | Sayfa zemini, kart içi, koyu zeminde metin |
+| **Saf Siyah** | `#000000` | `var(--vluFeuIeFs)` | Yüksek kontrastlı metin ve vurgular |
+| **Overlay Siyah** | `rgba(55, 67, 91, 0.75)` | `var(--fRUyppFgyp)` | Drawer/modal arkası karartma katmanı |
+| **Sticky Header Çizgisi** | `rgba(0, 0, 0, 0.08)` | `var(--gzj8Nhz1Gb)` | Scroll'da beliren header alt çizgisi |
+| **Kargo İlerleme Çubuğu** | `#E3E045` | `var(--ap8FzMh9VN)` | Sepet ücretsiz kargo ilerleme çubuğu |
+| **Koyu Zemin Çizgisi** | `rgba(255, 255, 255, 0.12)` | `var(--pFqY0XGdSq)` | Koyu bölümlerdeki ince ayraçlar |
+
+#### Nötr Skala — `Anasayfa.dc.html` referansından, **henüz token değil**
+Referans tasarımın editoryal grileri. Şu an bileşen CSS'lerinde ham hex olarak yazılı
+(`#8C97A5` 19 kullanım, `#E4E7E8` 10 kullanım) — bu, "ham değer kullanılmaz" ilkesinin bilinen
+açık ihlalidir ve token'a çevrilmeyi bekler (bkz. GLOBALS.md → Bilinen Boşluklar).
+
+| Hex | Rol |
+| :--- | :--- |
+| `#101418` | Neredeyse siyah — editoryal başlık kontrastı |
+| `#5A6472` | Koyu gri-mavi — ikincil başlık |
+| `#6E7A8C` | Orta gri-mavi — gövde/açıklama metni |
+| `#8C97A5` | Soft gri-mavi — mono etiket, pasif metin, ikon |
+| `#DCE0E1` | Açık gri — kenarlık |
+| `#E4E7E8` | Çok açık gri — ayraç çizgisi, input kenarlığı |
+| `#EDEFF0` / `#F4F5F5` | Zemin gri tonları — footer ve bölüm zeminleri |
+
+#### Color Scheme Yapısı — **uygulanmadı**
+İlk tasarımda 6 şemalı bir `colorScheme` yapısı öngörülmüştü. Canlı temada
+`colorSchemes.schemes` ve `colorSchemes.values` **boştur**; bölüm zeminleri bunun yerine her
+section'ın kendi `backgroundColor` COLOR prop'u ile yönetilir. Şema sistemine geçilecekse bu
+ayrı bir iş kalemidir.
 
 ---
 
-### Tipografi Sistemi (`Jost, sans-serif`)
-Tipografi temel font ailesi `Jost, sans-serif` üzerinedir. Taban font boyutu varsayılan `18px` (`112.5%`) ve line-height `1.4` (`25.2px`) değerindedir.
+### Tipografi Sistemi — 3 Fontlu Editoryal Karşıtlık
 
-#### Type Scale (Tipografi Ölçeği)
-- **`xs` (13.5px / `0.749rem`):** Alt etiketler, küçük rozetler, kargo bildirimleri
-- **`sm` (16px / `0.891rem`):** İkincil açıklamalar, input metinleri, footer alt bağlantıları
-- **`base` (18px / `1rem`):** Paragraf ve gövde metinleri (`line-height: 25.2px`)
-- **`lg` (24px / `1.335rem`):** Alt başlıklar, kart başlıkları, fiyat etiketi
-- **`xl` (27px / `1.498rem`):** Öne çıkan bölüm alt başlıkları
-- **`2xl` (30.2px / `1.682rem`):** Akordiyon başlıkları, mobil modal başlıkları
-- **`3xl` (36px / `2rem`):** Standard H1 başlıkları (`line-height: 46.8px`, `font-weight: 500`)
-- **`4xl` (48px / `2.67rem`):** H2 ve Hero ana başlıkları (`line-height: 62.5px`, `font-weight: 500`)
-- **`5xl` (54px / `3rem`):** Masaüstü büyük sloganlar
+Tek font ailesi yerine üç aileli bir sistem kullanılır. Fontlar `src/global.css` içinde Google Fonts
+ile yüklenir ve `--font-heading` / `--font-body` / `--font-mono` değişkenlerine bağlanır. Üçü de
+`latin-ext` alt kümesini içerdiğinden Türkçe karakterleri (İ, ı, Ş, Ğ, Ç, Ö, Ü) tam destekler.
+
+| Aile | Değişken | Rol |
+| :--- | :--- | :--- |
+| **Onest** | `--font-heading` | Tüm başlıklar (Display → H4) ve kart başlıkları |
+| **Roboto Flex** | `--font-body` | Gövde metni, açıklamalar, form ve input metinleri |
+| **Roboto Mono** | `--font-mono` | Bölüm etiketleri (`01 · ÖNE ÇIKANLAR`), rozetler, duyuru bandı, fiyat/mono UI |
+
+#### Type Scale — canlı tipografi token'ları
+Bileşenlerde ölçü/ağırlık elle yazılmaz; ilgili token'ın `className`'i eklenir
+(örn. `<h2 className="ikas-x__title _sKAMD8d1LA">`).
+
+| Token | `className` | Aile | Ölçü / Ağırlık / Satır Yüksekliği | Kullanım |
+| :--- | :--- | :--- | :--- | :--- |
+| Display Hero | `_78XkSXv7w4` | Onest | 54px / 600 / 64.8px | Hero ana slogan |
+| Başlık H1 | `_DusX6I08Pv` | Onest | 48px / 600 / 62.5px | Sayfa H1 |
+| Başlık H2 | `_sKAMD8d1LA` | Onest | 36px / 600 / 46.8px | Bölüm başlıkları |
+| Başlık H3 | `_AHnMWYqzuI` | Onest | 30.2px / 500 / 39.3px | Alt bölüm başlıkları |
+| Başlık H4 | `_f7x3iMRFDx` | Onest | 27px / 500 / 35.1px | Akordiyon, modal başlığı |
+| Kart ve Alt Başlık (lg) | `_AZR1yL8GrK` | Onest | 24px / 500 / 31.2px | Kart başlığı, fiyat |
+| Gövde Metni (base) | `_VcfI5D07Nt` | Roboto Flex | 18px / 400 / 25.2px | Paragraf, açıklama |
+| İkincil Metin (sm) | `_C0OZ8W7vYS` | Roboto Flex | 16px / 400 / 22.4px | Alt açıklama, footer linki |
+| Etiket ve Rozet (xs) | `_eZyocyyd0F` | Roboto Mono | 13.5px / 400 / 18.9px | Mono etiket, rozet, meta |
+| Mobil Duyuru Metni | `_8BUF3YKi2n` | Roboto Mono | 12px / 400 / 16.8px | Duyuru bandı (mobil) |
+
+> **Uyarı:** `Roboto Flex` token'ları yalnızca `400` ağırlığını destekler
+> (`supportedFontWeights: [400]`). Bu iki token'a başka bir ağırlık yazmak reddedilir.
+>
+> **Türkçe büyük harf:** Mono etiketler `toLocaleUpperCase("tr-TR")` ile büyütülür ve kök elemanda
+> `lang="tr"` bulunur; aksi hâlde `i → I` dönüşümü yanlış olur.
 
 ---
 
 ### Spacing (Boşluk) Ritmi
-- **Site Container Maksimum Genişliği (`--max-site-width`):** `1820px`
+- **Site Container Maksimum Genişliği (`--max-site-width`):** canlı token değeri `1820px`
+  (`getThemeSetting("_l6CcMRzdeZ")`).
+  > ⚠️ **Bilinen uyumsuzluk:** `Anasayfa.dc.html` referansı container'ı **1560px** olarak kurgular ve
+  > ana sayfa section'larının CSS fallback'i de `1560px`'tir. Ancak değişken her zaman canlı
+  > token'dan inline set edildiği için fallback devreye girmez ve sayfa fiilen **1820px** genişlikte
+  > render olur. Ana sayfayı referansa tam oturtmak için `_l6CcMRzdeZ` token'ının `1560px`'e
+  > çekilmesi gerekir; bu değişiklik ürün/koleksiyon/sepet sayfalarını da etkiler.
 - **Yatay Bölüm Padding (`--section-x-padding`):** `1.25rem` (`20px`) [Mobil: `16px`]
 - **Dikey Bölüm Aralığı (`--section-vertical-spacing`):** `2rem` (`32px`) [Masaüstü: `48px` - `64px`]
 - **Grid Gap (`--grid-gap`):** `1.25rem` (`20px`)
@@ -87,7 +146,7 @@ Tipografi temel font ailesi `Jost, sans-serif` üzerinedir. Taban font boyutu va
 ### 2. Header & Main Navigation Bar (`<site-header>`)
 - **Amaç:** Marka logosu, ana sayfa navigasyon menüsü, arama, hesap ve sepet butonlarını barındırır.
 - **Yapı:** 3 Kolonlu Flex Layout (`Logo Sol/Orta`, `Menü Orta/Sol`, `Icons Sağ`). Sabit Yükseklik `--header-height: 60px`.
-- **Stil Değerleri:** Background `#FFFFFF` (scroll edildiğinde `sticky` ve alt çizgi `1px solid rgba(0,0,0,0.08)`). Menü linkleri `Jost`, `16px`, `#37435B`, `font-weight: 500`.
+- **Stil Değerleri:** Background `#FFFFFF` (scroll edildiğinde `sticky` ve alt çizgi `1px solid rgba(0,0,0,0.08)`). Menü linkleri `Roboto Flex` (`_C0OZ8W7vYS`), `16px`, `var(--pxNuSoudLn)`.
 - **ikas Karşılığı:** ikas `IMAGE` prop (Logo) + `@ikas/bp-storefront` `getDefaultSrc`, `LINK` / `LIST_OF_LINK` prop tipleri.
 - **Hover/Active:** Menü linki hover'da `color: #E3E045` veya alt çizgi `scaleX(1)` animasyonu (`transition: transform 0.25s ease`).
 - **Responsive Davranışı (375px / 768px / 1440px):**
@@ -164,18 +223,32 @@ Tipografi temel font ailesi `Jost, sans-serif` üzerinedir. Taban font boyutu va
 
 ## 3. Sayfa Şablonları (Page Templates)
 
-### 1. Ana Sayfa (Homepage Template)
-1. `<announcement-bar>`
-2. `<site-header>`
-3. `<hero-banner>` (Hero Ürün Tanıtımı & Primary CTA)
-4. `<press-ticker>` (As-Seen-In Logolar Marquee Bandı)
-5. `<featured-collection-grid>` (Öne Çıkan Ürün Kartları Izgarası)
-6. `<image-with-text-block>` (Görsel ve Metin Karşılıklı Blok - Left/Right)
-7. `<product-features-icons>` (Ücretsiz Kargo, Garantili İade, Hijyenik Kumaş İkon Izgarası)
-8. `<testimonials-carousel>` (Müşteri Yorumları & Yıldız Kartları)
-9. `<video-demo-section>` (Ürün Kullanım Videosu / Autoplay Banner)
-10. `<newsletter-section>` (E-Bülten Kayıt Alanı)
-11. `<site-footer>`
+### 1. Ana Sayfa (Homepage Template) — **uygulanan gerçek dizilim**
+
+`Anasayfa.dc.html` referansına göre kurulan ve ikas editöründe Home sayfasına yerleştirilmiş
+11 section, yukarıdan aşağıya:
+
+| # | Section (ikas adı) | Rolü |
+| :-- | :--- | :--- |
+| 1 | Announcement Bar | Sticky duyuru bandı (3 mesaj, mono tipografi) |
+| 2 | Header | Sağa hizalı floating pill navbar; CartDrawer + SearchOverlay gömülü |
+| 3 | Hero Banner | 2 kolonlu hero, kelime kelime reveal + görsel parallax, sosyal kanıt kartı |
+| 4 | Editorial Bridge | Hero ile devamı arasında ince çizgi + slogan/künye köprüsü |
+| 5 | Product Features Icons | 4 kolonlu özellik bandı (çizgi ikon + mono etiket + başlık) |
+| 6 | Featured Collection Grid | Mono etiket + H2 + 4'lü ürün ızgarası, hover'da "Sepete Ekle" |
+| 7 | Story Section | Marka hikâyesi, scroll ile aydınlanan metin, 4 sayaç, hız duyarlı kayan bant |
+| 8 | Testimonials Carousel | Organik yerleşimli 4 yorum kartı + avatar kümesi |
+| 9 | Curved Marquee | SVG `textPath` üzerinde kavisli akan kampanya metni |
+| 10 | Newsletter Section | Footer'a gömülü duran koyu CTA kartı + e-posta formu |
+| 11 | Footer | 4 kolonlu footer, mobilde akordeon, sosyal + ödeme rozetleri |
+
+> **Kapsam dışı:** İlk plandaki `<press-ticker>`, `<image-with-text-block>`,
+> `<video-demo-section>` ve `<customer-reviews-section>` bileşenleri kodda mevcut ve
+> `ikas.config.json`'a kayıtlı olsalar da **yeni referans tasarımda yer almadıkları için ana sayfaya
+> yerleştirilmemişlerdir.** Kaldırılmaları ayrı bir temizlik kalemidir.
+>
+> **Kasıtlı binişme:** Newsletter kartı Footer'a gömülü görünür. Ofset tek bir değişkenden gelir:
+> `--newsletter-footer-overlap` (masaüstü `56px`, ≤767px `40px`).
 
 ### 2. Koleksiyon Sayfası (Collection / Shop All Template)
 1. `<site-header>`
