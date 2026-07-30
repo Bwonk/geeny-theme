@@ -5,6 +5,9 @@
  *   Ana Lacivert: var(--pxNuSoudLn)     TOKENS.md satır 10
  *   Accent Sarı: var(--sy8ZnXZdoG)     TOKENS.md satır 11
  *   Saf Beyaz:   var(--24KlcgGmm9)     TOKENS.md satır 14
+ *
+ * Nötr skala:
+ *   Meta Metin:  var(--p6EMJiXye1)
  * ═══════════════════════════════════════════════════════════════════════ */
 
 .ikas-testimonials {
@@ -53,7 +56,7 @@
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.22em;
-  color: #8C97A5;
+  color: var(--p6EMJiXye1);
 }
 
 .ikas-testimonials__title {
@@ -70,7 +73,7 @@
 }
 
 .ikas-testimonials__title-part1 {
-  color: #8C97A5;
+  color: var(--p6EMJiXye1);
   display: inline-flex;
   align-items: center;
   gap: 10px;

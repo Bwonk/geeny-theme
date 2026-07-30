@@ -1,6 +1,6 @@
 # TOKENS.md — Canlı ikas Tema Global Token Eşleşme Tablosu (`prompts/TOKENS.md`)
 
-Bu dosya, ikas editöründe canlı olarak oluşturulan 52 adet tasarım token'ının `list_theme_globals` çıktısından okunan gerçek canlı `id`, `cssVar`, `className` ve `variableName` değerlerini içerir. Bileşen kodlamalarında canlı değerler doğrudan buradan referans alınır.
+Bu dosya, ikas editöründe canlı olarak oluşturulan 62 adet tasarım token'ının `list_theme_globals` çıktısından okunan gerçek canlı `id`, `cssVar`, `className` ve `variableName` değerlerini içerir. Bileşen kodlamalarında canlı değerler doğrudan buradan referans alınır.
 
 ---
 
@@ -17,6 +17,19 @@ Bu dosya, ikas editöründe canlı olarak oluşturulan 52 adet tasarım token'ı
 | `Renkler / Sticky Header Çizgisi` | `Gzj8nhz1gb` | `var(--gzj8Nhz1Gb)` |
 | `Renkler / Kargo İlerleme Çubuğu` | `AP8FzMh9vN` | `var(--ap8FzMh9VN)` |
 | `Renkler / Koyu Zemin Çizgisi` | `PFqY0xGDSq` | `var(--pFqY0XGdSq)` |
+| `Nötr / Mürekkep` | `fcAwzuFj9w` | `var(--fcAwzuFj9W)` |
+| `Nötr / Gövde Metni` | `xGFwg5zqpf` | `var(--xGFwg5Zqpf)` |
+| `Nötr / Meta Metin` | `p6eMJiXYE1` | `var(--p6EMJiXye1)` |
+| `Nötr / Sessiz Başlık` | `u9hctrBRDd` | `var(--u9HctrBrDd)` |
+| `Nötr / Çizgi Güçlü` | `0rbHZ765Hw` | `var(--0RbHz765Hw)` |
+| `Nötr / Çizgi` | `8ARbeTYsmD` | `var(--8ARbeTYsmD)` |
+| `Nötr / Yüzey Yumuşak` | `JQs026vIpf` | `var(--jQs026VIpf)` |
+| `Nötr / Yüzey` | `wElEhJWJYh` | `var(--wElEhJwjYh)` |
+
+Nötr skala `Anasayfa.dc.html` referansındaki gri değerlerinden türetildi. Koyudan
+açığa sıralama: Mürekkep `#101418` → Ana Lacivert `#37435B` → Gövde Metni `#6E7A8C`
+→ Meta Metin `#8C97A5` → Sessiz Başlık `#AEB8C6` → Açık Gri Mavi `#C8CFD0`
+→ Çizgi Güçlü `#DCE0E1` → Çizgi `#E4E7E8` → Yüzey Yumuşak `#EDEFF0` → Yüzey `#F4F5F5`.
 
 ---
 

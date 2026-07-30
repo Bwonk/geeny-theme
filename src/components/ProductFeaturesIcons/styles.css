@@ -5,6 +5,10 @@
  *   Ana Lacivert:  var(--pxNuSoudLn)     TOKENS.md satır 10
  *   Açık Gri Mavi: var(--cdFDkBbKkc)     TOKENS.md satır 12
  *   Saf Beyaz:     var(--24KlcgGmm9)     TOKENS.md satır 14
+ *
+ * Nötr skala:
+ *   Meta Metin:     var(--p6EMJiXye1)
+ *   Yüzey Yumuşak:  var(--jQs026VIpf)
  * ═══════════════════════════════════════════════════════════════════════ */
 
 .ikas-features {
@@ -41,7 +45,7 @@
   align-items: center;
   gap: 16px;
   padding-right: clamp(12px, 1.6vw, 24px);
-  border-right: 1px solid #EDF0F0;
+  border-right: 1px solid var(--jQs026VIpf);
   min-width: 0;
   box-sizing: border-box;
 }
@@ -72,7 +76,7 @@
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.18em;
-  color: #8C97A5;
+  color: var(--p6EMJiXye1);
   white-space: nowrap;
 }
 
@@ -122,7 +126,7 @@
 
   .ikas-features__col {
     border-right: none;
-    border-bottom: 1px solid #EDF0F0;
+    border-bottom: 1px solid var(--jQs026VIpf);
     padding-right: 0;
     padding-bottom: 14px;
   }

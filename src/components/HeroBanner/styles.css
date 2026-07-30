@@ -8,6 +8,13 @@
  *   Accent Sarı:   var(--sy8ZnXZdoG)     TOKENS.md satır 11
  *   Açık Gri Mavi: var(--cdFDkBbKkc)     TOKENS.md satır 12
  *   Saf Beyaz:     var(--24KlcgGmm9)     TOKENS.md satır 14
+ *
+ * Nötr skala:
+ *   Gövde Metni:   var(--xGFwg5Zqpf)
+ *   Meta Metin:    var(--p6EMJiXye1)
+ *   Sessiz Başlık: var(--u9HctrBrDd)
+ *   Çizgi:         var(--8ARbeTYsmD)
+ *   Yüzey:         var(--wElEhJwjYh)
  * ═══════════════════════════════════════════════════════════════════════ */
 
 .ikas-hero {
@@ -45,7 +52,7 @@
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.22em;
-  color: #8C97A5;
+  color: var(--p6EMJiXye1);
 }
 
 /* İki Tonlu H1 Başlık & Word Reveal */
@@ -70,7 +77,7 @@
 }
 
 .ikas-hero__word--muted {
-  color: #AEB8C6;
+  color: var(--u9HctrBrDd);
 }
 
 .ikas-hero__subtitle {
@@ -78,7 +85,7 @@
   font-family: var(--font-body);
   font-size: clamp(13.5px, 1.05vw, 16.5px);
   line-height: 1.58;
-  color: #6E7A8C;
+  color: var(--xGFwg5Zqpf);
   max-width: 44ch;
   text-wrap: pretty;
 }
@@ -192,12 +199,12 @@
 }
 
 .ikas-hero__avatar--2 {
-  background-color: #AEB8C6;
+  background-color: var(--u9HctrBrDd);
   margin-left: -11px;
 }
 
 .ikas-hero__avatar--3 {
-  background-color: #8C97A5;
+  background-color: var(--p6EMJiXye1);
   margin-left: -11px;
 }
 
@@ -221,7 +228,7 @@
   font-family: var(--font-mono);
   font-size: 9.5px;
   letter-spacing: 0.14em;
-  color: #8C97A5;
+  color: var(--p6EMJiXye1);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -360,8 +367,8 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: #F4F5F5;
-    border: 1px solid #E4E7E8;
+    background: var(--wElEhJwjYh);
+    border: 1px solid var(--8ARbeTYsmD);
     border-radius: 9999px;
     padding: 4px 12px 4px 5px;
     margin-top: 2px;

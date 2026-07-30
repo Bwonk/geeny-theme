@@ -4,6 +4,9 @@
  * Renkler — TOKENS.md cssVar referansları:
  *   Ana Lacivert: var(--pxNuSoudLn)     TOKENS.md satır 10
  *   Saf Beyaz:   var(--24KlcgGmm9)     TOKENS.md satır 14
+ *
+ * Nötr skala:
+ *   Meta Metin:  var(--p6EMJiXye1)
  * ═══════════════════════════════════════════════════════════════════════ */
 
 .ikas-editorial-bridge {
@@ -72,7 +75,7 @@
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.18em;
-  color: #8C97A5;
+  color: var(--p6EMJiXye1);
   padding-top: 6px;
   white-space: nowrap;
 }

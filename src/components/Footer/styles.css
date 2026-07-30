@@ -5,6 +5,13 @@
  *   Ana Lacivert:     var(--pxNuSoudLn)     TOKENS.md satır 10
  *   Accent Sarı:     var(--sy8ZnXZdoG)     TOKENS.md satır 11
  *   Site Genel Zemin: var(--24KlcgGmm9)     TOKENS.md satır 14 (Saf Beyaz)
+ *
+ * Nötr skala:
+ *   Mürekkep:     var(--fcAwzuFj9W)
+ *   Gövde Metni:  var(--xGFwg5Zqpf)
+ *   Meta Metin:   var(--p6EMJiXye1)
+ *   Çizgi Güçlü:  var(--0RbHz765Hw)
+ *   Çizgi:        var(--8ARbeTYsmD)
  * ═══════════════════════════════════════════════════════════════════════ */
 
 .ikas-footer {
@@ -14,7 +21,7 @@
   color: var(--pxNuSoudLn);             /* Ana Lacivert — TOKENS.md satır 10 */
   padding: clamp(65px, 6vw, 95px) 0 clamp(22px, 2.6vw, 34px) 0;
   position: relative;
-  border-top: 1px solid #E4E7E8;
+  border-top: 1px solid var(--8ARbeTYsmD);
   z-index: 1;
 }
 
@@ -59,7 +66,7 @@
   font-family: var(--font-body);
   font-size: clamp(14.5px, 1.1vw, 16.5px);
   line-height: 1.6;
-  color: #6E7A8C;
+  color: var(--xGFwg5Zqpf);
   max-width: 46ch;
 }
 
@@ -101,7 +108,7 @@
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.18em;
-  color: #8C97A5;
+  color: var(--p6EMJiXye1);
   text-transform: uppercase;
   background: none;
   border: none;
@@ -114,7 +121,7 @@
 
 .ikas-footer__chevron {
   display: none;
-  color: #8C97A5;
+  color: var(--p6EMJiXye1);
   transition: transform 0.2s ease;
 }
 
@@ -136,12 +143,12 @@
 }
 
 .ikas-footer__link:hover {
-  color: #101418;
+  color: var(--fcAwzuFj9W);
 }
 
 /* ALT AYRAÇ BÖLÜMÜ (TELİF, SOSYAL MEDYA & ÖDEME ROZETLERİ) */
 .ikas-footer__bottom {
-  border-top: 1px solid #DCE0E1;
+  border-top: 1px solid var(--0RbHz765Hw);
   padding-top: clamp(18px, 2.2vw, 26px);
   display: flex;
   flex-wrap: wrap;
@@ -155,7 +162,7 @@
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.12em;
-  color: #8C97A5;
+  color: var(--p6EMJiXye1);
 }
 
 /* SOSYAL MEDYA PİLL İKONLARI */
@@ -168,7 +175,7 @@
 .ikas-footer__social-btn {
   width: 36px;
   height: 36px;
-  border: 1px solid #DCE0E1;
+  border: 1px solid var(--0RbHz765Hw);
   border-radius: 9999px;
   display: flex;
   align-items: center;
@@ -182,7 +189,7 @@
   background-color: var(--sy8ZnXZdoG);  /* Accent Sarı — TOKENS.md satır 11 */
   border-color: var(--sy8ZnXZdoG);
   transform: translateY(-2px);
-  color: #101418;
+  color: var(--fcAwzuFj9W);
 }
 
 /* ÖDEME KARTI ROZETLERİ */
@@ -193,13 +200,13 @@
 }
 
 .ikas-footer__payment-card {
-  border: 1px solid #DCE0E1;
+  border: 1px solid var(--0RbHz765Hw);
   border-radius: 3px;
   padding: 7px 11px;
   font-family: var(--font-mono);
   font-size: 9.5px;
   letter-spacing: 0.12em;
-  color: #6E7A8C;
+  color: var(--xGFwg5Zqpf);
 }
 
 /* Erişilebilirlik: Azaltılmış Hareket Tercihi */
@@ -231,7 +238,7 @@
     cursor: pointer;
     width: 100%;
     padding: 10px 0;
-    border-bottom: 1px solid #E4E7E8;
+    border-bottom: 1px solid var(--8ARbeTYsmD);
   }
 
   .ikas-footer__chevron {

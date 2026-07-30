@@ -6,6 +6,9 @@
  *   Accent Sarı:   var(--sy8ZnXZdoG)     TOKENS.md satır 11
  *   Açık Gri Mavi: var(--cdFDkBbKkc)     TOKENS.md satır 12
  *   Saf Beyaz:     var(--24KlcgGmm9)     TOKENS.md satır 14
+ *
+ * Nötr skala:
+ *   Mürekkep:      var(--fcAwzuFj9W)
  * ═══════════════════════════════════════════════════════════════════════ */
 
 .ikas-product-card {
@@ -93,7 +96,7 @@
   align-items: center;
   justify-content: center;
   background-color: var(--sy8ZnXZdoG);  /* Accent Sarı — TOKENS.md satır 11 */
-  color: #101418;
+  color: var(--fcAwzuFj9W);
   font-family: var(--font-mono);
   font-size: 9.5px;
   letter-spacing: 0.14em;

@@ -7,6 +7,11 @@
  *   Ana Lacivert: var(--pxNuSoudLn)     TOKENS.md satır 10
  *   Accent Sarı: var(--sy8ZnXZdoG)     TOKENS.md satır 11
  *   Saf Beyaz:   var(--24KlcgGmm9)     TOKENS.md satır 14
+ *
+ * Nötr skala:
+ *   Gövde Metni: var(--xGFwg5Zqpf)
+ *   Meta Metin:  var(--p6EMJiXye1)
+ *   Çizgi:       var(--8ARbeTYsmD)
  * ═══════════════════════════════════════════════════════════════════════ */
 
 .ikas-featured-grid {
@@ -36,7 +41,7 @@
   align-items: flex-end;
   gap: 20px;
   flex-wrap: wrap;
-  border-bottom: 1px solid #E4E7E8;
+  border-bottom: 1px solid var(--8ARbeTYsmD);
   padding-bottom: 18px;
   width: 100%;
 }
@@ -51,7 +56,7 @@
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.22em;
-  color: #8C97A5;
+  color: var(--p6EMJiXye1);
 }
 
 .ikas-featured-grid__title {
@@ -66,7 +71,7 @@
 .ikas-featured-grid__subtitle {
   margin: 6px 0 0;
   font-family: var(--font-body);
-  color: #6E7A8C;
+  color: var(--xGFwg5Zqpf);
   max-width: 58ch;
 }
 
@@ -74,7 +79,7 @@
   margin: 0;
   padding: clamp(28px, 4vw, 48px) 0;
   font-family: var(--font-body);
-  color: #6E7A8C;
+  color: var(--xGFwg5Zqpf);
   text-align: center;
 }
 
