@@ -23,7 +23,10 @@
   margin-bottom: calc(-1 * var(--newsletter-footer-overlap));
   position: relative;
   z-index: 2;
-  overflow: hidden;
+  /* Kartın box-shadow'u (0 26px 60px) section dışına taşar. overflow:hidden
+     gölgeyi kartın alt kenarından kesiyordu; pattern/takoz kırpması zaten
+     .ikas-newsletter__card üzerinde. */
+  overflow: visible;
 }
 
 .ikas-newsletter__container {
@@ -144,7 +147,8 @@
   flex-wrap: wrap;
   gap: 10px;
   max-width: 520px;
-  align-items: flex-start;
+  /* Buton, input satırının dikey ortasında (etiket sr-only; hata satırı form-row dışında). */
+  align-items: center;
 }
 
 .ikas-newsletter__input-wrapper {
@@ -184,6 +188,8 @@
 
 .ikas-newsletter__button-wrapper {
   flex: 0 0 auto;
+  display: flex;
+  align-items: center;
 }
 
 .ikas-newsletter__note {
@@ -210,6 +216,19 @@
   font-size: 15px;
   line-height: 1.5;
   font-family: var(--font-heading);
+}
+
+/* Label ekranda görünmesin ama input ile ilişkili kalsın (form-row hizasını bozmasın). */
+.ikas-newsletter .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Erişilebilirlik: Azaltılmış Hareket Tercihi */

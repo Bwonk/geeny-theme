@@ -205,6 +205,7 @@ export function NewsletterSection({
                         )
                       }
                       required
+                      aria-label={emailLabel || placeholder}
                       aria-invalid={isError ? "true" : "false"}
                     />
                   </div>
