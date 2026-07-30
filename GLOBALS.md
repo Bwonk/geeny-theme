@@ -22,10 +22,8 @@ mevcut token'ları kopyalar.
    bileşen CSS'lerinde `clamp()` ve `@media (max-width: 767px)` ile yönetiliyor. `DESIGN.md`'de
    öngörülen 6 şemalı `colorScheme` yapısı kurulmadı; bölüm zeminleri section başına
    `backgroundColor` COLOR prop'u ile yönetiliyor.
-2. **Ana sayfa dışı bileşenlerde eski tema renkleri duruyor.** `PageHeader`,
-   `PageContentWrapper` ve `NotFoundContainer` referans paletinde bulunmayan `#0A192F` ve
-   `#333333` kullanıyor. Hata kırmızıları da dört ayrı değerde (`#EF4444`, `#FF5A5A`,
-   `#FF7B7B`, `#FCA5A5`) — tek bir `Durum / Hata` token'ına indirilmeli.
+2. **Hata kırmızıları hâlâ dağınık.** Newsletter (`#FF5A5A` / `#FF7B7B`), sepet ve filtre
+   (`#EF4444`) farklı ham hex kullanıyor — tek bir `Durum / Hata` token'ına indirilmeli.
 
 ### Kapatılan boşluklar
 
@@ -35,6 +33,8 @@ mevcut token'ları kopyalar.
 - **Container çelişkisi çözüldü.** `Boşluk / Site Maksimum Genişliği` referansa uyacak şekilde
   `1560px`'e çekildi; genişlik + gutter artık aynı kutuya uygulanıyor (bkz. DESIGN.md →
   Spacing Ritmi).
+- **Kullanılmayan eski sayfa bileşenleri silindi.** `PageHeader`, `PageContentWrapper` ve
+  `NotFoundContainer` (ve onlarla gelen `#0A192F` / `#333333` ham renkleri) kaldırıldı.
 
 ## Temel İlkeler
 1. **Global-first:** Her renk, tipografi, boşluk, radius, gölge ve animasyon bir global token'dır. Bileşenler asla ham değer kullanmaz — renk `var(--<id>)`, tipografi `className="_<id>"`, globalVariable'lar `getThemeSetting` ile okunup inline CSS değişkenine aktarılır (`style={{ "--token": setting.value }}`).

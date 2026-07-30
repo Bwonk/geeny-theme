@@ -3,6 +3,9 @@ export { Header } from "./Header/index";
 export { NewsletterSection } from "./NewsletterSection/index";
 export { Footer } from "./Footer/index";
 export { HeroBanner } from "./HeroBanner/index";
+export { EditorialBridge } from "./EditorialBridge/index";
+export { CurvedMarquee } from "./CurvedMarquee/index";
+export { StorySection } from "./StorySection/index";
 export { PressTicker } from "./PressTicker/index";
 export { FeaturedCollectionGrid } from "./FeaturedCollectionGrid/index";
 export { ImageWithTextBlock } from "./ImageWithTextBlock/index";
@@ -15,8 +18,4 @@ export { ProductDetailSection } from "./ProductDetailSection/index";
 export { CollectionHero } from "./CollectionHero/index";
 export { CollectionSection } from "./CollectionSection/index";
 export { CartPageSection } from "./CartPageSection/index";
-export { PageHeader } from "./PageHeader/index";
-export { PageContentWrapper } from "./PageContentWrapper/index";
-export { NotFoundContainer } from "./NotFoundContainer/index";
 export { SearchPageSection } from "./SearchPageSection/index";
-
