@@ -17,8 +17,8 @@ export function CollectionSection({
   className = "",
 }: CollectionSectionProps) {
   // Read live theme global settings via getThemeSetting
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1820px)
-  const maxSiteWidth = siteWidthSetting?.value || "1820px";
+  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1560px)
+  const maxSiteWidth = siteWidthSetting?.value || "1560px";
 
   const inlineStyles = {
     backgroundColor: backgroundColor || undefined,

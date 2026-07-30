@@ -13,7 +13,7 @@
   width: 100%;
   box-sizing: border-box;
   background-color: var(--24KlcgGmm9);  /* Saf Beyaz — TOKENS.md satır 14 */
-  padding: clamp(16px, 2vw, 32px) clamp(20px, 5vw, 64px) clamp(32px, 4vw, 60px);
+  padding: clamp(16px, 2vw, 32px) 0 clamp(32px, 4vw, 60px);
   /* Dikey boşluk yalnızca padding'den gelir — margin collapse ile Hero'ya
      binmesin diye margin'ler açıkça sıfırlanır. */
   margin-block: 0;
@@ -24,6 +24,8 @@
   max-width: var(--max-site-width, 1560px);
   margin: 0 auto;
   width: 100%;
+  box-sizing: border-box;
+  padding-inline: var(--site-gutter);
 }
 
 /* Üst İnce Çizgi (ruleIn) */

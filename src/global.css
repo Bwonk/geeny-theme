@@ -64,6 +64,14 @@
   --z-index-modal: 10000;
   --z-index-toast: 10050;
 
+  /* Site kapsayıcısının yatay nefes payı. Genişlik (--max-site-width) merchant'ın
+     düzenleyebildiği tema ayarından gelir; gutter tasarımın sabiti olduğu için
+     burada tanımlıdır. İkisi de kapsayıcının KENDİ kutusuna uygulanır: kutu
+     --max-site-width'te sınırlanır, padding içeride kalır (referans tasarımla
+     aynı model). Bu ikisi farklı elemanlara dağıtılırsa section'lar geniş
+     ekranlarda birbirinden kayar. */
+  --site-gutter: clamp(20px, 5vw, 64px);
+
   /* Varyant Renk Swatch Boyutu */
   --swatch-size: 36px;
 

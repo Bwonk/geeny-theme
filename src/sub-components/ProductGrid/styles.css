@@ -7,7 +7,7 @@
 }
 
 .ikas-product-grid__container {
-  max-width: var(--max-site-width, 1820px);
+  max-width: var(--max-site-width, 1560px);
   width: 100%;
   margin: 0 auto;
   box-sizing: border-box;

@@ -19,7 +19,7 @@
   box-sizing: border-box;
   background-color: var(--24KlcgGmm9);  /* Saf Beyaz — TOKENS.md satır 14 */
   color: var(--pxNuSoudLn);             /* Ana Lacivert — TOKENS.md satır 10 */
-  padding: clamp(32px, 4vw, 60px) clamp(20px, 5vw, 64px);
+  padding: clamp(32px, 4vw, 60px) 0;
   /* Alttaki StorySection ile dikey margin çakışmasını engeller. */
   margin-block: 0;
   overflow: hidden;
@@ -29,6 +29,8 @@
   max-width: var(--max-site-width, 1560px);
   margin: 0 auto;
   width: 100%;
+  box-sizing: border-box;
+  padding-inline: var(--site-gutter);
   display: flex;
   flex-direction: column;
   gap: clamp(24px, 3vw, 40px);

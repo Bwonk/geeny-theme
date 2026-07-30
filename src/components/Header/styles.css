@@ -17,7 +17,7 @@
   width: 100%;
   box-sizing: border-box;
   z-index: var(--z-index-header, 100);
-  padding: clamp(10px, 1.5vw, 20px) clamp(20px, 5vw, 64px) clamp(6px, 1vw, 12px);
+  padding: clamp(10px, 1.5vw, 20px) 0 clamp(6px, 1vw, 12px);
   /* Zemin, backgroundColor prop'undan gelen --header-bg ile boyanır; altta
      içeriğin geçebilmesi için şeffaflaşan bir gradient olarak uygulanır. */
   background: linear-gradient(180deg, var(--header-bg, var(--24KlcgGmm9)) 58%, transparent);
@@ -35,9 +35,11 @@
 
 .ikas-header__wrapper {
   position: relative;
-  max-width: 1560px;
+  max-width: var(--max-site-width, 1560px);
   margin: 0 auto;
   width: 100%;
+  box-sizing: border-box;
+  padding-inline: var(--site-gutter);
 }
 
 /* Masaüstünde pill navbar sağa hizalıdır (sol taraf ferah görünür) */

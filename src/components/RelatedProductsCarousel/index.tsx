@@ -21,7 +21,7 @@ export function RelatedProductsCarousel({
   const mobilePxSetting = getThemeSetting("_uRDipxnxkx"); // Boşluk / Mobil Yatay Padding (16px)
   const gridGapSetting = getThemeSetting("_4Ud47RIVna"); // Boşluk / Grid Gap (20px)
   const mobileGridGapSetting = getThemeSetting("_dBvnJWALXD"); // Boşluk / Mobil Grid Gap (12px)
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1820px)
+  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1560px)
 
   const sectionPy = verticalPySetting?.value || "48px";
   const sectionPyMobile = verticalPyMobileSetting?.value || "32px";
@@ -29,7 +29,7 @@ export function RelatedProductsCarousel({
   const mobilePx = mobilePxSetting?.value || "16px";
   const gridGap = gridGapSetting?.value || "20px";
   const mobileGridGap = mobileGridGapSetting?.value || "12px";
-  const maxSiteWidth = siteWidthSetting?.value || "1820px";
+  const maxSiteWidth = siteWidthSetting?.value || "1560px";
 
   const inlineStyles = {
     backgroundColor: backgroundColor || undefined,

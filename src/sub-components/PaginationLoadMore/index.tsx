@@ -26,11 +26,11 @@ export function PaginationLoadMore({
   // Read live theme global settings via getThemeSetting
   const sectionPxSetting = getThemeSetting("_Nd1XnRyZlx"); // Boşluk / Masaüstü Yatay Bölüm Padding (20px)
   const mobilePxSetting = getThemeSetting("_uRDipxnxkx"); // Boşluk / Mobil Yatay Padding (16px)
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1820px)
+  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1560px)
 
   const sectionPx = sectionPxSetting?.value || "20px";
   const mobilePx = mobilePxSetting?.value || "16px";
-  const maxSiteWidth = siteWidthSetting?.value || "1820px";
+  const maxSiteWidth = siteWidthSetting?.value || "1560px";
 
   const inlineStyles = {
     "--section-px": sectionPx,

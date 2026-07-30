@@ -18,19 +18,23 @@ mevcut token'ları kopyalar.
 
 ## Bilinen Boşluklar
 
-Bu üç madde bilinçli olarak açıktır ve ayrı iş kalemidir:
-
-1. **Nötr gri skalası token değil.** `Anasayfa.dc.html` referansının editoryal grileri
-   (`#8C97A5`, `#E4E7E8`, `#6E7A8C`, `#DCE0E1`, `#101418`, `#F4F5F5`, `#EDEFF0`, `#5A6472`)
-   bileşen CSS'lerinde ham hex olarak yazılıdır — tek başına `#8C97A5` 19, `#E4E7E8` 10 yerde geçer.
-   Bu, "bileşenler asla ham değer kullanmaz" ilkesinin bilinen ihlalidir. Çözüm: `Renkler / Nötr …`
-   grubunda token'lar açıp CSS'lerdeki hex'leri `cssVar` ile değiştirmek.
-2. **`breakpoints`, `keyframes` ve `colorSchemes` boş.** Responsive kırılımlar tema token'ı değil,
+1. **`breakpoints`, `keyframes` ve `colorSchemes` boş.** Responsive kırılımlar tema token'ı değil,
    bileşen CSS'lerinde `clamp()` ve `@media (max-width: 767px)` ile yönetiliyor. `DESIGN.md`'de
    öngörülen 6 şemalı `colorScheme` yapısı kurulmadı; bölüm zeminleri section başına
    `backgroundColor` COLOR prop'u ile yönetiliyor.
-3. **`Boşluk / Site Maksimum Genişliği` referansla çelişiyor.** Canlı değer `1820px`, referans
-   tasarım `1560px` kurguluyor (bkz. DESIGN.md → Spacing Ritmi).
+2. **Ana sayfa dışı bileşenlerde eski tema renkleri duruyor.** `PageHeader`,
+   `PageContentWrapper` ve `NotFoundContainer` referans paletinde bulunmayan `#0A192F` ve
+   `#333333` kullanıyor. Hata kırmızıları da dört ayrı değerde (`#EF4444`, `#FF5A5A`,
+   `#FF7B7B`, `#FCA5A5`) — tek bir `Durum / Hata` token'ına indirilmeli.
+
+### Kapatılan boşluklar
+
+- **Nötr gri skalası token'a çevrildi.** Referansın editoryal grileri sekiz token'a bağlandı
+  (`Nötr / Mürekkep` → `Nötr / Yüzey`); ana sayfa section'larındaki 35 ham hex temizlendi.
+  Tam liste ve koyudan açığa sıralama için `prompts/TOKENS.md`.
+- **Container çelişkisi çözüldü.** `Boşluk / Site Maksimum Genişliği` referansa uyacak şekilde
+  `1560px`'e çekildi; genişlik + gutter artık aynı kutuya uygulanıyor (bkz. DESIGN.md →
+  Spacing Ritmi).
 
 ## Temel İlkeler
 1. **Global-first:** Her renk, tipografi, boşluk, radius, gölge ve animasyon bir global token'dır. Bileşenler asla ham değer kullanmaz — renk `var(--<id>)`, tipografi `className="_<id>"`, globalVariable'lar `getThemeSetting` ile okunup inline CSS değişkenine aktarılır (`style={{ "--token": setting.value }}`).
@@ -91,7 +95,7 @@ Bu üç madde bilinçli olarak açıktır ve ayrı iş kalemidir:
 
 | Ad | Değer | Kullanım |
 | :--- | :--- | :--- |
-| `Boşluk / Site Maksimum Genişliği` | `1820px` | Site container maksimum genişlik sınırı (`--max-site-width`) |
+| `Boşluk / Site Maksimum Genişliği` | `1560px` | Site container maksimum genişlik sınırı (`--max-site-width`) |
 | `Boşluk / Yatay Bölüm Padding` | `1.25rem` (`20px`) | Masaüstü/Tablet yatay bölüm padding değeri (`--section-x-padding`) |
 | `Boşluk / Mobil Yatay Padding` | `16px` | Mobil cihazlar için yatay bölüm padding değeri |
 | `Boşluk / Dikey Bölüm Spacing` | `2rem` (`32px`) | Mobil/Tablet dikey bölüm aralığı (`--section-vertical-spacing`) |

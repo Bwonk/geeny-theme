@@ -16,7 +16,7 @@ export function NotFoundContainer({
   const verticalPySetting = getThemeSetting("_Kl0my3VVMA");
   const verticalPyMobileSetting = getThemeSetting("_5Fdl1j6UHQ");
 
-  const maxSiteWidth = siteWidthSetting?.value || "1820px";
+  const maxSiteWidth = siteWidthSetting?.value || "1560px";
   const sectionPx = sectionPxSetting?.value || "20px";
   const mobilePx = mobilePxSetting?.value || "16px";
   const sectionPy = verticalPySetting?.value || "48px";

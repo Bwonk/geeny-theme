@@ -27,7 +27,7 @@
   max-width: var(--max-site-width, 1560px);
   margin: 0 auto;
   width: 100%;
-  padding: 0 clamp(20px, 5vw, 64px);
+  padding-inline: var(--site-gutter);
   display: flex;
   flex-direction: column;
   gap: clamp(32px, 4vw, 60px);

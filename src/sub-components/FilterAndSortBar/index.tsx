@@ -33,12 +33,12 @@ export function FilterAndSortBar({
   const sectionPxSetting = getThemeSetting("_Nd1XnRyZlx"); // Boşluk / Masaüstü Yatay Bölüm Padding (20px)
   const mobilePxSetting = getThemeSetting("_uRDipxnxkx"); // Boşluk / Mobil Yatay Padding (16px)
   const formRadiusSetting = getThemeSetting("_iI8H4rllzj"); // Radius / Input ve Form (0.5rem)
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1820px)
+  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1560px)
 
   const sectionPx = sectionPxSetting?.value || "20px";
   const mobilePx = mobilePxSetting?.value || "16px";
   const formRadius = formRadiusSetting?.value || "0.5rem";
-  const maxSiteWidth = siteWidthSetting?.value || "1820px";
+  const maxSiteWidth = siteWidthSetting?.value || "1560px";
 
   const inlineStyles = {
     "--section-px": sectionPx,

@@ -42,20 +42,23 @@ değeriyle** kullanılır; hex değeri koda yazılmaz. Canlı `id`/`cssVar` list
 | **Kargo İlerleme Çubuğu** | `#E3E045` | `var(--ap8FzMh9VN)` | Sepet ücretsiz kargo ilerleme çubuğu |
 | **Koyu Zemin Çizgisi** | `rgba(255, 255, 255, 0.12)` | `var(--pFqY0XGdSq)` | Koyu bölümlerdeki ince ayraçlar |
 
-#### Nötr Skala — `Anasayfa.dc.html` referansından, **henüz token değil**
-Referans tasarımın editoryal grileri. Şu an bileşen CSS'lerinde ham hex olarak yazılı
-(`#8C97A5` 19 kullanım, `#E4E7E8` 10 kullanım) — bu, "ham değer kullanılmaz" ilkesinin bilinen
-açık ihlalidir ve token'a çevrilmeyi bekler (bkz. GLOBALS.md → Bilinen Boşluklar).
+#### Nötr Skala — `Anasayfa.dc.html` referansından türetilen canlı token'lar
+Referans tasarımın editoryal grileri. Ana sayfa section'larında ham hex kullanılmaz; her biri
+aşağıdaki `cssVar` üzerinden okunur.
 
-| Hex | Rol |
-| :--- | :--- |
-| `#101418` | Neredeyse siyah — editoryal başlık kontrastı |
-| `#5A6472` | Koyu gri-mavi — ikincil başlık |
-| `#6E7A8C` | Orta gri-mavi — gövde/açıklama metni |
-| `#8C97A5` | Soft gri-mavi — mono etiket, pasif metin, ikon |
-| `#DCE0E1` | Açık gri — kenarlık |
-| `#E4E7E8` | Çok açık gri — ayraç çizgisi, input kenarlığı |
-| `#EDEFF0` / `#F4F5F5` | Zemin gri tonları — footer ve bölüm zeminleri |
+| Hex | Token | `cssVar` | Rol |
+| :--- | :--- | :--- | :--- |
+| `#101418` | `Nötr / Mürekkep` | `var(--fcAwzuFj9W)` | Neredeyse siyah — editoryal başlık kontrastı |
+| `#6E7A8C` | `Nötr / Gövde Metni` | `var(--xGFwg5Zqpf)` | Orta gri-mavi — gövde/açıklama metni |
+| `#8C97A5` | `Nötr / Meta Metin` | `var(--p6EMJiXye1)` | Soft gri-mavi — mono etiket, pasif metin, ikon |
+| `#AEB8C6` | `Nötr / Sessiz Başlık` | `var(--u9HctrBrDd)` | Sessizleştirilmiş başlık kelimeleri |
+| `#DCE0E1` | `Nötr / Çizgi Güçlü` | `var(--0RbHz765Hw)` | Açık gri — kenarlık |
+| `#E4E7E8` | `Nötr / Çizgi` | `var(--8ARbeTYsmD)` | Çok açık gri — ayraç çizgisi, input kenarlığı |
+| `#EDEFF0` | `Nötr / Yüzey Yumuşak` | `var(--jQs026VIpf)` | Kolon ayraçları, çok hafif zeminler |
+| `#F4F5F5` | `Nötr / Yüzey` | `var(--wElEhJwjYh)` | Bölüm zemin gri tonu |
+
+Referansta geçen `#5A6472` kodda hiç kullanılmadığı için token açılmadı; gerekirse skalaya
+`Nötr / Mürekkep` ile `Nötr / Gövde Metni` arasına eklenir.
 
 #### Color Scheme Yapısı — **uygulanmadı**
 İlk tasarımda 6 şemalı bir `colorScheme` yapısı öngörülmüştü. Canlı temada
@@ -103,13 +106,16 @@ Bileşenlerde ölçü/ağırlık elle yazılmaz; ilgili token'ın `className`'i 
 ---
 
 ### Spacing (Boşluk) Ritmi
-- **Site Container Maksimum Genişliği (`--max-site-width`):** canlı token değeri `1820px`
-  (`getThemeSetting("_l6CcMRzdeZ")`).
-  > ⚠️ **Bilinen uyumsuzluk:** `Anasayfa.dc.html` referansı container'ı **1560px** olarak kurgular ve
-  > ana sayfa section'larının CSS fallback'i de `1560px`'tir. Ancak değişken her zaman canlı
-  > token'dan inline set edildiği için fallback devreye girmez ve sayfa fiilen **1820px** genişlikte
-  > render olur. Ana sayfayı referansa tam oturtmak için `_l6CcMRzdeZ` token'ının `1560px`'e
-  > çekilmesi gerekir; bu değişiklik ürün/koleksiyon/sepet sayfalarını da etkiler.
+- **Site Container Maksimum Genişliği (`--max-site-width`):** canlı token değeri `1560px`
+  (`getThemeSetting("_l6CcMRzdeZ")`), `Anasayfa.dc.html` referansıyla birebir. Token tüm
+  sayfa tiplerini (ana sayfa, ürün, koleksiyon, sepet, arama) besler; genişlik tek yerden
+  değiştirilir.
+- **Yatay Nefes Payı (`--site-gutter`):** `clamp(20px, 5vw, 64px)`, `src/global.css` içinde
+  tanımlı.
+  > **Kapsayıcı kuralı:** `--max-site-width` ve `--site-gutter` **aynı** elemana uygulanır —
+  > kutu genişlikte sınırlanır, gutter içeride kalır (`box-sizing: border-box`). İkisi farklı
+  > elemanlara dağıtılırsa section'lar geniş ekranlarda birbirinden kayar: bu daha önce
+  > gerçekleşmiş ve içerik kenarları 1905px'te 64px ile 107px arasında ayrışmıştı.
 - **Yatay Bölüm Padding (`--section-x-padding`):** `1.25rem` (`20px`) [Mobil: `16px`]
 - **Dikey Bölüm Aralığı (`--section-vertical-spacing`):** `2rem` (`32px`) [Masaüstü: `48px` - `64px`]
 - **Grid Gap (`--grid-gap`):** `1.25rem` (`20px`)

@@ -47,7 +47,9 @@ export function Header({
   const mobilePaddingXSetting = getThemeSetting("_uRDipxnxkx");
   const drawerWidthSetting = getThemeSetting("_Bw7ChF0VC8");
   const drawerAnimSetting = getThemeSetting("_rTI75Www8J");
+  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ");
 
+  const maxSiteWidth = siteWidthSetting?.value || "1560px";
   const headerHeight = heightSetting?.value || "60px";
   const sectionPadX = paddingXSetting?.value || "1.25rem";
   const mobilePadX = mobilePaddingXSetting?.value || "16px";
@@ -87,6 +89,7 @@ export function Header({
   const inlineStyles = {
     // Zemin gradient üzerinden uygulanır (bkz. styles.css → .ikas-header background).
     "--header-bg": backgroundColor || undefined,
+    "--max-site-width": maxSiteWidth,
     "--header-height": headerHeight,
     "--section-padding-x": sectionPadX,
     "--mobile-padding-x": mobilePadX,

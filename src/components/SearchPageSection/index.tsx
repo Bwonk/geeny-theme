@@ -23,14 +23,14 @@ export function SearchPageSection({
   const verticalPyMobileSetting = getThemeSetting("_5Fdl1j6UHQ"); // Boşluk / Dikey Bölüm Spacing (32px)
   const sectionPxSetting = getThemeSetting("_Nd1XnRyZlx"); // Boşluk / Masaüstü Yatay Bölüm Padding (20px)
   const mobilePxSetting = getThemeSetting("_uRDipxnxkx"); // Boşluk / Mobil Yatay Padding (16px)
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1820px)
+  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1560px)
   const gridGapSetting = getThemeSetting("_4Ud47RIVna"); // Boşluk / Grid Gap (20px)
 
   const sectionPy = verticalPySetting?.value || "48px";
   const sectionPyMobile = verticalPyMobileSetting?.value || "32px";
   const sectionPx = sectionPxSetting?.value || "20px";
   const mobilePx = mobilePxSetting?.value || "16px";
-  const maxSiteWidth = siteWidthSetting?.value || "1820px";
+  const maxSiteWidth = siteWidthSetting?.value || "1560px";
   const gridGap = gridGapSetting?.value || "20px";
 
   const inlineStyles = {

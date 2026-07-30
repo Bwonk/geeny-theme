@@ -1,7 +1,7 @@
 
 .geeny-empty-search {
   width: 100%;
-  max-width: var(--max-site-width, 1820px);
+  max-width: var(--max-site-width, 1560px);
   margin: 0 auto;
   padding: var(--section-py, 48px) var(--section-px, 20px);
   display: flex;

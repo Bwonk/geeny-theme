@@ -31,13 +31,13 @@ export function StickyAddToCartBar({
   // Read theme global settings via getThemeSetting
   const stickyBarHeightSetting = getThemeSetting("_rEYcHCKRvC"); // Boşluk / Sticky Cart Bar Yüksekliği (64px)
   const stickyAnimSetting = getThemeSetting("_z2WqA2GtRY"); // Animasyon / Sticky Bar Belirme
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1820px)
+  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1560px)
   const sectionPxSetting = getThemeSetting("_Nd1XnRyZlx"); // Boşluk / Masaüstü Yatay Bölüm Padding (20px)
   const mobilePxSetting = getThemeSetting("_uRDipxnxkx"); // Boşluk / Mobil Yatay Padding (16px)
 
   const stickyBarHeight = stickyBarHeightSetting?.value || "64px";
   const stickyAnim = stickyAnimSetting?.value || "transform 0.3s ease, opacity 0.3s ease";
-  const maxSiteWidth = siteWidthSetting?.value || "1820px";
+  const maxSiteWidth = siteWidthSetting?.value || "1560px";
   const sectionPx = sectionPxSetting?.value || "20px";
   const mobilePx = mobilePxSetting?.value || "16px";
 

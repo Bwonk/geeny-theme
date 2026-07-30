@@ -32,7 +32,7 @@ export function EmptySearchState({
   className = "",
 }: Props) {
   // Read live global settings via getThemeSetting using exact variableNames from prompts/TOKENS.md
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1820px)
+  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1560px)
   const gridGapSetting = getThemeSetting("_4Ud47RIVna"); // Boşluk / Grid Gap (20px)
   const mobileGridGapSetting = getThemeSetting("_dBvnJWALXD"); // Boşluk / Mobil Grid Gap (12px)
   const sectionPxSetting = getThemeSetting("_Nd1XnRyZlx"); // Boşluk / Masaüstü Yatay Bölüm Padding (20px)
@@ -42,7 +42,7 @@ export function EmptySearchState({
   const cardRadiusSetting = getThemeSetting("_WyFUVwOpPk"); // Radius / Kart (32px)
   const buttonRadiusSetting = getThemeSetting("_ZaLXoaaaAA"); // Radius / Buton (8px)
 
-  const maxSiteWidth = siteWidthSetting?.value || "1820px";
+  const maxSiteWidth = siteWidthSetting?.value || "1560px";
   const gridGap = gridGapSetting?.value || "20px";
   const mobileGridGap = mobileGridGapSetting?.value || "12px";
   const sectionPx = sectionPxSetting?.value || "20px";
