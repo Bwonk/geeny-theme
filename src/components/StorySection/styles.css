@@ -1,5 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════════
- * STORY SECTION — Hikayemiz, Sayaçlar ve Velocity Marquee Bandı
+ * STORY SECTION — Hikayemiz + istatistik sayaçları
+ * (Velocity belt ayrı section: VelocityBelt)
  *
  * Renkler — TOKENS.md cssVar referansları:
  *   Ana Lacivert:  var(--pxNuSoudLn)     TOKENS.md satır 10
@@ -16,10 +17,9 @@
   box-sizing: border-box;
   background-color: var(--24KlcgGmm9);  /* Saf Beyaz — TOKENS.md satır 14 */
   color: var(--pxNuSoudLn);             /* Ana Lacivert — TOKENS.md satır 10 */
-  padding: clamp(40px, 5vw, 80px) 0 0 0;
+  padding: clamp(40px, 5vw, 80px) 0;
   position: relative;
   overflow: hidden;
-  /* Üstteki FeaturedCollectionGrid ile dikey margin çakışmasını engeller. */
   margin-block: 0;
 }
 
@@ -34,7 +34,6 @@
   box-sizing: border-box;
 }
 
-/* Üst Başlık & Paragraf */
 .ikas-story__header {
   display: flex;
   flex-direction: column;
@@ -49,7 +48,6 @@
   color: var(--p6EMJiXye1);
 }
 
-/* Scroll-Lit Paragraf (Kelimeler Soluk → Aydınlanan) */
 .ikas-story__paragraph {
   margin: 0;
   font-family: var(--font-heading);
@@ -72,7 +70,6 @@
   color: var(--pxNuSoudLn);             /* Ana Lacivert — TOKENS.md satır 10 */
 }
 
-/* İstatistik Sayaçları Izgarası */
 .ikas-story__counters {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -105,54 +102,13 @@
   color: var(--p6EMJiXye1);
 }
 
-/* Alt Velocity Marquee Bandı */
-.ikas-story__belt-wrapper {
-  margin-top: clamp(24px, 3vw, 40px);
-  background-color: var(--pxNuSoudLn);  /* Ana Lacivert — TOKENS.md satır 10 */
-  color: var(--24KlcgGmm9);             /* Saf Beyaz — TOKENS.md satır 14 */
-  padding: 14px 0;
-  transform: rotate(-1deg);
-  width: 100%;
-  max-width: 100%;
-  margin-left: 0;
-  overflow: hidden;
-  pointer-events: none;
-  box-sizing: border-box;
-}
-
-.ikas-story__belt-track {
-  display: flex;
-  white-space: nowrap;
-  will-change: transform;
-  max-width: 100%;
-  overflow: hidden;
-}
-
-.ikas-story__belt-text {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  color: var(--24KlcgGmm9);             /* Saf Beyaz — TOKENS.md satır 14 */
-  white-space: nowrap;
-  flex-shrink: 0;
-  max-width: 100%;
-}
-
-/* Erişilebilirlik: Azaltılmış Hareket Tercihi */
 @media (prefers-reduced-motion: reduce) {
   .ikas-story__word {
     opacity: 1 !important;
     transition: none !important;
   }
-
-  .ikas-story__belt-wrapper {
-    transform: none !important;
-    width: 100% !important;
-    margin-left: 0 !important;
-  }
 }
 
-/* RESPONSIVE (<1024px & <768px) */
 @media (max-width: 1023px) {
   .ikas-story__counters {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -162,7 +118,7 @@
 
 @media (max-width: 767px) {
   .ikas-story {
-    padding: 32px 0 0 0;
+    padding: 32px 0;
   }
 
   .ikas-story__container {

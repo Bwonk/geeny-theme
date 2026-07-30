@@ -20,8 +20,6 @@ export interface Props {
   counter4Val?: string;
   /** Dördüncü istatistik alt etiketi */
   counter4Label?: string;
-  /** Scroll hızı ile hızlanan alt bant metni */
-  marqueeText?: string;
   /** Bölüm zemin rengi */
   backgroundColor?: string;
 }

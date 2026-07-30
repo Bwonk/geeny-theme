@@ -19,3 +19,4 @@ export { CollectionHero } from "./CollectionHero/index";
 export { CollectionSection } from "./CollectionSection/index";
 export { CartPageSection } from "./CartPageSection/index";
 export { SearchPageSection } from "./SearchPageSection/index";
+export { VelocityBelt } from "./VelocityBelt/index";

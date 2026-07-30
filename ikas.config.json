@@ -843,15 +843,6 @@
           "groupId": "story_group"
         },
         {
-          "name": "marqueeText",
-          "displayName": "Alt Kayan Metin",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "İZMİR'DE DOKUNDU · İSTANBUL'DA TASARLANDI · %100 SAF PAMUK VE HAFIZA KÖPÜĞÜ ·",
-          "description": "Scroll hızı ile hızlanan alt bant metni",
-          "groupId": "story_group"
-        },
-        {
           "name": "backgroundColor",
           "displayName": "Arka Plan Rengi",
           "type": "COLOR",
@@ -1724,6 +1715,114 @@
           "description": "Bölüm arka plan rengi"
         }
       ]
+    },
+    {
+      "id": "e1iohf8g-JzDAoxhoRd",
+      "name": "VelocityBelt",
+      "entry": "./src/components/VelocityBelt/index.tsx",
+      "styles": "./src/components/VelocityBelt/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "text",
+          "displayName": "Kayan Metin",
+          "type": "TEXT",
+          "required": false,
+          "description": "Band üzerinde kayan metin",
+          "defaultValue": "İZMİR'DE DOKUNDU · İSTANBUL'DA TASARLANDI · %100 SAF PAMUK VE HAFIZA KÖPÜĞÜ ·",
+          "groupId": "content"
+        },
+        {
+          "name": "baseSpeed",
+          "displayName": "Temel Hız",
+          "type": "NUMBER",
+          "required": false,
+          "description": "Dururken/normal akış hızı",
+          "defaultValue": 0.8,
+          "groupId": "motion"
+        },
+        {
+          "name": "velocityMultiplier",
+          "displayName": "Scroll Hız Çarpanı",
+          "type": "NUMBER",
+          "required": false,
+          "description": "Scroll delta × bu değer",
+          "defaultValue": 0.12,
+          "groupId": "motion"
+        },
+        {
+          "name": "angle",
+          "displayName": "Eğim Açısı (°)",
+          "type": "NUMBER",
+          "required": false,
+          "description": "Bandın rotate açısı derece",
+          "defaultValue": -1,
+          "groupId": "motion"
+        },
+        {
+          "name": "direction",
+          "displayName": "Akış Yönü",
+          "type": "ENUM",
+          "required": false,
+          "description": "Metnin kayma yönü",
+          "defaultValue": "LEFT",
+          "groupId": "motion",
+          "enumTypeId": "vGqGTFaly1"
+        },
+        {
+          "name": "color",
+          "displayName": "Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "description": "TOKENS.md satır 14 Saf Beyaz",
+          "defaultValue": "#FFFFFF",
+          "groupId": "appearance"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "description": "TOKENS.md satır 10 Ana Lacivert",
+          "defaultValue": "#37435B",
+          "groupId": "appearance"
+        },
+        {
+          "name": "fontSize",
+          "displayName": "Metin Boyutu (px)",
+          "type": "NUMBER",
+          "required": false,
+          "description": "Kayan metin font-size",
+          "defaultValue": 12,
+          "groupId": "appearance"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "İçerik"
+        },
+        {
+          "id": "motion",
+          "name": "Hareket"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm"
+        }
+      ]
+    }
+  ],
+  "customTypes": [
+    {
+      "id": "vGqGTFaly1",
+      "name": "VelocityBeltDirection",
+      "type": "enum",
+      "enumOptions": {
+        "Sola (Left)": "LEFT",
+        "Sağa (Right)": "RIGHT"
+      },
+      "isDynamic": false
     }
   ]
 }

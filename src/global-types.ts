@@ -2,6 +2,9 @@
 // This file is regenerated automatically — do not edit manually.
 import { getThemeSettingValue as _getThemeSettingValueRaw } from "@ikas/bp-storefront";
 
+/** Enum type: vGqGTFaly1 */
+export type VelocityBeltDirection = "LEFT" | "RIGHT";
+
 /** Stable keys of theme global variables defined in the editor's "Styles" panel. */
 export type ThemeSettingName =
   /** Radius / Sepet İtem Görseli (TEXT) */
