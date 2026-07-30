@@ -1,3 +1,4 @@
+import { useId } from "preact/hooks";
 import { Props } from "./types";
 
 export interface CurvedMarqueeProps extends Props {
@@ -26,12 +27,14 @@ export function CurvedMarquee({
   curveAmount = 20,
   fontSize = 38,
   fadeEdges = true,
+  regionLabel,
   backgroundColor,
   className = "",
 }: CurvedMarqueeProps) {
-  const baseText = text?.trim()
-    ? text.trim().toLocaleUpperCase("tr-TR")
-    : "SS26 · SEYAHAT SERİSİ · UYKUNU YANINDA TAŞI ·";
+  // Aynı sayfada birden fazla kez kullanılabildiği için textPath referansı benzersiz olmalı.
+  const pathId = `ikas-curved-path-${useId()}`;
+
+  const baseText = text?.trim() ? text.trim().toLocaleUpperCase("tr-TR") : "";
 
   // Kesintisiz döngüsel akış için 4 tekrarlı metin
   const fullText = `${baseText} ${baseText} ${baseText} ${baseText}`;
@@ -80,7 +83,7 @@ export function CurvedMarquee({
     <section
       className={`ikas-curved-marquee ${className}`.trim()}
       style={inlineStyles}
-      aria-label={`Duyuru Bandı: ${baseText}`}
+      aria-label={regionLabel ? `${regionLabel}: ${baseText}` : baseText}
     >
       {/* SOL / SAĞ KENAR SOLUKLAŞMA FADE MASK */}
       {fadeEdges !== false && (
@@ -95,7 +98,7 @@ export function CurvedMarquee({
         aria-hidden="true"
       >
         <path
-          id="ikas-curved-path"
+          id={pathId}
           d={pathD}
           fill="none"
           stroke="none"
@@ -107,7 +110,7 @@ export function CurvedMarquee({
           fontWeight="600"
           dominantBaseline="central"
         >
-          <textPath href="#ikas-curved-path" startOffset="0%">
+          <textPath href={`#${pathId}`} startOffset="0%">
             {fullText}
             <animate
               attributeName="startOffset"

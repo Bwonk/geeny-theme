@@ -1,5 +1,5 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasNavigationLinkList } from "@ikas/bp-storefront";
+import type { IkasNavigationLinkList, IkasNavigationLink } from "@ikas/bp-storefront";
 
 export interface Props {
   /** Footer sol marka başlığı */
@@ -36,4 +36,6 @@ export interface Props {
   showPaymentIcons?: boolean;
   /** Bölüm arka plan rengi */
   backgroundColor?: string;
+  supportBadgeLink?: IkasNavigationLink | null;
+  paymentMethodsText?: string;
 }

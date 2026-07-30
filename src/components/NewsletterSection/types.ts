@@ -18,4 +18,8 @@ export interface Props {
   backgroundImage?: IkasImage | null;
   /** Bölüm zemin rengi */
   backgroundColor?: string;
+  emailLabel?: string;
+  errorText?: string;
+  successText?: string;
+  submittingButtonText?: string;
 }

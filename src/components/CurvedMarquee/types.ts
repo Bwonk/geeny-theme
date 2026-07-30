@@ -16,4 +16,5 @@ export interface Props {
   fadeEdges?: boolean;
   /** Bölüm zemin rengi */
   backgroundColor?: string;
+  regionLabel?: string;
 }

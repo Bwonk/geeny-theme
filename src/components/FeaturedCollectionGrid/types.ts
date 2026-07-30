@@ -1,5 +1,5 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasProductList } from "@ikas/bp-storefront";
+import type { IkasProductList, IkasNavigationLink } from "@ikas/bp-storefront";
 
 export interface Props {
   /** Koleksiyon alanı ana başlığı */
@@ -16,4 +16,10 @@ export interface Props {
   viewAllButtonText?: string;
   /** Bölüm zemin rengi */
   backgroundColor?: string;
+  tag?: string;
+  viewAllLink?: IkasNavigationLink | null;
+  emptyStateText?: string;
+  addToCartText?: string;
+  addingToCartText?: string;
+  soldOutText?: string;
 }

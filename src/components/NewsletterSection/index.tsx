@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "preact/hooks";
+import { useRef, useEffect, useState, useId } from "preact/hooks";
 import {
   customerStore,
   getNewsletterSubscriptionForm,
@@ -34,10 +34,16 @@ export function NewsletterSection({
   placeholder = "E-posta adresiniz",
   buttonText = "ABONE OL",
   subscribeNote = "* E-posta adresiniz güvendedir, dilediğiniz an tek tıkla ayrılabilirsiniz.",
+  emailLabel,
+  errorText,
+  successText,
+  submittingButtonText,
   backgroundImage,
   backgroundColor,
   className = "",
 }: NewsletterSectionProps) {
+  // Bölüm bir sayfada birden fazla kez kullanılabilir → label/input eşleşmesi benzersiz olmalı.
+  const emailInputId = `ikas-newsletter-email-${useId()}`;
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const newsletterForm = getNewsletterSubscriptionForm(customerStore);
@@ -92,7 +98,7 @@ export function NewsletterSection({
 
   const emailField = newsletterForm?.email;
   const isError = emailField?.hasError;
-  const errorMessage = emailField?.message || "Lütfen geçerli bir e-posta adresi giriniz.";
+  const errorMessage = emailField?.message || errorText;
   const isSuccess = newsletterForm?.isSuccess;
   const bgImgUrl = backgroundImage ? getDefaultSrc(backgroundImage) : null;
   const visibleClass = isVisible ? "ikas-newsletter--visible" : "";
@@ -169,23 +175,22 @@ export function NewsletterSection({
 
             {isSuccess ? (
               <div className="ikas-newsletter__success-msg _VcfI5D07Nt" role="alert">
-                {newsletterForm?.responseMessage ||
-                  "Bültenimize başarıyla kaydoldunuz! İlk sipariş indirim kodunuz e-posta adresinize gönderildi."}
+                {newsletterForm?.responseMessage || successText}
               </div>
             ) : (
               <form
                 className="ikas-newsletter__form"
                 onSubmit={handleSubmit}
-                aria-label="E-Bülten Aboneliği"
+                aria-label={title}
                 noValidate
               >
                 <div className="ikas-newsletter__form-row">
                   <div className="ikas-newsletter__input-wrapper">
-                    <label htmlFor="geeny-newsletter-email" className="visually-hidden">
-                      E-Posta Adresi
+                    <label htmlFor={emailInputId} className="visually-hidden">
+                      {emailLabel}
                     </label>
                     <input
-                      id="geeny-newsletter-email"
+                      id={emailInputId}
                       type="email"
                       className={`ikas-newsletter__input ${
                         isError ? "ikas-newsletter__input--error" : ""
@@ -206,13 +211,13 @@ export function NewsletterSection({
 
                   <div className="ikas-newsletter__button-wrapper">
                     <Button
-                      text={buttonText}
+                      text={newsletterForm?.isSubmitting ? submittingButtonText : buttonText}
                       variant="PILL_PRIMARY"
                       size="NORMAL"
                       icon={arrowIcon}
                       disabled={newsletterForm?.isSubmitting}
                       loading={newsletterForm?.isSubmitting}
-                      ariaLabel="E-Bülten Aboneliğini Gönder"
+                      ariaLabel={buttonText}
                     />
                   </div>
                 </div>
