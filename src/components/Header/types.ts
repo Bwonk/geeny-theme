@@ -10,4 +10,11 @@ export interface Props {
   navigation?: IkasNavigationLinkList;
   /** Sayfa kaydırıldığında header üstte sabit kalsın */
   stickyHeader?: boolean;
+  backgroundColor?: string;
+  brandText?: string;
+  mobileMenuTitle?: string;
+  menuLabel?: string;
+  searchLabel?: string;
+  accountLabel?: string;
+  cartLabel?: string;
 }

@@ -7,13 +7,22 @@
  *   Site Genel Zemin: var(--24KlcgGmm9)   TOKENS.md satır 14 (Saf Beyaz)
  * ═══════════════════════════════════════════════════════════════════════ */
 
+/* KASITLI BİNİŞME: CTA kartı footer'a "gömülü" durur.
+   Ofset tek bir değişkenden gelir; alt padding 0 olduğu için kartın footer'a
+   binen miktarı bu değere birebir eşittir. Footer'ın üst padding'i
+   clamp(65px, 6vw, 95px) → binişme sonrası nefes payı her kırılımda korunur. */
 .ikas-newsletter {
+  --newsletter-footer-overlap: 56px;
+
   width: 100%;
   box-sizing: border-box;
   background-color: var(--24KlcgGmm9);  /* Saf Beyaz / Site Genel Zemini — TOKENS.md satır 14 */
   color: #ffffff;
-  padding: clamp(24px, 3vw, 44px) 0 clamp(40px, 5vw, 72px) 0;
+  padding: clamp(24px, 3vw, 44px) 0 0 0;
+  margin-top: 0;
+  margin-bottom: calc(-1 * var(--newsletter-footer-overlap));
   position: relative;
+  z-index: 2;
   overflow: hidden;
 }
 
@@ -214,8 +223,11 @@
 
 /* RESPONSIVE (<768px) */
 @media (max-width: 767px) {
+  /* Mobilde alt padding 40px binişmeyi 10px'e düşürüyordu → kart footer'dan
+     kopuk görünüyordu. Padding sıfırlandı, ofset dar ekrana göre kısaldı. */
   .ikas-newsletter {
-    padding: 24px 0 40px 0;
+    --newsletter-footer-overlap: 40px;
+    padding: 24px 0 0 0;
   }
 
   .ikas-newsletter__container {

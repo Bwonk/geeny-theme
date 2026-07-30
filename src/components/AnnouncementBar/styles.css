@@ -21,7 +21,14 @@
   font-size: 11px;
   letter-spacing: 0.14em;
   text-align: center;
-  position: relative;
+  /* Bant tepeye sabitlenir; sticky header onun ALTINA oturur
+     (bkz. Header/styles.css → .ikas-header--sticky top ofseti).
+     Böylece hiçbir scroll konumunda ikisi üst üste binmez. */
+  position: sticky;
+  top: 0;
+  margin: 0;
+  /* Header ile aynı katman: header DOM'da sonra geldiği için kendi alt ağacı
+     (mobil menü, sepet çekmecesi, arama katmanı) bandın üzerinde kalır. */
   z-index: var(--z-index-announcement, 100);
   overflow: hidden;
 }

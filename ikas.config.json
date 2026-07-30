@@ -48,13 +48,18 @@
           "groupId": "announcement_group"
         },
         {
-          "name": "autoRotate",
-          "displayName": "Otomatik Döndür",
-          "type": "BOOLEAN",
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
           "required": false,
-          "defaultValue": true,
-          "description": "Birden fazla duyuru varsa otomatik geçiş yap",
-          "groupId": "announcement_group"
+          "defaultValue": "#37435B"
+        },
+        {
+          "name": "regionLabel",
+          "displayName": "Erişilebilirlik Bölge Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Duyuru Bandı"
         }
       ],
       "propGroups": [
@@ -122,6 +127,61 @@
           "defaultValue": true,
           "description": "Sayfa kaydırıldığında header üstte sabit kalsın",
           "groupId": "header_group"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FFFFFF"
+        },
+        {
+          "name": "brandText",
+          "displayName": "Marka Metni (logo yoksa)",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "INFINITY",
+          "groupId": "texts"
+        },
+        {
+          "name": "mobileMenuTitle",
+          "displayName": "Mobil Menü Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "MENÜ",
+          "groupId": "texts"
+        },
+        {
+          "name": "menuLabel",
+          "displayName": "Menü Butonu Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Menü",
+          "groupId": "texts"
+        },
+        {
+          "name": "searchLabel",
+          "displayName": "Arama Butonu Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ara",
+          "groupId": "texts"
+        },
+        {
+          "name": "accountLabel",
+          "displayName": "Hesap Butonu Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Hesabım",
+          "groupId": "texts"
+        },
+        {
+          "name": "cartLabel",
+          "displayName": "Sepet Butonu Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sepet",
+          "groupId": "texts"
         }
       ],
       "propGroups": [
@@ -129,6 +189,10 @@
           "id": "header_group",
           "name": "Header ve Navigasyon Ayarları",
           "description": "Logo, ana navigasyon bağlantıları ve sabit header ayarları"
+        },
+        {
+          "id": "texts",
+          "name": "Metinler"
         }
       ]
     },
@@ -208,6 +272,34 @@
           "required": false,
           "description": "Bölüm zemin rengi",
           "groupId": "newsletter_group"
+        },
+        {
+          "name": "emailLabel",
+          "displayName": "E-Posta Alan Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "E-Posta Adresi"
+        },
+        {
+          "name": "errorText",
+          "displayName": "Hata Mesajı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Lütfen geçerli bir e-posta adresi giriniz."
+        },
+        {
+          "name": "successText",
+          "displayName": "Başarı Mesajı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bültenimize başarıyla kaydoldunuz."
+        },
+        {
+          "name": "submittingButtonText",
+          "displayName": "Gönderilirken Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "GÖNDERİLİYOR..."
         }
       ],
       "propGroups": [
@@ -373,6 +465,19 @@
           "required": false,
           "description": "Bölüm arka plan rengi",
           "groupId": "footer_group"
+        },
+        {
+          "name": "supportBadgeLink",
+          "displayName": "Destek Etiketi Bağlantısı",
+          "type": "LINK",
+          "required": false
+        },
+        {
+          "name": "paymentMethodsText",
+          "displayName": "Ödeme Yöntemleri (virgülle ayırın)",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "VISA, MASTERCARD, TROY, 3D SECURE"
         }
       ],
       "propGroups": [
@@ -484,6 +589,13 @@
           "required": false,
           "description": "Bölüm zemin rengi",
           "groupId": "hero_group"
+        },
+        {
+          "name": "imageAlt",
+          "displayName": "Görsel Alternatif Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SS26 Seyahat Serisi"
         }
       ],
       "propGroups": [
@@ -616,6 +728,13 @@
           "required": false,
           "description": "Bölüm zemin rengi",
           "groupId": "marquee_group"
+        },
+        {
+          "name": "regionLabel",
+          "displayName": "Erişilebilirlik Bölge Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Duyuru Bandı"
         }
       ],
       "propGroups": [
@@ -866,6 +985,47 @@
           "required": false,
           "description": "Bölüm zemin rengi",
           "groupId": "featured_collection_group"
+        },
+        {
+          "name": "tag",
+          "displayName": "Üst Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "01 · ÖNE ÇIKANLAR"
+        },
+        {
+          "name": "viewAllLink",
+          "displayName": "Tümünü Gör Bağlantısı",
+          "type": "LINK",
+          "required": false
+        },
+        {
+          "name": "emptyStateText",
+          "displayName": "Ürün Yokken Gösterilecek Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bu koleksiyonda henüz ürün bulunmuyor."
+        },
+        {
+          "name": "addToCartText",
+          "displayName": "Sepete Ekle Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SEPETE EKLE"
+        },
+        {
+          "name": "addingToCartText",
+          "displayName": "Sepete Eklenirken Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "EKLENİYOR..."
+        },
+        {
+          "name": "soldOutText",
+          "displayName": "Tükendi Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "TÜKENDİ"
         }
       ],
       "propGroups": [
@@ -1215,6 +1375,12 @@
           "required": false,
           "description": "Bölüm zemin rengi",
           "groupId": "testimonials_group"
+        },
+        {
+          "name": "bottomLink",
+          "displayName": "Alt Bağlantı Hedefi",
+          "type": "LINK",
+          "required": false
         }
       ],
       "propGroups": [

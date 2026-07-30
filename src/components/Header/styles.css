@@ -18,13 +18,19 @@
   box-sizing: border-box;
   z-index: var(--z-index-header, 100);
   padding: clamp(10px, 1.5vw, 20px) clamp(20px, 5vw, 64px) clamp(6px, 1vw, 12px);
-  background: linear-gradient(180deg, var(--24KlcgGmm9) 58%, rgba(255, 255, 255, 0));
+  /* Zemin, backgroundColor prop'undan gelen --header-bg ile boyanır; altta
+     içeriğin geçebilmesi için şeffaflaşan bir gradient olarak uygulanır. */
+  background: linear-gradient(180deg, var(--header-bg, var(--24KlcgGmm9)) 58%, transparent);
   transition: padding 0.3s ease;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
+/* Sticky header, duyuru bandının gerçek yüksekliği kadar aşağıdan yapışır.
+   Değişkeni AnnouncementBar çalışma anında yayınlar; bant yoksa 0px kalır. */
 .ikas-header--sticky {
   position: sticky;
-  top: 0;
+  top: var(--ikas-announcement-height, 0px);
 }
 
 .ikas-header__wrapper {

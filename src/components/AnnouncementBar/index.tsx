@@ -1,5 +1,9 @@
+import { useEffect, useRef } from "preact/hooks";
 import { getThemeSetting } from "@ikas/bp-storefront";
 import { Props } from "./types";
+
+/** Sticky header'ın altına ineceği ofseti taşıyan global CSS değişkeni. */
+const OFFSET_VAR = "--ikas-announcement-height";
 
 export interface AnnouncementBarProps extends Props {
   className?: string;
@@ -16,18 +20,53 @@ export interface AnnouncementBarProps extends Props {
  * - Türkçe karakter dostu toLocaleUpperCase("tr-TR") dönüşümü
  */
 export function AnnouncementBar({
-  text = "500 ₺ ÜZERİ ÜCRETSİZ KARGO",
-  text2 = "30 GÜN KOŞULSUZ İADE",
-  text3 = "2 YIL GARANTİ",
+  text,
+  text2,
+  text3,
   link,
+  regionLabel,
+  backgroundColor,
   className = "",
 }: AnnouncementBarProps) {
   const msg1 = text?.trim() ? text.trim().toLocaleUpperCase("tr-TR") : "";
   const msg2 = text2?.trim() ? text2.trim().toLocaleUpperCase("tr-TR") : "";
   const msg3 = text3?.trim() ? text3.trim().toLocaleUpperCase("tr-TR") : "";
+  const hasMessages = Boolean(msg1 || msg2 || msg3);
+
+  const barRef = useRef<HTMLElement | null>(null);
+
+  // Bant sticky olarak tepeye sabitlenir; gerçek yüksekliğini global bir CSS
+  // değişkenine yazar ki sticky header tam altına otursun (üst üste binmesin).
+  // Bant yoksa değişken 0px'e döner → header top:0 ile çalışmaya devam eder.
+  useEffect(() => {
+    const root = document.documentElement;
+    const el = barRef.current;
+
+    if (!hasMessages || !el) {
+      root.style.setProperty(OFFSET_VAR, "0px");
+      return;
+    }
+
+    const publishHeight = () => {
+      root.style.setProperty(OFFSET_VAR, `${Math.round(el.offsetHeight)}px`);
+    };
+
+    publishHeight();
+
+    const observer =
+      typeof ResizeObserver !== "undefined" ? new ResizeObserver(publishHeight) : null;
+    observer?.observe(el);
+    window.addEventListener("resize", publishHeight);
+
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener("resize", publishHeight);
+      root.style.setProperty(OFFSET_VAR, "0px");
+    };
+  }, [hasMessages]);
 
   // Eğer hiçbir duyuru metni girilmemişse bileşeni işleme
-  if (!msg1 && !msg2 && !msg3) {
+  if (!hasMessages) {
     return null;
   }
 
@@ -37,6 +76,7 @@ export function AnnouncementBar({
 
   const inlineStyles = {
     "--announcement-height": barHeight,
+    backgroundColor: backgroundColor || undefined,
   };
 
   const linkObj = link as any;
@@ -75,9 +115,10 @@ export function AnnouncementBar({
 
   return (
     <aside
+      ref={barRef}
       className={`ikas-announcement-bar ${className}`.trim()}
       style={inlineStyles}
-      aria-label={`Duyuru Bandı: ${fullText}`}
+      aria-label={regionLabel ? `${regionLabel}: ${fullText}` : fullText}
     >
       {href ? (
         <a

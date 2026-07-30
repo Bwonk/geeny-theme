@@ -10,6 +10,6 @@ export interface Props {
   text3?: string;
   /** Tıklandığında yönlendirilecek sayfa veya harici link */
   link?: IkasNavigationLink | null;
-  /** Birden fazla duyuru varsa otomatik geçiş yap */
-  autoRotate?: boolean;
+  backgroundColor?: string;
+  regionLabel?: string;
 }

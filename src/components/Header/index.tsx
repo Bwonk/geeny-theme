@@ -29,6 +29,13 @@ export function Header({
   logoWidth = 160,
   navigation,
   stickyHeader = true,
+  backgroundColor,
+  brandText,
+  mobileMenuTitle,
+  menuLabel,
+  searchLabel,
+  accountLabel,
+  cartLabel,
   className = "",
 }: HeaderProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -73,9 +80,13 @@ export function Header({
   const itemCount = cartItems.reduce((acc, item) => acc + (item.quantity ?? 1), 0);
 
   const logoSrc = logo ? getDefaultSrc(logo) : null;
-  const links = navigation?.links ?? [];
+  const links = (navigation?.links ?? []).filter(
+    (item: any) => Boolean(item?.label || item?.title)
+  );
 
   const inlineStyles = {
+    // Zemin gradient üzerinden uygulanır (bkz. styles.css → .ikas-header background).
+    "--header-bg": backgroundColor || undefined,
     "--header-height": headerHeight,
     "--section-padding-x": sectionPadX,
     "--mobile-padding-x": mobilePadX,
@@ -99,7 +110,7 @@ export function Header({
               <button
                 type="button"
                 className="ikas-header__hamburger"
-                aria-label="Menüyü Aç/Kapat"
+                aria-label={menuLabel}
                 aria-expanded={isDrawerOpen}
                 aria-controls="mobile-navigation-drawer"
                 onClick={() => setIsDrawerOpen(true)}
@@ -121,25 +132,25 @@ export function Header({
               </button>
 
               {/* Logo Linki */}
-              <a href="/" className="ikas-header__logo-link" aria-label="Ana Sayfa">
+              <a href="/" className="ikas-header__logo-link" aria-label={brandText}>
                 {logoSrc ? (
                   <img
                     src={logoSrc}
-                    alt="Logo"
+                    alt={brandText}
                     className="ikas-header__logo-img"
                     style={{ width: `${logoWidth}px` }}
                   />
                 ) : (
-                  <span className="ikas-header__logo-text">INFINITY</span>
+                  <span className="ikas-header__logo-text">{brandText}</span>
                 )}
               </a>
 
               {/* Masaüstü Navigasyon Menüsü */}
-              <nav className="ikas-header__nav" aria-label="Ana Menü">
+              <nav className="ikas-header__nav" aria-label={menuLabel}>
                 <ul className="ikas-header__menu">
                   {links.map((item: any, index: number) => {
                     const href = item.href || item.externalLink || "#";
-                    const label = item.label || item.title || "Bağlantı";
+                    const label = item.label || item.title;
                     return (
                       <li key={index} className="ikas-header__menu-item">
                         <a href={href} className="ikas-header__menu-link">
@@ -158,8 +169,8 @@ export function Header({
               <button
                 type="button"
                 className="ikas-header__icon-btn"
-                aria-label="Ara"
-                title="Ürün Ara"
+                aria-label={searchLabel}
+                title={searchLabel}
                 onClick={() => window.dispatchEvent(new CustomEvent("geeny:search-overlay:open"))}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
@@ -172,8 +183,8 @@ export function Header({
               <button
                 type="button"
                 className="ikas-header__icon-btn"
-                aria-label="Hesabım"
-                title="Müşteri Hesabı"
+                aria-label={accountLabel}
+                title={accountLabel}
                 onClick={() => Router.navigateToPage("ACCOUNT")}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
@@ -186,8 +197,8 @@ export function Header({
               <button
                 type="button"
                 className="ikas-header__cart-btn"
-                aria-label={`Sepet (${itemCount} Ürün)`}
-                title="Alışveriş Sepeti"
+                aria-label={`${cartLabel} (${itemCount})`}
+                title={cartLabel}
                 onClick={() => {
                   window.dispatchEvent(new CustomEvent("geeny:cart-drawer:toggle"));
                 }}
@@ -221,11 +232,11 @@ export function Header({
         aria-hidden={!isDrawerOpen}
       >
         <div className="ikas-header__drawer-header">
-          <span className="ikas-header__logo-text">MENÜ</span>
+          <span className="ikas-header__logo-text">{mobileMenuTitle}</span>
           <button
             type="button"
             className="ikas-header__drawer-close"
-            aria-label="Menüyü Kapat"
+            aria-label={menuLabel}
             onClick={() => setIsDrawerOpen(false)}
           >
             <svg
@@ -243,11 +254,11 @@ export function Header({
             </svg>
           </button>
         </div>
-        <nav className="ikas-header__drawer-nav" aria-label="Mobil Menü">
+        <nav className="ikas-header__drawer-nav" aria-label={mobileMenuTitle}>
           <ul className="ikas-header__drawer-menu">
             {links.map((item: any, index: number) => {
               const href = item.href || item.externalLink || "#";
-              const label = item.label || item.title || "Bağlantı";
+              const label = item.label || item.title;
               return (
                 <li key={index}>
                   <a
