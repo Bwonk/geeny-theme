@@ -4,6 +4,10 @@ import { getThemeSettingValue as _getThemeSettingValueRaw } from "@ikas/bp-store
 
 /** Enum type: vGqGTFaly1 */
 export type VelocityBeltDirection = "LEFT" | "RIGHT";
+/** Enum type: VWZ4Ci2qHH */
+export type VelocityBeltScrollBoost = "off" | "light" | "medium" | "strong";
+/** Enum type: ReYL0teQQr */
+export type VelocityBeltSpeed = "slow" | "normal" | "fast";
 
 /** Stable keys of theme global variables defined in the editor's "Styles" panel. */
 export type ThemeSettingName =

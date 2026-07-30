@@ -1,21 +1,21 @@
 // This file is auto-generated — do not edit manually.
-import type { VelocityBeltDirection } from "../../global-types";
+import type { VelocityBeltDirection, VelocityBeltScrollBoost, VelocityBeltSpeed } from "../../global-types";
 
 export interface Props {
-  /** Band üzerinde kayan metin */
+  /** Band üzerinde akan metin */
   text?: string;
-  /** Dururken/normal akış hızı */
-  baseSpeed?: number;
-  /** Scroll delta × bu değer */
-  velocityMultiplier?: number;
-  /** Bandın rotate açısı derece */
+  /** Bandı eğ. 0 = düz. Örnek: -2 veya 3 (eksi sola, artı sağa yatık). */
   angle?: number;
-  /** Metnin kayma yönü */
+  /** Sola veya sağa. */
   direction?: VelocityBeltDirection;
-  /** TOKENS.md satır 14 Saf Beyaz */
+  /** Kayan yazının rengi */
   color?: string;
-  /** TOKENS.md satır 10 Ana Lacivert */
+  /** Bandın zemin rengi */
   backgroundColor?: string;
-  /** Kayan metin font-size */
+  /** Piksel cinsinden yazı büyüklüğü. Örnek: 12 */
   fontSize?: number;
+  /** Bandın normal kayma hızı. Yavaş önerilir. */
+  speed?: VelocityBeltSpeed;
+  /** Sayfa kaydırılınca bant biraz hızlanır mı? Kapalı = sabit hız. */
+  scrollBoost?: VelocityBeltScrollBoost;
 }

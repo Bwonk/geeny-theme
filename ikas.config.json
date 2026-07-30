@@ -1728,43 +1728,25 @@
           "displayName": "Kayan Metin",
           "type": "TEXT",
           "required": false,
-          "description": "Band üzerinde kayan metin",
+          "description": "Band üzerinde akan metin",
           "defaultValue": "İZMİR'DE DOKUNDU · İSTANBUL'DA TASARLANDI · %100 SAF PAMUK VE HAFIZA KÖPÜĞÜ ·",
           "groupId": "content"
         },
         {
-          "name": "baseSpeed",
-          "displayName": "Temel Hız",
-          "type": "NUMBER",
-          "required": false,
-          "description": "Dururken/normal akış hızı",
-          "defaultValue": 0.28,
-          "groupId": "motion"
-        },
-        {
-          "name": "velocityMultiplier",
-          "displayName": "Scroll Hız Çarpanı",
-          "type": "NUMBER",
-          "required": false,
-          "description": "Scroll delta × bu değer",
-          "defaultValue": 0.035,
-          "groupId": "motion"
-        },
-        {
           "name": "angle",
-          "displayName": "Eğim Açısı (°)",
+          "displayName": "Eğim",
           "type": "NUMBER",
           "required": false,
-          "description": "Bandın rotate açısı derece",
+          "description": "Bandı eğ. 0 = düz. Örnek: -2 veya 3 (eksi sola, artı sağa yatık).",
           "defaultValue": -2,
           "groupId": "motion"
         },
         {
           "name": "direction",
-          "displayName": "Akış Yönü",
+          "displayName": "Yazı Nereye Aksın?",
           "type": "ENUM",
           "required": false,
-          "description": "Metnin kayma yönü",
+          "description": "Sola veya sağa.",
           "defaultValue": "LEFT",
           "groupId": "motion",
           "enumTypeId": "vGqGTFaly1"
@@ -1774,7 +1756,7 @@
           "displayName": "Metin Rengi",
           "type": "COLOR",
           "required": false,
-          "description": "TOKENS.md satır 14 Saf Beyaz",
+          "description": "Kayan yazının rengi",
           "defaultValue": "#FFFFFF",
           "groupId": "appearance"
         },
@@ -1783,18 +1765,38 @@
           "displayName": "Arka Plan Rengi",
           "type": "COLOR",
           "required": false,
-          "description": "TOKENS.md satır 10 Ana Lacivert",
+          "description": "Bandın zemin rengi",
           "defaultValue": "#37435B",
           "groupId": "appearance"
         },
         {
           "name": "fontSize",
-          "displayName": "Metin Boyutu (px)",
+          "displayName": "Yazı Boyutu",
           "type": "NUMBER",
           "required": false,
-          "description": "Kayan metin font-size",
+          "description": "Piksel cinsinden yazı büyüklüğü. Örnek: 12",
           "defaultValue": 12,
           "groupId": "appearance"
+        },
+        {
+          "name": "speed",
+          "displayName": "Akış Hızı",
+          "type": "ENUM",
+          "required": false,
+          "description": "Bandın normal kayma hızı. Yavaş önerilir.",
+          "defaultValue": "slow",
+          "groupId": "motion",
+          "enumTypeId": "ReYL0teQQr"
+        },
+        {
+          "name": "scrollBoost",
+          "displayName": "Kaydırınca Hızlansın mı?",
+          "type": "ENUM",
+          "required": false,
+          "description": "Sayfa kaydırılınca bant biraz hızlanır mı? Kapalı = sabit hız.",
+          "defaultValue": "light",
+          "groupId": "motion",
+          "enumTypeId": "VWZ4Ci2qHH"
         }
       ],
       "propGroups": [
@@ -1804,7 +1806,7 @@
         },
         {
           "id": "motion",
-          "name": "Hareket"
+          "name": "Hız ve Eğim"
         },
         {
           "id": "appearance",
@@ -1819,8 +1821,31 @@
       "name": "VelocityBeltDirection",
       "type": "enum",
       "enumOptions": {
-        "Sola (Left)": "LEFT",
-        "Sağa (Right)": "RIGHT"
+        "Sola": "LEFT",
+        "Sağa": "RIGHT"
+      },
+      "isDynamic": false
+    },
+    {
+      "id": "ReYL0teQQr",
+      "name": "VelocityBeltSpeed",
+      "type": "enum",
+      "enumOptions": {
+        "Yavaş": "slow",
+        "Normal": "normal",
+        "Hızlı": "fast"
+      },
+      "isDynamic": false
+    },
+    {
+      "id": "VWZ4Ci2qHH",
+      "name": "VelocityBeltScrollBoost",
+      "type": "enum",
+      "enumOptions": {
+        "Kapalı": "off",
+        "Hafif": "light",
+        "Orta": "medium",
+        "Güçlü": "strong"
       },
       "isDynamic": false
     }

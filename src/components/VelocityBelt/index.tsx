@@ -1,18 +1,37 @@
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import { Props } from "./types";
-import type { VelocityBeltDirection } from "../../global-types";
+import type {
+  VelocityBeltDirection,
+  VelocityBeltScrollBoost,
+  VelocityBeltSpeed,
+} from "../../global-types";
 
 export interface VelocityBeltProps extends Props {
   className?: string;
 }
 
+/** Editördeki "Akış Hızı" seçenekleri → dahili px/frame hızı (yavaş default). */
+const SPEED_MAP: Record<string, number> = {
+  slow: 0.1,
+  normal: 0.22,
+  fast: 0.42,
+};
+
+/** "Kaydırınca Hızlansın mı?" → scroll delta çarpanı */
+const BOOST_MAP: Record<string, number> = {
+  off: 0,
+  light: 0.012,
+  medium: 0.028,
+  strong: 0.055,
+};
+
 /**
- * VelocityBelt — Scroll hızına tepki veren kayan bant.
+ * VelocityBelt — Scroll'a tepki verebilen kayan bant.
  *
- * Eğim (angle) tek birimde uygulanır: lacivert zemin + metin birlikte rotate olur.
- * Section zemini boyanmaz (düz dikdörtgen eğimi öldürürdü); boya yalnızca wrapper'da.
- *
- * Köşe oturtma: wrapper genişliği |angle|'a göre büyür → rotate sonrası sol/sağ boşluk yok.
+ * Merchant ayarları sade:
+ *   speed       → Yavaş / Normal / Hızlı
+ *   scrollBoost → Kapalı / Hafif / Orta / Güçlü
+ *   angle       → eğim (zemin + yazı birlikte)
  *
  * Renkler — TOKENS.md:
  *   bg    → Ana Lacivert var(--pxNuSoudLn) satır 10
@@ -20,8 +39,8 @@ export interface VelocityBeltProps extends Props {
  */
 export function VelocityBelt({
   text = "İZMİR'DE DOKUNDU · İSTANBUL'DA TASARLANDI · %100 SAF PAMUK VE HAFIZA KÖPÜĞÜ ·",
-  baseSpeed = 0.28,
-  velocityMultiplier = 0.035,
+  speed = "slow" as VelocityBeltSpeed,
+  scrollBoost = "light" as VelocityBeltScrollBoost,
   angle = -2,
   direction = "LEFT" as VelocityBeltDirection,
   color,
@@ -32,25 +51,21 @@ export function VelocityBelt({
   const trackRef = useRef<HTMLDivElement>(null);
   const [offset, setOffset] = useState(0);
 
-  const resolvedBase =
-    typeof baseSpeed === "number" && isFinite(baseSpeed) ? Math.max(0, baseSpeed) : 0.28;
-  const resolvedMultiplier =
-    typeof velocityMultiplier === "number" && isFinite(velocityMultiplier)
-      ? Math.max(0, velocityMultiplier)
-      : 0.035;
+  const speedKey = String(speed || "slow").toLowerCase();
+  const boostKey = String(scrollBoost || "light").toLowerCase();
+  const resolvedBase = SPEED_MAP[speedKey] ?? SPEED_MAP.slow;
+  const resolvedMultiplier = BOOST_MAP[boostKey] ?? BOOST_MAP.light;
+
   const resolvedAngle = typeof angle === "number" && isFinite(angle) ? angle : -2;
   const resolvedFontSize =
     typeof fontSize === "number" && isFinite(fontSize) && fontSize > 0 ? fontSize : 12;
   const dir = String(direction || "LEFT").toUpperCase() === "RIGHT" ? "RIGHT" : "LEFT";
 
-  // Eğim arttıkça bant genişler; rotate sonrası sol/sağ köşeler viewport'u kapatır.
-  // taban %14 + |derece| × %2.2 (ör. 5° → ~%25, 10° → ~%36), üst sınır %55.
   const expandPct = useMemo(() => {
     const abs = Math.abs(resolvedAngle);
     return Math.min(55, Math.max(14, 14 + abs * 2.2));
   }, [resolvedAngle]);
 
-  // Clip dikey nefes: eğik bandın AABB yüksekliği için (px ≈ sin×genişlik yerine güvenli pay).
   const clipPadPx = useMemo(() => {
     const abs = Math.abs(resolvedAngle);
     return Math.max(8, Math.round(abs * 3.5 + 6));
@@ -60,29 +75,29 @@ export function VelocityBelt({
     let animId = 0;
     let lastScrollY = window.scrollY || window.pageYOffset;
     let currentX = 0;
-    let speed = resolvedBase;
+    let currentSpeed = resolvedBase;
 
     const isReducedMotion =
       typeof window.matchMedia === "function" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const loop = () => {
-      if (!isReducedMotion) {
+      if (!isReducedMotion && resolvedMultiplier > 0) {
         const nowScrollY = window.scrollY || window.pageYOffset;
         const delta = Math.abs(nowScrollY - lastScrollY);
         lastScrollY = nowScrollY;
 
-        speed += delta * resolvedMultiplier;
-        // Temel hıza dönüş — biraz daha yavaş sönüm (daha sakin his)
-        speed += (resolvedBase - speed) * 0.08;
-        // Anlık tavan: scroll patlamalarında kaçmasın
-        const maxSpeed = resolvedBase * 4 + 0.6;
-        if (speed > maxSpeed) speed = maxSpeed;
+        currentSpeed += delta * resolvedMultiplier;
+        currentSpeed += (resolvedBase - currentSpeed) * 0.1;
+        const maxSpeed = resolvedBase * 3.2 + 0.35;
+        if (currentSpeed > maxSpeed) currentSpeed = maxSpeed;
       } else {
-        speed = resolvedBase;
+        // Kapalı boost veya reduced-motion → sabit yavaş akış
+        currentSpeed = resolvedBase;
+        lastScrollY = window.scrollY || window.pageYOffset;
       }
 
-      currentX += dir === "RIGHT" ? speed : -speed;
+      currentX += dir === "RIGHT" ? currentSpeed : -currentSpeed;
 
       if (dir === "LEFT" && currentX <= -50) currentX = 0;
       if (dir === "RIGHT" && currentX >= 50) currentX = 0;
@@ -101,7 +116,6 @@ export function VelocityBelt({
   const repeated = `${formatted} ${formatted} ${formatted} ${formatted}`;
 
   const sectionStyle = {
-    // Section şeffaf kalır — eğimli birim yalnızca wrapper
     "--belt-color": color || undefined,
     "--belt-bg": backgroundColor || undefined,
     "--belt-font-size": `${resolvedFontSize}px`,
@@ -118,7 +132,6 @@ export function VelocityBelt({
       aria-hidden="true"
     >
       <div className="ikas-velocity-belt__clip">
-        {/* Zemin + yazı TEK transform: rotate — birlikte eğilir */}
         <div className="ikas-velocity-belt__wrapper">
           <div
             ref={trackRef}
