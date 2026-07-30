@@ -7,13 +7,6 @@ export interface TestimonialsCarouselProps extends Props {
 }
 
 // Varsayılan yüksek kaliteli demo yüz fotoğrafları (Referanstaki Portre Avatarları)
-const DEMO_AVATARS = {
-  elif: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
-  mert: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
-  selin: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80",
-  deniz: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
-};
-
 /**
  * TestimonialsCarousel — Referans Görselle BİREBİR Aynı Konuşma Balonu & Dışa Taşkan Avatar Tasarımı
  *
@@ -41,6 +34,7 @@ export function TestimonialsCarousel({
   review4Author = "DENİZ T.",
   review4Avatar,
   bottomLinkText = "2.412 YORUMU OKU →",
+  bottomLink,
   backgroundColor,
   className = "",
 }: TestimonialsCarouselProps) {
@@ -85,15 +79,21 @@ export function TestimonialsCarousel({
 
   const visibleClass = isVisible ? "ikas-testimonials--visible" : "";
 
+  const bottomLinkObj = bottomLink as any;
+  const bottomHref = bottomLinkObj?.href || bottomLinkObj?.externalLink || "#yorumlar";
+
+  const stackAvatarSrcs = [review1Avatar, review2Avatar, review3Avatar]
+    .map((img) => (img ? getDefaultSrc(img) : null))
+    .filter(Boolean) as string[];
+
   // Dışa Taşkan Avatar Render Yardımcısı (Referans Tasarıma Birebir Uyumlu)
   const renderAvatar = (
     avatarImg: IkasImage | null | undefined,
     authorName: string,
     badgePositionClass: string,
-    colorThemeClass: string,
-    demoFallbackUrl: string
+    colorThemeClass: string
   ) => {
-    const src = avatarImg ? getDefaultSrc(avatarImg) : demoFallbackUrl;
+    const src = avatarImg ? getDefaultSrc(avatarImg) : null;
     const cleanName = (authorName || "").trim();
     const initial = cleanName.charAt(0).toLocaleUpperCase("tr-TR") || "U";
 
@@ -105,7 +105,7 @@ export function TestimonialsCarousel({
         {src ? (
           <img
             src={src}
-            alt={cleanName || "Müşteri Profil Fotoğrafı"}
+            alt=""
             className="ikas-testimonials__avatar-img"
             loading="lazy"
           />
@@ -134,8 +134,7 @@ export function TestimonialsCarousel({
                 review1Avatar,
                 review1Author,
                 "ikas-testimonials__avatar-badge--left",
-                "ikas-testimonials__avatar-badge--yellow",
-                DEMO_AVATARS.elif
+                "ikas-testimonials__avatar-badge--yellow"
               )}
               <p
                 className="ikas-testimonials__quote"
@@ -145,7 +144,7 @@ export function TestimonialsCarousel({
                 <div className="ikas-testimonials__author _VcfI5D07Nt">
                   {review1Author}
                 </div>
-                <div className="ikas-testimonials__stars" aria-label="5 yıldız">
+                <div className="ikas-testimonials__stars" aria-hidden="true">
                   ★★★★★
                 </div>
               </div>
@@ -157,8 +156,7 @@ export function TestimonialsCarousel({
                 review2Avatar,
                 review2Author,
                 "ikas-testimonials__avatar-badge--right",
-                "ikas-testimonials__avatar-badge--blue",
-                DEMO_AVATARS.mert
+                "ikas-testimonials__avatar-badge--blue"
               )}
               <p
                 className="ikas-testimonials__quote"
@@ -168,7 +166,7 @@ export function TestimonialsCarousel({
                 <div className="ikas-testimonials__author _VcfI5D07Nt">
                   {review2Author}
                 </div>
-                <div className="ikas-testimonials__stars" aria-label="5 yıldız">
+                <div className="ikas-testimonials__stars" aria-hidden="true">
                   ★★★★★
                 </div>
               </div>
@@ -185,12 +183,20 @@ export function TestimonialsCarousel({
             <h2 className="ikas-testimonials__title _sKAMD8d1LA">
               <span className="ikas-testimonials__title-part1">
                 {titlePart1}
-                {/* AVATAR STACK (Gerçek Yüz Portreleri) */}
-                <span className="ikas-testimonials__avatar-stack" aria-hidden="true">
-                  <img src={DEMO_AVATARS.elif} alt="" className="ikas-testimonials__avatar-stack-img" />
-                  <img src={DEMO_AVATARS.mert} alt="" className="ikas-testimonials__avatar-stack-img" />
-                  <img src={DEMO_AVATARS.selin} alt="" className="ikas-testimonials__avatar-stack-img" />
-                </span>
+                {/* AVATAR STACK — merchant'ın yüklediği yorum avatarlarından beslenir */}
+                {stackAvatarSrcs.length > 0 && (
+                  <span className="ikas-testimonials__avatar-stack" aria-hidden="true">
+                    {stackAvatarSrcs.map((src, idx) => (
+                      <img
+                        key={idx}
+                        src={src}
+                        alt=""
+                        className="ikas-testimonials__avatar-stack-img"
+                        loading="lazy"
+                      />
+                    ))}
+                  </span>
+                )}
               </span>
               <span className="ikas-testimonials__title-part2">{titlePart2}</span>
             </h2>
@@ -204,8 +210,7 @@ export function TestimonialsCarousel({
                 review3Avatar,
                 review3Author,
                 "ikas-testimonials__avatar-badge--left-bottom",
-                "ikas-testimonials__avatar-badge--gray",
-                DEMO_AVATARS.selin
+                "ikas-testimonials__avatar-badge--gray"
               )}
               <p
                 className="ikas-testimonials__quote"
@@ -215,7 +220,7 @@ export function TestimonialsCarousel({
                 <div className="ikas-testimonials__author _VcfI5D07Nt">
                   {review3Author}
                 </div>
-                <div className="ikas-testimonials__stars" aria-label="5 yıldız">
+                <div className="ikas-testimonials__stars" aria-hidden="true">
                   ★★★★★
                 </div>
               </div>
@@ -227,8 +232,7 @@ export function TestimonialsCarousel({
                 review4Avatar,
                 review4Author,
                 "ikas-testimonials__avatar-badge--right-bottom",
-                "ikas-testimonials__avatar-badge--yellow",
-                DEMO_AVATARS.deniz
+                "ikas-testimonials__avatar-badge--yellow"
               )}
               <p
                 className="ikas-testimonials__quote"
@@ -238,7 +242,7 @@ export function TestimonialsCarousel({
                 <div className="ikas-testimonials__author _VcfI5D07Nt">
                   {review4Author}
                 </div>
-                <div className="ikas-testimonials__stars" aria-label="5 yıldız">
+                <div className="ikas-testimonials__stars" aria-hidden="true">
                   ★★★★★
                 </div>
               </div>
@@ -248,7 +252,7 @@ export function TestimonialsCarousel({
           {/* ALT YÖNLENDİRME BAĞLANTISI */}
           {bottomLinkText && (
             <div className="ikas-testimonials__footer">
-              <a href="#yorumlar" className="ikas-testimonials__link _eZyocyyd0F">
+              <a href={bottomHref} className="ikas-testimonials__link _eZyocyyd0F">
                 {bottomLinkText}
               </a>
             </div>

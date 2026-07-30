@@ -1,5 +1,5 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasImage } from "@ikas/bp-storefront";
+import type { IkasImage, IkasNavigationLink } from "@ikas/bp-storefront";
 
 export interface Props {
   /** Monospace bölüm üst etiket metni */
@@ -36,4 +36,5 @@ export interface Props {
   bottomLinkText?: string;
   /** Bölüm zemin rengi */
   backgroundColor?: string;
+  bottomLink?: IkasNavigationLink | null;
 }

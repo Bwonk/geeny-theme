@@ -21,6 +21,10 @@ export interface Props {
   showQuickAdd?: boolean;
   /** Buton görsel üzerinde slide-up overlay olarak belirsin mi? (Anasayfa.dc.html tasarımı) */
   overlayQuickAdd?: boolean;
+  /** Buton metinleri — üst section'ın TEXT prop'larından geçirilir. */
+  addToCartText?: string;
+  addingToCartText?: string;
+  soldOutText?: string;
   className?: string;
 }
 
@@ -29,6 +33,9 @@ export function ProductCard({
   showRating = false,
   showQuickAdd = true,
   overlayQuickAdd = true,
+  addToCartText = "SEPETE EKLE",
+  addingToCartText = "EKLENİYOR...",
+  soldOutText = "TÜKENDİ",
   className = "",
 }: Props) {
   const [isAdding, setIsAdding] = useState(false);
@@ -45,68 +52,8 @@ export function ProductCard({
     "--image-hover-transition": hoverAnim,
   };
 
-  // Demo fallback handler for empty product state
-  const handleDemoQuickAdd = (e: Event) => {
-    e.preventDefault();
-    e.stopPropagation();
-    window.dispatchEvent(new CustomEvent("geeny:cart-drawer:open"));
-  };
-
-  // If product is missing or null, render high quality demo product card with PILL_PRIMARY Button
-  if (!product) {
-    return (
-      <article
-        className={`ikas-product-card ${overlayQuickAdd ? "ikas-product-card--overlay-mode" : ""} ${className}`.trim()}
-        style={inlineStyles}
-      >
-        <div className="ikas-product-card__image-wrapper">
-          <div className="ikas-product-card__image-placeholder" style={{ backgroundColor: "#C8CFD0" }} />
-          <div className="ikas-product-card__badge-wrapper">
-            <span className="ikas-product-card__badge">EN ÇOK SATAN</span>
-          </div>
-
-          {showQuickAdd && overlayQuickAdd && (
-            <div
-              className="ikas-product-card__overlay-quick-add"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-              }}
-            >
-              <Button
-                text="SEPETE EKLE"
-                variant="PILL_PRIMARY"
-                fullWidth
-                size="NORMAL"
-                onClick={handleDemoQuickAdd}
-                ariaLabel="Infinity Pillow · Klasik ürününü sepete ekle"
-              />
-            </div>
-          )}
-        </div>
-
-        <div className="ikas-product-card__content">
-          <h3 className="ikas-product-card__title">Infinity Pillow · Klasik</h3>
-          <div className="ikas-product-card__price-wrapper">
-            <span className="ikas-product-card__final-price">₺1.290</span>
-          </div>
-
-          {showQuickAdd && !overlayQuickAdd && (
-            <div className="ikas-product-card__quick-add">
-              <Button
-                text="SEPETE EKLE"
-                variant="PILL_PRIMARY"
-                fullWidth
-                size="NORMAL"
-                onClick={handleDemoQuickAdd}
-                ariaLabel="Infinity Pillow · Klasik ürününü sepete ekle"
-              />
-            </div>
-          )}
-        </div>
-      </article>
-    );
-  }
+  // Ürün yoksa sahte kart basmak yerine hiç render etme.
+  if (!product) return null;
 
   const variant = getSelectedProductVariant(product);
 
@@ -156,7 +103,7 @@ export function ProductCard({
     }
   };
 
-  const buttonText = isAdding ? "EKLENİYOR..." : inStock ? "SEPETE EKLE" : "TÜKENDİ";
+  const buttonText = isAdding ? addingToCartText : inStock ? addToCartText : soldOutText;
 
   return (
     <article

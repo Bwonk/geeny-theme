@@ -15,6 +15,39 @@ export interface StorySectionProps extends Props {
  * 3. Velocity Marquee Belt: Alt lacivert duyuru bandı scroll hızına tepki vererek ivmelenir/yavaşlar.
  * 4. prefers-reduced-motion Erişilebilirlik Desteği.
  */
+/**
+ * Sayaç metnini ("140.000+", "4.8 / 5", "2 YIL") ilerlemeye göre ara değere çevirir.
+ * Hedef sayı prop'un kendisinden okunur; önek/sonek ve ondalık biçimi korunur.
+ * Sayı içermeyen değerler olduğu gibi döner.
+ */
+function countUp(rawValue: string | undefined, progress: number): string {
+  const value = (rawValue ?? "").trim();
+  const match = value.match(/\d[\d.,]*/);
+  if (!match) return value;
+
+  const matched = match[0];
+  const usesComma = matched.includes(",");
+  // Türkçe binlik ayracı "." kaldırılır, ondalık ayracı "." biçimine getirilir.
+  const normalized = usesComma
+    ? matched.replace(/\./g, "").replace(",", ".")
+    : matched.replace(/\.(?=\d{3}\b)/g, "");
+
+  const target = parseFloat(normalized);
+  if (!isFinite(target)) return value;
+
+  const dotIndex = normalized.indexOf(".");
+  const decimals = dotIndex === -1 ? 0 : normalized.length - dotIndex - 1;
+  const current = target * progress;
+
+  const body =
+    decimals > 0
+      ? current.toFixed(decimals).replace(".", usesComma ? "," : ".")
+      : Math.floor(current).toLocaleString("tr-TR");
+
+  const start = match.index ?? 0;
+  return `${value.slice(0, start)}${body}${value.slice(start + matched.length)}`;
+}
+
 export function StorySection({
   tag = "02 · HİKÂYEMİZ",
   storyText = "Uykunun bir lüks değil, en temel insan hakkı olduğuna inanıyoruz. İzmir'deki atölyemizde dokunan her iplik, uzun yolculuklarda omurganızı desteklemek ve size evdeki konforu hissettirmek için özenle tasarlandı.",
@@ -38,10 +71,10 @@ export function StorySection({
   // States
   const [activeWordCount, setActiveWordCount] = useState(0);
   const [counts, setCounts] = useState({
-    c1: "0+",
-    c2: "0.0 / 5",
-    c3: "0",
-    c4: counter4Val || "2 YIL",
+    c1: countUp(counter1Val, 0),
+    c2: countUp(counter2Val, 0),
+    c3: countUp(counter3Val, 0),
+    c4: countUp(counter4Val, 0),
   });
   const [beltTranslateX, setBeltTranslateX] = useState(0);
 
@@ -120,20 +153,11 @@ export function StorySection({
               const progress = Math.min(1, elapsed / duration);
               const easeProgress = 1 - Math.pow(1 - progress, 3);
 
-              const v1 = Math.floor(easeProgress * 140000);
-              const formattedV1 = `${v1.toLocaleString("tr-TR")}+`;
-
-              const v2 = (easeProgress * 4.8).toFixed(1);
-              const formattedV2 = `${v2} / 5`;
-
-              const v3 = Math.floor(easeProgress * 2412);
-              const formattedV3 = v3.toLocaleString("tr-TR");
-
               setCounts({
-                c1: progress >= 1 ? counter1Val : formattedV1,
-                c2: progress >= 1 ? counter2Val : formattedV2,
-                c3: progress >= 1 ? counter3Val : formattedV3,
-                c4: counter4Val,
+                c1: progress >= 1 ? counter1Val : countUp(counter1Val, easeProgress),
+                c2: progress >= 1 ? counter2Val : countUp(counter2Val, easeProgress),
+                c3: progress >= 1 ? counter3Val : countUp(counter3Val, easeProgress),
+                c4: progress >= 1 ? counter4Val : countUp(counter4Val, easeProgress),
               });
 
               if (progress < 1) {
