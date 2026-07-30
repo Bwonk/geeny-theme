@@ -1,46 +1,56 @@
 /* ═══════════════════════════════════════════════════════════════════════
  * VELOCITY BELT — Scroll hızına tepki veren bağımsız kayan bant
  *
- * Renkler — TOKENS.md cssVar referansları:
- *   Ana Lacivert (zemin default): var(--pxNuSoudLn)  satır 10
- *   Saf Beyaz (metin default):    var(--24KlcgGmm9)  satır 14
+ * Renkler — TOKENS.md:
+ *   Ana Lacivert (zemin): var(--pxNuSoudLn)  satır 10
+ *   Saf Beyaz (metin):    var(--24KlcgGmm9)  satır 14
  *
- * Eğim: --belt-angle (prop). Clip katmanı overflow:hidden;
- * wrapper width:110% + negatif margin → eğimde kenar boşluğu yok.
+ * Eğim: zemin + yazı .ikas-velocity-belt__wrapper üzerinde TEK rotate.
+ * Section zemini boyanmaz (düz dikdörtgen eğimi yok ederdi).
+ * --belt-expand (JS, |angle|'a göre): sol/sağ köşe boşluğunu kapatır.
  * ═══════════════════════════════════════════════════════════════════════ */
 
 .ikas-velocity-belt {
   width: 100%;
   box-sizing: border-box;
-  /* Prop gelmezse token (TOKENS.md satır 10) */
-  background-color: var(--belt-bg, var(--pxNuSoudLn));
-  color: var(--belt-color, var(--24KlcgGmm9));
+  /* Sayfa zemini görünür; bant rengi yalnızca eğik wrapper'da */
+  background-color: transparent;
   margin: 0;
   padding: 0;
   position: relative;
-  /* Section kendisi taşmayı kesmez; clip katmanı keser */
   overflow: visible;
 }
 
-/* Viewport kenarını kırpar — eğik bant taşmasını gizler */
+/* Viewport kırpıcı — eğik bandın taşan uçlarını gizler, köşeler oturur */
 .ikas-velocity-belt__clip {
   width: 100%;
   overflow: hidden;
   pointer-events: none;
+  /* Dikey pay: rotate sonrası AABB taşmasını yut */
+  padding-block: var(--belt-clip-pad, 10px);
+  margin-block: calc(-1 * var(--belt-clip-pad, 10px));
+  box-sizing: content-box;
 }
 
-/* Eğimli bant gövdesi: viewport'tan geniş → rotate sonrası kenar boşluğu kalmaz */
+/*
+ * Tek eğimli birim: background + text birlikte.
+ * width = 100% + 2×expand, margin negatif → ortalanır.
+ * expand, angle büyüdükçe JS tarafından artırılır.
+ */
 .ikas-velocity-belt__wrapper {
-  width: 110%;
-  margin-left: -5%;
+  width: calc(100% + 2 * var(--belt-expand, 14%));
+  margin-left: calc(-1 * var(--belt-expand, 14%));
   box-sizing: border-box;
   padding: 14px 0;
   background-color: var(--belt-bg, var(--pxNuSoudLn)); /* TOKENS.md satır 10 */
   color: var(--belt-color, var(--24KlcgGmm9));         /* TOKENS.md satır 14 */
-  transform: rotate(var(--belt-angle, -1deg));
+  transform: rotate(var(--belt-angle, -2deg));
   transform-origin: center center;
   overflow: hidden;
   will-change: transform;
+  /* Alt/üst kenarda hairline artefaktı önle */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .ikas-velocity-belt__track {
@@ -49,6 +59,7 @@
   white-space: nowrap;
   width: max-content;
   will-change: transform;
+  /* Track yalnızca yatay kayar — eğim wrapper'da */
 }
 
 .ikas-velocity-belt__text {
@@ -61,7 +72,6 @@
   padding-right: 2em;
 }
 
-/* reduced-motion: açı KORUNUR (düzleştirilmez); JS sabit baseSpeed kullanır */
 @media (prefers-reduced-motion: reduce) {
   .ikas-velocity-belt__track {
     will-change: auto;
