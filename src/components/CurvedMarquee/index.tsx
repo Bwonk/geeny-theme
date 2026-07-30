@@ -4,14 +4,19 @@ export interface CurvedMarqueeProps extends Props {
   className?: string;
 }
 
+export const MIN_CURVE = -120;
+export const MAX_CURVE = 120;
+
 /**
  * CurvedMarquee — Tam Özelleştirilebilir Atmosferik Kavisli Kayan Metin Section
  *
- * Düzeltmeler (Harf Çarpıklığı / Geometri Bozulması Çözümü):
- * - `preserveAspectRatio="none"` KALDIRILDI → `xMidYMid slice` olarak ayarlandı.
- *   (Böylece SVG genişlik/yükseklik ölçeklemesi X ve Y aksında %100 eşit (1:1) oranla yapılır, harfler yatayda ezilmez veya gerilmez.)
- * - SVG `<text>` elemanına doğrudan `fontFamily`, `fontSize`, `fontWeight` attribute'ları bağlandı.
- * - Harf aralığı bozulmasını önlemek için nötr letter-spacing kullanıldı.
+ * Düzeltmeler (Taşma / Kavis / Dikey Merkezleme Çözümü):
+ * - `curveAmount` [-120, +120] aralığına clamp'lenir (aşırı bükülme önlenir).
+ * - SVG viewBox (1600x200) ve dinamik baseline hesaplaması ile dikey merkezleme sağlanır.
+ *   (`baseLineY = yMid + 0.25 * numCurve`)
+ * - Metin hangi curve ayarında olursa olsun her zaman SVG kapsayıcısının dikey ortasında kalır,
+ *   üstteki/alttaki section'lara taşmaz ve kesilmez.
+ * - `preserveAspectRatio="xMidYMid meet"` ile SVG metni taşmasız 1:1 oranla hizalanır.
  */
 export function CurvedMarquee({
   text = "SS26 · SEYAHAT SERİSİ · UYKUNU YANINDA TAŞI ·",
@@ -44,10 +49,21 @@ export function CurvedMarquee({
   const fromOffset = dirStr === "RIGHT" ? "-100%" : "0%";
   const toOffset = dirStr === "RIGHT" ? "0%" : "-100%";
 
-  // TEK Simetrik Kavis Hesaplama:
-  // Başlangıç: (-200, 60), Tek Kontrol Noktası: (800, controlY), Bitiş: (1800, 60)
-  const baseLineY = 60;
-  const numCurve = typeof curveAmount === "number" ? curveAmount : 20;
+  // 1. CURVE SINIRLAMA (CLAMPING [-120, +120])
+  const rawCurve = typeof curveAmount === "number" ? curveAmount : 20;
+  const numCurve = Math.max(MIN_CURVE, Math.min(MAX_CURVE, rawCurve));
+
+  // 2. KAPSAYICI YÜKSEKLİK & DİKEY MERKEZLEME HESABI
+  // ViewBox: 1600 x 200 (Y-mid = 100)
+  // Eğrinin dikey orta noktası (excursion midpoint) yMid=100 noktasında sabit tutulur.
+  const viewBoxWidth = 1600;
+  const viewBoxHeight = 200;
+  const yMid = viewBoxHeight / 2; // 100
+
+  // baseLineY formülü: yMid + 0.25 * numCurve
+  // Böylece kavis yukarı da olsa (+), aşağı da olsa (-), düz de olsa (0),
+  // metnin salınım merkezi SVG viewBox'ının tam dikey ortası (100) olur.
+  const baseLineY = yMid + 0.25 * numCurve;
   const controlY = baseLineY - numCurve;
   const pathD = `M -200 ${baseLineY} Q 800 ${controlY} 1800 ${baseLineY}`;
 
@@ -73,8 +89,8 @@ export function CurvedMarquee({
 
       {/* SVG KAVİSLİ KAYAN METİN */}
       <svg
-        viewBox="0 0 1600 110"
-        preserveAspectRatio="xMidYMid slice"
+        viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}
+        preserveAspectRatio="xMidYMid meet"
         className="ikas-curved-marquee__svg"
         aria-hidden="true"
       >
@@ -86,10 +102,10 @@ export function CurvedMarquee({
         />
         <text
           className="ikas-curved-marquee__text"
-          font-family="Onest, var(--font-heading), sans-serif"
-          font-size={numFontSize}
-          font-weight="600"
-          dominant-baseline="central"
+          fontFamily="Onest, var(--font-heading), sans-serif"
+          fontSize={numFontSize}
+          fontWeight="600"
+          dominantBaseline="central"
         >
           <textPath href="#ikas-curved-path" startOffset="0%">
             {fullText}

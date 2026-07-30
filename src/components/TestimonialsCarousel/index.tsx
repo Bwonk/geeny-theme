@@ -1,100 +1,258 @@
-import { getThemeSetting } from "@ikas/bp-storefront";
-import { formatShadow } from "../../utils/theme";
+import { useRef, useEffect, useState } from "preact/hooks";
+import { getThemeSetting, getDefaultSrc, IkasImage } from "@ikas/bp-storefront";
 import { Props } from "./types";
 
 export interface TestimonialsCarouselProps extends Props {
   className?: string;
 }
 
+// Varsayılan yüksek kaliteli demo yüz fotoğrafları (Referanstaki Portre Avatarları)
+const DEMO_AVATARS = {
+  elif: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+  mert: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+  selin: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80",
+  deniz: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
+};
+
+/**
+ * TestimonialsCarousel — Referans Görselle BİREBİR Aynı Konuşma Balonu & Dışa Taşkan Avatar Tasarımı
+ *
+ * Referans Tasarım Özellikleri:
+ * 1. Konuşan Avatar Bütünlüğü: Avatar kartın tam DIŞ KENARINDA (solunda veya sağında) yarı yarıya dışa taşarak konumlanır. Kart, avatardan çıkan organik bir konuşma balonu hissi verir.
+ * 2. Gerçek Yüz Portreleri: Merchant `reviewXAvatar` (IMAGE) yüklediyse o gösterilir, yoksa yüksek çözünürlüklü gerçek yüz portresi gösterilir.
+ * 3. Soft Renkli Zemin Daireleri: Referanstaki gibi her avatar yumuşak pastel tonlu dairesel zemin içinde (Sarı #F5E8C7, Mavi #D8E4F0, Gri #D5E0DA).
+ * 4. Ortada Gömülü İki Tonlu Başlık: "Gerçek yolcular" + 3'lü Avatar Stack + "Gerçek uyku".
+ * 5. prefers-reduced-motion Erişilebilirlik Desteği.
+ */
 export function TestimonialsCarousel({
-  title = "Kullanıcılarımızın Deneyimleri",
-  subtitle = "Binlerce mutlu gezginin seyahat deneyimleri hakkındaki görüşleri.",
-  testimonial1Text = "12 saatlik uçak yolculuğunda ilk defa boyun ağrısı çekmeden uyudum. Harika bir tasarım!",
-  testimonial1Author = "Zeynep A. — Doğrulanmış Alıcı",
-  testimonial2Text = "Kumaş kalitesi ve katlanabilir olması çok pratik. Çantamdan hiç ayırmıyorum.",
-  testimonial2Author = "Caner T. — Sık Seyahat Eden",
+  tag = "03 · YORUMLAR",
+  titlePart1 = "Gerçek yolcular",
+  titlePart2 = "Gerçek uyku",
+  review1Text = "İstanbul-Tokyo uçuşuydu, hiç umudum yoktu. <strong>İlk kez uzun uçuşta gerçekten uyuyabildim</strong> — boynum yana devrilmedi, inerken omzum ağrımıyordu.",
+  review1Author = "ELİF K.",
+  review1Avatar,
+  review2Text = "Boyun ağrım için almıştım. <strong>Artık her seyahatte yanımda</strong> — çantada yer kaplamıyor, kendi kılıfına giriyor.",
+  review2Author = "MERT A.",
+  review2Avatar,
+  review3Text = "Gece otobüsünde bile işe yarıyor. <strong>İki yıldır her yolculukta yanımda:</strong> kılıfını yıkıyorum, hiç deforme olmadı.",
+  review3Author = "SELİN Y.",
+  review3Avatar,
+  review4Text = "Oğluma mini boyunu aldık. <strong>Arabada başı öne düşmüyor artık</strong>, uyandığında keyfi yerinde oluyor.",
+  review4Author = "DENİZ T.",
+  review4Avatar,
+  bottomLinkText = "2.412 YORUMU OKU →",
   backgroundColor,
   className = "",
 }: TestimonialsCarouselProps) {
-  // Read live global settings via getThemeSetting using exact variableNames from prompts/TOKENS.md
-  const verticalPySetting = getThemeSetting("_Kl0my3VVMA"); // Boşluk / Masaüstü Dikey Spacing (48px)
-  const verticalPyMobileSetting = getThemeSetting("_5Fdl1j6UHQ"); // Boşluk / Dikey Bölüm Spacing (2rem / 32px)
-  const sectionPxSetting = getThemeSetting("_Nd1XnRyZlx"); // Boşluk / Masaüstü Yatay Bölüm Padding (20px)
-  const mobilePxSetting = getThemeSetting("_uRDipxnxkx"); // Boşluk / Mobil Yatay Padding (16px)
-  const cardRadiusSetting = getThemeSetting("_WyFUVwOpPk"); // Radius / Kart (2rem / 32px)
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1820px)
-  const cardShadowSetting = getThemeSetting("_yyUleMlhR4"); // Gölge / Kart Soft Shadow
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
-  const sectionPy = verticalPySetting?.value || "48px";
-  const sectionPyMobile = verticalPyMobileSetting?.value || "32px";
-  const sectionPx = sectionPxSetting?.value || "20px";
-  const mobilePx = mobilePxSetting?.value || "16px";
-  const cardRadius = cardRadiusSetting?.value || "32px";
-  const maxSiteWidth = siteWidthSetting?.value || "1820px";
-  const cardShadow = formatShadow(cardShadowSetting?.value, "0 4px 20px rgba(55, 67, 91, 0.08)");
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setIsVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(el);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ");
+  const maxSiteWidth = siteWidthSetting?.value || "1560px";
 
   const inlineStyles = {
     backgroundColor: backgroundColor || undefined,
-    "--section-py": sectionPy,
-    "--section-py-mobile": sectionPyMobile,
-    "--section-px": sectionPx,
-    "--mobile-px": mobilePx,
-    "--card-radius": cardRadius,
     "--max-site-width": maxSiteWidth,
-    "--card-shadow": cardShadow,
   };
 
-  const reviews = [
-    { text: testimonial1Text, author: testimonial1Author },
-    { text: testimonial2Text, author: testimonial2Author },
-  ];
+  const visibleClass = isVisible ? "ikas-testimonials--visible" : "";
+
+  // Dışa Taşkan Avatar Render Yardımcısı (Referans Tasarıma Birebir Uyumlu)
+  const renderAvatar = (
+    avatarImg: IkasImage | null | undefined,
+    authorName: string,
+    badgePositionClass: string,
+    colorThemeClass: string,
+    demoFallbackUrl: string
+  ) => {
+    const src = avatarImg ? getDefaultSrc(avatarImg) : demoFallbackUrl;
+    const cleanName = (authorName || "").trim();
+    const initial = cleanName.charAt(0).toLocaleUpperCase("tr-TR") || "U";
+
+    return (
+      <div
+        className={`ikas-testimonials__avatar-badge ${badgePositionClass} ${colorThemeClass}`.trim()}
+        aria-hidden="true"
+      >
+        {src ? (
+          <img
+            src={src}
+            alt={cleanName || "Müşteri Profil Fotoğrafı"}
+            className="ikas-testimonials__avatar-img"
+            loading="lazy"
+          />
+        ) : (
+          <span className="ikas-testimonials__avatar-initial">{initial}</span>
+        )}
+      </div>
+    );
+  };
 
   return (
     <section
-      className={`ikas-testimonials ${className}`.trim()}
+      ref={sectionRef}
+      id="yorumlar"
+      className={`ikas-testimonials ${visibleClass} ${className}`.trim()}
       style={inlineStyles}
+      lang="tr"
     >
       <div className="ikas-testimonials__container">
-        {/* BÖLÜM BAŞLIĞI */}
-        <div className="ikas-testimonials__header">
-          {title && (
-            <h2 className="ikas-testimonials__title _sKAMD8d1LA">
-              {title}
-            </h2>
-          )}
-          {subtitle && (
-            <p className="ikas-testimonials__subtitle _VcfI5D07Nt">
-              {subtitle}
-            </p>
-          )}
-        </div>
-
-        {/* YORUM KARTLARI */}
-        <div className="ikas-testimonials__grid">
-          {reviews.map((rev, idx) => (
-            <div key={idx} className="ikas-testimonials__card">
-              {/* 5 YILDIZ PUAN */}
-              <div className="ikas-testimonials__stars" aria-label="5 Yıldız">
-                {Array.from({ length: 5 }).map((_, sIdx) => (
-                  <svg key={sIdx} width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                ))}
+        <div className="ikas-testimonials__organic-wrapper">
+          {/* ÜST DİZİLİM: KART 1 (Sol Üst) & KART 2 (Sağ Üst - Daha Aşağıda) */}
+          <div className="ikas-testimonials__row ikas-testimonials__row--top">
+            {/* KART 1 (Sol Üst - Avatar Sol Dışında) */}
+            <div className="ikas-testimonials__card ikas-testimonials__card--1 t-float">
+              {renderAvatar(
+                review1Avatar,
+                review1Author,
+                "ikas-testimonials__avatar-badge--left",
+                "ikas-testimonials__avatar-badge--yellow",
+                DEMO_AVATARS.elif
+              )}
+              <p
+                className="ikas-testimonials__quote"
+                dangerouslySetInnerHTML={{ __html: review1Text }}
+              />
+              <div className="ikas-testimonials__card-footer">
+                <div className="ikas-testimonials__author _VcfI5D07Nt">
+                  {review1Author}
+                </div>
+                <div className="ikas-testimonials__stars" aria-label="5 yıldız">
+                  ★★★★★
+                </div>
               </div>
-
-              {rev.text && (
-                <p className="ikas-testimonials__text _VcfI5D07Nt">
-                  "{rev.text}"
-                </p>
-              )}
-
-              {rev.author && (
-                <span className="ikas-testimonials__author _eZyocyyd0F">
-                  {rev.author}
-                </span>
-              )}
             </div>
-          ))}
+
+            {/* KART 2 (Sağ Üst - Avatar Sağ Dışında) */}
+            <div className="ikas-testimonials__card ikas-testimonials__card--2 t-float">
+              {renderAvatar(
+                review2Avatar,
+                review2Author,
+                "ikas-testimonials__avatar-badge--right",
+                "ikas-testimonials__avatar-badge--blue",
+                DEMO_AVATARS.mert
+              )}
+              <p
+                className="ikas-testimonials__quote"
+                dangerouslySetInnerHTML={{ __html: review2Text }}
+              />
+              <div className="ikas-testimonials__card-footer">
+                <div className="ikas-testimonials__author _VcfI5D07Nt">
+                  {review2Author}
+                </div>
+                <div className="ikas-testimonials__stars" aria-label="5 yıldız">
+                  ★★★★★
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ORTA MERKEZ BAŞLIK & AVATAR KÜMESİ (KARTLARIN ARASINA GÖMÜLÜ) */}
+          <div className="ikas-testimonials__header">
+            {tag && (
+              <div className="ikas-testimonials__tag _eZyocyyd0F">
+                {tag}
+              </div>
+            )}
+            <h2 className="ikas-testimonials__title _sKAMD8d1LA">
+              <span className="ikas-testimonials__title-part1">
+                {titlePart1}
+                {/* AVATAR STACK (Gerçek Yüz Portreleri) */}
+                <span className="ikas-testimonials__avatar-stack" aria-hidden="true">
+                  <img src={DEMO_AVATARS.elif} alt="" className="ikas-testimonials__avatar-stack-img" />
+                  <img src={DEMO_AVATARS.mert} alt="" className="ikas-testimonials__avatar-stack-img" />
+                  <img src={DEMO_AVATARS.selin} alt="" className="ikas-testimonials__avatar-stack-img" />
+                </span>
+              </span>
+              <span className="ikas-testimonials__title-part2">{titlePart2}</span>
+            </h2>
+          </div>
+
+          {/* ALT DİZİLİM: KART 3 (Sol Alt) & KART 4 (Sağ Alt - Daha Aşağıda) */}
+          <div className="ikas-testimonials__row ikas-testimonials__row--bottom">
+            {/* KART 3 (Sol Alt - Avatar Sol Dışında) */}
+            <div className="ikas-testimonials__card ikas-testimonials__card--3 t-float">
+              {renderAvatar(
+                review3Avatar,
+                review3Author,
+                "ikas-testimonials__avatar-badge--left-bottom",
+                "ikas-testimonials__avatar-badge--gray",
+                DEMO_AVATARS.selin
+              )}
+              <p
+                className="ikas-testimonials__quote"
+                dangerouslySetInnerHTML={{ __html: review3Text }}
+              />
+              <div className="ikas-testimonials__card-footer">
+                <div className="ikas-testimonials__author _VcfI5D07Nt">
+                  {review3Author}
+                </div>
+                <div className="ikas-testimonials__stars" aria-label="5 yıldız">
+                  ★★★★★
+                </div>
+              </div>
+            </div>
+
+            {/* KART 4 (Sağ Alt - Avatar Sağ Dışında) */}
+            <div className="ikas-testimonials__card ikas-testimonials__card--4 t-float">
+              {renderAvatar(
+                review4Avatar,
+                review4Author,
+                "ikas-testimonials__avatar-badge--right-bottom",
+                "ikas-testimonials__avatar-badge--yellow",
+                DEMO_AVATARS.deniz
+              )}
+              <p
+                className="ikas-testimonials__quote"
+                dangerouslySetInnerHTML={{ __html: review4Text }}
+              />
+              <div className="ikas-testimonials__card-footer">
+                <div className="ikas-testimonials__author _VcfI5D07Nt">
+                  {review4Author}
+                </div>
+                <div className="ikas-testimonials__stars" aria-label="5 yıldız">
+                  ★★★★★
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ALT YÖNLENDİRME BAĞLANTISI */}
+          {bottomLinkText && (
+            <div className="ikas-testimonials__footer">
+              <a href="#yorumlar" className="ikas-testimonials__link _eZyocyyd0F">
+                {bottomLinkText}
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </section>

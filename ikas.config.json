@@ -140,12 +140,21 @@
       "type": "section",
       "props": [
         {
+          "name": "tag",
+          "displayName": "Bölüm Üst Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "BÜLTEN · TOPLULUK",
+          "description": "Monospace bülten alanı üst etiketi",
+          "groupId": "newsletter_group"
+        },
+        {
           "name": "title",
           "displayName": "Bölüm Başlığı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Yeniliklerden ve Fırsatlardan Haberdar Olun",
-          "description": "Bülten kayıt alanı başlığı",
+          "defaultValue": "Uykunun peşinde.",
+          "description": "Bülten kayıt alanı ana başlığı",
           "groupId": "newsletter_group"
         },
         {
@@ -153,7 +162,7 @@
           "displayName": "Alt Açıklama",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "E-posta adresinizle kayıt olun, ilk siparişinizde %10 indirim kazanın.",
+          "defaultValue": "Ayda bir e-posta: yeni renkler, kısa uyku notları ve aboneler için ilk erişim. Uzun yolculuklardan öğrendiklerimizi paylaşıyoruz — dilediğin an tek tıkla çıkabilirsin.",
           "description": "Bülten kayıt alanı alt metni",
           "groupId": "newsletter_group"
         },
@@ -162,7 +171,7 @@
           "displayName": "Girdi İpucu Metni",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "E-posta adresinizi giriniz",
+          "defaultValue": "E-posta adresiniz",
           "description": "E-posta kutusu içindeki ipucu metni",
           "groupId": "newsletter_group"
         },
@@ -171,8 +180,25 @@
           "displayName": "Buton Metni",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Abone Ol",
+          "defaultValue": "ABONE OL",
           "description": "Form gönderme butonu metni",
+          "groupId": "newsletter_group"
+        },
+        {
+          "name": "subscribeNote",
+          "displayName": "Abonelik Alt Notu",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "* E-posta adresiniz güvendedir, dilediğiniz an tek tıkla ayrılabilirsiniz.",
+          "description": "Form altındaki bilgi notu",
+          "groupId": "newsletter_group"
+        },
+        {
+          "name": "backgroundImage",
+          "displayName": "Arka Plan Görseli",
+          "type": "IMAGE",
+          "required": false,
+          "description": "CTA kutusu arka plan detay görseli (opsiyonel)",
           "groupId": "newsletter_group"
         },
         {
@@ -180,7 +206,7 @@
           "displayName": "Arka Plan Rengi",
           "type": "COLOR",
           "required": false,
-          "description": "Bölüm arka plan rengi",
+          "description": "Bölüm zemin rengi",
           "groupId": "newsletter_group"
         }
       ],
@@ -201,72 +227,134 @@
       "isFooter": true,
       "props": [
         {
-          "name": "copyrightText",
-          "displayName": "Telif Hakkı Metni",
+          "name": "brandTitle",
+          "displayName": "Marka İsmi / Başlık",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "© 2026 Infinity Pillow. Tüm hakları saklıdır.",
-          "description": "Footer en altındaki telif metni",
+          "defaultValue": "INFINITY",
+          "description": "Footer sol marka başlığı",
+          "groupId": "footer_group"
+        },
+        {
+          "name": "brandDescription",
+          "displayName": "Marka Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İyi tasarlanmış seyahat ve uyku ürünleri. İzmir'de dokundu, İstanbul'da tasarlandı — her ürün gönderilmeden önce elden geçiyor.",
+          "description": "Footer sol marka kısa tanıtım yazısı",
+          "groupId": "footer_group"
+        },
+        {
+          "name": "supportBadgeText",
+          "displayName": "Destek Etiketi Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "DESTEK: 7/24 CANLI",
+          "description": "Marka açıklamasının altındaki sarı vurgulu destek link metni",
+          "groupId": "footer_group"
+        },
+        {
+          "name": "col1Title",
+          "displayName": "1. Kolon Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "MAĞAZA",
+          "description": "İlk link kolonunun monospace başlığı",
           "groupId": "footer_group"
         },
         {
           "name": "quickLinks",
-          "displayName": "Hızlı Linkler Menüsü",
+          "displayName": "1. Kolon Bağlantıları (Mağaza)",
           "type": "LIST_OF_LINK",
           "required": false,
-          "defaultValue": {
-            "links": [
-              {
-                "linkType": "PAGE",
-                "label": "Ana Sayfa",
-                "pageType": "INDEX",
-                "subLinks": []
-              },
-              {
-                "linkType": "PAGE",
-                "label": "Tüm Ürünler",
-                "pageType": "CATEGORY",
-                "subLinks": []
-              },
-              {
-                "linkType": "PAGE",
-                "label": "Hakkımızda",
-                "pageType": "ACCOUNT",
-                "subLinks": []
-              }
-            ]
-          },
-          "description": "Footer hızlı erişim menü bağlantıları",
+          "description": "İlk kolondaki menü bağlantıları",
+          "groupId": "footer_group"
+        },
+        {
+          "name": "col2Title",
+          "displayName": "2. Kolon Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "REHBER",
+          "description": "İkinci link kolonunun monospace başlığı",
+          "groupId": "footer_group"
+        },
+        {
+          "name": "col2Links",
+          "displayName": "2. Kolon Bağlantıları (Rehber)",
+          "type": "LIST_OF_LINK",
+          "required": false,
+          "description": "İkinci kolondaki menü bağlantıları",
+          "groupId": "footer_group"
+        },
+        {
+          "name": "col3Title",
+          "displayName": "3. Kolon Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "KURUMSAL",
+          "description": "Üçüncü link kolonunun monospace başlığı",
           "groupId": "footer_group"
         },
         {
           "name": "customerServiceLinks",
-          "displayName": "Müşteri Hizmetleri Menüsü",
+          "displayName": "3. Kolon Bağlantıları (Kurumsal)",
           "type": "LIST_OF_LINK",
           "required": false,
-          "defaultValue": {
-            "links": [
-              {
-                "linkType": "PAGE",
-                "label": "Sıkça Sorulan Sorular",
-                "pageType": "SEARCH",
-                "subLinks": []
-              },
-              {
-                "linkType": "PAGE",
-                "label": "Kargo ve Teslimat",
-                "pageType": "ACCOUNT",
-                "subLinks": []
-              },
-              {
-                "linkType": "PAGE",
-                "label": "İade Politikası",
-                "pageType": "ACCOUNT",
-                "subLinks": []
-              }
-            ]
-          },
-          "description": "Yardım ve politika bağlantıları",
+          "description": "Üçüncü kolondaki menü bağlantıları",
+          "groupId": "footer_group"
+        },
+        {
+          "name": "col4Title",
+          "displayName": "4. Kolon Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "YARDIM",
+          "description": "Dördüncü link kolonunun monospace başlığı",
+          "groupId": "footer_group"
+        },
+        {
+          "name": "col4Links",
+          "displayName": "4. Kolon Bağlantıları (Yardım)",
+          "type": "LIST_OF_LINK",
+          "required": false,
+          "description": "Dördüncü kolondaki menü bağlantıları",
+          "groupId": "footer_group"
+        },
+        {
+          "name": "copyrightText",
+          "displayName": "Telif Hakkı Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "© 2026 INFINITY SLEEP GOODS · TÜM HAKLARI SAKLIDIR",
+          "description": "Footer en altındaki telif metni",
+          "groupId": "footer_group"
+        },
+        {
+          "name": "instagramUrl",
+          "displayName": "Instagram Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://instagram.com",
+          "description": "Instagram profil bağlantısı",
+          "groupId": "footer_group"
+        },
+        {
+          "name": "youtubeUrl",
+          "displayName": "YouTube Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://youtube.com",
+          "description": "YouTube kanal bağlantısı",
+          "groupId": "footer_group"
+        },
+        {
+          "name": "pinterestUrl",
+          "displayName": "Pinterest Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://pinterest.com",
+          "description": "Pinterest profil bağlantısı",
           "groupId": "footer_group"
         },
         {
@@ -275,7 +363,7 @@
           "type": "BOOLEAN",
           "required": false,
           "defaultValue": true,
-          "description": "Alt bantta ödeme kartı ikonlarını göster",
+          "description": "Alt bantta VISA/Mastercard ödeme ikonlarını göster",
           "groupId": "footer_group"
         },
         {
@@ -500,7 +588,7 @@
           "type": "NUMBER",
           "required": false,
           "defaultValue": 20,
-          "description": "Eğrinin kavis miktarı (0 = Düz çizgi, 20 = Hafif zarif kavis)",
+          "description": "Eğrinin kavis miktarı (-120 ile +120 arası, 0 = Düz çizgi, 20 = Hafif zarif kavis)",
           "groupId": "marquee_group"
         },
         {
@@ -535,6 +623,129 @@
           "id": "marquee_group",
           "name": "Kavisli Marquee Ayarları",
           "description": "SVG kavisli kayan metin bant ayarları"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-StorySection",
+      "name": "Story Section",
+      "entry": "./src/components/StorySection/index.tsx",
+      "styles": "./src/components/StorySection/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "tag",
+          "displayName": "Bölüm Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "02 · HİKÂYEMİZ",
+          "description": "Monospace bölüm üst etiket metni",
+          "groupId": "story_group"
+        },
+        {
+          "name": "storyText",
+          "displayName": "Hikaye Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Uykunun bir lüks değil, en temel insan hakkı olduğuna inanıyoruz. İzmir'deki atölyemizde dokunan her iplik, uzun yolculuklarda omurganızı desteklemek ve size evdeki konforu hissettirmek için özenle tasarlandı.",
+          "description": "Scroll ile aydınlanan marka hikayesi metni",
+          "groupId": "story_group"
+        },
+        {
+          "name": "counter1Val",
+          "displayName": "1. Sayaç Değeri",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "140.000+",
+          "description": "İlk istatistik değeri",
+          "groupId": "story_group"
+        },
+        {
+          "name": "counter1Label",
+          "displayName": "1. Sayaç Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "MUTLU YOLCU",
+          "description": "İlk istatistik alt etiketi",
+          "groupId": "story_group"
+        },
+        {
+          "name": "counter2Val",
+          "displayName": "2. Sayaç Değeri",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "4.8 / 5",
+          "description": "İkinci istatistik değeri",
+          "groupId": "story_group"
+        },
+        {
+          "name": "counter2Label",
+          "displayName": "2. Sayaç Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "KULLANICI PUANI",
+          "description": "İkinci istatistik alt etiketi",
+          "groupId": "story_group"
+        },
+        {
+          "name": "counter3Val",
+          "displayName": "3. Sayaç Değeri",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "2.412",
+          "description": "Üçüncü istatistik değeri",
+          "groupId": "story_group"
+        },
+        {
+          "name": "counter3Label",
+          "displayName": "3. Sayaç Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "DEĞERLENDİRME",
+          "description": "Üçüncü istatistik alt etiketi",
+          "groupId": "story_group"
+        },
+        {
+          "name": "counter4Val",
+          "displayName": "4. Sayaç Değeri",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "2 YIL",
+          "description": "Dördüncü istatistik değeri",
+          "groupId": "story_group"
+        },
+        {
+          "name": "counter4Label",
+          "displayName": "4. Sayaç Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "BİREBİR DEĞİŞİM",
+          "description": "Dördüncü istatistik alt etiketi",
+          "groupId": "story_group"
+        },
+        {
+          "name": "marqueeText",
+          "displayName": "Alt Kayan Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İZMİR'DE DOKUNDU · İSTANBUL'DA TASARLANDI · %100 SAF PAMUK VE HAFIZA KÖPÜĞÜ ·",
+          "description": "Scroll hızı ile hızlanan alt bant metni",
+          "groupId": "story_group"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "description": "Bölüm zemin rengi",
+          "groupId": "story_group"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "story_group",
+          "name": "Hikayemiz Bölüm Ayarları",
+          "description": "Hikaye paragrafı, sayaclar ve alt velocity bant ayarları"
         }
       ]
     },
@@ -858,57 +1069,143 @@
       "type": "section",
       "props": [
         {
-          "name": "title",
-          "displayName": "Bölüm Başlığı",
+          "name": "tag",
+          "displayName": "Bölüm Etiketi",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Kullanıcılarımızın Deneyimleri",
-          "description": "Müşteri yorumları başlığı",
+          "defaultValue": "03 · YORUMLAR",
+          "description": "Monospace bölüm üst etiket metni",
           "groupId": "testimonials_group"
         },
         {
-          "name": "subtitle",
-          "displayName": "Alt Açıklama",
+          "name": "titlePart1",
+          "displayName": "Başlık 1. Satır (Gri)",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Binlerce mutlu gezginin seyahat deneyimleri hakkındaki görüşleri.",
-          "description": "Bölüm alt metni",
+          "defaultValue": "Gerçek yolcular",
+          "description": "Avatar kümesinin yanındaki gri üst başlık",
           "groupId": "testimonials_group"
         },
         {
-          "name": "testimonial1Text",
+          "name": "titlePart2",
+          "displayName": "Başlık 2. Satır (Lacivert)",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Gerçek uyku",
+          "description": "Ana lacivert vurgulu alt başlık",
+          "groupId": "testimonials_group"
+        },
+        {
+          "name": "review1Text",
           "displayName": "1. Yorum Metni",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "12 saatlik uçak yolculuğunda ilk defa boyun ağrısı çekmeden uyudum. Harika bir tasarım!",
-          "description": "İlk müşteri yorumu",
+          "defaultValue": "İstanbul-Tokyo uçuşuydu, hiç umudum yoktu. <strong>İlk kez uzun uçuşta gerçekten uyuyabildim</strong> — boynum yana devrilmedi, inerken omzum ağrımıyordu.",
+          "description": "Sol üst 1. müşteri yorum metni",
           "groupId": "testimonials_group"
         },
         {
-          "name": "testimonial1Author",
+          "name": "review1Author",
           "displayName": "1. Yorum Yapan",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Zeynep A. — Doğrulanmış Alıcı",
-          "description": "Müşteri adı",
+          "defaultValue": "ELİF K.",
+          "description": "1. Müşteri adı",
           "groupId": "testimonials_group"
         },
         {
-          "name": "testimonial2Text",
+          "name": "review1Avatar",
+          "displayName": "1. Müşteri Profil Fotoğrafı",
+          "type": "IMAGE",
+          "required": false,
+          "description": "1. Müşteri profil görseli (yüklü değilse adının baş harfi gösterilir)",
+          "groupId": "testimonials_group"
+        },
+        {
+          "name": "review2Text",
           "displayName": "2. Yorum Metni",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Kumaş kalitesi ve katlanabilir olması çok pratik. Çantamdan hiç ayırmıyorum.",
-          "description": "İkinci müşteri yorumu",
+          "defaultValue": "Boyun ağrım için almıştım. <strong>Artık her seyahatte yanımda</strong> — çantada yer kaplamıyor, kendi kılıfına giriyor.",
+          "description": "Sağ üst 2. müşteri yorum metni",
           "groupId": "testimonials_group"
         },
         {
-          "name": "testimonial2Author",
+          "name": "review2Author",
           "displayName": "2. Yorum Yapan",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Caner T. — Sık Seyahat Eden",
-          "description": "Müşteri adı",
+          "defaultValue": "MERT A.",
+          "description": "2. Müşteri adı",
+          "groupId": "testimonials_group"
+        },
+        {
+          "name": "review2Avatar",
+          "displayName": "2. Müşteri Profil Fotoğrafı",
+          "type": "IMAGE",
+          "required": false,
+          "description": "2. Müşteri profil görseli (yüklü değilse adının baş harfi gösterilir)",
+          "groupId": "testimonials_group"
+        },
+        {
+          "name": "review3Text",
+          "displayName": "3. Yorum Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Gece otobüsünde bile işe yarıyor. <strong>İki yıldır her yolculukta yanımda:</strong> kılıfını yıkıyorum, hiç deforme olmadı.",
+          "description": "Sol alt 3. müşteri yorum metni",
+          "groupId": "testimonials_group"
+        },
+        {
+          "name": "review3Author",
+          "displayName": "3. Yorum Yapan",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SELİN Y.",
+          "description": "3. Müşteri adı",
+          "groupId": "testimonials_group"
+        },
+        {
+          "name": "review3Avatar",
+          "displayName": "3. Müşteri Profil Fotoğrafı",
+          "type": "IMAGE",
+          "required": false,
+          "description": "3. Müşteri profil görseli (yüklü değilse adının baş harfi gösterilir)",
+          "groupId": "testimonials_group"
+        },
+        {
+          "name": "review4Text",
+          "displayName": "4. Yorum Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Oğluma mini boyunu aldık. <strong>Arabada başı öne düşmüyor artık</strong>, uyandığında keyfi yerinde oluyor.",
+          "description": "Sağ alt 4. müşteri yorum metni",
+          "groupId": "testimonials_group"
+        },
+        {
+          "name": "review4Author",
+          "displayName": "4. Yorum Yapan",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "DENİZ T.",
+          "description": "4. Müşteri adı",
+          "groupId": "testimonials_group"
+        },
+        {
+          "name": "review4Avatar",
+          "displayName": "4. Müşteri Profil Fotoğrafı",
+          "type": "IMAGE",
+          "required": false,
+          "description": "4. Müşteri profil görseli (yüklü değilse adının baş harfi gösterilir)",
+          "groupId": "testimonials_group"
+        },
+        {
+          "name": "bottomLinkText",
+          "displayName": "Alt Bağlantı Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "2.412 YORUMU OKU →",
+          "description": "Bölüm altındaki yönlendirme metni",
           "groupId": "testimonials_group"
         },
         {

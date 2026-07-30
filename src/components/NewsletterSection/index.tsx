@@ -1,4 +1,4 @@
-import { useEffect } from "preact/hooks";
+import { useRef, useEffect, useState } from "preact/hooks";
 import {
   customerStore,
   getNewsletterSubscriptionForm,
@@ -6,6 +6,7 @@ import {
   setNewsletterSubscriptionFormEmail,
   submitNewsletterSubscriptionForm,
   getThemeSetting,
+  getDefaultSrc,
 } from "@ikas/bp-storefront";
 import Button from "../../sub-components/Button";
 import { Props } from "./types";
@@ -14,14 +15,31 @@ export interface NewsletterSectionProps extends Props {
   className?: string;
 }
 
+/**
+ * NewsletterSection — Knockoff Tarzı Büyük Koyu Lacivert CTA Kutusu (Anasayfa.dc.html Uyumlu)
+ *
+ * Özellikler:
+ * - Koyu Lacivert (`var(--pxNuSoudLn)`) geniş yuvarlak köşe CTA kutusu (box-shadow & border-radius)
+ * - Arka planda: Düşük opaklıkta görsel + Gradient overlay + İnce -12° açılı SVG desen pattern
+ * - Sağ üst köşede Accent Sarı (`var(--sy8ZnXZdoG)`) dekoratif takoz
+ * - Sol içerik: Mono üst etiket, H2 başlık, kısa açıklama, e-posta girdi kutusu, Pill Grow butonu & güven notu
+ * - ikas SDK newsletter form entegrasyonu (getNewsletterSubscriptionForm, submitNewsletterSubscriptionForm)
+ * - Merkezi Button sub-component (variant="PILL_PRIMARY" wave Pill Grow efekti)
+ * - Scroll-Reveal & prefers-reduced-motion Erişilebilirlik Desteği
+ */
 export function NewsletterSection({
-  title = "Yeniliklerden ve Fırsatlardan Haberdar Olun",
-  subtitle = "E-posta adresinizle kayıt olun, ilk siparişinizde %10 indirim kazanın.",
-  placeholder = "E-posta adresinizi giriniz",
-  buttonText = "Abone Ol",
+  tag = "BÜLTEN · TOPLULUK",
+  title = "Uykunun peşinde.",
+  subtitle = "Ayda bir e-posta: yeni renkler, kısa uyku notları ve aboneler için ilk erişim. Uzun yolculuklardan öğrendiklerimizi paylaşıyoruz — dilediğin an tek tıkla çıkabilirsin.",
+  placeholder = "E-posta adresiniz",
+  buttonText = "ABONE OL",
+  subscribeNote = "* E-posta adresiniz güvendedir, dilediğiniz an tek tıkla ayrılabilirsiniz.",
+  backgroundImage,
   backgroundColor,
   className = "",
 }: NewsletterSectionProps) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
   const newsletterForm = getNewsletterSubscriptionForm(customerStore);
 
   useEffect(() => {
@@ -30,29 +48,40 @@ export function NewsletterSection({
     }
   }, [newsletterForm]);
 
-  // Read live global settings via getThemeSetting using exact variableNames from prompts/TOKENS.md
-  const radiusSetting = getThemeSetting("_iI8H4rllzj"); // Radius / Input ve Form (0.5rem / 8px)
-  const buttonHeightSetting = getThemeSetting("_2xLGYXCG2n"); // Boşluk / Buton Yüksekliği (48px)
-  const verticalPySetting = getThemeSetting("_Kl0my3VVMA"); // Boşluk / Masaüstü Dikey Spacing (48px)
-  const verticalPyMobileSetting = getThemeSetting("_5Fdl1j6UHQ"); // Boşluk / Dikey Bölüm Spacing (2rem / 32px)
-  const sectionPxSetting = getThemeSetting("_Nd1XnRyZlx"); // Boşluk / Masaüstü Yatay Bölüm Padding (20px)
-  const mobilePxSetting = getThemeSetting("_uRDipxnxkx"); // Boşluk / Mobil Yatay Padding (16px)
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
 
-  const inputRadius = radiusSetting?.value || "8px";
-  const buttonHeight = buttonHeightSetting?.value || "48px";
-  const sectionPy = verticalPySetting?.value || "48px";
-  const sectionPyMobile = verticalPyMobileSetting?.value || "32px";
-  const sectionPx = sectionPxSetting?.value || "20px";
-  const mobilePx = mobilePxSetting?.value || "16px";
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setIsVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(el);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ");
+  const maxSiteWidth = siteWidthSetting?.value || "1560px";
 
   const inlineStyles = {
     backgroundColor: backgroundColor || undefined,
-    "--input-radius": inputRadius,
-    "--button-height": buttonHeight,
-    "--section-py": sectionPy,
-    "--section-py-mobile": sectionPyMobile,
-    "--section-px": sectionPx,
-    "--mobile-px": mobilePx,
+    "--max-site-width": maxSiteWidth,
   };
 
   const handleSubmit = async (e: Event) => {
@@ -65,82 +94,150 @@ export function NewsletterSection({
   const isError = emailField?.hasError;
   const errorMessage = emailField?.message || "Lütfen geçerli bir e-posta adresi giriniz.";
   const isSuccess = newsletterForm?.isSuccess;
+  const bgImgUrl = backgroundImage ? getDefaultSrc(backgroundImage) : null;
+  const visibleClass = isVisible ? "ikas-newsletter--visible" : "";
+
+  const arrowIcon = (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M4 12h15M13 6l6 6-6 6" />
+    </svg>
+  );
 
   return (
     <section
-      className={`ikas-newsletter ${className}`.trim()}
+      ref={sectionRef}
+      className={`ikas-newsletter ${visibleClass} ${className}`.trim()}
       style={inlineStyles}
+      lang="tr"
     >
       <div className="ikas-newsletter__container">
-        {title && (
-          <h2 className="ikas-newsletter__title _sKAMD8d1LA">{title}</h2>
-        )}
+        {/* KURU LACİVERT CTA KUTUSU */}
+        <div className="ikas-newsletter__card">
+          {/* OPSİYONEL ARKA PLAN GÖRSELİ */}
+          {bgImgUrl && (
+            <img
+              src={bgImgUrl}
+              alt=""
+              className="ikas-newsletter__bg-img"
+              loading="lazy"
+            />
+          )}
 
-        {subtitle && (
-          <p className="ikas-newsletter__subtitle _VcfI5D07Nt">{subtitle}</p>
-        )}
+          {/* GRADIENT OVERLAY */}
+          <div className="ikas-newsletter__overlay" />
 
-        {isSuccess ? (
-          <div className="ikas-newsletter__success-msg _VcfI5D07Nt" role="alert">
-            {newsletterForm?.responseMessage ||
-              "Bültenimize başarıyla kaydoldunuz! Teşekkür ederiz."}
-          </div>
-        ) : (
-          <form
-            className="ikas-newsletter__form"
-            onSubmit={handleSubmit}
-            aria-label="E-Bülten Aboneliği"
-            noValidate
-          >
-            <div className="ikas-newsletter__form-row">
-              <div className="ikas-newsletter__input-wrapper">
-                <label htmlFor="geeny-newsletter-email" className="visually-hidden">
-                  E-Posta Adresi
-                </label>
-                <input
-                  id="geeny-newsletter-email"
-                  type="email"
-                  className={`ikas-newsletter__input ${
-                    isError ? "ikas-newsletter__input--error" : ""
-                  }`}
-                  placeholder={placeholder}
-                  value={emailField?.value ?? ""}
-                  onInput={(e: Event) =>
-                    newsletterForm &&
-                    setNewsletterSubscriptionFormEmail(
-                      newsletterForm,
-                      (e.target as HTMLInputElement).value
-                    )
-                  }
-                  required
-                  aria-invalid={isError ? "true" : "false"}
-                />
+          {/* DÖNDÜRÜLMÜŞ MİKRO İKON SVG PATTERN */}
+          <svg aria-hidden="true" className="ikas-newsletter__pattern">
+            <defs>
+              <pattern
+                id="cta-pat"
+                width="104"
+                height="104"
+                patternUnits="userSpaceOnUse"
+                patternTransform="rotate(-12)"
+              >
+                <g fill="none" stroke="#C8CFD0" strokeWidth="1.3" strokeLinecap="round">
+                  <path d="M18 22c-3.4 1.4-5.8 4.7-5.8 8.6a9.2 9.2 0 0 0 12.3 8.7A10 10 0 0 1 18 22Z" />
+                  <path d="M64 18h14M64 26h9" />
+                  <path d="M58 74c0-3.6 2.9-6.6 6.5-6.6h9c3.6 0 6.5 3 6.5 6.6" />
+                  <path d="M64.5 74c0 2.4 2.4 4.4 5.5 4.4h3c3.1 0 5.5-2 5.5-4.4" />
+                  <path d="M22 62l16 8-16 8v-6l7-2-7-2Z" />
+                </g>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#cta-pat)" />
+          </svg>
+
+          {/* SAĞ ÜST DEKORATİF ACCENT TAKOZ */}
+          <div className="ikas-newsletter__wedge" aria-hidden="true" />
+
+          {/* İÇERİK BLOĞU */}
+          <div className="ikas-newsletter__content">
+            {tag && (
+              <div className="ikas-newsletter__tag _eZyocyyd0F">
+                {tag}
+              </div>
+            )}
+
+            {title && (
+              <h2 className="ikas-newsletter__title _sKAMD8d1LA">{title}</h2>
+            )}
+
+            {subtitle && (
+              <p className="ikas-newsletter__subtitle _VcfI5D07Nt">{subtitle}</p>
+            )}
+
+            {isSuccess ? (
+              <div className="ikas-newsletter__success-msg _VcfI5D07Nt" role="alert">
+                {newsletterForm?.responseMessage ||
+                  "Bültenimize başarıyla kaydoldunuz! İlk sipariş indirim kodunuz e-posta adresinize gönderildi."}
+              </div>
+            ) : (
+              <form
+                className="ikas-newsletter__form"
+                onSubmit={handleSubmit}
+                aria-label="E-Bülten Aboneliği"
+                noValidate
+              >
+                <div className="ikas-newsletter__form-row">
+                  <div className="ikas-newsletter__input-wrapper">
+                    <label htmlFor="geeny-newsletter-email" className="visually-hidden">
+                      E-Posta Adresi
+                    </label>
+                    <input
+                      id="geeny-newsletter-email"
+                      type="email"
+                      className={`ikas-newsletter__input ${
+                        isError ? "ikas-newsletter__input--error" : ""
+                      }`}
+                      placeholder={placeholder}
+                      value={emailField?.value ?? ""}
+                      onInput={(e: Event) =>
+                        newsletterForm &&
+                        setNewsletterSubscriptionFormEmail(
+                          newsletterForm,
+                          (e.target as HTMLInputElement).value
+                        )
+                      }
+                      required
+                      aria-invalid={isError ? "true" : "false"}
+                    />
+                  </div>
+
+                  <div className="ikas-newsletter__button-wrapper">
+                    <Button
+                      text={buttonText}
+                      variant="PILL_PRIMARY"
+                      size="NORMAL"
+                      icon={arrowIcon}
+                      disabled={newsletterForm?.isSubmitting}
+                      loading={newsletterForm?.isSubmitting}
+                      ariaLabel="E-Bülten Aboneliğini Gönder"
+                    />
+                  </div>
+                </div>
+
                 {isError && (
                   <p className="ikas-newsletter__error-msg _eZyocyyd0F" role="alert">
                     {errorMessage}
                   </p>
                 )}
-              </div>
 
-              <div className="ikas-newsletter__button-wrapper">
-                <Button
-                  text={buttonText}
-                  variant="ACCENT"
-                  size="NORMAL"
-                  disabled={newsletterForm?.isSubmitting}
-                  loading={newsletterForm?.isSubmitting}
-                  ariaLabel="E-Bülten Aboneliğini Gönder"
-                />
-              </div>
-            </div>
+                {newsletterForm?.isFailure && newsletterForm.responseMessage && (
+                  <p className="ikas-newsletter__error-msg _eZyocyyd0F" role="alert">
+                    {newsletterForm.responseMessage}
+                  </p>
+                )}
 
-            {newsletterForm?.isFailure && newsletterForm.responseMessage && (
-              <p className="ikas-newsletter__error-msg _eZyocyyd0F" role="alert">
-                {newsletterForm.responseMessage}
-              </p>
+                {subscribeNote && (
+                  <div className="ikas-newsletter__note _eZyocyyd0F">
+                    {subscribeNote}
+                  </div>
+                )}
+              </form>
             )}
-          </form>
-        )}
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -8,7 +8,7 @@ export interface Props {
   speed?: number;
   /** Metnin kayma yönü (Sola / Sağa) */
   direction?: string;
-  /** Eğrinin kavis miktarı (0 = Düz çizgi, 20 = Hafif zarif kavis) */
+  /** Eğrinin kavis miktarı (-120 ile +120 arası, 0 = Düz çizgi, 20 = Hafif zarif kavis) */
   curveAmount?: number;
   /** Font punto büyüklüğü (px) */
   fontSize?: number;
