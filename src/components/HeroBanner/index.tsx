@@ -29,6 +29,7 @@ export function HeroBanner({
   secondaryButtonLink,
   socialProofTitle = "140.000+ mutlu yolcu",
   socialProofSubtitle = "4,8 / 5 · 2.412 DEĞERLENDİRME",
+  imageAlt,
   image,
   backgroundColor,
   className = "",
@@ -178,6 +179,18 @@ export function HeroBanner({
               </button>
             )}
           </div>
+
+          {/* Mobil Kompakt Sosyal Kanıt Chip (<768px Görünür) */}
+          {(socialProofTitle || socialProofSubtitle) && (
+            <div className="ikas-hero__social-proof-chip">
+              <div className="ikas-hero__avatar-stack ikas-hero__avatar-stack--sm">
+                <span className="ikas-hero__avatar ikas-hero__avatar--1" />
+                <span className="ikas-hero__avatar ikas-hero__avatar--2" />
+                <span className="ikas-hero__avatar ikas-hero__avatar--3" />
+              </div>
+              <span className="ikas-hero__chip-text">{socialProofTitle}</span>
+            </div>
+          )}
         </div>
 
         {/* 2. SAĞ KOLON: 4:5 Dikey Görsel + Parallax + Sosyal Kanıt Kartı */}
@@ -190,7 +203,7 @@ export function HeroBanner({
             {imgSrc ? (
               <img
                 src={imgSrc}
-                alt={title || "SS26 Seyahat Serisi Hero Görseli"}
+                alt={imageAlt || title || ""}
                 className="ikas-hero__img"
               />
             ) : (
@@ -222,11 +235,9 @@ export function HeroBanner({
                 )}
               </div>
 
-              {/* Yıldız Puanı */}
-              <span
-                className="ikas-hero__stars"
-                aria-label="5 üzerinden 5 yıldız"
-              >
+              {/* Yıldız Puanı — puan bilgisi socialProofSubtitle'da metin olarak
+                  verildiği için glifler ekran okuyuculardan gizlenir. */}
+              <span className="ikas-hero__stars" aria-hidden="true">
                 ★★★★★
               </span>
             </div>

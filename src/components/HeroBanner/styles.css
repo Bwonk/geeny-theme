@@ -1,7 +1,7 @@
 @import "../../sub-components/Button/styles.css";
 
 /* ═══════════════════════════════════════════════════════════════════════
- * HERO BANNER — Anasayfa.dc.html Uyumlu 2 Kolonlu Hero Alanı
+ * HERO BANNER — COMPACT RESPONSIVE FIT (Anasayfa.dc.html Uyumlu)
  *
  * Renkler — TOKENS.md cssVar referansları:
  *   Ana Lacivert:  var(--pxNuSoudLn)     TOKENS.md satır 10
@@ -13,10 +13,12 @@
 .ikas-hero {
   max-width: 100%;
   margin: 0 auto;
-  padding: clamp(20px, 3vw, 44px) clamp(20px, 5vw, 64px) clamp(28px, 3.4vw, 52px);
+  padding: clamp(14px, 2.2vh, 36px) clamp(20px, 5vw, 64px) clamp(12px, 1.8vh, 28px);
   background-color: var(--24KlcgGmm9);  /* Saf Beyaz — TOKENS.md satır 14 */
   box-sizing: border-box;
   overflow: hidden;
+  /* Alt komşusu EditorialBridge ile margin collapse yaşanmasın diye sıfır. */
+  margin-block: 0;
 }
 
 .ikas-hero__container {
@@ -24,8 +26,8 @@
   margin: 0 auto;
   width: 100%;
   display: grid;
-  gap: clamp(28px, 4vw, 72px);
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 430px), 1fr));
+  gap: clamp(20px, 3.2vw, 56px);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
   align-items: center;
   animation: heroFadeUp 0.7s cubic-bezier(0.2, 0.8, 0.25, 1) both;
 }
@@ -34,7 +36,7 @@
 .ikas-hero__content {
   display: flex;
   flex-direction: column;
-  gap: clamp(18px, 2vw, 28px);
+  gap: clamp(12px, 1.6vh, 24px);
   min-width: 0;
   align-items: flex-start;
 }
@@ -51,7 +53,7 @@
   margin: 0;
   font-family: var(--font-heading);
   font-weight: 600;
-  font-size: clamp(40px, 6.6vw, 92px);
+  font-size: clamp(36px, 5.2vw, 84px);
   line-height: 0.94;
   letter-spacing: -0.045em;
   text-wrap: balance;
@@ -74,8 +76,8 @@
 .ikas-hero__subtitle {
   margin: 0;
   font-family: var(--font-body);
-  font-size: clamp(14.5px, 1.15vw, 17.5px);
-  line-height: 1.62;
+  font-size: clamp(13.5px, 1.05vw, 16.5px);
+  line-height: 1.58;
   color: #6E7A8C;
   max-width: 44ch;
   text-wrap: pretty;
@@ -85,8 +87,8 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: clamp(12px, 1.6vw, 22px);
-  margin-top: 4px;
+  gap: clamp(10px, 1.4vw, 20px);
+  margin-top: 2px;
 }
 
 /* İkincil Alt Çizgili Buton/Link */
@@ -110,7 +112,12 @@
   color: var(--sy8ZnXZdoG);             /* Accent Sarı — TOKENS.md satır 11 */
 }
 
-/* 2. SAĞ KOLON: 4:5 Dikey Görsel & Parallax */
+/* Mobil Kompakt Social Proof Chip (Varsayılan Masaüstünde Gizli) */
+.ikas-hero__social-proof-chip {
+  display: none;
+}
+
+/* 2. SAĞ KOLON: Görsel & Parallax */
 .ikas-hero__media-column {
   position: relative;
   min-width: 0;
@@ -124,6 +131,8 @@
   overflow: hidden;
   background-color: var(--cdFDkBbKkc);  /* Açık Gri Mavi — TOKENS.md satır 12 */
   will-change: transform;
+  max-height: calc(100vh - 180px);
+  max-height: calc(100svh - 180px);
 }
 
 .ikas-hero__img {
@@ -132,6 +141,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 30%;
 }
 
 .ikas-hero__img-placeholder {
@@ -225,7 +235,175 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
- * ANİMASYONLAR
+ * COMPACT DESKTOP (1440x900, 1366x768 & KISA MASAÜSTÜ EKRANLARI)
+ * ═══════════════════════════════════════════════════════════════════════ */
+@media (min-width: 1024px) and (max-height: 920px) {
+  .ikas-hero {
+    padding: clamp(8px, 1.4vh, 18px) clamp(20px, 4vw, 56px) clamp(8px, 1.2vh, 16px);
+  }
+
+  .ikas-hero__container {
+    gap: clamp(18px, 2.8vw, 40px);
+  }
+
+  .ikas-hero__content {
+    gap: clamp(10px, 1.3vh, 18px);
+  }
+
+  .ikas-hero__title {
+    font-size: clamp(32px, 4.4vw, 64px);
+    line-height: 0.95;
+  }
+
+  .ikas-hero__subtitle {
+    font-size: clamp(13px, 0.95vw, 15px);
+    line-height: 1.48;
+  }
+
+  .ikas-hero__media-wrapper {
+    max-height: calc(100vh - 195px);
+    max-height: calc(100svh - 195px);
+  }
+
+  .ikas-hero__social-proof-card {
+    left: clamp(10px, 1.2vw, 16px);
+    bottom: clamp(10px, 1.2vw, 16px);
+    right: clamp(10px, 1.2vw, 16px);
+    padding: 7px 14px 7px 10px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+ * TABLET DÜZENİ (768px - 1023px)
+ * ═══════════════════════════════════════════════════════════════════════ */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .ikas-hero {
+    padding: 16px 24px 24px;
+  }
+
+  .ikas-hero__container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .ikas-hero__content {
+    gap: 14px;
+  }
+
+  .ikas-hero__title {
+    font-size: clamp(34px, 5.4vw, 52px);
+    line-height: 0.96;
+  }
+
+  .ikas-hero__media-wrapper {
+    aspect-ratio: 16 / 9;
+    max-height: 380px;
+    border-radius: 24px;
+  }
+
+  .ikas-hero__img {
+    object-position: center 30%;
+  }
+
+  .ikas-hero__social-proof-card {
+    left: 16px;
+    bottom: 16px;
+    right: auto;
+    max-width: calc(100% - 32px);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+ * MOBİL DÜZENİ (<768px)
+ * ═══════════════════════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+  .ikas-hero {
+    padding: 12px 16px 20px;
+  }
+
+  .ikas-hero__container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .ikas-hero__content {
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .ikas-hero__title {
+    font-size: clamp(30px, 8.2vw, 42px);
+    line-height: 0.96;
+    letter-spacing: -0.035em;
+  }
+
+  .ikas-hero__subtitle {
+    font-size: 13.5px;
+    line-height: 1.48;
+  }
+
+  .ikas-hero__actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    margin-top: 0;
+  }
+
+  .ikas-hero__actions .ikas-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Mobil Kompakt Social Proof Chip */
+  .ikas-hero__social-proof-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #F4F5F5;
+    border: 1px solid #E4E7E8;
+    border-radius: 9999px;
+    padding: 4px 12px 4px 5px;
+    margin-top: 2px;
+  }
+
+  .ikas-hero__chip-text {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    color: var(--pxNuSoudLn);
+    font-weight: 500;
+  }
+
+  .ikas-hero__avatar-stack--sm .ikas-hero__avatar {
+    width: 24px;
+    height: 24px;
+  }
+
+  .ikas-hero__avatar-stack--sm .ikas-hero__avatar--2,
+  .ikas-hero__avatar-stack--sm .ikas-hero__avatar--3 {
+    margin-left: -8px;
+  }
+
+  /* Mobil Teaser Görsel */
+  .ikas-hero__media-wrapper {
+    aspect-ratio: 4 / 3;
+    max-height: 220px;
+    border-radius: 18px;
+  }
+
+  .ikas-hero__img {
+    object-position: center 30%;
+  }
+
+  /* Mobilde Büyük Overlay Kartı Gizle */
+  .ikas-hero__social-proof-card {
+    display: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+ * ANİMASYONLAR & ERİŞİLEBİLİRLİK
  * ═══════════════════════════════════════════════════════════════════════ */
 @keyframes wordReveal {
   from {
@@ -251,7 +429,6 @@
   }
 }
 
-/* Erişilebilirlik: Azaltılmış Hareket Tercihi */
 @media (prefers-reduced-motion: reduce) {
   .ikas-hero__container,
   .ikas-hero__word,
@@ -263,36 +440,3 @@
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════════════
- * RESPONSIVE (DÜZENLEME <768px)
- * ═══════════════════════════════════════════════════════════════════════ */
-@media (max-width: 767px) {
-  .ikas-hero {
-    padding: 24px 16px 36px;
-  }
-
-  .ikas-hero__container {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .ikas-hero__content {
-    align-items: flex-start;
-  }
-
-  .ikas-hero__actions {
-    width: 100%;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 14px;
-  }
-
-  .ikas-hero__social-proof-card {
-    padding: 8px 12px;
-    gap: 8px;
-  }
-
-  .ikas-hero__stars {
-    display: none;
-  }
-}

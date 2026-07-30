@@ -24,4 +24,5 @@ export interface Props {
   image?: IkasImage | null;
   /** Bölüm zemin rengi */
   backgroundColor?: string;
+  imageAlt?: string;
 }
