@@ -5,50 +5,70 @@
  *   Ana Lacivert (zemin): var(--pxNuSoudLn)  satır 10
  *   Saf Beyaz (metin):    var(--24KlcgGmm9)  satır 14
  *
- * Eğim: zemin + yazı .ikas-velocity-belt__wrapper üzerinde TEK rotate.
- * Section zemini boyanmaz (düz dikdörtgen eğimi yok ederdi).
- * --belt-expand (JS, |angle|'a göre): sol/sağ köşe boşluğunu kapatır.
+ * Eğim: rotate(var(--tilt-angle)) → .ikas-velocity-belt__strip
+ * transform-origin: center center
+ *
+ * Dynamic transform bounds (JS → CSS vars):
+ *   --tilt-extra-inline  = (rotatedW − w) / 2
+ *   --tilt-extra-block   = (rotatedH − h) / 2
+ *   rotatedW = |w·cos θ| + |h·sin θ|
+ *   rotatedH = |w·sin θ| + |h·cos θ|
+ * θ = 0 → extras 0 (gereksiz boşluk yok).
  * ═══════════════════════════════════════════════════════════════════════ */
 
 .ikas-velocity-belt {
   width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
-  /* Sayfa zemini görünür; bant rengi yalnızca eğik wrapper'da */
   background-color: transparent;
   margin: 0;
   padding: 0;
   position: relative;
-  overflow: visible;
-}
-
-/* Viewport kırpıcı — eğik bandın taşan uçlarını gizler, köşeler oturur */
-.ikas-velocity-belt__clip {
-  width: 100%;
+  /* Section taşmayı sayfaya vermez; kırpma bounds'ta */
   overflow: hidden;
-  pointer-events: none;
-  /* Dikey pay: rotate sonrası AABB taşmasını yut */
-  padding-block: var(--belt-clip-pad, 10px);
-  margin-block: calc(-1 * var(--belt-clip-pad, 10px));
-  box-sizing: content-box;
 }
 
 /*
- * Tek eğimli birim: background + text birlikte.
- * width = 100% + 2×expand, margin negatif → ortalanır.
- * expand, angle büyüdükçe JS tarafından artırılır.
+ * Layout kutusu: dikey pay kadar büyür → sonraki section overlap olmaz.
+ * Yatayda overflow:hidden → overscan sayfa scrollbar üretmez.
  */
-.ikas-velocity-belt__wrapper {
-  width: calc(100% + 2 * var(--belt-expand, 14%));
-  margin-left: calc(-1 * var(--belt-expand, 14%));
+.ikas-velocity-belt__bounds {
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  pointer-events: none;
+  padding-block: var(--tilt-extra-block, 0px);
+}
+
+/*
+ * Yatay güvenli alan: rotate AABB için strip'i ortalar.
+ * Parent bounds kırptığı için document yatay scroll olmaz.
+ */
+.ikas-velocity-belt__overscan {
+  width: calc(100% + 2 * var(--tilt-extra-inline, 0px));
+  margin-left: calc(-1 * var(--tilt-extra-inline, 0px));
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*
+ * Tek eğimli birim (zemin + yazı).
+ * Genişlik = ölçülen bounds genişliği (viewport); overscan içinde ortalı.
+ */
+.ikas-velocity-belt__strip {
+  width: var(--belt-base-width, 100%);
+  max-width: none;
+  flex-shrink: 0;
   box-sizing: border-box;
   padding: 14px 0;
   background-color: var(--belt-bg, var(--pxNuSoudLn)); /* TOKENS.md satır 10 */
   color: var(--belt-color, var(--24KlcgGmm9));         /* TOKENS.md satır 14 */
-  transform: rotate(var(--belt-angle, -2deg));
+  transform: rotate(var(--tilt-angle, 0deg));
   transform-origin: center center;
-  overflow: hidden;
+  overflow: hidden; /* yalnızca track metin taşması — kendi rotate'ini kırpmaz */
   will-change: transform;
-  /* Alt/üst kenarda hairline artefaktı önle */
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
@@ -59,7 +79,6 @@
   white-space: nowrap;
   width: max-content;
   will-change: transform;
-  /* Track yalnızca yatay kayar — eğim wrapper'da */
 }
 
 .ikas-velocity-belt__text {

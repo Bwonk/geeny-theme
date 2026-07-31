@@ -1,4 +1,4 @@
-import { useState, useEffect } from "preact/hooks";
+import { useState, useEffect, useRef } from "preact/hooks";
 import {
   getDefaultSrc,
   cartStore,
@@ -8,6 +8,10 @@ import {
 import { Props } from "./types";
 import CartDrawer from "../../sub-components/CartDrawer";
 import SearchOverlay from "../../sub-components/SearchOverlay";
+import { formatShadow } from "../../utils/theme";
+
+/** Hero vb. bileşenlerin kalan viewport hesabı için gerçek header yüksekliği. */
+const HEADER_OFFSET_VAR = "--ikas-header-height";
 
 export interface HeaderProps extends Props {
   className?: string;
@@ -18,10 +22,10 @@ export interface HeaderProps extends Props {
  *
  * Özellikler:
  * - Koyu lacivert (var(--pxNuSoudLn)) pill container (9999px radius)
- * - Sağ tarafa hizalı floating pill yapısı (sol taraf ferah)
- * - Üst kısım sticky, alt zemin gradient fade-out
+ * - Sağ tarafa hizalı floating pill (çevre şeffaf — tam genişlik scrim yok)
+ * - Sticky; elevation token shadow (scroll'da hafif güçlenir)
  * - Logo (Onest 700 + tracking), navigasyon linkleri (hover: accent sarı)
- * - İkonlar: Arama, Hesap ve Accent Sarı Sepet butonu + Roboto Mono sayaç badge
+ * - İkonlar: Arama, Hesap ve Accent Sarı Sepet — ortak interaction sistemi
  * - Entegre CartDrawer ve SearchOverlay tetikleyicileri
  */
 export function Header({
@@ -40,6 +44,8 @@ export function Header({
 }: HeaderProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const headerRef = useRef<HTMLElement | null>(null);
 
   // Read live global settings via getThemeSetting
   const heightSetting = getThemeSetting("_OQlsoCe9ah");
@@ -48,6 +54,9 @@ export function Header({
   const drawerWidthSetting = getThemeSetting("_Bw7ChF0VC8");
   const drawerAnimSetting = getThemeSetting("_rTI75Www8J");
   const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ");
+  const stickyShadowSetting = getThemeSetting("_iSJXfL0J5I"); // Gölge / Sticky Header Shadow
+  const softShadowSetting = getThemeSetting("_yyUleMlhR4"); // Gölge / Kart Soft Shadow
+  const actionAnimSetting = getThemeSetting("_bNtMCrOBsE"); // Animasyon / Buton ve Hover
 
   const maxSiteWidth = siteWidthSetting?.value || "1560px";
   const headerHeight = heightSetting?.value || "60px";
@@ -55,6 +64,48 @@ export function Header({
   const mobilePadX = mobilePaddingXSetting?.value || "16px";
   const drawerWidth = drawerWidthSetting?.value || "320px";
   const drawerAnim = drawerAnimSetting?.value || "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)";
+  const pillShadowRest = formatShadow(
+    softShadowSetting?.value,
+    "0 8px 24px color-mix(in srgb, var(--vluFeuIeFs) 14%, transparent)"
+  );
+  const pillShadowScrolled = formatShadow(
+    stickyShadowSetting?.value,
+    "0 12px 32px color-mix(in srgb, var(--vluFeuIeFs) 20%, transparent)"
+  );
+  const actionTransition = actionAnimSetting?.value || "180ms ease";
+
+  // Gerçek layout yüksekliğini yayınla → Hero kalan 100dvh alanını hesaplar
+  useEffect(() => {
+    const root = document.documentElement;
+    const el = headerRef.current;
+    if (!el) return;
+
+    const publishHeight = () => {
+      // getBoundingClientRect: padding + border dahil gerçek görsel yükseklik
+      const h = Math.round(el.getBoundingClientRect().height);
+      if (h > 0) root.style.setProperty(HEADER_OFFSET_VAR, `${h}px`);
+    };
+
+    publishHeight();
+    // Font / sticky padding oturuncaya kadar bir frame daha ölç
+    const raf = requestAnimationFrame(() => {
+      publishHeight();
+      requestAnimationFrame(publishHeight);
+    });
+
+    const observer =
+      typeof ResizeObserver !== "undefined" ? new ResizeObserver(publishHeight) : null;
+    observer?.observe(el);
+    window.addEventListener("resize", publishHeight);
+    document.fonts?.ready?.then?.(publishHeight);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      observer?.disconnect();
+      window.removeEventListener("resize", publishHeight);
+      root.style.setProperty(HEADER_OFFSET_VAR, "0px");
+    };
+  }, []);
 
   // Scroll listener for sticky shadow/state
   useEffect(() => {
@@ -63,6 +114,21 @@ export function Header({
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Search overlay açık/kapalı — search butonu active + ikon X
+  useEffect(() => {
+    const onOpen = () => setIsSearchOpen(true);
+    const onClose = () => setIsSearchOpen(false);
+    const onToggle = () => setIsSearchOpen((v) => !v);
+    window.addEventListener("geeny:search-overlay:open", onOpen);
+    window.addEventListener("geeny:search-overlay:close", onClose);
+    window.addEventListener("geeny:search-overlay:toggle", onToggle);
+    return () => {
+      window.removeEventListener("geeny:search-overlay:open", onOpen);
+      window.removeEventListener("geeny:search-overlay:close", onClose);
+      window.removeEventListener("geeny:search-overlay:toggle", onToggle);
+    };
   }, []);
 
   // Body scroll lock when mobile drawer is open
@@ -87,14 +153,16 @@ export function Header({
   );
 
   const inlineStyles = {
-    // Zemin gradient üzerinden uygulanır (bkz. styles.css → .ikas-header background).
-    "--header-bg": backgroundColor || undefined,
+    // backgroundColor prop API'de kalır; floating island için tam genişlik boyanmaz.
     "--max-site-width": maxSiteWidth,
     "--header-height": headerHeight,
     "--section-padding-x": sectionPadX,
     "--mobile-padding-x": mobilePadX,
     "--drawer-width": drawerWidth,
     "--drawer-transition": drawerAnim,
+    "--header-pill-shadow": pillShadowRest,
+    "--header-pill-shadow-scrolled": pillShadowScrolled,
+    "--nav-action-transition": actionTransition,
   };
 
   const stickyClass = stickyHeader ? "ikas-header--sticky" : "";
@@ -102,7 +170,7 @@ export function Header({
   const combinedClassName = `ikas-header ${stickyClass} ${scrolledClass} ${className}`.trim();
 
   return (
-    <header className={combinedClassName} style={inlineStyles}>
+    <header ref={headerRef} className={combinedClassName} style={inlineStyles}>
       <div className="ikas-header__wrapper">
         <div className="ikas-header__pill-wrapper">
           <div className="ikas-header__pill">
@@ -168,18 +236,31 @@ export function Header({
 
             {/* SAĞ ALAN: Arama, Hesap ve Sepet Butonları */}
             <div className="ikas-header__right-section">
-              {/* Arama Butonu */}
+              {/* Arama Butonu — açıkken active + X */}
               <button
                 type="button"
-                className="ikas-header__icon-btn"
+                className={`ikas-header__icon-btn${isSearchOpen ? " ikas-header__icon-btn--active" : ""}`}
                 aria-label={searchLabel}
+                aria-expanded={isSearchOpen}
                 title={searchLabel}
-                onClick={() => window.dispatchEvent(new CustomEvent("geeny:search-overlay:open"))}
+                onClick={() => {
+                  window.dispatchEvent(
+                    new CustomEvent(
+                      isSearchOpen ? "geeny:search-overlay:close" : "geeny:search-overlay:open"
+                    )
+                  );
+                }}
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                  <circle cx="11" cy="11" r="7" />
-                  <path d="m20 20-3.6-3.6" />
-                </svg>
+                {isSearchOpen ? (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                    <path d="M6 6l12 12M18 6 6 18" />
+                  </svg>
+                ) : (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                    <circle cx="11" cy="11" r="7" />
+                    <path d="m20 20-3.6-3.6" />
+                  </svg>
+                )}
               </button>
 
               {/* Müşteri Hesabı Butonu */}
@@ -190,7 +271,7 @@ export function Header({
                 title={accountLabel}
                 onClick={() => Router.navigateToPage("ACCOUNT")}
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
                   <circle cx="12" cy="8" r="3.6" />
                   <path d="M4.5 20c.6-3.8 3.8-5.8 7.5-5.8s6.9 2 7.5 5.8" />
                 </svg>
@@ -206,7 +287,7 @@ export function Header({
                   window.dispatchEvent(new CustomEvent("geeny:cart-drawer:toggle"));
                 }}
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
                   <path d="M6 7.5h12l1 12.5H5z" />
                   <path d="M9.2 7.5a2.8 2.8 0 0 1 5.6 0" />
                 </svg>

@@ -18,10 +18,9 @@
   box-sizing: border-box;
   z-index: var(--z-index-header, 100);
   padding: clamp(10px, 1.5vw, 20px) 0 clamp(6px, 1vw, 12px);
-  /* Zemin, backgroundColor prop'undan gelen --header-bg ile boyanır; altta
-     içeriğin geçebilmesi için şeffaflaşan bir gradient olarak uygulanır. */
-  background: linear-gradient(180deg, var(--header-bg, var(--24KlcgGmm9)) 58%, transparent);
-  transition: padding 0.3s ease;
+  /* Floating island: tam genişlik beyaz gradient/scrim YOK — çevre şeffaf.
+     Elevation yalnızca pill üzerindeki token shadow ile. */
+  background: transparent;
   margin-top: 0;
   margin-bottom: 0;
 }
@@ -42,9 +41,10 @@
   padding-inline: var(--site-gutter);
 }
 
-/* Masaüstünde pill navbar sağa hizalıdır (sol taraf ferah görünür) */
+/* Masaüstünde pill, shared --nav-pill-max ile site genişliğine bağlı;
+   sağa yaslanır → content-box sağ kenarı Hero görsel sağ kenarıyla örtüşür. */
 .ikas-header__pill-wrapper {
-  width: min(100%, 780px);
+  width: min(100%, var(--nav-pill-max, calc(var(--max-site-width, 1560px) / 2)));
   margin-left: auto;
 }
 
@@ -59,9 +59,18 @@
   padding: 0 7px 0 clamp(18px, 2vw, 30px);
   background-color: var(--pxNuSoudLn);  /* Ana Lacivert — TOKENS.md satır 10 */
   border-radius: 9999px;
-  box-shadow: 0 14px 36px rgba(19, 25, 36, 0.2);
+  /* Sakin elevation — token; scroll'da hafif güçlenir (beyaz halo yok) */
+  box-shadow: var(--header-pill-shadow, 0 8px 24px color-mix(in srgb, var(--vluFeuIeFs) 14%, transparent));
+  transition: box-shadow 180ms ease;
   overflow: hidden;
   box-sizing: border-box;
+}
+
+.ikas-header--scrolled .ikas-header__pill {
+  box-shadow: var(
+    --header-pill-shadow-scrolled,
+    var(--header-pill-shadow, 0 12px 32px color-mix(in srgb, var(--vluFeuIeFs) 20%, transparent))
+  );
 }
 
 /* 1. SOL ALAN: Logo + Menü */
@@ -158,7 +167,7 @@
   color: var(--sy8ZnXZdoG);             /* Accent Sarı — TOKENS.md satır 11 */
 }
 
-/* 2. SAĞ ALAN: İkon Butonları */
+/* 2. SAĞ ALAN: İkon Butonları — ortak interaction sistemi */
 .ikas-header__right-section {
   flex: 0 0 auto;
   display: flex;
@@ -167,8 +176,10 @@
 }
 
 .ikas-header__icon-btn {
-  width: 42px;
-  height: 42px;
+  --nav-action-size: 42px;
+  --nav-action-ease: var(--nav-action-transition, 180ms ease);
+  width: var(--nav-action-size);
+  height: var(--nav-action-size);
   border: 0;
   border-radius: 9999px;
   background: transparent;
@@ -177,19 +188,48 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.24s ease, color 0.24s ease;
+  flex-shrink: 0;
+  transform: scale(1);
+  transition:
+    background-color var(--nav-action-ease),
+    color var(--nav-action-ease),
+    transform var(--nav-action-ease),
+    opacity var(--nav-action-ease);
 }
 
 .ikas-header__icon-btn:hover {
-  background-color: rgba(255, 255, 255, 0.12);
+  background-color: color-mix(in srgb, var(--24KlcgGmm9) 12%, transparent);
   color: var(--sy8ZnXZdoG);             /* Accent Sarı — TOKENS.md satır 11 */
+  transform: scale(1.06);
 }
 
-/* Accent Sarı Sepet Butonu */
+.ikas-header__icon-btn:active {
+  transform: scale(0.94);
+  background-color: color-mix(in srgb, var(--24KlcgGmm9) 16%, transparent);
+}
+
+.ikas-header__icon-btn:focus {
+  outline: none;
+}
+
+.ikas-header__icon-btn:focus-visible {
+  outline: 2px solid var(--sy8ZnXZdoG);
+  outline-offset: 2px;
+  color: var(--sy8ZnXZdoG);
+}
+
+.ikas-header__icon-btn--active {
+  background-color: color-mix(in srgb, var(--24KlcgGmm9) 16%, transparent);
+  color: var(--sy8ZnXZdoG);
+}
+
+/* Accent Sarı Sepet — aynı hit area / timing, sarı ana-aksiyon korunsun */
 .ikas-header__cart-btn {
+  --nav-action-size: 42px;
+  --nav-action-ease: var(--nav-action-transition, 180ms ease);
   position: relative;
-  width: 42px;
-  height: 42px;
+  width: var(--nav-action-size);
+  height: var(--nav-action-size);
   border: 0;
   border-radius: 9999px;
   background-color: var(--sy8ZnXZdoG);  /* Accent Sarı — TOKENS.md satır 11 */
@@ -198,12 +238,45 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.24s ease, transform 0.24s cubic-bezier(0.2, 0.8, 0.25, 1);
+  flex-shrink: 0;
+  transform: scale(1);
+  transition:
+    background-color var(--nav-action-ease),
+    transform var(--nav-action-ease),
+    opacity var(--nav-action-ease);
 }
 
 .ikas-header__cart-btn:hover {
-  background-color: #F0EE55;
-  transform: translateY(-1px);
+  background-color: color-mix(in srgb, var(--sy8ZnXZdoG) 88%, var(--24KlcgGmm9));
+  transform: scale(1.06);
+}
+
+.ikas-header__cart-btn:active {
+  transform: scale(0.94);
+}
+
+.ikas-header__cart-btn:focus {
+  outline: none;
+}
+
+.ikas-header__cart-btn:focus-visible {
+  outline: 2px solid var(--24KlcgGmm9);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ikas-header__pill,
+  .ikas-header__icon-btn,
+  .ikas-header__cart-btn {
+    transition: none !important;
+  }
+
+  .ikas-header__icon-btn:hover,
+  .ikas-header__icon-btn:active,
+  .ikas-header__cart-btn:hover,
+  .ikas-header__cart-btn:active {
+    transform: none !important;
+  }
 }
 
 /* Sepet Sayacı Badge'i (Roboto Mono) */
@@ -328,7 +401,8 @@
     margin-left: 0;
   }
 
+  /* Yatay nefes yalnızca wrapper --site-gutter ile (Hero ile aynı hiza). */
   .ikas-header {
-    padding: 10px 14px 6px;
+    padding: 10px 0 6px;
   }
 }

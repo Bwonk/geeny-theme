@@ -189,6 +189,7 @@ export function SearchOverlay({
 
   const handleCloseOverlay = () => {
     setIsOpen(false);
+    window.dispatchEvent(new CustomEvent("geeny:search-overlay:close"));
     if (onClose) {
       onClose();
     }

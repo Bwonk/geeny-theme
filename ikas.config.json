@@ -1821,8 +1821,8 @@
       "name": "VelocityBeltDirection",
       "type": "enum",
       "enumOptions": {
-        "Sola": "LEFT",
-        "Sağa": "RIGHT"
+        "Sola (Left)": "LEFT",
+        "Sağa (Right)": "RIGHT"
       },
       "isDynamic": false
     },

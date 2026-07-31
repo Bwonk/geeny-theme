@@ -32,11 +32,12 @@
   width: 100%;
 }
 
+/* Sticky sahipliği ProductMediaGallery scroll-track'inde;
+   sol kolon sticky olursa scrub yüksekliği bozulur. */
 .ikas-pdp__left {
   width: 100%;
   min-width: 0;
-  position: sticky;
-  top: 80px;
+  position: static;
 }
 
 .ikas-pdp__right {
@@ -51,10 +52,6 @@
   .ikas-pdp__main-grid {
     grid-template-columns: 1fr;
     gap: 24px;
-  }
-
-  .ikas-pdp__left {
-    position: static;
   }
 
   .ikas-pdp__container {

@@ -209,39 +209,35 @@ export function HeroBanner({
             ) : (
               <div className="ikas-hero__img-placeholder" />
             )}
+
+            {/* Sosyal kanıt — görsel sınırları içinde, orantılı overlay */}
+            {(socialProofTitle || socialProofSubtitle) && (
+              <div className="ikas-hero__social-proof-card">
+                <div className="ikas-hero__avatar-stack">
+                  <span className="ikas-hero__avatar ikas-hero__avatar--1" />
+                  <span className="ikas-hero__avatar ikas-hero__avatar--2" />
+                  <span className="ikas-hero__avatar ikas-hero__avatar--3" />
+                </div>
+
+                <div className="ikas-hero__social-proof-info">
+                  {socialProofTitle && (
+                    <div className="ikas-hero__social-proof-title">
+                      {socialProofTitle}
+                    </div>
+                  )}
+                  {socialProofSubtitle && (
+                    <div className="ikas-hero__social-proof-subtitle _eZyocyyd0F">
+                      {socialProofSubtitle.toLocaleUpperCase("tr-TR")}
+                    </div>
+                  )}
+                </div>
+
+                <span className="ikas-hero__stars" aria-hidden="true">
+                  ★★★★★
+                </span>
+              </div>
+            )}
           </div>
-
-          {/* Sosyal Kanıt Floating Kartı */}
-          {(socialProofTitle || socialProofSubtitle) && (
-            <div className="ikas-hero__social-proof-card">
-              {/* Avatarlar */}
-              <div className="ikas-hero__avatar-stack">
-                <span className="ikas-hero__avatar ikas-hero__avatar--1" />
-                <span className="ikas-hero__avatar ikas-hero__avatar--2" />
-                <span className="ikas-hero__avatar ikas-hero__avatar--3" />
-              </div>
-
-              {/* Bilgi Metinleri */}
-              <div className="ikas-hero__social-proof-info">
-                {socialProofTitle && (
-                  <div className="ikas-hero__social-proof-title">
-                    {socialProofTitle}
-                  </div>
-                )}
-                {socialProofSubtitle && (
-                  <div className="ikas-hero__social-proof-subtitle _eZyocyyd0F">
-                    {socialProofSubtitle.toLocaleUpperCase("tr-TR")}
-                  </div>
-                )}
-              </div>
-
-              {/* Yıldız Puanı — puan bilgisi socialProofSubtitle'da metin olarak
-                  verildiği için glifler ekran okuyuculardan gizlenir. */}
-              <span className="ikas-hero__stars" aria-hidden="true">
-                ★★★★★
-              </span>
-            </div>
-          )}
         </div>
       </div>
     </section>
