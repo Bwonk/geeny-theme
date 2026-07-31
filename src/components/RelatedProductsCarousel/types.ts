@@ -8,4 +8,8 @@ export interface Props {
   productList?: IkasProductList;
   /** Bölüm zemin rengi */
   backgroundColor?: string;
+  tag?: string;
+  addToCartText?: string;
+  addingToCartText?: string;
+  soldOutText?: string;
 }

@@ -1,103 +1,245 @@
-import { useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import { getThemeSetting, IkasProduct } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
 
-export interface AccordionItem {
-  id?: string;
-  title: string;
-  content: string;
+export interface SpecRow {
+  label: string;
+  value: string;
 }
 
 export interface Props {
   product?: IkasProduct | null;
-  items?: AccordionItem[];
+  detailsTag?: string;
+  detailsTitle?: string;
+  detailsSubtitle?: string;
+  acc1Title?: string;
+  acc1Body?: string;
+  acc1Bullet1?: string;
+  acc1Bullet2?: string;
+  acc1Bullet3?: string;
+  acc2Title?: string;
+  acc2Spec1Label?: string;
+  acc2Spec1Value?: string;
+  acc2Spec2Label?: string;
+  acc2Spec2Value?: string;
+  acc2Spec3Label?: string;
+  acc2Spec3Value?: string;
+  acc2Spec4Label?: string;
+  acc2Spec4Value?: string;
+  acc2Spec5Label?: string;
+  acc2Spec5Value?: string;
+  acc3Title?: string;
+  acc3Body?: string;
+  acc4Title?: string;
+  acc4Body?: string;
   className?: string;
 }
 
+function PlusIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+      <path d="M12 5v14M5 12h14" />
+    </svg>
+  );
+}
+
 export function ProductValueAccordions({
-  items,
-  product,
+  detailsTag = "01 · ÜRÜN DETAYLARI",
+  detailsTitle = "Bilmen gereken her şey.",
+  detailsSubtitle = "On iki prototip sonrası ortaya çıkan tek parça yapı — malzemesinden bakımına kadar.",
+  acc1Title = "Nasıl kullanılır",
+  acc1Body = "Boyun desteği için tüpü iki kez boynuna sar ve uçları önde birleştir; çene düşmesini engeller. Bel desteği için düz bırak, koltuk ile sırtın arasına yerleştir. Yan uyku pozisyonunda tek kat sararak omuz altına al.",
+  acc1Bullet1 = "Uçak, tren ve otobüs koltuklarında — baş yana devrilmez.",
+  acc1Bullet2 = "Ofiste bel yastığı olarak — lomber boşluğu doldurur.",
+  acc1Bullet3 = "Evde okuma yastığı olarak — kolluk yüksekliğine göre katlanır.",
+  acc2Title = "Malzeme ve ölçüler",
+  acc2Spec1Label = "DIŞ KUMAŞ",
+  acc2Spec1Value = "%68 geri dönüştürülmüş polyester, %32 pamuk örgü",
+  acc2Spec2Label = "DOLGU",
+  acc2Spec2Value = "Nefes alan mikro boncuk (EPS)",
+  acc2Spec3Label = "STANDART",
+  acc2Spec3Value = "92 × 13 cm · 340 g",
+  acc2Spec4Label = "MİNİ",
+  acc2Spec4Value = "74 × 11 cm · 240 g",
+  acc2Spec5Label = "ÜRETİM",
+  acc2Spec5Value = "İzmir'de dokundu, İstanbul'da dikildi",
+  acc3Title = "Bakım",
+  acc3Body = "Kılıf fermuarla çıkar: 30°C'de hassas programda yıka, kurutma makinesine girmez, gölgede kurut. İç dolgu yıkanmaz; nemli bezle silmek yeterli. Ütü ve çamaşır suyu kullanma.",
+  acc4Title = "Kargo, iade ve garanti",
+  acc4Body = "500 ₺ üzeri siparişlerde kargo ücretsiz; 14.00'a kadar verilen siparişler aynı gün hazırlanır, 2–4 iş günü içinde kapında. 30 gün içinde koşulsuz iade — kullanılmış olsa bile. Dikiş ve fermuar kusurlarına 2 yıl değişim garantisi.",
   className = "",
 }: Props) {
-  const [openState, setOpenState] = useState<Record<string, boolean>>({ item0: true });
+  const [openId, setOpenId] = useState<string>("acc1");
+  const [headVisible, setHeadVisible] = useState(false);
+  const rootRef = useRef<HTMLElement>(null);
+  const bodyRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  const accordionAnimSetting = getThemeSetting("_QzHzEnrknJ"); // Animasyon / Akordiyon Açılış
-  const accordionTransition = accordionAnimSetting?.value || "max-height 0.35s ease-in-out";
+  const accordionAnimSetting = getThemeSetting("_QzHzEnrknJ");
+  const fadeAnimSetting = getThemeSetting("_AwVN6G9Zib");
+  const accordionTransition =
+    accordionAnimSetting?.value || "max-height 0.44s cubic-bezier(0.22, 1, 0.36, 1)";
+  const fadeEase = fadeAnimSetting?.value || "0.6s cubic-bezier(0.22, 1, 0.36, 1)";
 
-  const defaultItems: AccordionItem[] = [
-    {
-      id: "item0",
-      title: "Ergonomik Tasarım & Kullanım",
-      content:
-        product?.description ||
-        "Infinity Pillow 360° dönebilen ergonomik yapısı sayesinde baş, boyun ve bel desteği sağlar. Uçak, tren, araba seyahatlerinde ve evde dinlenirken omurganızı mükemmel açıda destekler.",
-    },
-    {
-      id: "item1",
-      title: "Kumaş Bakımı & Yıkama Talimatları",
-      content:
-        "Nefes alabilir bambu dokuma kılıfı fermuarlıdır ve kolayca çıkarılabilir. 30°C'de makinede hassas yıkama yapılabilir. Ağartıcı kullanılmamalıdır.",
-    },
-    {
-      id: "item2",
-      title: "Kargo, Teslimat & 14 Gün İade",
-      content:
-        "Hafta içi saat 15:00'e kadar verilen tüm siparişler aynı gün kargoya teslim edilir. Ürününüzden %100 memnun kalmazsanız 14 gün boyunca ücretsiz iade hakkınız mevcuttur.",
-    },
-  ];
+  const bullets = [acc1Bullet1, acc1Bullet2, acc1Bullet3].filter(Boolean) as string[];
+  const specs: SpecRow[] = [
+    { label: acc2Spec1Label, value: acc2Spec1Value },
+    { label: acc2Spec2Label, value: acc2Spec2Value },
+    { label: acc2Spec3Label, value: acc2Spec3Value },
+    { label: acc2Spec4Label, value: acc2Spec4Value },
+    { label: acc2Spec5Label, value: acc2Spec5Value },
+  ].filter((r) => r.label && r.value) as SpecRow[];
 
-  const displayItems = items && items.length > 0 ? items : defaultItems;
+  const items = [
+    { id: "acc1", title: acc1Title, kind: "bullets" as const },
+    { id: "acc2", title: acc2Title, kind: "specs" as const },
+    { id: "acc3", title: acc3Title, kind: "text" as const, body: acc3Body },
+    { id: "acc4", title: acc4Title, kind: "text" as const, body: acc4Body },
+  ].filter((i) => i.title);
 
-  const toggleItem = (id: string) => {
-    setOpenState((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
+      setHeadVisible(true);
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          setHeadVisible(true);
+          io.disconnect();
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -6% 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  // Açık panel yüksekliğini ölç
+  useEffect(() => {
+    const apply = () => {
+      items.forEach((item) => {
+        const panel = bodyRefs.current[item.id];
+        if (!panel) return;
+        const open = openId === item.id;
+        panel.style.maxHeight = open ? `${panel.scrollHeight + 40}px` : "0px";
+        panel.style.opacity = open ? "1" : "0";
+      });
+    };
+    apply();
+    window.addEventListener("resize", apply);
+    return () => window.removeEventListener("resize", apply);
+  }, [openId, items.length, acc1Body, acc3Body, acc4Body]);
+
+  const toggle = (id: string) => {
+    setOpenId((prev) => (prev === id ? "" : id));
   };
 
+  const inlineStyles = {
+    "--accordion-transition": accordionTransition,
+    "--details-fade": fadeEase,
+  } as any;
+
   return (
-    <div
-      className={`ikas-accordions ${className}`.trim()}
-      style={{ "--accordion-transition": accordionTransition } as any}
+    <section
+      ref={rootRef}
+      className={`ikas-details ${headVisible ? "ikas-details--inview" : ""} ${className}`.trim()}
+      style={inlineStyles}
       lang="tr"
     >
-      {displayItems.map((item, idx) => {
-        const itemId = item.id || `item${idx}`;
-        const isOpen = Boolean(openState[itemId]);
+      <div className="ikas-details__grid">
+        <header className="ikas-details__head">
+          {detailsTag && (
+            <div className="ikas-details__tag ikas-details__reveal">{detailsTag}</div>
+          )}
+          {detailsTitle && (
+            <h2 className="ikas-details__title ikas-details__reveal ikas-details__reveal--2">
+              {detailsTitle}
+            </h2>
+          )}
+          {detailsSubtitle && (
+            <p className="ikas-details__subtitle ikas-details__reveal ikas-details__reveal--3">
+              {detailsSubtitle}
+            </p>
+          )}
+        </header>
 
-        return (
-          <div key={itemId} className="ikas-accordions__item">
-            <button
-              type="button"
-              className="ikas-accordions__header"
-              onClick={() => toggleItem(itemId)}
-              aria-expanded={isOpen}
-            >
-              <span className="ikas-accordions__title _AZR1yL8GrK">
-                {item.title}
-              </span>
-              <span
-                className={`ikas-accordions__icon ${
-                  isOpen ? "ikas-accordions__icon--open" : ""
-                }`}
-                aria-hidden="true"
+        <div className="ikas-details__list">
+          {items.map((item, idx) => {
+            const isOpen = openId === item.id;
+            const isLast = idx === items.length - 1;
+
+            return (
+              <div
+                key={item.id}
+                className={`ikas-details__item${isLast ? " ikas-details__item--last" : ""}`}
               >
-                +
-              </span>
-            </button>
-            <div
-              className={`ikas-accordions__panel ${
-                isOpen ? "ikas-accordions__panel--open" : ""
-              }`}
-            >
-              <div className="ikas-accordions__body _VcfI5D07Nt">
-                {item.content}
+                <button
+                  type="button"
+                  className="ikas-details__btn"
+                  aria-expanded={isOpen}
+                  aria-controls={`details-panel-${item.id}`}
+                  id={`details-btn-${item.id}`}
+                  onClick={() => toggle(item.id)}
+                >
+                  <span className="ikas-details__btn-label">{item.title}</span>
+                  <span
+                    className={`ikas-details__icon${isOpen ? " ikas-details__icon--open" : ""}`}
+                    aria-hidden="true"
+                  >
+                    <PlusIcon />
+                  </span>
+                </button>
+
+                <div
+                  id={`details-panel-${item.id}`}
+                  role="region"
+                  aria-labelledby={`details-btn-${item.id}`}
+                  className="ikas-details__panel"
+                  ref={(el) => {
+                    bodyRefs.current[item.id] = el;
+                  }}
+                >
+                  <div className="ikas-details__body">
+                    {item.kind === "bullets" && (
+                      <>
+                        {acc1Body && <p className="ikas-details__text">{acc1Body}</p>}
+                        {bullets.length > 0 && (
+                          <ul className="ikas-details__bullets">
+                            {bullets.map((b) => (
+                              <li key={b}>{b}</li>
+                            ))}
+                          </ul>
+                        )}
+                      </>
+                    )}
+
+                    {item.kind === "specs" && specs.length > 0 && (
+                      <dl className="ikas-details__specs">
+                        {specs.map((row) => (
+                          <div key={row.label} className="ikas-details__spec-row">
+                            <dt>{row.label}</dt>
+                            <dd>{row.value}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    )}
+
+                    {item.kind === "text" && item.body && (
+                      <p className="ikas-details__text">{item.body}</p>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        );
-      })}
-    </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
   );
 }
 

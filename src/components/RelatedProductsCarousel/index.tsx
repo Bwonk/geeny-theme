@@ -8,60 +8,55 @@ export interface RelatedProductsCarouselProps extends Props {
 }
 
 export function RelatedProductsCarousel({
-  title = "Bunları da Beğenebilirsiniz",
+  tag = "03 · BENZER ÜRÜNLER",
+  title = "Bunları da beğenebilirsiniz",
   productList,
   products,
+  addToCartText = "SEPETE EKLE",
+  addingToCartText = "EKLENİYOR...",
+  soldOutText = "TÜKENDİ",
   backgroundColor,
   className = "",
 }: RelatedProductsCarouselProps) {
-  // Read live theme global settings via getThemeSetting
-  const verticalPySetting = getThemeSetting("_Kl0my3VVMA"); // Boşluk / Masaüstü Dikey Spacing (48px)
-  const verticalPyMobileSetting = getThemeSetting("_5Fdl1j6UHQ"); // Boşluk / Dikey Bölüm Spacing (2rem / 32px)
-  const sectionPxSetting = getThemeSetting("_Nd1XnRyZlx"); // Boşluk / Masaüstü Yatay Bölüm Padding (20px)
-  const mobilePxSetting = getThemeSetting("_uRDipxnxkx"); // Boşluk / Mobil Yatay Padding (16px)
-  const gridGapSetting = getThemeSetting("_4Ud47RIVna"); // Boşluk / Grid Gap (20px)
-  const mobileGridGapSetting = getThemeSetting("_dBvnJWALXD"); // Boşluk / Mobil Grid Gap (12px)
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1560px)
-
-  const sectionPy = verticalPySetting?.value || "48px";
-  const sectionPyMobile = verticalPyMobileSetting?.value || "32px";
-  const sectionPx = sectionPxSetting?.value || "20px";
-  const mobilePx = mobilePxSetting?.value || "16px";
-  const gridGap = gridGapSetting?.value || "20px";
-  const mobileGridGap = mobileGridGapSetting?.value || "12px";
+  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ");
   const maxSiteWidth = siteWidthSetting?.value || "1560px";
 
-  const inlineStyles = {
-    backgroundColor: backgroundColor || undefined,
-    "--section-py": sectionPy,
-    "--section-py-mobile": sectionPyMobile,
-    "--section-px": sectionPx,
-    "--mobile-px": mobilePx,
-    "--grid-gap": gridGap,
-    "--mobile-grid-gap": mobileGridGap,
-    "--max-site-width": maxSiteWidth,
-  };
-
-  const displayProducts = products || (productList as any)?.data || [];
+  const displayProducts: IkasProduct[] =
+    products || (productList as any)?.data || [];
 
   if (!displayProducts || displayProducts.length === 0) return null;
 
+  const inlineStyles = {
+    backgroundColor: backgroundColor || undefined,
+    "--max-site-width": maxSiteWidth,
+  } as any;
+
   return (
     <section
-      className={`ikas-related-products ${className}`.trim()}
-      style={inlineStyles as any}
+      className={`ikas-related ${className}`.trim()}
+      style={inlineStyles}
       lang="tr"
     >
-      <div className="ikas-related-products__container">
-        {title && (
-          <h2 className="ikas-related-products__title _sKAMD8d1LA">
-            {title}
-          </h2>
-        )}
+      <div className="ikas-related__container">
+        <header className="ikas-related__header">
+          <div className="ikas-related__header-left">
+            {tag && <div className="ikas-related__tag">{tag}</div>}
+            {title && <h2 className="ikas-related__title">{title}</h2>}
+          </div>
+        </header>
 
-        <div className="ikas-related-products__grid">
-          {displayProducts.slice(0, 4).map((productItem: any, idx: number) => (
-            <ProductCard key={productItem.id || idx} product={productItem} />
+        <div className="ikas-related__track">
+          {displayProducts.slice(0, 4).map((productItem, idx) => (
+            <div key={productItem.id || idx} className="ikas-related__item">
+              <ProductCard
+                product={productItem}
+                showQuickAdd
+                overlayQuickAdd
+                addToCartText={addToCartText}
+                addingToCartText={addingToCartText}
+                soldOutText={soldOutText}
+              />
+            </div>
           ))}
         </div>
       </div>

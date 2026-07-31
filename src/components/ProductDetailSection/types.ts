@@ -1,11 +1,40 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasProduct, IkasProductList } from "@ikas/bp-storefront";
+import type { IkasProduct } from "@ikas/bp-storefront";
 
 export interface Props {
   /** PDP ana ürün objesi */
   product?: IkasProduct | null;
-  /** İlişkili ürünler ikas liste seçeneği */
-  relatedProducts?: IkasProductList;
   /** Bölüm zemin rengi */
   backgroundColor?: string;
+  seriesTag?: string;
+  productBadge?: string;
+  sizeGuideText?: string;
+  stockInText?: string;
+  stockOutText?: string;
+  addToCartText?: string;
+  addingToCartText?: string;
+  addedToCartText?: string;
+  soldOutText?: string;
+  discountBadgeLabel?: string;
+  reviewLabel?: string;
+  qtyDecreaseLabel?: string;
+  qtyIncreaseLabel?: string;
+  trustShippingText?: string;
+  trustReturnText?: string;
+  trustWarrantyText?: string;
+  showProductBadge?: boolean;
+  showBuyNow?: boolean;
+  buyNowText?: string;
+  breadcrumbHomeText?: string;
+  showStickyBar?: boolean;
+  stickyQtyUnitText?: string;
+  stickyImageAlt?: string;
+  sizeGuideDrawerTitle?: string;
+  sizeGuideIntro?: string;
+  sizeGuideRow1Label?: string;
+  sizeGuideRow1Value?: string;
+  sizeGuideRow2Label?: string;
+  sizeGuideRow2Value?: string;
+  sizeGuideNote?: string;
+  sizeGuideCloseLabel?: string;
 }

@@ -1173,7 +1173,7 @@
           "displayName": "3. Özellik Başlığı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Katlanabilir & Hafif",
+          "defaultValue": "Katlanabilir",
           "description": "Üçüncü özellik kartının ana başlığı",
           "groupId": "product_features_group"
         },
@@ -1191,7 +1191,7 @@
           "displayName": "4. Özellik Başlığı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "2 Yıl Değişim Garantisi",
+          "defaultValue": "2 Yıl Değişim",
           "description": "Dördüncü özellik kartının ana başlığı",
           "groupId": "product_features_group"
         },
@@ -1202,6 +1202,13 @@
           "required": false,
           "description": "Bölüm zemin rengi",
           "groupId": "product_features_group"
+        },
+        {
+          "name": "usePdpIcons",
+          "displayName": "Ürün Detay İkon Seti",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false
         }
       ],
       "propGroups": [
@@ -1461,8 +1468,9 @@
           "displayName": "Bölüm Başlığı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Müşteri Değerlendirmeleri",
-          "description": "Bölümün ana başlık metni"
+          "defaultValue": "Müşteri değerlendirmeleri",
+          "description": "Bölümün ana başlık metni",
+          "groupId": "reviews_content"
         },
         {
           "name": "product",
@@ -1477,6 +1485,53 @@
           "type": "COLOR",
           "required": false,
           "description": "Bölüm zemin rengi"
+        },
+        {
+          "name": "tag",
+          "displayName": "Üst Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "02 · YORUMLAR",
+          "groupId": "reviews_content"
+        },
+        {
+          "name": "countSuffix",
+          "displayName": "Yorum Sayısı Soneki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "doğrulanmış yorum",
+          "groupId": "reviews_content"
+        },
+        {
+          "name": "verifiedBuyerText",
+          "displayName": "Doğrulanmış Alıcı Rozeti",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Doğrulanmış alıcı",
+          "groupId": "reviews_content"
+        },
+        {
+          "name": "emptyText",
+          "displayName": "Boş Durum Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bu ürün için henüz yorum yok.",
+          "groupId": "reviews_content"
+        },
+        {
+          "name": "loadingText",
+          "displayName": "Yükleniyor Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Yorumlar yükleniyor...",
+          "groupId": "reviews_content"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "reviews_content",
+          "name": "İçerik",
+          "description": "Başlık ve boş durum metinleri"
         }
       ]
     },
@@ -1492,8 +1547,9 @@
           "displayName": "Bölüm Başlığı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Bunları da Beğenebilirsiniz",
-          "description": "Bölümün ana başlık metni"
+          "defaultValue": "Bunları da beğenebilirsiniz",
+          "description": "Bölümün ana başlık metni",
+          "groupId": "related_content"
         },
         {
           "name": "productList",
@@ -1508,6 +1564,44 @@
           "type": "COLOR",
           "required": false,
           "description": "Bölüm zemin rengi"
+        },
+        {
+          "name": "tag",
+          "displayName": "Üst Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "03 · BENZER ÜRÜNLER",
+          "groupId": "related_content"
+        },
+        {
+          "name": "addToCartText",
+          "displayName": "Sepete Ekle Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SEPETE EKLE",
+          "groupId": "related_content"
+        },
+        {
+          "name": "addingToCartText",
+          "displayName": "Ekleniyor Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "EKLENİYOR...",
+          "groupId": "related_content"
+        },
+        {
+          "name": "soldOutText",
+          "displayName": "Tükendi Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "TÜKENDİ",
+          "groupId": "related_content"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "related_content",
+          "name": "İçerik"
         }
       ]
     },
@@ -1526,18 +1620,280 @@
           "description": "PDP ana ürün objesi"
         },
         {
-          "name": "relatedProducts",
-          "displayName": "Önerilen Ürünler Listesi",
-          "type": "PRODUCT_LIST",
-          "required": false,
-          "description": "İlişkili ürünler ikas liste seçeneği"
-        },
-        {
           "name": "backgroundColor",
           "displayName": "Arka Plan Rengi",
           "type": "COLOR",
           "required": false,
           "description": "Bölüm zemin rengi"
+        },
+        {
+          "name": "seriesTag",
+          "displayName": "Seri Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SS26 · SEYAHAT SERİSİ",
+          "groupId": "buybox"
+        },
+        {
+          "name": "productBadge",
+          "displayName": "Ürün Rozeti",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "EN ÇOK SATAN",
+          "groupId": "buybox"
+        },
+        {
+          "name": "sizeGuideText",
+          "displayName": "Ölçü Tablosu Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ÖLÇÜ TABLOSU",
+          "groupId": "sizeguide"
+        },
+        {
+          "name": "stockInText",
+          "displayName": "Stokta Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "STOKTA · 2–4 İŞ GÜNÜ İÇİNDE KARGODA",
+          "groupId": "buybox"
+        },
+        {
+          "name": "stockOutText",
+          "displayName": "Stok Yok Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "STOK TÜKENDİ",
+          "groupId": "buybox"
+        },
+        {
+          "name": "addToCartText",
+          "displayName": "Sepete Ekle Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SEPETE EKLE",
+          "groupId": "buybox"
+        },
+        {
+          "name": "addingToCartText",
+          "displayName": "Ekleniyor Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "EKLENİYOR...",
+          "groupId": "buybox"
+        },
+        {
+          "name": "addedToCartText",
+          "displayName": "Eklendi Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SEPETE EKLENDİ",
+          "groupId": "buybox"
+        },
+        {
+          "name": "soldOutText",
+          "displayName": "Tükendi Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "TÜKENDİ",
+          "groupId": "buybox"
+        },
+        {
+          "name": "discountBadgeLabel",
+          "displayName": "İndirim Rozeti Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İNDİRİM",
+          "groupId": "buybox"
+        },
+        {
+          "name": "reviewLabel",
+          "displayName": "Değerlendirme Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "DEĞERLENDİRME",
+          "groupId": "buybox"
+        },
+        {
+          "name": "qtyDecreaseLabel",
+          "displayName": "Adet Azalt Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Adet azalt",
+          "groupId": "buybox"
+        },
+        {
+          "name": "qtyIncreaseLabel",
+          "displayName": "Adet Artır Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Adet artır",
+          "groupId": "buybox"
+        },
+        {
+          "name": "trustShippingText",
+          "displayName": "Güven: Kargo Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "500 ₺ ÜZERİ ÜCRETSİZ KARGO",
+          "groupId": "buybox"
+        },
+        {
+          "name": "trustReturnText",
+          "displayName": "Güven: İade Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "30 GÜN KOŞULSUZ İADE",
+          "groupId": "buybox"
+        },
+        {
+          "name": "trustWarrantyText",
+          "displayName": "Güven: Garanti Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "2 YIL DEĞİŞİM GARANTİSİ",
+          "groupId": "buybox"
+        },
+        {
+          "name": "showProductBadge",
+          "displayName": "Ürün Rozetini Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "buybox"
+        },
+        {
+          "name": "showBuyNow",
+          "displayName": "Hemen Satın Al Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "buybox"
+        },
+        {
+          "name": "buyNowText",
+          "displayName": "Hemen Satın Al Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "HEMEN SATIN AL",
+          "groupId": "buybox"
+        },
+        {
+          "name": "breadcrumbHomeText",
+          "displayName": "Breadcrumb Ana Sayfa Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ANA SAYFA",
+          "groupId": "breadcrumb"
+        },
+        {
+          "name": "showStickyBar",
+          "displayName": "Sabit Barı Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "sticky"
+        },
+        {
+          "name": "stickyQtyUnitText",
+          "displayName": "Adet Birimi Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ADET",
+          "groupId": "sticky"
+        },
+        {
+          "name": "stickyImageAlt",
+          "displayName": "Bar Görsel Alt Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ürün görseli",
+          "groupId": "sticky"
+        },
+        {
+          "name": "sizeGuideDrawerTitle",
+          "displayName": "Drawer Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ölçü tablosu",
+          "groupId": "sizeguide"
+        },
+        {
+          "name": "sizeGuideIntro",
+          "displayName": "Drawer Giriş Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İki boyut — boyun çevresi ve taşıma tercihine göre seç.",
+          "groupId": "sizeguide"
+        },
+        {
+          "name": "sizeGuideRow1Label",
+          "displayName": "1. Satır Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "STANDART",
+          "groupId": "sizeguide"
+        },
+        {
+          "name": "sizeGuideRow1Value",
+          "displayName": "1. Satır Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "92 × 13 cm · 340 g",
+          "groupId": "sizeguide"
+        },
+        {
+          "name": "sizeGuideRow2Label",
+          "displayName": "2. Satır Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "MİNİ",
+          "groupId": "sizeguide"
+        },
+        {
+          "name": "sizeGuideRow2Value",
+          "displayName": "2. Satır Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "74 × 11 cm · 240 g",
+          "groupId": "sizeguide"
+        },
+        {
+          "name": "sizeGuideNote",
+          "displayName": "Drawer Not",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Emin değilsen Standart ile başla; Mini çocuk ve dar koltuklar için.",
+          "groupId": "sizeguide"
+        },
+        {
+          "name": "sizeGuideCloseLabel",
+          "displayName": "Kapat Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Kapat",
+          "groupId": "sizeguide"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "buybox",
+          "name": "Satış Paneli",
+          "description": "Ürün bilgi paneli metinleri"
+        },
+        {
+          "id": "breadcrumb",
+          "name": "Breadcrumb"
+        },
+        {
+          "id": "sticky",
+          "name": "Sabit Sepet Barı",
+          "description": "Scroll sonrası alt sabit satın alma barı"
+        },
+        {
+          "id": "sizeguide",
+          "name": "Ölçü Tablosu",
+          "description": "Alt drawer içerikleri"
         }
       ]
     },
@@ -1811,6 +2167,218 @@
         {
           "id": "appearance",
           "name": "Görünüm"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-ay4Y1iwjVS",
+      "name": "ProductDetailsSection",
+      "entry": "./src/components/ProductDetailsSection/index.tsx",
+      "styles": "./src/components/ProductDetailsSection/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "product",
+          "displayName": "Ürün",
+          "type": "PRODUCT",
+          "required": false
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#ffffff"
+        },
+        {
+          "name": "detailsTag",
+          "displayName": "Detay Üst Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "01 · ÜRÜN DETAYLARI",
+          "groupId": "details"
+        },
+        {
+          "name": "detailsTitle",
+          "displayName": "Detay Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bilmen gereken her şey.",
+          "groupId": "details"
+        },
+        {
+          "name": "detailsSubtitle",
+          "displayName": "Detay Alt Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "On iki prototip sonrası ortaya çıkan tek parça yapı — malzemesinden bakımına kadar.",
+          "groupId": "details"
+        },
+        {
+          "name": "acc1Title",
+          "displayName": "1. Madde Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Nasıl kullanılır",
+          "groupId": "details"
+        },
+        {
+          "name": "acc1Body",
+          "displayName": "1. Madde Gövde",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Boyun desteği için tüpü iki kez boynuna sar ve uçları önde birleştir; çene düşmesini engeller. Bel desteği için düz bırak, koltuk ile sırtın arasına yerleştir. Yan uyku pozisyonunda tek kat sararak omuz altına al.",
+          "groupId": "details"
+        },
+        {
+          "name": "acc1Bullet1",
+          "displayName": "1. Madde Madde 1",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Uçak, tren ve otobüs koltuklarında — baş yana devrilmez.",
+          "groupId": "details"
+        },
+        {
+          "name": "acc1Bullet2",
+          "displayName": "1. Madde Madde 2",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ofiste bel yastığı olarak — lomber boşluğu doldurur.",
+          "groupId": "details"
+        },
+        {
+          "name": "acc1Bullet3",
+          "displayName": "1. Madde Madde 3",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Evde okuma yastığı olarak — kolluk yüksekliğine göre katlanır.",
+          "groupId": "details"
+        },
+        {
+          "name": "acc2Title",
+          "displayName": "2. Madde Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Malzeme ve ölçüler",
+          "groupId": "details"
+        },
+        {
+          "name": "acc2Spec1Label",
+          "displayName": "2. Spec1 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "DIŞ KUMAŞ",
+          "groupId": "details"
+        },
+        {
+          "name": "acc2Spec1Value",
+          "displayName": "2. Spec1 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "%68 geri dönüştürülmüş polyester, %32 pamuk örgü",
+          "groupId": "details"
+        },
+        {
+          "name": "acc2Spec2Label",
+          "displayName": "2. Spec2 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "DOLGU",
+          "groupId": "details"
+        },
+        {
+          "name": "acc2Spec2Value",
+          "displayName": "2. Spec2 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Nefes alan mikro boncuk (EPS)",
+          "groupId": "details"
+        },
+        {
+          "name": "acc2Spec3Label",
+          "displayName": "2. Spec3 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "STANDART",
+          "groupId": "details"
+        },
+        {
+          "name": "acc2Spec3Value",
+          "displayName": "2. Spec3 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "92 × 13 cm · 340 g",
+          "groupId": "details"
+        },
+        {
+          "name": "acc2Spec4Label",
+          "displayName": "2. Spec4 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "MİNİ",
+          "groupId": "details"
+        },
+        {
+          "name": "acc2Spec4Value",
+          "displayName": "2. Spec4 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "74 × 11 cm · 240 g",
+          "groupId": "details"
+        },
+        {
+          "name": "acc2Spec5Label",
+          "displayName": "2. Spec5 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ÜRETİM",
+          "groupId": "details"
+        },
+        {
+          "name": "acc2Spec5Value",
+          "displayName": "2. Spec5 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İzmir'de dokundu, İstanbul'da dikildi",
+          "groupId": "details"
+        },
+        {
+          "name": "acc3Title",
+          "displayName": "3. Madde Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bakım",
+          "groupId": "details"
+        },
+        {
+          "name": "acc3Body",
+          "displayName": "3. Madde Gövde",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Kılıf fermuarla çıkar: 30°C'de hassas programda yıka, kurutma makinesine girmez, gölgede kurut. İç dolgu yıkanmaz; nemli bezle silmek yeterli. Ütü ve çamaşır suyu kullanma.",
+          "groupId": "details"
+        },
+        {
+          "name": "acc4Title",
+          "displayName": "4. Madde Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Kargo, iade ve garanti",
+          "groupId": "details"
+        },
+        {
+          "name": "acc4Body",
+          "displayName": "4. Madde Gövde",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "500 ₺ üzeri siparişlerde kargo ücretsiz; 14.00'a kadar verilen siparişler aynı gün hazırlanır, 2–4 iş günü içinde kapında. 30 gün içinde koşulsuz iade — kullanılmış olsa bile. Dikiş ve fermuar kusurlarına 2 yıl değişim garantisi.",
+          "groupId": "details"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "details",
+          "name": "Details"
         }
       ]
     }

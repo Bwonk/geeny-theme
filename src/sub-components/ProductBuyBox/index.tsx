@@ -1,4 +1,4 @@
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import {
   getThemeSetting,
   getSelectedProductVariant,
@@ -6,6 +6,7 @@ import {
   selectVariantValue,
   getProductVariantFormattedFinalPrice,
   getProductVariantFormattedSellPrice,
+  getProductVariantDiscountPercentage,
   hasProductVariantDiscount,
   hasProductVariantStock,
   isAddToCartEnabled,
@@ -15,41 +16,105 @@ import {
 } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
 import Button from "../Button";
+import SizeGuideDrawer from "../SizeGuideDrawer";
 
 export interface Props {
   product?: IkasProduct | null;
+  seriesTag?: string;
+  productBadge?: string;
+  showProductBadge?: boolean;
+  sizeGuideText?: string;
+  sizeGuideDrawerTitle?: string;
+  sizeGuideIntro?: string;
+  sizeGuideRow1Label?: string;
+  sizeGuideRow1Value?: string;
+  sizeGuideRow2Label?: string;
+  sizeGuideRow2Value?: string;
+  sizeGuideNote?: string;
+  sizeGuideCloseLabel?: string;
+  stockInText?: string;
+  stockOutText?: string;
+  addToCartText?: string;
+  addingToCartText?: string;
+  addedToCartText?: string;
+  soldOutText?: string;
+  discountBadgeLabel?: string;
+  reviewLabel?: string;
+  qtyDecreaseLabel?: string;
+  qtyIncreaseLabel?: string;
+  trustShippingText?: string;
+  trustReturnText?: string;
+  trustWarrantyText?: string;
   showBuyNow?: boolean;
+  buyNowText?: string;
   className?: string;
+}
+
+function stripHtml(html?: string | null): string {
+  if (!html) return "";
+  return html
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function CartIcon() {
+  return (
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" aria-hidden="true">
+      <path d="M6 7.5h12l1 12.5H5z" />
+      <path d="M9.2 7.5a2.8 2.8 0 0 1 5.6 0" />
+    </svg>
+  );
 }
 
 export function ProductBuyBox({
   product,
-  showBuyNow = true,
+  seriesTag = "SS26 · SEYAHAT SERİSİ",
+  productBadge = "EN ÇOK SATAN",
+  showProductBadge = true,
+  sizeGuideText = "ÖLÇÜ TABLOSU",
+  sizeGuideDrawerTitle = "Ölçü tablosu",
+  sizeGuideIntro = "İki boyut — boyun çevresi ve taşıma tercihine göre seç.",
+  sizeGuideRow1Label = "STANDART",
+  sizeGuideRow1Value = "92 × 13 cm · 340 g",
+  sizeGuideRow2Label = "MİNİ",
+  sizeGuideRow2Value = "74 × 11 cm · 240 g",
+  sizeGuideNote = "Emin değilsen Standart ile başla; Mini çocuk ve dar koltuklar için.",
+  sizeGuideCloseLabel = "Kapat",
+  stockInText = "STOKTA · 2–4 İŞ GÜNÜ İÇİNDE KARGODA",
+  stockOutText = "STOK TÜKENDİ",
+  addToCartText = "SEPETE EKLE",
+  addingToCartText = "EKLENİYOR...",
+  addedToCartText = "SEPETE EKLENDİ",
+  soldOutText = "TÜKENDİ",
+  discountBadgeLabel = "İNDİRİM",
+  reviewLabel = "DEĞERLENDİRME",
+  qtyDecreaseLabel = "Adet azalt",
+  qtyIncreaseLabel = "Adet artır",
+  trustShippingText = "500 ₺ ÜZERİ ÜCRETSİZ KARGO",
+  trustReturnText = "30 GÜN KOŞULSUZ İADE",
+  trustWarrantyText = "2 YIL DEĞİŞİM GARANTİSİ",
+  showBuyNow = false,
+  buyNowText = "HEMEN SATIN AL",
   className = "",
 }: Props) {
-  const [quantity, setQuantity] = useState<number>(1);
-  const [isAdding, setIsAdding] = useState<boolean>(false);
+  const [quantity, setQuantity] = useState(1);
+  const [isAdding, setIsAdding] = useState(false);
+  const [justAdded, setJustAdded] = useState(false);
+  const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
 
-  // Read theme global settings via getThemeSetting
-  const gridGapSetting = getThemeSetting("_4Ud47RIVna"); // Boşluk / Grid Gap (20px)
-  const mobileGridGapSetting = getThemeSetting("_dBvnJWALXD"); // Boşluk / Mobil Grid Gap (12px)
-  const swatchRadiusSetting = getThemeSetting("_XYyz9eaKGx"); // Radius / Swatch Dairesel (50%)
-  const formRadiusSetting = getThemeSetting("_iI8H4rllzj"); // Radius / Input ve Form (0.5rem)
-  const btnHeightSetting = getThemeSetting("_2xLGYXCG2n"); // Boşluk / Buton Yüksekliği (48px)
+  const actionAnimSetting = getThemeSetting("_bNtMCrOBsE"); // Animasyon / Buton ve Hover
+  const swatchRadiusSetting = getThemeSetting("_XYyz9eaKGx"); // Radius / Swatch
 
-  const gridGap = gridGapSetting?.value || "20px";
-  const mobileGridGap = mobileGridGapSetting?.value || "12px";
+  const actionEase = actionAnimSetting?.value || "180ms ease";
   const swatchRadius = swatchRadiusSetting?.value || "50%";
-  const formRadius = formRadiusSetting?.value || "0.5rem";
-  const btnHeight = btnHeightSetting?.value || "48px";
 
-  const inlineStyles = {
-    "--grid-gap": gridGap,
-    "--mobile-grid-gap": mobileGridGap,
-    "--swatch-radius": swatchRadius,
-    "--form-radius": formRadius,
-    "--btn-height": btnHeight,
-  };
+  useEffect(() => {
+    if (!justAdded) return;
+    const t = window.setTimeout(() => setJustAdded(false), 1800);
+    return () => window.clearTimeout(t);
+  }, [justAdded]);
 
   if (!product) return null;
 
@@ -58,14 +123,35 @@ export function ProductBuyBox({
   const finalPriceText = variant ? getProductVariantFormattedFinalPrice(variant) : "";
   const sellPriceText = variant ? getProductVariantFormattedSellPrice(variant) : "";
   const isDiscounted = variant ? hasProductVariantDiscount(variant) : false;
+  const discountPct = variant && isDiscounted ? getProductVariantDiscountPercentage(variant) : "";
   const inStock = variant ? hasProductVariantStock(variant) : true;
-  const canAddToCart = isAddToCartEnabled(product) && inStock;
+  const canAddToCart = isAddToCartEnabled(product) && inStock && !!variant;
+
+  const summaryRaw = stripHtml(product.description);
+  const summary =
+    summaryRaw.length > 220 ? `${summaryRaw.slice(0, 217).trimEnd()}…` : summaryRaw;
+  const rating =
+    typeof product.averageRating === "number" && product.averageRating > 0
+      ? product.averageRating
+      : null;
+  const reviewCount = product.reviewCount || 0;
+
+  const ctaLabel = !inStock
+    ? soldOutText
+    : isAdding
+      ? addingToCartText
+      : justAdded
+        ? addedToCartText
+        : addToCartText;
 
   const handleAddToCart = async () => {
-    if (!variant || isAdding) return;
+    if (!variant || isAdding || !canAddToCart) return;
     setIsAdding(true);
     try {
-      await addItemToCart(variant, product, quantity);
+      const result = await addItemToCart(variant, product, quantity);
+      if ((result as any)?.success !== false) {
+        setJustAdded(true);
+      }
     } catch (err) {
       console.error("Sepete ekleme hatası:", err);
     } finally {
@@ -73,71 +159,133 @@ export function ProductBuyBox({
     }
   };
 
+  const inlineStyles = {
+    "--buybox-action-ease": actionEase,
+    "--swatch-radius": swatchRadius,
+  } as any;
+
+  const starFilled = rating ? Math.round(rating) : 0;
+
   return (
     <div
       className={`ikas-buy-box ${className}`.trim()}
-      style={inlineStyles as any}
+      style={inlineStyles}
       lang="tr"
+      id="product-buy-box-cta"
     >
-      {/* ÜRÜN BAŞLIĞI */}
-      <h1 className="ikas-buy-box__title _sKAMD8d1LA">{product.name}</h1>
-
-      {/* DEĞERLENDİRME VE YILDIZLAR */}
-      {typeof product.averageRating === "number" && product.averageRating > 0 && (
-        <div className="ikas-buy-box__rating _C0OZ8W7vYS">
-          <div className="ikas-buy-box__stars" aria-label={`Puan: ${product.averageRating}`}>
-            {"★".repeat(Math.round(product.averageRating))}
-            {"☆".repeat(5 - Math.round(product.averageRating))}
-          </div>
-          <span>({product.reviewCount || 0} Değerlendirme)</span>
+      {/* Üst: seri + rozet + başlık + rating */}
+      <div className="ikas-buy-box__intro">
+        <div className="ikas-buy-box__meta-row">
+          {seriesTag && <span className="ikas-buy-box__series">{seriesTag}</span>}
+          {showProductBadge && productBadge && (
+            <span className="ikas-buy-box__badge">{productBadge}</span>
+          )}
         </div>
-      )}
 
-      {/* FİYAT BİLGİSİ */}
-      <div className="ikas-buy-box__price-wrapper">
-        <span className="ikas-buy-box__final-price _AZR1yL8GrK">
-          {finalPriceText}
-        </span>
+        <h1 className="ikas-buy-box__title _DusX6I08Pv">{product.name}</h1>
+
+        {rating != null && (
+          <div className="ikas-buy-box__rating">
+            <span
+              className="ikas-buy-box__stars"
+              aria-label={`${rating.toLocaleString("tr-TR")} / 5`}
+            >
+              {"★".repeat(Math.min(5, Math.max(0, starFilled)))}
+              {"☆".repeat(Math.max(0, 5 - starFilled))}
+            </span>
+            <span className="ikas-buy-box__rating-meta">
+              {rating.toLocaleString("tr-TR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}
+              {" / 5"}
+              {reviewCount > 0 && (
+                <>
+                  {" · "}
+                  {reviewCount.toLocaleString("tr-TR")} {reviewLabel}
+                </>
+              )}
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Fiyat */}
+      <div className="ikas-buy-box__price-row">
+        <span className="ikas-buy-box__final-price">{finalPriceText}</span>
         {isDiscounted && sellPriceText && (
-          <span className="ikas-buy-box__sell-price _VcfI5D07Nt">
-            {sellPriceText}
+          <span className="ikas-buy-box__sell-price">{sellPriceText}</span>
+        )}
+        {isDiscounted && discountPct && (
+          <span className="ikas-buy-box__discount">
+            %{discountPct} {discountBadgeLabel}
           </span>
         )}
       </div>
 
-      {/* VARYANT SEÇENEKLERİ (RENK / BEDEN) */}
+      {/* Kısa özet — ürün açıklamasından */}
+      {summary && <p className="ikas-buy-box__summary">{summary}</p>}
+
+      <div className="ikas-buy-box__rule" aria-hidden="true" />
+
+      {/* Varyantlar */}
       {variantTypes.length > 0 && (
         <div className="ikas-buy-box__variants">
-          {variantTypes.map((vtItem: any) => {
-            const vType = vtItem.variantType || vtItem;
-            const values = vtItem.values || vtItem.variantValues || [];
-            return (
-              <div key={vType.id || vtItem.id} className="ikas-buy-box__variant-type">
-                <span className="ikas-buy-box__variant-label _VcfI5D07Nt">
-                  {vType.name}:
-                </span>
-                <div className="ikas-buy-box__swatches">
-                  {values.map((vVal: any) => {
-                    const isSelected = vVal.isSelected;
-                    const isColor = isColorVariantValue(vVal);
-                    const colorHex = vVal.colorCode || vVal.hex || "#37435B";
+          {variantTypes.map((vtItem, vtIndex) => {
+            const vType = vtItem.variantType;
+            const values = vtItem.displayedVariantValues || [];
+            const selected = values.find((v) => v.isSelected)?.variantValue;
+            const isColorType = values.some((v) => isColorVariantValue(v.variantValue));
+            const showSizeGuide = !isColorType && !!sizeGuideText &&
+              vtIndex === variantTypes.findIndex((t) =>
+                !(t.displayedVariantValues || []).some((v) => isColorVariantValue(v.variantValue))
+              );
 
-                    if (isColor) {
+            return (
+              <div key={vType.id} className="ikas-buy-box__variant-block">
+                <div className="ikas-buy-box__variant-head">
+                  <span className="ikas-buy-box__variant-label">{vType.name}</span>
+                  {isColorType && selected?.name && (
+                    <span className="ikas-buy-box__variant-value">
+                      {selected.name.toLocaleUpperCase("tr-TR")}
+                    </span>
+                  )}
+                  {showSizeGuide && (
+                    <button
+                      type="button"
+                      className="ikas-buy-box__size-guide"
+                      onClick={() => setSizeGuideOpen(true)}
+                    >
+                      {sizeGuideText}
+                    </button>
+                  )}
+                </div>
+
+                <div
+                  className={
+                    isColorType
+                      ? "ikas-buy-box__swatches"
+                      : "ikas-buy-box__pills"
+                  }
+                >
+                  {values.map((dvv) => {
+                    const vVal = dvv.variantValue;
+                    const selectedOn = dvv.isSelected;
+                    const disabled = !dvv.hasStock && !selectedOn;
+
+                    if (isColorVariantValue(vVal)) {
+                      const hex = vVal.colorCode || "#37435B";
                       return (
                         <button
                           key={vVal.id}
                           type="button"
-                          className={`ikas-buy-box__swatch-btn ${
-                            isSelected ? "ikas-buy-box__swatch-btn--selected" : ""
+                          className={`ikas-buy-box__swatch${
+                            selectedOn ? " ikas-buy-box__swatch--selected" : ""
                           }`}
-                          onClick={() => selectVariantValue(product, vType, vVal)}
+                          style={{ backgroundColor: hex }}
+                          disabled={disabled}
                           aria-label={`${vType.name}: ${vVal.name}`}
-                          title={vVal.name}
+                          aria-pressed={selectedOn}
+                          onClick={() => selectVariantValue(product, vVal)}
                         >
-                          <span
-                            className="ikas-buy-box__swatch-color"
-                            style={{ backgroundColor: colorHex }}
-                          />
+                          <span className="ikas-buy-box__swatch-ring" aria-hidden="true" />
                         </button>
                       );
                     }
@@ -146,12 +294,15 @@ export function ProductBuyBox({
                       <button
                         key={vVal.id}
                         type="button"
-                        className={`ikas-buy-box__text-btn _C0OZ8W7vYS ${
-                          isSelected ? "ikas-buy-box__text-btn--selected" : ""
+                        className={`ikas-buy-box__pill${
+                          selectedOn ? " ikas-buy-box__pill--selected" : ""
                         }`}
-                        onClick={() => selectVariantValue(product, vType, vVal)}
+                        disabled={disabled}
+                        aria-pressed={selectedOn}
+                        onClick={() => selectVariantValue(product, vVal)}
                       >
-                        {vVal.name}
+                        <span className="ikas-buy-box__pill-grow" aria-hidden="true" />
+                        <span className="ikas-buy-box__pill-label">{vVal.name}</span>
                       </button>
                     );
                   })}
@@ -162,60 +313,118 @@ export function ProductBuyBox({
         </div>
       )}
 
-      {/* ADET SEÇİCİ VE SEPETE EKLE BUTONLARI */}
-      <div className="ikas-buy-box__qty-wrapper">
-        <div className="ikas-buy-box__qty-picker">
+      {/* Adet + stok */}
+      <div className="ikas-buy-box__qty-row">
+        <div className="ikas-buy-box__qty">
           <button
             type="button"
             className="ikas-buy-box__qty-btn"
             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
             disabled={quantity <= 1}
-            aria-label="Adet Azalt"
+            aria-label={qtyDecreaseLabel}
           >
-            -
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <path d="M5 12h14" />
+            </svg>
           </button>
-          <span className="ikas-buy-box__qty-value _VcfI5D07Nt">{quantity}</span>
+          <span className="ikas-buy-box__qty-value">{quantity}</span>
           <button
             type="button"
             className="ikas-buy-box__qty-btn"
-            onClick={() => setQuantity((q) => q + 1)}
-            aria-label="Adet Artır"
+            onClick={() => setQuantity((q) => Math.min(9, q + 1))}
+            aria-label={qtyIncreaseLabel}
           >
-            +
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
           </button>
+        </div>
+
+        <div
+          className={`ikas-buy-box__stock${
+            inStock ? "" : " ikas-buy-box__stock--out"
+          }`}
+        >
+          <span className="ikas-buy-box__stock-dot" aria-hidden="true" />
+          <span>{inStock ? stockInText : stockOutText}</span>
         </div>
       </div>
 
-      {/* STOK UYARISI */}
-      {!inStock && (
-        <p className="ikas-buy-box__stock-warning _C0OZ8W7vYS">
-          Bu varyant için stok tükenmiştir.
-        </p>
-      )}
+      {/* Ana CTA — Pill Grow + sepet chip */}
+      <Button
+        text={ctaLabel}
+        variant="PILL_PRIMARY"
+        size="LARGE"
+        fullWidth
+        disabled={!canAddToCart}
+        loading={isAdding}
+        onClick={handleAddToCart}
+        className="ikas-buy-box__cta"
+        icon={
+          <span className="ikas-buy-box__cta-chip" aria-hidden="true">
+            <CartIcon />
+          </span>
+        }
+      />
 
-      {/* AKSİYON BUTONLARI */}
-      <div className="ikas-buy-box__actions">
+      {showBuyNow && inStock && (
         <Button
-          text={inStock ? "Sepete Ekle" : "Tükendi"}
-          variant="PRIMARY"
+          text={buyNowText}
+          variant="PILL_SECONDARY"
           size="LARGE"
           fullWidth
           disabled={!canAddToCart}
-          loading={isAdding}
           onClick={handleAddToCart}
         />
+      )}
 
-        {showBuyNow && inStock && (
-          <Button
-            text="Hemen Satın Al"
-            variant="ACCENT"
-            size="LARGE"
-            fullWidth
-            disabled={!canAddToCart}
-            onClick={handleAddToCart}
-          />
-        )}
-      </div>
+      {/* Trust satırları */}
+      {(trustShippingText || trustReturnText || trustWarrantyText) && (
+        <ul className="ikas-buy-box__trust">
+          {trustShippingText && (
+            <li className="ikas-buy-box__trust-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                <path d="M3 7h11v9H3z" />
+                <path d="M14 10h4l3 3v3h-7z" />
+                <circle cx="7" cy="18" r="1.6" />
+                <circle cx="17" cy="18" r="1.6" />
+              </svg>
+              <span>{trustShippingText}</span>
+            </li>
+          )}
+          {trustReturnText && (
+            <li className="ikas-buy-box__trust-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                <path d="M4 12a8 8 0 1 1 3 6.2" />
+                <path d="M4 6v6h6" />
+              </svg>
+              <span>{trustReturnText}</span>
+            </li>
+          )}
+          {trustWarrantyText && (
+            <li className="ikas-buy-box__trust-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                <path d="M12 3l7 3v6c0 4-3 7.4-7 9-4-1.6-7-5-7-9V6z" />
+                <path d="m9 12 2.2 2.2L15.5 10" />
+              </svg>
+              <span>{trustWarrantyText}</span>
+            </li>
+          )}
+        </ul>
+      )}
+
+      <SizeGuideDrawer
+        open={sizeGuideOpen}
+        onClose={() => setSizeGuideOpen(false)}
+        title={sizeGuideDrawerTitle}
+        intro={sizeGuideIntro}
+        rows={[
+          { label: sizeGuideRow1Label || "", value: sizeGuideRow1Value || "" },
+          { label: sizeGuideRow2Label || "", value: sizeGuideRow2Value || "" },
+        ]}
+        note={sizeGuideNote}
+        closeLabel={sizeGuideCloseLabel}
+      />
     </div>
   );
 }

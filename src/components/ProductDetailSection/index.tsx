@@ -3,27 +3,60 @@ import BreadcrumbNav from "../../sub-components/BreadcrumbNav";
 import ProductMediaGallery from "../../sub-components/ProductMediaGallery";
 import ProductBuyBox from "../../sub-components/ProductBuyBox";
 import StickyAddToCartBar from "../../sub-components/StickyAddToCartBar";
-import ProductValueAccordions from "../../sub-components/ProductValueAccordions";
-import { CustomerReviewsSection } from "../CustomerReviewsSection";
-import { RelatedProductsCarousel } from "../RelatedProductsCarousel";
 import { Props } from "./types";
 
 export interface ProductDetailSectionProps extends Props {
   className?: string;
 }
 
+/**
+ * Product Detail Section — çekirdek PDP:
+ * Breadcrumb + Gallery | BuyBox + Sticky ATC
+ *
+ * Features / Details / Reviews / Related ayrı section olarak
+ * editörde drag-drop ile yerleştirilir.
+ */
 export function ProductDetailSection({
   product,
-  relatedProducts,
   backgroundColor,
+  seriesTag = "SS26 · SEYAHAT SERİSİ",
+  productBadge = "EN ÇOK SATAN",
+  sizeGuideText = "ÖLÇÜ TABLOSU",
+  sizeGuideDrawerTitle = "Ölçü tablosu",
+  sizeGuideIntro = "İki boyut — boyun çevresi ve taşıma tercihine göre seç.",
+  sizeGuideRow1Label = "STANDART",
+  sizeGuideRow1Value = "92 × 13 cm · 340 g",
+  sizeGuideRow2Label = "MİNİ",
+  sizeGuideRow2Value = "74 × 11 cm · 240 g",
+  sizeGuideNote = "Emin değilsen Standart ile başla; Mini çocuk ve dar koltuklar için.",
+  sizeGuideCloseLabel = "Kapat",
+  stockInText = "STOKTA · 2–4 İŞ GÜNÜ İÇİNDE KARGODA",
+  stockOutText = "STOK TÜKENDİ",
+  addToCartText = "SEPETE EKLE",
+  addingToCartText = "EKLENİYOR...",
+  addedToCartText = "SEPETE EKLENDİ",
+  soldOutText = "TÜKENDİ",
+  discountBadgeLabel = "İNDİRİM",
+  reviewLabel = "DEĞERLENDİRME",
+  qtyDecreaseLabel = "Adet azalt",
+  qtyIncreaseLabel = "Adet artır",
+  trustShippingText = "500 ₺ ÜZERİ ÜCRETSİZ KARGO",
+  trustReturnText = "30 GÜN KOŞULSUZ İADE",
+  trustWarrantyText = "2 YIL DEĞİŞİM GARANTİSİ",
+  showProductBadge = true,
+  showBuyNow = false,
+  buyNowText = "HEMEN SATIN AL",
+  breadcrumbHomeText = "ANA SAYFA",
+  showStickyBar = true,
+  stickyQtyUnitText = "ADET",
+  stickyImageAlt = "Ürün görseli",
   className = "",
 }: ProductDetailSectionProps) {
-  // Read live theme global settings via getThemeSetting
-  const verticalPySetting = getThemeSetting("_Kl0my3VVMA"); // Boşluk / Masaüstü Dikey Spacing (48px)
-  const verticalPyMobileSetting = getThemeSetting("_5Fdl1j6UHQ"); // Boşluk / Dikey Bölüm Spacing (2rem / 32px)
-  const sectionPxSetting = getThemeSetting("_Nd1XnRyZlx"); // Boşluk / Masaüstü Yatay Bölüm Padding (20px)
-  const mobilePxSetting = getThemeSetting("_uRDipxnxkx"); // Boşluk / Mobil Yatay Padding (16px)
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1560px)
+  const verticalPySetting = getThemeSetting("_Kl0my3VVMA");
+  const verticalPyMobileSetting = getThemeSetting("_5Fdl1j6UHQ");
+  const sectionPxSetting = getThemeSetting("_Nd1XnRyZlx");
+  const mobilePxSetting = getThemeSetting("_uRDipxnxkx");
+  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ");
 
   const sectionPy = verticalPySetting?.value || "48px";
   const sectionPyMobile = verticalPyMobileSetting?.value || "32px";
@@ -48,33 +81,60 @@ export function ProductDetailSection({
       style={inlineStyles as any}
       lang="tr"
     >
-      {/* NAVİGASYON BREADCRUMB */}
-      <BreadcrumbNav product={product} />
+      <BreadcrumbNav product={product} homepageText={breadcrumbHomeText} />
 
       <div className="ikas-pdp__container">
-        {/* ANA SPLIT GRID: SOL GALERİ, SAĞ BUY BOX */}
         <div className="ikas-pdp__main-grid">
-          {/* SOL KOLON: GÖRSEL GALERİSİ */}
           <div className="ikas-pdp__left">
             <ProductMediaGallery product={product} />
           </div>
 
-          {/* SAĞ KOLON: SATIN ALMA ALANI & AKORDİYONLAR */}
           <div className="ikas-pdp__right" id="product-buy-box-target">
-            <ProductBuyBox product={product} />
-            <ProductValueAccordions product={product} />
+            <ProductBuyBox
+              product={product}
+              seriesTag={seriesTag}
+              productBadge={productBadge}
+              showProductBadge={showProductBadge}
+              sizeGuideText={sizeGuideText}
+              sizeGuideDrawerTitle={sizeGuideDrawerTitle}
+              sizeGuideIntro={sizeGuideIntro}
+              sizeGuideRow1Label={sizeGuideRow1Label}
+              sizeGuideRow1Value={sizeGuideRow1Value}
+              sizeGuideRow2Label={sizeGuideRow2Label}
+              sizeGuideRow2Value={sizeGuideRow2Value}
+              sizeGuideNote={sizeGuideNote}
+              sizeGuideCloseLabel={sizeGuideCloseLabel}
+              stockInText={stockInText}
+              stockOutText={stockOutText}
+              addToCartText={addToCartText}
+              addingToCartText={addingToCartText}
+              addedToCartText={addedToCartText}
+              soldOutText={soldOutText}
+              discountBadgeLabel={discountBadgeLabel}
+              reviewLabel={reviewLabel}
+              qtyDecreaseLabel={qtyDecreaseLabel}
+              qtyIncreaseLabel={qtyIncreaseLabel}
+              trustShippingText={trustShippingText}
+              trustReturnText={trustReturnText}
+              trustWarrantyText={trustWarrantyText}
+              showBuyNow={showBuyNow}
+              buyNowText={buyNowText}
+            />
           </div>
         </div>
       </div>
 
-      {/* MÜŞTERİ YORUMLARI BÖLÜMÜ */}
-      <CustomerReviewsSection product={product} />
-
-      {/* İLİŞKİLİ ÖNERİLEN ÜRÜNLER CAROUSEL'İ */}
-      <RelatedProductsCarousel productList={relatedProducts || undefined} />
-
-      {/* STICKY SEPETE EKLE BARI */}
-      <StickyAddToCartBar product={product} targetElementId="product-buy-box-target" />
+      <StickyAddToCartBar
+        product={product}
+        targetElementId="product-buy-box-cta"
+        showStickyBar={showStickyBar}
+        addToCartText={addToCartText}
+        addingToCartText={addingToCartText}
+        addedToCartText={addedToCartText}
+        soldOutText={soldOutText}
+        stickyQtyUnitText={stickyQtyUnitText}
+        stickyImageAlt={stickyImageAlt}
+      />
     </section>
   );
 }

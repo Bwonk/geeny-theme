@@ -2,6 +2,7 @@ import { useState, useEffect } from "preact/hooks";
 import {
   getThemeSetting,
   getSelectedProductVariant,
+  getDisplayedProductVariantTypes,
   getProductVariantMainImage,
   getDefaultSrc,
   getProductVariantFormattedFinalPrice,
@@ -17,39 +18,74 @@ import Button from "../Button";
 export interface Props {
   product?: IkasProduct | null;
   targetElementId?: string;
+  addToCartText?: string;
+  addingToCartText?: string;
+  addedToCartText?: string;
+  soldOutText?: string;
+  stickyQtyUnitText?: string;
+  stickyImageAlt?: string;
+  showStickyBar?: boolean;
   className?: string;
+}
+
+function buildVariantMeta(product: IkasProduct, qtyUnitText?: string): string {
+  const types = getDisplayedProductVariantTypes(product) || [];
+  const parts: string[] = [];
+
+  types.forEach((vt) => {
+    const selected = vt.displayedVariantValues?.find((v) => v.isSelected);
+    const name = selected?.variantValue?.name;
+    if (name) parts.push(name.toLocaleUpperCase("tr-TR"));
+  });
+
+  // Sticky her zaman 1 adet ekler; meta satırında referans ritmini koru
+  if (qtyUnitText) {
+    parts.push(`1 ${qtyUnitText.trim().toLocaleUpperCase("tr-TR")}`);
+  }
+
+  return parts.join(" · ");
 }
 
 export function StickyAddToCartBar({
   product,
-  targetElementId = "product-buy-box-target",
+  targetElementId = "product-buy-box-cta",
+  addToCartText = "SEPETE EKLE",
+  addingToCartText = "EKLENİYOR...",
+  addedToCartText = "SEPETE EKLENDİ",
+  soldOutText = "TÜKENDİ",
+  stickyQtyUnitText = "ADET",
+  stickyImageAlt = "Ürün görseli",
+  showStickyBar = true,
   className = "",
 }: Props) {
-  const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [isAdding, setIsAdding] = useState<boolean>(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
+  const [justAdded, setJustAdded] = useState(false);
 
-  // Read theme global settings via getThemeSetting
-  const stickyBarHeightSetting = getThemeSetting("_rEYcHCKRvC"); // Boşluk / Sticky Cart Bar Yüksekliği (64px)
-  const stickyAnimSetting = getThemeSetting("_z2WqA2GtRY"); // Animasyon / Sticky Bar Belirme
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1560px)
-  const sectionPxSetting = getThemeSetting("_Nd1XnRyZlx"); // Boşluk / Masaüstü Yatay Bölüm Padding (20px)
-  const mobilePxSetting = getThemeSetting("_uRDipxnxkx"); // Boşluk / Mobil Yatay Padding (16px)
+  const stickyAnimSetting = getThemeSetting("_z2WqA2GtRY");
+  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ");
+  const sectionPxSetting = getThemeSetting("_Nd1XnRyZlx");
+  const mobilePxSetting = getThemeSetting("_uRDipxnxkx");
 
-  const stickyBarHeight = stickyBarHeightSetting?.value || "64px";
-  const stickyAnim = stickyAnimSetting?.value || "transform 0.3s ease, opacity 0.3s ease";
+  const stickyAnim =
+    stickyAnimSetting?.value || "transform 0.42s cubic-bezier(0.22, 1, 0.36, 1)";
   const maxSiteWidth = siteWidthSetting?.value || "1560px";
   const sectionPx = sectionPxSetting?.value || "20px";
   const mobilePx = mobilePxSetting?.value || "16px";
 
   const inlineStyles = {
-    "--sticky-bar-height": stickyBarHeight,
     "--sticky-bar-transition": stickyAnim,
     "--max-site-width": maxSiteWidth,
     "--section-px": sectionPx,
     "--mobile-px": mobilePx,
-  };
+  } as any;
 
   useEffect(() => {
+    if (!showStickyBar) {
+      setIsVisible(false);
+      return;
+    }
+
     let observer: IntersectionObserver | null = null;
     const targetEl = document.getElementById(targetElementId);
 
@@ -57,43 +93,62 @@ export function StickyAddToCartBar({
       observer = new IntersectionObserver(
         (entries) => {
           const entry = entries[0];
-          // When the buy box target is out of view (scrolled past), show sticky bar
-          setIsVisible(!entry.isIntersecting);
+          if (!entry) return;
+          // Referans: yalnızca ana CTA viewport üstünden geçince göster
+          const scrolledPast =
+            !entry.isIntersecting && entry.boundingClientRect.top < 0;
+          setIsVisible(scrolledPast);
         },
-        { threshold: 0.1 }
+        { threshold: 0 }
       );
       observer.observe(targetEl);
     } else {
-      // Fallback scroll listener if target element not found
-      const handleScroll = () => {
-        setIsVisible(window.scrollY > 450);
-      };
+      const handleScroll = () => setIsVisible(window.scrollY > 520);
       window.addEventListener("scroll", handleScroll, { passive: true });
       return () => window.removeEventListener("scroll", handleScroll);
     }
 
     return () => {
-      if (observer && targetEl) {
-        observer.unobserve(targetEl);
-      }
+      if (observer && targetEl) observer.unobserve(targetEl);
     };
-  }, [targetElementId]);
+  }, [targetElementId, showStickyBar]);
 
-  if (!product) return null;
+  useEffect(() => {
+    if (!justAdded) return;
+    const t = window.setTimeout(() => setJustAdded(false), 1800);
+    return () => window.clearTimeout(t);
+  }, [justAdded]);
+
+  if (!showStickyBar || !product) return null;
 
   const variant = getSelectedProductVariant(product);
   const mainProductImage = variant ? getProductVariantMainImage(variant) : null;
-  const mainImage: IkasImage | null = (mainProductImage as any)?.image || (mainProductImage as any) || null;
+  const mainImage: IkasImage | null =
+    (mainProductImage as any)?.image || (mainProductImage as any) || null;
   const imgSrc = mainImage ? getDefaultSrc(mainImage) : null;
-  const finalPriceText = variant ? getProductVariantFormattedFinalPrice(variant) : "";
+  const finalPriceText = variant
+    ? getProductVariantFormattedFinalPrice(variant)
+    : "";
   const inStock = variant ? hasProductVariantStock(variant) : true;
-  const canAddToCart = isAddToCartEnabled(product) && inStock;
+  const canAddToCart = isAddToCartEnabled(product) && inStock && !!variant;
+  const barMeta = buildVariantMeta(product, stickyQtyUnitText);
+
+  const ctaLabel = !inStock
+    ? soldOutText
+    : isAdding
+      ? addingToCartText
+      : justAdded
+        ? addedToCartText
+        : addToCartText;
 
   const handleAddToCart = async () => {
-    if (!variant || isAdding) return;
+    if (!variant || isAdding || !canAddToCart) return;
     setIsAdding(true);
     try {
-      await addItemToCart(variant, product, 1);
+      const result = await addItemToCart(variant, product, 1);
+      if ((result as any)?.success !== false) {
+        setJustAdded(true);
+      }
     } catch (err) {
       console.error("Sticky sepete ekleme hatası:", err);
     } finally {
@@ -103,43 +158,40 @@ export function StickyAddToCartBar({
 
   return (
     <div
-      className={`ikas-sticky-cart ${
-        isVisible ? "ikas-sticky-cart--visible" : ""
-      } ${className}`.trim()}
-      style={inlineStyles as any}
+      className={`ikas-sticky-cart${isVisible ? " ikas-sticky-cart--visible" : ""} ${className}`.trim()}
+      style={inlineStyles}
       lang="tr"
+      aria-hidden={!isVisible}
     >
       <div className="ikas-sticky-cart__container">
-        {/* ÜRÜN ÖZET BİLGİSİ */}
-        <div className="ikas-sticky-cart__info">
-          <div className="ikas-sticky-cart__img-wrapper">
-            {imgSrc ? (
-              <img
-                src={imgSrc}
-                alt={product.name}
-                className="ikas-sticky-cart__img"
-              />
-            ) : null}
-          </div>
-          <div className="ikas-sticky-cart__meta">
-            <span className="ikas-sticky-cart__name _VcfI5D07Nt">
-              {product.name}
-            </span>
-            <span className="ikas-sticky-cart__price _AZR1yL8GrK">
-              {finalPriceText}
-            </span>
-          </div>
+        <div className="ikas-sticky-cart__thumb">
+          {imgSrc ? (
+            <img
+              src={imgSrc}
+              alt={stickyImageAlt || product.name || ""}
+              className="ikas-sticky-cart__img"
+            />
+          ) : null}
         </div>
 
-        {/* SATIN ALMA BUTONU */}
+        <div className="ikas-sticky-cart__meta">
+          <span className="ikas-sticky-cart__name">{product.name}</span>
+          {barMeta && <span className="ikas-sticky-cart__variants">{barMeta}</span>}
+        </div>
+
+        {finalPriceText && (
+          <span className="ikas-sticky-cart__price">{finalPriceText}</span>
+        )}
+
         <div className="ikas-sticky-cart__action">
           <Button
-            text={inStock ? "Sepete Ekle" : "Tükendi"}
-            variant="PRIMARY"
+            text={ctaLabel}
+            variant="PILL_PRIMARY"
             size="NORMAL"
             disabled={!canAddToCart}
             loading={isAdding}
             onClick={handleAddToCart}
+            className="ikas-sticky-cart__btn"
           />
         </div>
       </div>

@@ -8,4 +8,9 @@ export interface Props {
   product?: IkasProduct | null;
   /** Bölüm zemin rengi */
   backgroundColor?: string;
+  tag?: string;
+  countSuffix?: string;
+  verifiedBuyerText?: string;
+  emptyText?: string;
+  loadingText?: string;
 }

@@ -7,48 +7,91 @@ import {
   getSrc,
   getThumbnailSrc,
   createMediaSrcset,
+  selectVariantValue,
   IkasImage,
   IkasProduct,
+  IkasProductVariant,
+  IkasVariantValue,
 } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
 import { formatShadow } from "../../utils/theme";
 
 export interface Props {
   product?: IkasProduct | null;
-  /** Masaüstü scroll başına slide yüksekliği (vh). Referans varsayılan: 66 */
-  slideHoldVh?: number;
+  /** Story süresi (ms) — Instagram fill süresi */
+  storyDurationMs?: number;
   className?: string;
 }
 
-const DESKTOP_MQ = "(min-width: 992px)";
-const DEFAULT_SLIDE_HOLD_VH = 66;
+const DEFAULT_STORY_MS = 5000;
+
+interface GalleryItem {
+  image: IkasImage;
+  /** Thumb / story seçiminde bu rengi de seç (tek görselli varyantlar) */
+  variantValue?: IkasVariantValue | null;
+}
 
 function pad2(n: number): string {
   return n < 10 ? `0${n}` : String(n);
 }
 
-function collectImages(product: IkasProduct): IkasImage[] {
-  const variant = getSelectedProductVariant(product);
-  const rawImages = (variant as any)?.images || (product as any)?.images || [];
-  const mainProductImage = variant ? getProductVariantMainImage(variant) : null;
+function pushUniqueImage(
+  list: IkasImage[],
+  img: IkasImage | null | undefined
+): void {
+  if (!img || !(img as any).id) return;
+  if (list.some((existing) => existing.id === (img as any).id)) return;
+  list.push(img);
+}
+
+function imagesFromVariant(variant: IkasProductVariant | null | undefined): IkasImage[] {
+  if (!variant) return [];
+  const out: IkasImage[] = [];
+  const mainProductImage = getProductVariantMainImage(variant);
   const mainImage: IkasImage | null =
     (mainProductImage as any)?.image || (mainProductImage as any) || null;
+  pushUniqueImage(out, mainImage);
 
-  const allImages: IkasImage[] = [];
-  if (mainImage && (mainImage as any).id) {
-    allImages.push(mainImage);
+  const rawImages = (variant as any)?.images || [];
+  rawImages.forEach((item: any) => {
+    pushUniqueImage(out, item?.image || item);
+  });
+  return out;
+}
+
+/**
+ * Galeri kaynağı:
+ * - Seçili varyantta 2+ görsel varsa → yalnızca onlar (klasik PDP)
+ * - Yoksa (renk başına 1 görsel) → tüm varyantların benzersiz görselleri
+ */
+function collectGalleryItems(product: IkasProduct): GalleryItem[] {
+  const selected = getSelectedProductVariant(product);
+  const selectedImages = imagesFromVariant(selected);
+
+  if (selectedImages.length > 1) {
+    return selectedImages.map((image) => ({ image, variantValue: null }));
   }
-  if (rawImages && rawImages.length > 0) {
-    rawImages.forEach((item: any) => {
-      const imgObj = item?.image || item;
-      if (imgObj && imgObj.id) {
-        if (!allImages.some((existing) => existing.id === imgObj.id)) {
-          allImages.push(imgObj);
-        }
-      }
+
+  const items: GalleryItem[] = [];
+  const seen = new Set<string>();
+
+  (product.variants || []).forEach((variant) => {
+    if (variant?.isActive === false) return;
+    const imgs = imagesFromVariant(variant);
+    imgs.forEach((image) => {
+      const id = (image as any).id as string;
+      if (!id || seen.has(id)) return;
+      seen.add(id);
+      const variantValue = variant.variantValues?.[0] || null;
+      items.push({ image, variantValue });
     });
+  });
+
+  if (items.length === 0 && selectedImages[0]) {
+    items.push({ image: selectedImages[0], variantValue: null });
   }
-  return allImages;
+
+  return items;
 }
 
 function imageLabel(img: IkasImage | null | undefined, productName?: string): string {
@@ -57,21 +100,40 @@ function imageLabel(img: IkasImage | null | undefined, productName?: string): st
   return productName || "";
 }
 
+function indexForSelectedVariant(
+  product: IkasProduct,
+  items: GalleryItem[]
+): number {
+  const selected = getSelectedProductVariant(product);
+  const selectedImages = imagesFromVariant(selected);
+  const firstId = selectedImages[0] ? (selectedImages[0] as any).id : null;
+  if (!firstId) return 0;
+  const idx = items.findIndex((it) => (it.image as any).id === firstId);
+  return idx >= 0 ? idx : 0;
+}
+
 export function ProductMediaGallery({
   product,
-  slideHoldVh = DEFAULT_SLIDE_HOLD_VH,
+  storyDurationMs = DEFAULT_STORY_MS,
   className = "",
 }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const trackRef = useRef<HTMLDivElement>(null);
+  /** Story animasyonunu restart etmek için (thumb seçiminde) */
+  const [storyTick, setStoryTick] = useState(0);
+  const [thumbsOverflow, setThumbsOverflow] = useState(false);
+  const [thumbsFade, setThumbsFade] = useState({ top: false, bottom: false });
   const stageRef = useRef<HTMLDivElement>(null);
+  const thumbsRailRef = useRef<HTMLDivElement>(null);
+  const thumbsRef = useRef<HTMLDivElement>(null);
   const reduceMotionRef = useRef(false);
+  /** Autoplay sırasında variant sync'i atlamak için */
+  const skipVariantSyncRef = useRef(false);
 
-  const mediaRadiusSetting = getThemeSetting("_YFQAxlLvZl"); // Radius / Medya
-  const cardShadowSetting = getThemeSetting("_yyUleMlhR4"); // Gölge / Kart Soft Shadow
-  const fadeAnimSetting = getThemeSetting("_AwVN6G9Zib"); // Animasyon / Fade Yumuşak
-  const scaleHoverSetting = getThemeSetting("_Z1JfmMfgtb"); // Animasyon / Görsel Scale Hover
-  const mobileGridGapSetting = getThemeSetting("_dBvnJWALXD"); // Boşluk / Mobil Grid Gap
+  const mediaRadiusSetting = getThemeSetting("_YFQAxlLvZl");
+  const cardShadowSetting = getThemeSetting("_yyUleMlhR4");
+  const fadeAnimSetting = getThemeSetting("_AwVN6G9Zib");
+  const scaleHoverSetting = getThemeSetting("_Z1JfmMfgtb");
+  const mobileGridGapSetting = getThemeSetting("_dBvnJWALXD");
 
   const mediaRadius = mediaRadiusSetting?.value || "28px";
   const cardShadow = formatShadow(
@@ -81,25 +143,28 @@ export function ProductMediaGallery({
   const fadeAnim = fadeAnimSetting?.value || "0.6s cubic-bezier(0.22, 1, 0.36, 1)";
   const thumbMotion = scaleHoverSetting?.value || "0.24s cubic-bezier(0.22, 1, 0.36, 1)";
   const mobileGridGap = mobileGridGapSetting?.value || "12px";
+  const storyMs = Math.max(2200, Math.min(12000, Number(storyDurationMs) || DEFAULT_STORY_MS));
 
-  const allImages = product ? collectImages(product) : [];
-  const imageCount = allImages.length;
+  const items = product ? collectGalleryItems(product) : [];
+  const imageCount = items.length;
   const activeIndex =
     imageCount === 0 ? 0 : Math.min(selectedIndex, Math.max(0, imageCount - 1));
-  const activeImage = allImages[activeIndex] || null;
-  const activeLabel = imageLabel(activeImage, product?.name);
-  const countText =
-    imageCount > 0 ? `${pad2(activeIndex + 1)} / ${pad2(imageCount)}` : "";
-
-  const scrubEnabled = imageCount > 1;
-  const hold = Math.max(40, Math.min(110, Number(slideHoldVh) || DEFAULT_SLIDE_HOLD_VH));
+  const storyEnabled = imageCount > 1;
 
   const variant = product ? getSelectedProductVariant(product) : null;
   const variantKey = variant?.id || product?.id || "";
 
-  useEffect(() => {
-    setSelectedIndex(0);
-  }, [variantKey]);
+  const updateThumbsFade = () => {
+    const el = thumbsRef.current;
+    if (!el) return;
+    const { scrollTop, scrollHeight, clientHeight } = el;
+    const canScroll = scrollHeight > clientHeight + 1;
+    setThumbsOverflow(canScroll);
+    setThumbsFade({
+      top: canScroll && scrollTop > 2,
+      bottom: canScroll && scrollTop + clientHeight < scrollHeight - 2,
+    });
+  };
 
   useEffect(() => {
     reduceMotionRef.current = !!(
@@ -108,139 +173,253 @@ export function ProductMediaGallery({
     );
   }, []);
 
+  // Thumb rail yüksekliği = ana görsel; taşınca dikey slider
   useEffect(() => {
-    if (!scrubEnabled) return;
-
-    const track = trackRef.current;
     const stage = stageRef.current;
-    if (!track || !stage) return;
+    const rail = thumbsRailRef.current;
+    const thumbs = thumbsRef.current;
+    if (!stage || !rail || !thumbs || imageCount <= 1) return;
 
-    const mq = window.matchMedia(DESKTOP_MQ);
-    let cur = -1;
-    let queued = false;
-    let mQueued = false;
-
-    const setIndex = (i: number) => {
-      const next = Math.max(0, Math.min(imageCount - 1, i));
-      if (next === cur) return;
-      cur = next;
-      setSelectedIndex(next);
-    };
-
-    const pad = () => Math.max(60, Math.min(110, window.innerHeight * 0.09));
-
-    const geom = () => {
-      const top = track.getBoundingClientRect().top + window.scrollY;
-      const total = Math.max(1, track.offsetHeight - stage.offsetHeight - pad());
-      return { start: top - pad(), total };
-    };
-
-    const paintDesktop = () => {
-      queued = false;
-      if (!mq.matches) return;
-      const g = geom();
-      const p = Math.max(0, Math.min(0.9999, (window.scrollY - g.start) / g.total));
-      setIndex(Math.min(imageCount - 1, Math.floor(p * imageCount)));
-    };
-
-    const onScroll = () => {
-      if (!queued) {
-        queued = true;
-        requestAnimationFrame(paintDesktop);
+    const syncHeight = () => {
+      // Desktop: rail = stage yüksekliği. Mobil yatay strip — max-height kaldır.
+      const desktop = window.matchMedia("(min-width: 992px)").matches;
+      if (desktop) {
+        const h = stage.getBoundingClientRect().height;
+        if (h > 0) {
+          rail.style.maxHeight = `${Math.round(h)}px`;
+          rail.style.height = `${Math.round(h)}px`;
+        }
+      } else {
+        rail.style.maxHeight = "";
+        rail.style.height = "";
       }
+      updateThumbsFade();
     };
 
-    const onStageScroll = () => {
-      if (mQueued) return;
-      mQueued = true;
+    syncHeight();
+
+    let ro: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== "undefined") {
+      ro = new ResizeObserver(() => syncHeight());
+      ro.observe(stage);
+      ro.observe(thumbs);
+    }
+
+    window.addEventListener("resize", syncHeight);
+    thumbs.addEventListener("scroll", updateThumbsFade, { passive: true });
+
+    return () => {
+      ro?.disconnect();
+      window.removeEventListener("resize", syncHeight);
+      thumbs.removeEventListener("scroll", updateThumbsFade);
+    };
+  }, [imageCount, activeIndex]);
+
+  // Aktif thumb görünür alanda kalsın
+  useEffect(() => {
+    const thumbs = thumbsRef.current;
+    if (!thumbs || imageCount <= 1) return;
+    const active = thumbs.querySelector(
+      ".ikas-media-gallery__thumb--active"
+    ) as HTMLElement | null;
+    if (!active) return;
+
+    const desktop = window.matchMedia("(min-width: 992px)").matches;
+    if (desktop) {
+      active.scrollIntoView({
+        block: "nearest",
+        inline: "nearest",
+        behavior: reduceMotionRef.current ? "auto" : "smooth",
+      });
+    } else {
+      active.scrollIntoView({
+        block: "nearest",
+        inline: "center",
+        behavior: reduceMotionRef.current ? "auto" : "smooth",
+      });
+    }
+    requestAnimationFrame(updateThumbsFade);
+  }, [activeIndex, imageCount]);
+
+  // Buy box renk değişince galeriyi o varyantın görseline hizala
+  useEffect(() => {
+    if (!product || imageCount === 0) return;
+    if (skipVariantSyncRef.current) {
+      skipVariantSyncRef.current = false;
+      return;
+    }
+    const next = indexForSelectedVariant(product, items);
+    setSelectedIndex((prev) => {
+      if (prev === next) return prev;
+      setStoryTick((t) => t + 1);
+      return next;
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [variantKey, imageCount]);
+
+  // Instagram story autoplay — süre dolunca sonraki (loop)
+  useEffect(() => {
+    if (!storyEnabled || !product) return;
+    if (reduceMotionRef.current) return;
+
+    const timer = window.setTimeout(() => {
+      setSelectedIndex((prev) => {
+        const next = (prev + 1) % imageCount;
+        const vv = items[next]?.variantValue;
+        if (vv) {
+          skipVariantSyncRef.current = true;
+          // disableRoute: URL değişmesin → sayfa başa zıplamasın
+          selectVariantValue(product, vv, true);
+        }
+        return next;
+      });
+      setStoryTick((t) => t + 1);
+    }, storyMs);
+
+    return () => window.clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [storyEnabled, imageCount, storyMs, activeIndex, storyTick]);
+
+  // Mobil yatay snap ile seçili index senkron
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage || !storyEnabled) return;
+
+    let queued = false;
+    const onScroll = () => {
+      if (queued) return;
+      queued = true;
       requestAnimationFrame(() => {
-        mQueued = false;
-        if (mq.matches) return;
+        queued = false;
+        if (window.matchMedia("(min-width: 992px)").matches) return;
         const w = stage.clientWidth || 1;
-        setIndex(Math.round(stage.scrollLeft / w));
+        const idx = Math.round(stage.scrollLeft / w);
+        const next = Math.max(0, Math.min(imageCount - 1, idx));
+        setSelectedIndex((prev) => {
+          if (prev === next) return prev;
+          setStoryTick((t) => t + 1);
+          return next;
+        });
       });
     };
 
-    const onMqChange = () => {
-      if (mq.matches) {
-        paintDesktop();
-      } else {
-        const w = stage.clientWidth || 1;
-        stage.scrollTo({ left: Math.max(0, cur) * w, behavior: "auto" });
-      }
-    };
+    stage.addEventListener("scroll", onScroll, { passive: true });
+    return () => stage.removeEventListener("scroll", onScroll);
+  }, [storyEnabled, imageCount]);
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    stage.addEventListener("scroll", onStageScroll, { passive: true });
-    mq.addEventListener?.("change", onMqChange);
-
-    paintDesktop();
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      stage.removeEventListener("scroll", onStageScroll);
-      mq.removeEventListener?.("change", onMqChange);
-    };
-  }, [scrubEnabled, imageCount, hold]);
-
-  const goToIndex = (i: number) => {
+  const goToIndex = (i: number, opts?: { syncVariant?: boolean }) => {
     const next = Math.max(0, Math.min(imageCount - 1, i));
+    const syncVariant = opts?.syncVariant !== false;
     setSelectedIndex(next);
+    setStoryTick((t) => t + 1);
 
-    const track = trackRef.current;
     const stage = stageRef.current;
-    if (!track || !stage || !scrubEnabled) return;
-
-    const reduce = reduceMotionRef.current;
-    const behavior: ScrollBehavior = reduce ? "auto" : "smooth";
-
-    if (window.matchMedia(DESKTOP_MQ).matches) {
-      const edgePad = Math.max(60, Math.min(110, window.innerHeight * 0.09));
-      const top = track.getBoundingClientRect().top + window.scrollY;
-      const total = Math.max(1, track.offsetHeight - stage.offsetHeight - edgePad);
-      const start = top - edgePad;
-      const y = start + ((next + 0.5) / imageCount) * total;
-      window.scrollTo({ top: Math.max(0, y), behavior });
-    } else {
-      stage.scrollTo({ left: next * stage.clientWidth, behavior });
+    if (stage && !window.matchMedia("(min-width: 992px)").matches) {
+      stage.scrollTo({
+        left: next * stage.clientWidth,
+        behavior: reduceMotionRef.current ? "auto" : "smooth",
+      });
     }
+
+    if (syncVariant && product) {
+      const vv = items[next]?.variantValue;
+      if (vv) {
+        skipVariantSyncRef.current = true;
+        // Gallery/story navigasyonu URL yazmasın — history scroll-to-top engeli
+        selectVariantValue(product, vv, true);
+      }
+    }
+  };
+
+  /** Instagram: sol tap = önceki, sağ tap = sonraki (loop) */
+  const goRelative = (delta: number) => {
+    if (!storyEnabled) return;
+    const next = (activeIndex + delta + imageCount) % imageCount;
+    goToIndex(next, { syncVariant: true });
+  };
+
+  const onStageKeyDown = (e: KeyboardEvent) => {
+    if (!storyEnabled) return;
+    if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      goRelative(-1);
+    } else if (e.key === "ArrowRight") {
+      e.preventDefault();
+      goRelative(1);
+    }
+  };
+
+  const scrollThumbsBy = (dir: 1 | -1) => {
+    const el = thumbsRef.current;
+    if (!el) return;
+    const amount = Math.max(80, el.clientHeight * 0.55) * dir;
+    el.scrollBy({
+      top: amount,
+      behavior: reduceMotionRef.current ? "auto" : "smooth",
+    });
   };
 
   if (!product) return null;
 
-  const trackStyle = {
+  const galleryStyle = {
     "--media-radius": mediaRadius,
     "--card-shadow": cardShadow,
     "--gallery-fade": fadeAnim,
     "--gallery-thumb-motion": thumbMotion,
     "--mobile-grid-gap": mobileGridGap,
-    ...(scrubEnabled
-      ? { "--gallery-track-height": `${imageCount * hold}vh` }
-      : {}),
+    "--story-duration": `${storyMs}ms`,
   } as any;
+
+  const prevStoryLabel = `${product.name} — önceki görsel`;
+  const nextStoryLabel = `${product.name} — sonraki görsel`;
+  const thumbsUpLabel = `${product.name} — yukarı kaydır`;
+  const thumbsDownLabel = `${product.name} — aşağı kaydır`;
 
   return (
     <div
-      ref={trackRef}
-      className={`ikas-media-gallery${scrubEnabled ? " ikas-media-gallery--scrub" : ""} ${className}`.trim()}
-      style={trackStyle}
+      className={`ikas-media-gallery ${className}`.trim()}
+      style={galleryStyle}
       lang="tr"
     >
-      <div className="ikas-media-gallery__sticky">
-        <div className="ikas-media-gallery__wrap">
-          {imageCount > 1 && (
+      <div className="ikas-media-gallery__wrap">
+        {imageCount > 1 && (
+          <div
+            ref={thumbsRailRef}
+            className={`ikas-media-gallery__thumbs-rail${
+              thumbsOverflow ? " ikas-media-gallery__thumbs-rail--overflow" : ""
+            }${thumbsFade.top ? " ikas-media-gallery__thumbs-rail--fade-top" : ""}${
+              thumbsFade.bottom ? " ikas-media-gallery__thumbs-rail--fade-bottom" : ""
+            }`}
+          >
+            {thumbsOverflow && thumbsFade.top && (
+              <button
+                type="button"
+                className="ikas-media-gallery__thumbs-nav ikas-media-gallery__thumbs-nav--prev"
+                onClick={() => scrollThumbsBy(-1)}
+                aria-label={thumbsUpLabel}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
+                  <path d="M6 15l6-6 6 6" />
+                </svg>
+              </button>
+            )}
+
             <div
+              ref={thumbsRef}
               className="ikas-media-gallery__thumbs"
               role="tablist"
               aria-label={product.name}
             >
-              {allImages.map((img, idx) => {
+              {items.map((item, idx) => {
+                const img = item.image;
                 const thumbSrc =
                   getThumbnailSrc(img) || getSrc(img, 150) || getDefaultSrc(img);
                 const isActive = idx === activeIndex;
-                const label = imageLabel(img, product.name) || `${product.name} ${idx + 1}`;
+                const colorName = item.variantValue?.name;
+                const label =
+                  colorName ||
+                  imageLabel(img, product.name) ||
+                  `${product.name} ${idx + 1}`;
 
                 return (
                   <button
@@ -251,7 +430,7 @@ export function ProductMediaGallery({
                     className={`ikas-media-gallery__thumb${
                       isActive ? " ikas-media-gallery__thumb--active" : ""
                     }`}
-                    onClick={() => goToIndex(idx)}
+                    onClick={() => goToIndex(idx, { syncVariant: true })}
                     aria-label={label}
                   >
                     {thumbSrc && (
@@ -267,62 +446,119 @@ export function ProductMediaGallery({
                 );
               })}
             </div>
-          )}
 
-          <div className="ikas-media-gallery__main-col">
-            <div
-              ref={stageRef}
-              className="ikas-media-gallery__stage"
-              role="region"
-              aria-roledescription="carousel"
-              aria-label={product.name}
-            >
-              {imageCount === 0 ? (
-                <div className="ikas-media-gallery__slide ikas-media-gallery__slide--active">
-                  <div className="ikas-media-gallery__placeholder" />
-                </div>
-              ) : (
-                allImages.map((img, idx) => {
-                  const src = getDefaultSrc(img);
-                  const srcSet = createMediaSrcset?.(img);
-                  const isActive = idx === activeIndex;
-                  const label = imageLabel(img, product.name);
-
-                  return (
-                    <div
-                      key={(img as any).id || idx}
-                      className={`ikas-media-gallery__slide${
-                        isActive ? " ikas-media-gallery__slide--active" : ""
-                      }`}
-                      aria-hidden={!isActive}
-                    >
-                      {src ? (
-                        <img
-                          src={src}
-                          srcSet={srcSet || undefined}
-                          sizes="(max-width: 991px) 100vw, 56vw"
-                          alt={label || product.name || ""}
-                          className="ikas-media-gallery__img"
-                          draggable={false}
-                        />
-                      ) : (
-                        <div className="ikas-media-gallery__placeholder" />
-                      )}
-                    </div>
-                  );
-                })
-              )}
-            </div>
-
-            {imageCount > 0 && (
-              <div className="ikas-media-gallery__meta">
-                <span className="ikas-media-gallery__label">{activeLabel}</span>
-                {imageCount > 1 && (
-                  <span className="ikas-media-gallery__count">{countText}</span>
-                )}
-              </div>
+            {thumbsOverflow && thumbsFade.bottom && (
+              <button
+                type="button"
+                className="ikas-media-gallery__thumbs-nav ikas-media-gallery__thumbs-nav--next"
+                onClick={() => scrollThumbsBy(1)}
+                aria-label={thumbsDownLabel}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </button>
             )}
           </div>
+        )}
+
+        <div className="ikas-media-gallery__main-col">
+          <div
+            ref={stageRef}
+            className="ikas-media-gallery__stage"
+            role="region"
+            aria-roledescription="carousel"
+            aria-label={product.name}
+            tabIndex={storyEnabled ? 0 : undefined}
+            onKeyDown={storyEnabled ? (onStageKeyDown as any) : undefined}
+          >
+            {imageCount > 1 && (
+              <div className="ikas-media-gallery__story" aria-hidden="true">
+                {items.map((_, idx) => {
+                  const state =
+                    idx < activeIndex
+                      ? "done"
+                      : idx === activeIndex
+                        ? "active"
+                        : "idle";
+                  return (
+                    <span
+                      key={`${idx}-${state === "active" ? storyTick : "x"}`}
+                      className={`ikas-media-gallery__story-seg ikas-media-gallery__story-seg--${state}`}
+                    >
+                      <span className="ikas-media-gallery__story-fill" />
+                    </span>
+                  );
+                })}
+              </div>
+            )}
+
+            {/* Instagram tap zones — sol önceki / sağ sonraki */}
+            {storyEnabled && (
+              <div className="ikas-media-gallery__taps" aria-hidden="true">
+                <button
+                  type="button"
+                  className="ikas-media-gallery__tap ikas-media-gallery__tap--prev"
+                  tabIndex={-1}
+                  onClick={() => goRelative(-1)}
+                  aria-label={prevStoryLabel}
+                />
+                <button
+                  type="button"
+                  className="ikas-media-gallery__tap ikas-media-gallery__tap--next"
+                  tabIndex={-1}
+                  onClick={() => goRelative(1)}
+                  aria-label={nextStoryLabel}
+                />
+              </div>
+            )}
+
+            {imageCount === 0 ? (
+              <div className="ikas-media-gallery__slide ikas-media-gallery__slide--active">
+                <div className="ikas-media-gallery__placeholder" />
+              </div>
+            ) : (
+              items.map((item, idx) => {
+                const img = item.image;
+                const src = getDefaultSrc(img);
+                const srcSet = createMediaSrcset?.(img);
+                const isActive = idx === activeIndex;
+                const label =
+                  item.variantValue?.name || imageLabel(img, product.name);
+
+                return (
+                  <div
+                    key={(img as any).id || idx}
+                    className={`ikas-media-gallery__slide${
+                      isActive ? " ikas-media-gallery__slide--active" : ""
+                    }`}
+                    aria-hidden={!isActive}
+                  >
+                    {src ? (
+                      <img
+                        src={src}
+                        srcSet={srcSet || undefined}
+                        sizes="(max-width: 991px) 100vw, 56vw"
+                        alt={label || product.name || ""}
+                        className="ikas-media-gallery__img"
+                        draggable={false}
+                      />
+                    ) : (
+                      <div className="ikas-media-gallery__placeholder" />
+                    )}
+                  </div>
+                );
+              })
+            )}
+          </div>
+
+          {imageCount > 1 && (
+            <div className="ikas-media-gallery__meta">
+              <span className="ikas-media-gallery__count">
+                {pad2(activeIndex + 1)} / {pad2(imageCount)}
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </div>

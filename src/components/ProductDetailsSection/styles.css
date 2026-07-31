@@ -1,0 +1,7 @@
+@import "../../sub-components/ProductValueAccordions/styles.css";
+
+.ikas-product-details {
+  width: 100%;
+  box-sizing: border-box;
+  border-top: 1px solid var(--8ARbeTYsmD, #e4e7e8);
+}

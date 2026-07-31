@@ -1,49 +1,110 @@
 @import "../../sub-components/ProductCard/styles.css";
 @import "../../sub-components/Button/styles.css";
 
-.ikas-related-products {
+/* ═══════════════════════════════════════════════════════════════════════
+ * RELATED PRODUCTS — PDP benzer ürünler (FeaturedCollection dilinde)
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+.ikas-related {
   width: 100%;
   box-sizing: border-box;
-  padding: var(--section-py, 48px) var(--section-px, 20px);
   background-color: var(--24KlcgGmm9);
+  color: var(--pxNuSoudLn);
+  border-top: 1px solid var(--8ARbeTYsmD, #e4e7e8);
+  padding: clamp(46px, 5vw, 80px) 0 clamp(52px, 6vw, 96px);
 }
 
-.ikas-related-products__container {
+.ikas-related__container {
   max-width: var(--max-site-width, 1560px);
   width: 100%;
   margin: 0 auto;
+  padding-inline: var(--site-gutter, var(--section-px, 20px));
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: clamp(24px, 3vw, 40px);
   box-sizing: border-box;
 }
 
-.ikas-related-products__title {
-  margin: 0;
-  color: var(--pxNuSoudLn);
-  text-align: center;
-}
-
-.ikas-related-products__grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--grid-gap, 20px);
+.ikas-related__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--8ARbeTYsmD, #e4e7e8);
+  padding-bottom: 18px;
   width: 100%;
 }
 
+.ikas-related__header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.ikas-related__tag {
+  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--p6EMJiXye1, #8c97a5);
+  text-transform: uppercase;
+}
+
+.ikas-related__title {
+  margin: 0;
+  font-family: Onest, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(26px, 2.8vw, 42px);
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  color: var(--pxNuSoudLn);
+  text-wrap: balance;
+}
+
+.ikas-related__track {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+  width: 100%;
+}
+
+.ikas-related__item {
+  min-width: 0;
+}
+
 @media (max-width: 991px) {
-  .ikas-related-products__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .ikas-related__track {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;
+    margin-inline: calc(-1 * var(--site-gutter, var(--mobile-px, 16px)));
+    padding-inline: var(--site-gutter, var(--mobile-px, 16px));
+    scrollbar-width: none;
+  }
+
+  .ikas-related__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ikas-related__item {
+    flex: 0 0 min(72vw, 260px);
+    scroll-snap-align: start;
   }
 }
 
 @media (max-width: 767px) {
-  .ikas-related-products {
-    padding: var(--section-py-mobile, 32px) var(--mobile-px, 16px);
+  .ikas-related {
+    padding:
+      clamp(36px, 6vw, 56px)
+      0
+      clamp(48px, 8vw, 80px);
   }
 
-  .ikas-related-products__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--mobile-grid-gap, 12px);
+  .ikas-related__container {
+    padding-inline: var(--site-gutter, var(--mobile-px, 16px));
   }
 }

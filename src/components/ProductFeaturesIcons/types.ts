@@ -18,4 +18,5 @@ export interface Props {
   feature4Title?: string;
   /** Bölüm zemin rengi */
   backgroundColor?: string;
+  usePdpIcons?: boolean;
 }
