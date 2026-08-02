@@ -1,0 +1,45 @@
+// This file is auto-generated — do not edit manually.
+export interface Props {
+  backgroundColor?: string;
+  accountInfoLabel?: string;
+  ordersLabel?: string;
+  addressesLabel?: string;
+  favoritesLabel?: string;
+  logoutLabel?: string;
+  profileTitle?: string;
+  firstNameLabel?: string;
+  lastNameLabel?: string;
+  emailLabel?: string;
+  phoneLabel?: string;
+  saveButtonText?: string;
+  savingButtonText?: string;
+  successMessage?: string;
+  ordersTitle?: string;
+  ordersEmptyText?: string;
+  addressesTitle?: string;
+  addressesEmptyText?: string;
+  favoritesTitle?: string;
+  favoritesEmptyText?: string;
+  shopButtonText?: string;
+  welcomePrefix?: string;
+  detailButtonText?: string;
+  orderNoText?: string;
+  itemsText?: string;
+  ordersErrorText?: string;
+  retryButtonText?: string;
+  addAddressText?: string;
+  editAddressText?: string;
+  deleteAddressText?: string;
+  cancelText?: string;
+  modalTitleAdd?: string;
+  modalTitleEdit?: string;
+  deleteConfirmTitle?: string;
+  deleteConfirmMessage?: string;
+  addToCartText?: string;
+  removeFavoriteText?: string;
+  addressTitleLabel?: string;
+  addressLineLabel?: string;
+  cityLabel?: string;
+  postalCodeLabel?: string;
+  countryLabel?: string;
+}

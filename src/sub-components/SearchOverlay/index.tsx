@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, useCallback } from "preact/hooks";
-import { createPortal } from "preact/compat";
 import {
   apiSearchProducts,
   Router,
@@ -13,6 +12,7 @@ import {
 } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
 import Button from "../Button";
+import PortalScope from "../PortalScope";
 
 export interface Props {
   isOpen?: boolean;
@@ -476,11 +476,7 @@ export function SearchOverlay({
     </div>
   );
 
-  if (typeof document !== "undefined" && document.body) {
-    return createPortal(content, document.body);
-  }
-
-  return content;
+  return <PortalScope name="search-overlay">{content}</PortalScope>;
 }
 
 export default observer(SearchOverlay);

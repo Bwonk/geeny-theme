@@ -37,4 +37,10 @@ export interface Props {
   sizeGuideRow2Value?: string;
   sizeGuideNote?: string;
   sizeGuideCloseLabel?: string;
+  showCrossSell?: boolean;
+  crossSellTitle?: string;
+  crossSellSubtitle?: string;
+  crossSellAddedText?: string;
+  crossSellSelectLabel?: string;
+  crossSellSelectedLabel?: string;
 }

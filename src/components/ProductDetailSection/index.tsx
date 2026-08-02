@@ -50,6 +50,12 @@ export function ProductDetailSection({
   showStickyBar = true,
   stickyQtyUnitText = "ADET",
   stickyImageAlt = "Ürün görseli",
+  showCrossSell = true,
+  crossSellTitle = "Birlikte Al",
+  crossSellSubtitle = "Bu ürünle birlikte sık alınanlar.",
+  crossSellAddedText = "Sepete eklendi",
+  crossSellSelectLabel = "Birlikte ekle",
+  crossSellSelectedLabel = "Seçildi",
   className = "",
 }: ProductDetailSectionProps) {
   const verticalPySetting = getThemeSetting("_Kl0my3VVMA");
@@ -119,6 +125,12 @@ export function ProductDetailSection({
               trustWarrantyText={trustWarrantyText}
               showBuyNow={showBuyNow}
               buyNowText={buyNowText}
+              showCrossSell={showCrossSell}
+              crossSellTitle={crossSellTitle}
+              crossSellSubtitle={crossSellSubtitle}
+              crossSellAddedText={crossSellAddedText}
+              crossSellSelectLabel={crossSellSelectLabel}
+              crossSellSelectedLabel={crossSellSelectedLabel}
             />
           </div>
         </div>

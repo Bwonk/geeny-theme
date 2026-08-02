@@ -5,8 +5,11 @@ import {
   getDisplayedProductVariantTypes,
   selectVariantValue,
   getProductVariantFormattedFinalPrice,
+  getProductVariantFormattedFinalPriceWithCampaignOffers,
   getProductVariantFormattedSellPrice,
+  getProductVariantFormattedSellPriceWithCampaignOffers,
   getProductVariantDiscountPercentage,
+  getProductVariantCampaignOffersDiscountPercentage,
   hasProductVariantDiscount,
   hasProductVariantStock,
   isAddToCartEnabled,
@@ -17,6 +20,7 @@ import {
 import { observer } from "@ikas/component-utils";
 import Button from "../Button";
 import SizeGuideDrawer from "../SizeGuideDrawer";
+import ProductCrossSellOffers from "../ProductCrossSellOffers";
 
 export interface Props {
   product?: IkasProduct | null;
@@ -47,6 +51,12 @@ export interface Props {
   trustWarrantyText?: string;
   showBuyNow?: boolean;
   buyNowText?: string;
+  showCrossSell?: boolean;
+  crossSellTitle?: string;
+  crossSellSubtitle?: string;
+  crossSellAddedText?: string;
+  crossSellSelectLabel?: string;
+  crossSellSelectedLabel?: string;
   className?: string;
 }
 
@@ -97,6 +107,12 @@ export function ProductBuyBox({
   trustWarrantyText = "2 YIL DEĞİŞİM GARANTİSİ",
   showBuyNow = false,
   buyNowText = "HEMEN SATIN AL",
+  showCrossSell = true,
+  crossSellTitle = "Birlikte Al",
+  crossSellSubtitle = "Bu ürünle birlikte sık alınanlar.",
+  crossSellAddedText = "Sepete eklendi",
+  crossSellSelectLabel = "Birlikte ekle",
+  crossSellSelectedLabel = "Seçildi",
   className = "",
 }: Props) {
   const [quantity, setQuantity] = useState(1);
@@ -120,10 +136,30 @@ export function ProductBuyBox({
 
   const variant = getSelectedProductVariant(product);
   const variantTypes = getDisplayedProductVariantTypes(product) || [];
-  const finalPriceText = variant ? getProductVariantFormattedFinalPrice(variant) : "";
-  const sellPriceText = variant ? getProductVariantFormattedSellPrice(variant) : "";
-  const isDiscounted = variant ? hasProductVariantDiscount(variant) : false;
-  const discountPct = variant && isDiscounted ? getProductVariantDiscountPercentage(variant) : "";
+  const hasSelectedOffers = (product.offers || []).some(
+    (offer) => !!offer?.isSelected && !!(offer as any).product
+  );
+  const finalPriceText = variant
+    ? hasSelectedOffers
+      ? getProductVariantFormattedFinalPriceWithCampaignOffers(variant)
+      : getProductVariantFormattedFinalPrice(variant)
+    : "";
+  const sellPriceText = variant
+    ? hasSelectedOffers
+      ? getProductVariantFormattedSellPriceWithCampaignOffers(variant)
+      : getProductVariantFormattedSellPrice(variant)
+    : "";
+  const isDiscounted = variant
+    ? hasSelectedOffers
+      ? getProductVariantCampaignOffersDiscountPercentage(variant) > 0 ||
+        hasProductVariantDiscount(variant)
+      : hasProductVariantDiscount(variant)
+    : false;
+  const discountPct = variant
+    ? hasSelectedOffers
+      ? String(getProductVariantCampaignOffersDiscountPercentage(variant) || getProductVariantDiscountPercentage(variant) || "")
+      : getProductVariantDiscountPercentage(variant)
+    : "";
   const inStock = variant ? hasProductVariantStock(variant) : true;
   const canAddToCart = isAddToCartEnabled(product) && inStock && !!variant;
 
@@ -349,6 +385,16 @@ export function ProductBuyBox({
           <span>{inStock ? stockInText : stockOutText}</span>
         </div>
       </div>
+
+      <ProductCrossSellOffers
+        product={product}
+        showCrossSell={showCrossSell}
+        title={crossSellTitle}
+        subtitle={crossSellSubtitle}
+        addedText={crossSellAddedText}
+        selectLabel={crossSellSelectLabel}
+        selectedLabel={crossSellSelectedLabel}
+      />
 
       {/* Ana CTA — Pill Grow + sepet chip */}
       <Button

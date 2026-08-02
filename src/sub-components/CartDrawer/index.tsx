@@ -1,5 +1,4 @@
 import { useState, useEffect } from "preact/hooks";
-import { createPortal } from "preact/compat";
 import {
   cartStore,
   changeItemQuantity,
@@ -13,6 +12,7 @@ import {
 } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
 import Button from "../Button";
+import PortalScope from "../PortalScope";
 
 export interface Props {
   freeShippingThreshold?: number;
@@ -340,11 +340,7 @@ export function CartDrawer({
     </>
   );
 
-  if (typeof document !== "undefined" && document.body) {
-    return createPortal(content, document.body);
-  }
-
-  return content;
+  return <PortalScope name="cart-drawer">{content}</PortalScope>;
 }
 
 export default observer(CartDrawer);

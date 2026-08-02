@@ -1,0 +1,143 @@
+@import "../../sub-components/Button/styles.css";
+
+.ikas-recover {
+  width: 100%;
+  min-height: 70svh;
+  box-sizing: border-box;
+  color: var(--pxNuSoudLn);
+  background: var(--24KlcgGmm9, #fff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(40px, 8vw, 96px) var(--section-px, 20px);
+}
+
+.ikas-recover__wrap {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 2vw, 26px);
+}
+
+.ikas-recover__brand {
+  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--pxNuSoudLn);
+  text-decoration: none;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.ikas-recover__panel {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2vw, 22px);
+}
+
+.ikas-recover__header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ikas-recover__heading {
+  margin: 0;
+  font-family: Onest, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(28px, 3.2vw, 40px);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.ikas-recover__intro {
+  margin: 0;
+  font-family: Onest, system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--p6EMJiXye1, #8c97a5);
+}
+
+.ikas-recover__banner {
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-family: Onest, system-ui, sans-serif;
+  font-size: 13px;
+}
+
+.ikas-recover__banner--ok {
+  background: color-mix(in srgb, #12b76a 10%, transparent);
+  color: #027a48;
+}
+
+.ikas-recover__banner--err {
+  background: color-mix(in srgb, #c0392b 8%, transparent);
+  color: #8f1f1f;
+}
+
+.ikas-recover__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ikas-recover__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ikas-recover__label {
+  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  color: var(--p6EMJiXye1, #8c97a5);
+}
+
+.ikas-recover__input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1.5px solid var(--8ARbeTYsmD, #e4e7e8);
+  border-radius: var(--input-radius, 14px);
+  background: var(--24KlcgGmm9, #fff);
+  color: var(--pxNuSoudLn);
+  font-family: "Roboto Flex", Onest, system-ui, sans-serif;
+  font-size: 15px;
+  padding: 15px 16px;
+  outline: none;
+}
+
+.ikas-recover__input:focus {
+  border-color: color-mix(in srgb, var(--pxNuSoudLn) 55%, transparent);
+}
+
+.ikas-recover__input--error {
+  border-color: color-mix(in srgb, #c0392b 70%, transparent);
+}
+
+.ikas-recover__error {
+  font-size: 12px;
+  color: #8f1f1f;
+}
+
+.ikas-recover__back {
+  border: 0;
+  background: none;
+  padding: 0;
+  align-self: center;
+  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  color: var(--pxNuSoudLn);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .ikas-recover {
+    padding: 32px var(--mobile-px, 16px) 56px;
+  }
+}

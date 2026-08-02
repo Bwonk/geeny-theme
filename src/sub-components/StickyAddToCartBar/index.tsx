@@ -6,6 +6,7 @@ import {
   getProductVariantMainImage,
   getDefaultSrc,
   getProductVariantFormattedFinalPrice,
+  getProductVariantFormattedFinalPriceWithCampaignOffers,
   hasProductVariantStock,
   isAddToCartEnabled,
   addItemToCart,
@@ -127,7 +128,9 @@ export function StickyAddToCartBar({
     (mainProductImage as any)?.image || (mainProductImage as any) || null;
   const imgSrc = mainImage ? getDefaultSrc(mainImage) : null;
   const finalPriceText = variant
-    ? getProductVariantFormattedFinalPrice(variant)
+    ? (product.offers || []).some((o) => !!o?.isSelected)
+      ? getProductVariantFormattedFinalPriceWithCampaignOffers(variant)
+      : getProductVariantFormattedFinalPrice(variant)
     : "";
   const inStock = variant ? hasProductVariantStock(variant) : true;
   const canAddToCart = isAddToCartEnabled(product) && inStock && !!variant;

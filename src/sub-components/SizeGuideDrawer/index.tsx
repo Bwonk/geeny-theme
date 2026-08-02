@@ -1,7 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
-import { createPortal } from "preact/compat";
 import { getThemeSetting } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
+import PortalScope from "../PortalScope";
 
 export interface SizeGuideRow {
   label: string;
@@ -115,7 +115,7 @@ export function SizeGuideDrawer({
     </div>
   );
 
-  return createPortal(content, document.body);
+  return <PortalScope name="size-guide">{content}</PortalScope>;
 }
 
 export default observer(SizeGuideDrawer);

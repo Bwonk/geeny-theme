@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "preact/hooks";
 import {
   getDefaultSrc,
   cartStore,
+  customerStore,
+  hasCustomer,
   Router,
   getThemeSetting,
 } from "@ikas/bp-storefront";
@@ -263,13 +265,17 @@ export function Header({
                 )}
               </button>
 
-              {/* Müşteri Hesabı Butonu */}
+              {/* Müşteri Hesabı / Giriş */}
               <button
                 type="button"
                 className="ikas-header__icon-btn"
                 aria-label={accountLabel}
                 title={accountLabel}
-                onClick={() => Router.navigateToPage("ACCOUNT")}
+                onClick={() =>
+                  Router.navigateToPage(
+                    hasCustomer(customerStore) ? "ACCOUNT" : "LOGIN"
+                  )
+                }
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
                   <circle cx="12" cy="8" r="3.6" />

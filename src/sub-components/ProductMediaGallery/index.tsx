@@ -215,7 +215,7 @@ export function ProductMediaGallery({
     };
   }, [imageCount, activeIndex]);
 
-  // Aktif thumb görünür alanda kalsın
+  // Aktif thumb yalnızca rail içinde kaydırılsın — scrollIntoView sayfayı galeriye çeker
   useEffect(() => {
     const thumbs = thumbsRef.current;
     if (!thumbs || imageCount <= 1) return;
@@ -225,18 +225,36 @@ export function ProductMediaGallery({
     if (!active) return;
 
     const desktop = window.matchMedia("(min-width: 992px)").matches;
+    const behavior = reduceMotionRef.current ? "auto" : "smooth";
+
     if (desktop) {
-      active.scrollIntoView({
-        block: "nearest",
-        inline: "nearest",
-        behavior: reduceMotionRef.current ? "auto" : "smooth",
-      });
+      const pad = 8;
+      const thumbTop = active.offsetTop;
+      const thumbBottom = thumbTop + active.offsetHeight;
+      const viewTop = thumbs.scrollTop;
+      const viewBottom = viewTop + thumbs.clientHeight;
+      if (thumbTop < viewTop + pad) {
+        thumbs.scrollTo({ top: Math.max(0, thumbTop - pad), behavior });
+      } else if (thumbBottom > viewBottom - pad) {
+        thumbs.scrollTo({
+          top: thumbBottom - thumbs.clientHeight + pad,
+          behavior,
+        });
+      }
     } else {
-      active.scrollIntoView({
-        block: "nearest",
-        inline: "center",
-        behavior: reduceMotionRef.current ? "auto" : "smooth",
-      });
+      const pad = 12;
+      const thumbLeft = active.offsetLeft;
+      const thumbRight = thumbLeft + active.offsetWidth;
+      const viewLeft = thumbs.scrollLeft;
+      const viewRight = viewLeft + thumbs.clientWidth;
+      if (thumbLeft < viewLeft + pad) {
+        thumbs.scrollTo({ left: Math.max(0, thumbLeft - pad), behavior });
+      } else if (thumbRight > viewRight - pad) {
+        thumbs.scrollTo({
+          left: thumbRight - thumbs.clientWidth + pad,
+          behavior,
+        });
+      }
     }
     requestAnimationFrame(updateThumbsFade);
   }, [activeIndex, imageCount]);
@@ -257,27 +275,17 @@ export function ProductMediaGallery({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [variantKey, imageCount]);
 
-  // Instagram story autoplay — süre dolunca sonraki (loop)
+  // Instagram story autoplay — yalnızca görsel; variant/URL yok → scroll zıplamaz
   useEffect(() => {
-    if (!storyEnabled || !product) return;
+    if (!storyEnabled) return;
     if (reduceMotionRef.current) return;
 
     const timer = window.setTimeout(() => {
-      setSelectedIndex((prev) => {
-        const next = (prev + 1) % imageCount;
-        const vv = items[next]?.variantValue;
-        if (vv) {
-          skipVariantSyncRef.current = true;
-          // disableRoute: URL değişmesin → sayfa başa zıplamasın
-          selectVariantValue(product, vv, true);
-        }
-        return next;
-      });
+      setSelectedIndex((prev) => (prev + 1) % imageCount);
       setStoryTick((t) => t + 1);
     }, storyMs);
 
     return () => window.clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storyEnabled, imageCount, storyMs, activeIndex, storyTick]);
 
   // Mobil yatay snap ile seçili index senkron
@@ -307,6 +315,30 @@ export function ProductMediaGallery({
     return () => stage.removeEventListener("scroll", onScroll);
   }, [storyEnabled, imageCount]);
 
+  /** Variant seç + window scroll konumunu kilitle (URL yazma) */
+  const selectVariantKeepScroll = (vv: IkasVariantValue) => {
+    if (!product) return;
+    const x = window.scrollX;
+    const y = window.scrollY;
+    skipVariantSyncRef.current = true;
+    selectVariantValue(product, vv, true);
+    const restore = () => {
+      if (window.scrollX !== x || window.scrollY !== y) {
+        window.scrollTo(x, y);
+      }
+    };
+    restore();
+    requestAnimationFrame(() => {
+      restore();
+      requestAnimationFrame(restore);
+    });
+    const started = performance.now();
+    const id = window.setInterval(() => {
+      restore();
+      if (performance.now() - started > 320) window.clearInterval(id);
+    }, 16);
+  };
+
   const goToIndex = (i: number, opts?: { syncVariant?: boolean }) => {
     const next = Math.max(0, Math.min(imageCount - 1, i));
     const syncVariant = opts?.syncVariant !== false;
@@ -321,13 +353,9 @@ export function ProductMediaGallery({
       });
     }
 
-    if (syncVariant && product) {
+    if (syncVariant) {
       const vv = items[next]?.variantValue;
-      if (vv) {
-        skipVariantSyncRef.current = true;
-        // Gallery/story navigasyonu URL yazmasın — history scroll-to-top engeli
-        selectVariantValue(product, vv, true);
-      }
+      if (vv) selectVariantKeepScroll(vv);
     }
   };
 

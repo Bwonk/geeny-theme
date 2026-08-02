@@ -1873,6 +1873,54 @@
           "required": false,
           "defaultValue": "Kapat",
           "groupId": "sizeguide"
+        },
+        {
+          "name": "showCrossSell",
+          "displayName": "Cross Sell Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "crossSell"
+        },
+        {
+          "name": "crossSellTitle",
+          "displayName": "Cross Sell Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Birlikte Al",
+          "groupId": "crossSell"
+        },
+        {
+          "name": "crossSellSubtitle",
+          "displayName": "Cross Sell Alt Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bu ürünle birlikte sık alınanlar.",
+          "groupId": "crossSell"
+        },
+        {
+          "name": "crossSellAddedText",
+          "displayName": "Sepete Eklendi Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sepete eklendi",
+          "groupId": "crossSell"
+        },
+        {
+          "name": "crossSellSelectLabel",
+          "displayName": "Seçim Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Birlikte ekle",
+          "groupId": "crossSell"
+        },
+        {
+          "name": "crossSellSelectedLabel",
+          "displayName": "Seçildi Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Seçildi",
+          "groupId": "crossSell"
         }
       ],
       "propGroups": [
@@ -1894,6 +1942,11 @@
           "id": "sizeguide",
           "name": "Ölçü Tablosu",
           "description": "Alt drawer içerikleri"
+        },
+        {
+          "id": "crossSell",
+          "name": "Cross Sell",
+          "description": "Kampanya teklifi ürünleri"
         }
       ]
     },
@@ -2379,6 +2432,925 @@
         {
           "id": "details",
           "name": "Details"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-6lDC6NnyTn",
+      "name": "AuthSection",
+      "entry": "./src/components/AuthSection/index.tsx",
+      "styles": "./src/components/AuthSection/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#ffffff"
+        },
+        {
+          "name": "brandKicker",
+          "displayName": "Marka Kicker",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "INFINITY",
+          "groupId": "content"
+        },
+        {
+          "name": "loginHeading",
+          "displayName": "Giriş Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Tekrar hoş geldin.",
+          "groupId": "content"
+        },
+        {
+          "name": "registerHeading",
+          "displayName": "Kayıt Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Hesabını oluştur.",
+          "groupId": "content"
+        },
+        {
+          "name": "loginIntro",
+          "displayName": "Giriş Intro",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Siparişlerini, iadelerini ve garanti kayıtlarını tek yerden yönet.",
+          "groupId": "content"
+        },
+        {
+          "name": "registerIntro",
+          "displayName": "Kayıt Intro",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Infinity ailesine katıl — sipariş ve garanti takibi tek hesapta.",
+          "groupId": "content"
+        },
+        {
+          "name": "loginTabText",
+          "displayName": "Giriş Tab",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "GİRİŞ YAP",
+          "groupId": "switcher"
+        },
+        {
+          "name": "registerTabText",
+          "displayName": "Kayıt Tab",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "KAYIT OL",
+          "groupId": "switcher"
+        },
+        {
+          "name": "emailLabel",
+          "displayName": "E-posta Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "E-POSTA",
+          "groupId": "loginFields"
+        },
+        {
+          "name": "emailPlaceholder",
+          "displayName": "E-posta Placeholder",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ornek@email.com",
+          "groupId": "loginFields"
+        },
+        {
+          "name": "passwordLabel",
+          "displayName": "Şifre Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ŞİFRE",
+          "groupId": "loginFields"
+        },
+        {
+          "name": "passwordPlaceholder",
+          "displayName": "Şifre Placeholder",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Şifren",
+          "groupId": "loginFields"
+        },
+        {
+          "name": "forgotPasswordText",
+          "displayName": "Şifremi Unuttum",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ŞİFREMİ UNUTTUM",
+          "groupId": "loginFields"
+        },
+        {
+          "name": "loginSubmitText",
+          "displayName": "Giriş Butonu",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "GİRİŞ YAP",
+          "groupId": "buttons"
+        },
+        {
+          "name": "loginSubmittingText",
+          "displayName": "Giriş Yükleniyor",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "GİRİŞ YAPILIYOR...",
+          "groupId": "buttons"
+        },
+        {
+          "name": "fullNameLabel",
+          "displayName": "Ad Soyad Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "AD SOYAD",
+          "groupId": "registerFields"
+        },
+        {
+          "name": "fullNamePlaceholder",
+          "displayName": "Ad Soyad Placeholder",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Adın Soyadın",
+          "groupId": "registerFields"
+        },
+        {
+          "name": "passwordConfirmLabel",
+          "displayName": "Şifre Tekrar Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ŞİFRE TEKRAR",
+          "groupId": "registerFields"
+        },
+        {
+          "name": "passwordConfirmPlaceholder",
+          "displayName": "Şifre Tekrar Placeholder",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Şifreni tekrar gir",
+          "groupId": "registerFields"
+        },
+        {
+          "name": "registerSubmitText",
+          "displayName": "Kayıt Butonu",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "HESAP OLUŞTUR",
+          "groupId": "buttons"
+        },
+        {
+          "name": "registerSubmittingText",
+          "displayName": "Kayıt Yükleniyor",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "OLUŞTURULUYOR...",
+          "groupId": "buttons"
+        },
+        {
+          "name": "agreementConsentText",
+          "displayName": "Sözleşme Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Kullanım koşulları ve gizlilik politikasını okudum, onaylıyorum.",
+          "groupId": "consents"
+        },
+        {
+          "name": "heroImage",
+          "displayName": "Hero Görsel",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "hero"
+        },
+        {
+          "name": "heroImageAlt",
+          "displayName": "Hero Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Infinity seyahat atmosferi",
+          "groupId": "hero"
+        },
+        {
+          "name": "heroTag",
+          "displayName": "Hero Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SS26 · SEYAHAT SERİSİ",
+          "groupId": "hero"
+        },
+        {
+          "name": "heroTitle",
+          "displayName": "Hero Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Uykunu yanında taşı.",
+          "groupId": "hero"
+        },
+        {
+          "name": "heroSubtitle",
+          "displayName": "Hero Alt Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Hesabın siparişlerini, iade taleplerini ve garanti kayıtlarını tek yerde tutar.",
+          "groupId": "hero"
+        },
+        {
+          "name": "socialProofTitle",
+          "displayName": "Sosyal Kanıt Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "140.000+ mutlu yolcu",
+          "groupId": "hero"
+        },
+        {
+          "name": "socialProofSubtitle",
+          "displayName": "Sosyal Kanıt Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "4,8 / 5 · 2.412 DEĞERLENDİRME",
+          "groupId": "hero"
+        },
+        {
+          "name": "enableParallax",
+          "displayName": "Parallax",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "hero"
+        },
+        {
+          "name": "footnote",
+          "displayName": "Dipnot",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Verilerin güvenle saklanır.",
+          "groupId": "content"
+        },
+        {
+          "name": "passwordMismatchText",
+          "displayName": "Şifre Uyuşmazlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Şifreler eşleşmiyor",
+          "groupId": "registerFields"
+        },
+        {
+          "name": "showPasswordLabel",
+          "displayName": "Şifreyi Göster",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Şifreyi göster",
+          "groupId": "loginFields"
+        },
+        {
+          "name": "hidePasswordLabel",
+          "displayName": "Şifreyi Gizle",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Şifreyi gizle",
+          "groupId": "loginFields"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "Content"
+        },
+        {
+          "id": "switcher",
+          "name": "Switcher"
+        },
+        {
+          "id": "loginFields",
+          "name": "Login Fields"
+        },
+        {
+          "id": "buttons",
+          "name": "Buttons"
+        },
+        {
+          "id": "registerFields",
+          "name": "Register Fields"
+        },
+        {
+          "id": "consents",
+          "name": "Consents"
+        },
+        {
+          "id": "social",
+          "name": "Social"
+        },
+        {
+          "id": "hero",
+          "name": "Hero"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-BID8PfbPS4",
+      "name": "ForgotPasswordSection",
+      "entry": "./src/components/ForgotPasswordSection/index.tsx",
+      "styles": "./src/components/ForgotPasswordSection/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#ffffff"
+        },
+        {
+          "name": "brandKicker",
+          "displayName": "Marka",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "INFINITY",
+          "groupId": "content"
+        },
+        {
+          "name": "title",
+          "displayName": "Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Şifreni sıfırla.",
+          "groupId": "content"
+        },
+        {
+          "name": "subtitle",
+          "displayName": "Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "E-posta adresine sıfırlama bağlantısı gönderelim.",
+          "groupId": "content"
+        },
+        {
+          "name": "emailLabel",
+          "displayName": "E-posta Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "E-POSTA",
+          "groupId": "email"
+        },
+        {
+          "name": "emailPlaceholder",
+          "displayName": "E-posta Placeholder",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ornek@email.com",
+          "groupId": "email"
+        },
+        {
+          "name": "submitButtonText",
+          "displayName": "Gönder Butonu",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "BAĞLANTI GÖNDER",
+          "groupId": "buttons"
+        },
+        {
+          "name": "submittingButtonText",
+          "displayName": "Gönderiliyor",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "GÖNDERİLİYOR...",
+          "groupId": "buttons"
+        },
+        {
+          "name": "backToLoginText",
+          "displayName": "Girişe Dön",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "GİRİŞE DÖN",
+          "groupId": "buttons"
+        },
+        {
+          "name": "successTitle",
+          "displayName": "Başarı Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "E-posta yolda.",
+          "groupId": "success"
+        },
+        {
+          "name": "successMessage",
+          "displayName": "Başarı Mesajı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sıfırlama bağlantısını e-posta kutunda bulacaksın.",
+          "groupId": "success"
+        },
+        {
+          "name": "successButtonText",
+          "displayName": "Başarı Butonu",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "GİRİŞE DÖN",
+          "groupId": "success"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "Content"
+        },
+        {
+          "id": "email",
+          "name": "Email"
+        },
+        {
+          "id": "buttons",
+          "name": "Buttons"
+        },
+        {
+          "id": "success",
+          "name": "Success"
+        },
+        {
+          "id": "formFields",
+          "name": "Form"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-4m1uCHIynF",
+      "name": "AccountDashboard",
+      "entry": "./src/components/AccountDashboard/index.tsx",
+      "styles": "./src/components/AccountDashboard/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#ffffff"
+        },
+        {
+          "name": "accountInfoLabel",
+          "displayName": "Hesabım",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "HESABIM",
+          "groupId": "sidebar"
+        },
+        {
+          "name": "ordersLabel",
+          "displayName": "Siparişler",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SİPARİŞLERİM",
+          "groupId": "sidebar"
+        },
+        {
+          "name": "addressesLabel",
+          "displayName": "Adresler",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ADRESLERİM",
+          "groupId": "sidebar"
+        },
+        {
+          "name": "favoritesLabel",
+          "displayName": "Favoriler",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "FAVORİLERİM",
+          "groupId": "sidebar"
+        },
+        {
+          "name": "logoutLabel",
+          "displayName": "Çıkış",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ÇIKIŞ YAP",
+          "groupId": "sidebar"
+        },
+        {
+          "name": "profileTitle",
+          "displayName": "Profil Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Hesap bilgileri",
+          "groupId": "profile"
+        },
+        {
+          "name": "firstNameLabel",
+          "displayName": "Ad Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "AD",
+          "groupId": "profile"
+        },
+        {
+          "name": "lastNameLabel",
+          "displayName": "Soyad Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SOYAD",
+          "groupId": "profile"
+        },
+        {
+          "name": "emailLabel",
+          "displayName": "E-posta Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "E-POSTA",
+          "groupId": "profile"
+        },
+        {
+          "name": "phoneLabel",
+          "displayName": "Telefon Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "TELEFON",
+          "groupId": "profile"
+        },
+        {
+          "name": "saveButtonText",
+          "displayName": "Kaydet",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "KAYDET",
+          "groupId": "profile"
+        },
+        {
+          "name": "savingButtonText",
+          "displayName": "Kaydediliyor",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "KAYDEDİLİYOR...",
+          "groupId": "profile"
+        },
+        {
+          "name": "successMessage",
+          "displayName": "Başarı Mesajı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bilgilerin güncellendi.",
+          "groupId": "profile"
+        },
+        {
+          "name": "ordersTitle",
+          "displayName": "Sipariş Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Siparişlerim",
+          "groupId": "panels"
+        },
+        {
+          "name": "ordersEmptyText",
+          "displayName": "Sipariş Boş",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Henüz siparişin yok.",
+          "groupId": "panels"
+        },
+        {
+          "name": "addressesTitle",
+          "displayName": "Adres Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Adreslerim",
+          "groupId": "panels"
+        },
+        {
+          "name": "addressesEmptyText",
+          "displayName": "Adres Boş",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Kayıtlı adresin yok.",
+          "groupId": "panels"
+        },
+        {
+          "name": "favoritesTitle",
+          "displayName": "Favori Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Favorilerim",
+          "groupId": "panels"
+        },
+        {
+          "name": "favoritesEmptyText",
+          "displayName": "Favori Boş",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Favori ürünün yok.",
+          "groupId": "panels"
+        },
+        {
+          "name": "shopButtonText",
+          "displayName": "Alışveriş Butonu",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ALIŞVERİŞE BAŞLA",
+          "groupId": "panels"
+        },
+        {
+          "name": "welcomePrefix",
+          "displayName": "Hoş Geldin Öneki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Merhaba",
+          "groupId": "sidebar"
+        },
+        {
+          "name": "detailButtonText",
+          "displayName": "Sipariş Detay",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "DETAY",
+          "groupId": "panels"
+        },
+        {
+          "name": "orderNoText",
+          "displayName": "Sipariş No",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sipariş No",
+          "groupId": "panels"
+        },
+        {
+          "name": "itemsText",
+          "displayName": "Ürün Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ürün",
+          "groupId": "panels"
+        },
+        {
+          "name": "ordersErrorText",
+          "displayName": "Sipariş Hata",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Siparişler yüklenemedi.",
+          "groupId": "panels"
+        },
+        {
+          "name": "retryButtonText",
+          "displayName": "Tekrar Dene",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "TEKRAR DENE",
+          "groupId": "panels"
+        },
+        {
+          "name": "addAddressText",
+          "displayName": "Adres Ekle",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ADRES EKLE",
+          "groupId": "panels"
+        },
+        {
+          "name": "editAddressText",
+          "displayName": "Adres Düzenle",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "DÜZENLE",
+          "groupId": "panels"
+        },
+        {
+          "name": "deleteAddressText",
+          "displayName": "Adres Sil",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SİL",
+          "groupId": "panels"
+        },
+        {
+          "name": "cancelText",
+          "displayName": "İptal",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İPTAL",
+          "groupId": "panels"
+        },
+        {
+          "name": "modalTitleAdd",
+          "displayName": "Modal Ekle Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Yeni adres",
+          "groupId": "panels"
+        },
+        {
+          "name": "modalTitleEdit",
+          "displayName": "Modal Düzenle Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Adresi düzenle",
+          "groupId": "panels"
+        },
+        {
+          "name": "deleteConfirmTitle",
+          "displayName": "Sil Onay Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Adresi sil",
+          "groupId": "panels"
+        },
+        {
+          "name": "deleteConfirmMessage",
+          "displayName": "Sil Onay Mesaj",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bu adresi silmek istediğine emin misin?",
+          "groupId": "panels"
+        },
+        {
+          "name": "addToCartText",
+          "displayName": "Sepete Ekle",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SEPETE EKLE",
+          "groupId": "panels"
+        },
+        {
+          "name": "removeFavoriteText",
+          "displayName": "Favoriden Çıkar",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "FAVORİDEN ÇIKAR",
+          "groupId": "panels"
+        },
+        {
+          "name": "addressTitleLabel",
+          "displayName": "Adres Başlık Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "BAŞLIK",
+          "groupId": "panels"
+        },
+        {
+          "name": "addressLineLabel",
+          "displayName": "Adres Satırı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ADRES",
+          "groupId": "panels"
+        },
+        {
+          "name": "cityLabel",
+          "displayName": "Şehir",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ŞEHİR",
+          "groupId": "panels"
+        },
+        {
+          "name": "postalCodeLabel",
+          "displayName": "Posta Kodu",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "POSTA KODU",
+          "groupId": "panels"
+        },
+        {
+          "name": "countryLabel",
+          "displayName": "Ülke",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ÜLKE",
+          "groupId": "panels"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "sidebar",
+          "name": "Sidebar"
+        },
+        {
+          "id": "profile",
+          "name": "Profile"
+        },
+        {
+          "id": "panels",
+          "name": "Panels"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-J6HPSREKLs",
+      "name": "RecoverPasswordSection",
+      "entry": "./src/components/RecoverPasswordSection/index.tsx",
+      "styles": "./src/components/RecoverPasswordSection/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#ffffff"
+        },
+        {
+          "name": "brandKicker",
+          "displayName": "Marka",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "INFINITY",
+          "groupId": "content"
+        },
+        {
+          "name": "title",
+          "displayName": "Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Yeni şifreni belirle.",
+          "groupId": "content"
+        },
+        {
+          "name": "subtitle",
+          "displayName": "Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Güçlü bir şifre seç ve tekrar gir.",
+          "groupId": "content"
+        },
+        {
+          "name": "passwordLabel",
+          "displayName": "Şifre",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "YENİ ŞİFRE",
+          "groupId": "fields"
+        },
+        {
+          "name": "passwordPlaceholder",
+          "displayName": "Şifre Placeholder",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "En az 8 karakter",
+          "groupId": "fields"
+        },
+        {
+          "name": "passwordAgainLabel",
+          "displayName": "Şifre Tekrar",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ŞİFRE TEKRAR",
+          "groupId": "fields"
+        },
+        {
+          "name": "passwordAgainPlaceholder",
+          "displayName": "Tekrar Placeholder",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Şifreni tekrar gir",
+          "groupId": "fields"
+        },
+        {
+          "name": "submitButtonText",
+          "displayName": "Değiştir",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ŞİFREYİ DEĞİŞTİR",
+          "groupId": "buttons"
+        },
+        {
+          "name": "submittingButtonText",
+          "displayName": "Değiştiriliyor",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "DEĞİŞTİRİLİYOR...",
+          "groupId": "buttons"
+        },
+        {
+          "name": "successMessage",
+          "displayName": "Başarı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Şifren başarıyla güncellendi.",
+          "groupId": "success"
+        },
+        {
+          "name": "loginLinkText",
+          "displayName": "Giriş Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "GİRİŞE DÖN",
+          "groupId": "success"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "Content"
+        },
+        {
+          "id": "fields",
+          "name": "Fields"
+        },
+        {
+          "id": "buttons",
+          "name": "Buttons"
+        },
+        {
+          "id": "success",
+          "name": "Success"
         }
       ]
     }
