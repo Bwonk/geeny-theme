@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from "preact/hooks";
 import { getThemeSetting, getDefaultSrc, IkasImage } from "@ikas/bp-storefront";
+import TextLink from "../../sub-components/TextLink";
 import { Props } from "./types";
 
 export interface TestimonialsCarouselProps extends Props {
@@ -252,9 +253,12 @@ export function TestimonialsCarousel({
           {/* ALT YÖNLENDİRME BAĞLANTISI */}
           {bottomLinkText && (
             <div className="ikas-testimonials__footer">
-              <a href={bottomHref} className="ikas-testimonials__link _eZyocyyd0F">
-                {bottomLinkText}
-              </a>
+              <TextLink
+                tone="LABEL"
+                href={bottomHref}
+                className="ikas-testimonials__link"
+                text={bottomLinkText}
+              />
             </div>
           )}
         </div>

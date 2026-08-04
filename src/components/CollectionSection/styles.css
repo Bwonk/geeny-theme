@@ -4,6 +4,7 @@
 @import "../../sub-components/PaginationLoadMore/styles.css";
 @import "../../sub-components/ProductCard/styles.css";
 @import "../../sub-components/Button/styles.css";
+@import "../../sub-components/TextLink/styles.css";
 
 .ikas-collection-section {
   width: 100%;

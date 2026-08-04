@@ -1,6 +1,7 @@
 import { useRef, useEffect } from "preact/hooks";
 import { getThemeSetting, getDefaultSrc, Router } from "@ikas/bp-storefront";
 import Button from "../../sub-components/Button";
+import TextLink from "../../sub-components/TextLink";
 import { Props } from "./types";
 
 export interface HeroBannerProps extends Props {
@@ -160,9 +161,10 @@ export function HeroBanner({
             )}
 
             {secondaryButtonText && (
-              <button
-                type="button"
+              <TextLink
+                tone="LABEL"
                 className="ikas-hero__secondary-link"
+                text={secondaryButtonText}
                 onClick={() => {
                   const sLink = secondaryButtonLink as any;
                   if (sLink?.href) {
@@ -174,9 +176,7 @@ export function HeroBanner({
                     if (el) el.scrollIntoView({ behavior: "smooth" });
                   }
                 }}
-              >
-                {secondaryButtonText.toLocaleUpperCase("tr-TR")}
-              </button>
+              />
             )}
           </div>
 

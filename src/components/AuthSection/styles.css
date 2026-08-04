@@ -1,5 +1,6 @@
 @import "../../sub-components/AuthHero/styles.css";
 @import "../../sub-components/Button/styles.css";
+@import "../../sub-components/TextLink/styles.css";
 
 .ikas-auth {
   --auth-frame-max: 900px;
@@ -274,24 +275,6 @@
   justify-content: flex-end;
 }
 
-.ikas-auth__forgot {
-  border: 0;
-  background: none;
-  padding: 0 0 3px;
-  font-family: "Roboto Mono", ui-monospace, monospace;
-  font-size: 10.5px;
-  letter-spacing: 0.14em;
-  color: var(--pxNuSoudLn);
-  cursor: pointer;
-  text-decoration: none;
-  border-bottom: 2px solid var(--sy8ZnXZdoG);
-  line-height: 1.2;
-}
-
-.ikas-auth__forgot:hover {
-  color: var(--fcAwzuFj9W, #101418);
-}
-
 .ikas-auth__consent {
   display: flex;
   align-items: flex-start;
@@ -306,10 +289,6 @@
 
 .ikas-auth__consent:hover {
   color: var(--pxNuSoudLn);
-}
-
-.ikas-auth__consent-link {
-  border-bottom: 2px solid var(--sy8ZnXZdoG);
 }
 
 .ikas-auth__checkbox {

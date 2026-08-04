@@ -10,6 +10,7 @@ import {
 import { Props } from "./types";
 import CartDrawer from "../../sub-components/CartDrawer";
 import SearchOverlay from "../../sub-components/SearchOverlay";
+import CloseButton from "../../sub-components/CloseButton";
 import { formatShadow } from "../../utils/theme";
 
 /** Hero vb. bileşenlerin kalan viewport hesabı için gerçek header yüksekliği. */
@@ -348,26 +349,11 @@ export function Header({
       >
         <div className="ikas-header__drawer-header">
           <span className="ikas-header__logo-text">{mobileMenuTitle}</span>
-          <button
-            type="button"
-            className="ikas-header__drawer-close"
-            aria-label={menuLabel}
+          <CloseButton
+            ariaLabel={menuLabel || "Menüyü kapat"}
             onClick={() => setIsDrawerOpen(false)}
-          >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </button>
+            tone="onDark"
+          />
         </div>
         <nav className="ikas-header__drawer-nav" aria-label={mobileMenuTitle}>
           <ul className="ikas-header__drawer-menu">

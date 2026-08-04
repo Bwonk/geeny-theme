@@ -21,6 +21,7 @@ import { observer } from "@ikas/component-utils";
 import Button from "../Button";
 import SizeGuideDrawer from "../SizeGuideDrawer";
 import ProductCrossSellOffers from "../ProductCrossSellOffers";
+import TextLink from "../TextLink";
 
 export interface Props {
   product?: IkasProduct | null;
@@ -284,13 +285,12 @@ export function ProductBuyBox({
                     </span>
                   )}
                   {showSizeGuide && (
-                    <button
-                      type="button"
+                    <TextLink
+                      tone="LABEL"
                       className="ikas-buy-box__size-guide"
+                      text={sizeGuideText}
                       onClick={() => setSizeGuideOpen(true)}
-                    >
-                      {sizeGuideText}
-                    </button>
+                    />
                   )}
                 </div>
 

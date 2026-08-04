@@ -67,36 +67,6 @@
   color: var(--pxNuSoudLn);
 }
 
-.ikas-cart-drawer__close-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background-color: var(--cdFDkBbKkc);
-  color: var(--pxNuSoudLn);
-  cursor: pointer;
-  transition: background-color 0.2s ease-out;
-}
-
-.ikas-cart-drawer__close-btn:hover {
-  background-color: var(--gzj8Nhz1Gb);
-}
-
-.ikas-cart-drawer__close-btn:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 2px;
-}
-
-.ikas-cart-drawer__close-btn svg {
-  width: 16px;
-  height: 16px;
-}
-
 /* BODY */
 .ikas-cart-drawer__body {
   flex: 1 1 0;
@@ -500,21 +470,14 @@
   cursor: default;
 }
 
-.ikas-cart-drawer__promo-apply:focus-visible,
-.ikas-cart-drawer__promo-remove:focus-visible {
+.ikas-cart-drawer__promo-apply:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 2px;
 }
 
+/* Layout only — underline on TextLink */
 .ikas-cart-drawer__promo-remove {
   flex: 0 0 auto;
-  border: 0;
-  padding: 0;
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
 .ikas-cart-drawer__promo-code {
@@ -623,7 +586,6 @@
 @media (prefers-reduced-motion: reduce) {
   .ikas-cart-drawer,
   .ikas-cart-drawer__backdrop,
-  .ikas-cart-drawer__close-btn,
   .ikas-cart-drawer__line,
   .ikas-cart-drawer__stepper button,
   .ikas-cart-drawer__offer-add,

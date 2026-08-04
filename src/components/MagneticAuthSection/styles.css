@@ -1,6 +1,8 @@
 @import "../../sub-components/Button/styles.css";
+@import "../../sub-components/TextLink/styles.css";
 @import "../../sub-components/MagneticAuthBrandSide/styles.css";
 @import "../../sub-components/MagneticAuthRow/styles.css";
+@import "../../sub-components/CloseButton/styles.css";
 
 /* ══════════════════════════════════════════════════════════════
    Magnetic Auth Section — Saf Beyaz stage, split layout
@@ -222,44 +224,15 @@
   gap: 14px;
 }
 
+.ikas-mgauth__panel-head .ikas-close-btn {
+  margin-left: auto;
+}
+
 .ikas-mgauth__panel-form-wordmark {
   display: none;
   font-weight: 600;
   letter-spacing: 0.24em;
   color: var(--pxNuSoudLn, #37435b);
-}
-
-.ikas-mgauth__panel-close {
-  flex: 0 0 auto;
-  margin-left: auto;
-  width: 36px;
-  height: 36px;
-  box-sizing: border-box;
-  border: 1.5px solid var(--0RbHz765Hw, #dce0e1);
-  border-radius: 9999px;
-  background: var(--24KlcgGmm9, #fff);
-  color: var(--pxNuSoudLn, #37435b);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition:
-    background 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease,
-    transform 0.25s ease;
-}
-
-.ikas-mgauth__panel-close:hover {
-  background: var(--pxNuSoudLn, #37435b);
-  border-color: var(--pxNuSoudLn, #37435b);
-  color: var(--24KlcgGmm9, #fff);
-  transform: rotate(90deg);
-}
-
-.ikas-mgauth__panel-close:focus-visible {
-  outline: 2px solid var(--pxNuSoudLn, #37435b);
-  outline-offset: 3px;
 }
 
 .ikas-mgauth__panel-body {
@@ -459,23 +432,6 @@
   justify-content: flex-end;
 }
 
-.ikas-mgauth .ikas-auth__forgot {
-  border: 0;
-  background: none;
-  padding: 0 0 3px;
-  font-family: "Roboto Mono", ui-monospace, monospace;
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  color: var(--pxNuSoudLn, #37435b);
-  cursor: pointer;
-  border-bottom: 2px solid var(--sy8ZnXZdoG);
-  line-height: 1.2;
-}
-
-.ikas-mgauth .ikas-auth__forgot:hover {
-  color: var(--fcAwzuFj9W, #101418);
-}
-
 .ikas-mgauth .ikas-auth__consent-block {
   display: flex;
   flex-direction: column;
@@ -496,10 +452,6 @@
 
 .ikas-mgauth .ikas-auth__consent:hover {
   color: var(--pxNuSoudLn, #37435b);
-}
-
-.ikas-mgauth .ikas-auth__consent-link {
-  border-bottom: 2px solid var(--sy8ZnXZdoG);
 }
 
 .ikas-mgauth .ikas-auth__checkbox {
@@ -646,8 +598,7 @@
   .ikas-mgauth__dim,
   .ikas-mgauth__scrim,
   .ikas-mgauth__panel-grid,
-  .ikas-mgauth__switcher-pill,
-  .ikas-mgauth__panel-close {
+  .ikas-mgauth__switcher-pill {
     transition: none;
   }
 

@@ -1,3 +1,5 @@
+@import "../../sub-components/TextLink/styles.css";
+
 /* ═══════════════════════════════════════════════════════════════════════
  * TESTIMONIALS CAROUSEL — Referans Görselle BİREBİR Aynı Konuşma Balonu & Avatar Yapısı
  *
@@ -313,22 +315,6 @@
 .ikas-testimonials__footer {
   text-align: center;
   margin-top: clamp(40px, 5vw, 60px);
-}
-
-.ikas-testimonials__link {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  color: var(--pxNuSoudLn);             /* Ana Lacivert — TOKENS.md satır 10 */
-  border-bottom: 2px solid var(--sy8ZnXZdoG); /* Accent Sarı — TOKENS.md satır 11 */
-  padding-bottom: 4px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: border-color 0.2s ease;
-}
-
-.ikas-testimonials__link:hover {
-  border-color: var(--pxNuSoudLn);
 }
 
 /* Erişilebilirlik: Azaltılmış Hareket Tercihi */

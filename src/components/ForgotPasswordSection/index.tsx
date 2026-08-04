@@ -12,6 +12,7 @@ import {
 } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
 import Button from "../../sub-components/Button";
+import TextLink from "../../sub-components/TextLink";
 import { Props } from "./types";
 
 export interface ForgotPasswordSectionProps extends Props {
@@ -57,13 +58,12 @@ const ForgotForm = observer(function ForgotForm({
           fullWidth
           onClick={() => Router.navigateToPage("LOGIN")}
         />
-        <button
-          type="button"
+        <TextLink
+          tone="LABEL"
           className="ikas-forgot__back"
+          text={backToLoginText}
           onClick={() => Router.navigateToPage("LOGIN")}
-        >
-          {backToLoginText}
-        </button>
+        />
       </div>
     );
   }
@@ -128,13 +128,12 @@ const ForgotForm = observer(function ForgotForm({
         />
       </form>
 
-      <button
-        type="button"
+      <TextLink
+        tone="LABEL"
         className="ikas-forgot__back"
+        text={backToLoginText}
         onClick={() => Router.navigateToPage("LOGIN")}
-      >
-        {backToLoginText}
-      </button>
+      />
     </div>
   );
 });

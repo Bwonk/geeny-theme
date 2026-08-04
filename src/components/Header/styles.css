@@ -1,6 +1,8 @@
 @import "../../sub-components/CartDrawer/styles.css";
 @import "../../sub-components/SearchOverlay/styles.css";
 @import "../../sub-components/Button/styles.css";
+@import "../../sub-components/TextLink/styles.css";
+@import "../../sub-components/CloseButton/styles.css";
 
 /* ═══════════════════════════════════════════════════════════════════════
  * HEADER — FLOATING PILL NAVBAR
@@ -344,14 +346,6 @@
   justify-content: space-between;
   padding: 16px 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.ikas-header__drawer-close {
-  background: none;
-  border: none;
-  padding: 8px;
-  color: var(--24KlcgGmm9);
-  cursor: pointer;
 }
 
 .ikas-header__drawer-nav {

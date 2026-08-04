@@ -1,5 +1,6 @@
 import { useState } from "preact/hooks";
 import { getThemeSetting } from "@ikas/bp-storefront";
+import TextLink from "../../sub-components/TextLink";
 import { Props } from "./types";
 
 export interface FooterProps extends Props {
@@ -134,12 +135,12 @@ export function Footer({
               </p>
             )}
             {supportBadgeText && (
-              <a
+              <TextLink
+                tone="LABEL"
                 href={supportHref || "#"}
-                className="ikas-footer__support-link _eZyocyyd0F"
-              >
-                {supportBadgeText}
-              </a>
+                className="ikas-footer__support-link"
+                text={supportBadgeText}
+              />
             )}
           </div>
 

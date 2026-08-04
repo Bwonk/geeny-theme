@@ -19,6 +19,7 @@ import AuthLoginForm from "../../sub-components/AuthLoginForm";
 import AuthRegisterForm from "../../sub-components/AuthRegisterForm";
 import MagneticAuthBrandSide from "../../sub-components/MagneticAuthBrandSide";
 import MagneticAuthRow from "../../sub-components/MagneticAuthRow";
+import CloseButton from "../../sub-components/CloseButton";
 import { Props } from "./types";
 
 const BAR_TONE_COUNT = 5;
@@ -707,24 +708,10 @@ export function MagneticAuthSection({
               <span className="ikas-mgauth__panel-form-wordmark _eZyocyyd0F">
                 {upper(brandKicker)}
               </span>
-              <button
-                type="button"
-                className="ikas-mgauth__panel-close"
-                aria-label={closeButtonLabel}
+              <CloseButton
+                ariaLabel={closeButtonLabel}
                 onClick={closePanel}
-              >
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  aria-hidden="true"
-                >
-                  <path d="M6 6l12 12M18 6L6 18" />
-                </svg>
-              </button>
+              />
             </div>
 
             <div

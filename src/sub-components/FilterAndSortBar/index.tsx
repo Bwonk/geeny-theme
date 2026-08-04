@@ -13,6 +13,8 @@ import {
 } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
 import Button from "../Button";
+import TextLink from "../TextLink";
+import CloseButton from "../CloseButton";
 
 export interface Props {
   productList?: IkasProductList;
@@ -101,13 +103,12 @@ export function FilterAndSortBar({
           </span>
 
           {hasApplied && (
-            <button
-              type="button"
+            <TextLink
+              tone="BODY"
               className="ikas-filter-bar__clear _C0OZ8W7vYS"
+              text="Filtreleri Temizle"
               onClick={handleClearFilters}
-            >
-              Filtreleri Temizle
-            </button>
+            />
           )}
         </div>
 
@@ -156,14 +157,10 @@ export function FilterAndSortBar({
           <h3 className="ikas-filter-drawer__title _AZR1yL8GrK">
             {filterTitle}
           </h3>
-          <button
-            type="button"
-            className="ikas-filter-drawer__close"
+          <CloseButton
+            ariaLabel="Filtre panelini kapat"
             onClick={() => setIsDrawerOpen(false)}
-            aria-label="Filtre panelini kapat"
-          >
-            ✕
-          </button>
+          />
         </div>
 
         <div className="ikas-filter-drawer__content">

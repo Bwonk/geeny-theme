@@ -8,6 +8,7 @@ import {
 } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
 import Button from "../Button";
+import TextLink from "../TextLink";
 
 export interface Props {
   loginForm: ReturnType<typeof getLoginForm>;
@@ -123,13 +124,12 @@ export function AuthLoginForm({
 
       {forgotPasswordText && (
         <div className="ikas-auth__row">
-          <button
-            type="button"
+          <TextLink
+            tone="LABEL"
             className="ikas-auth__forgot"
+            text={forgotPasswordText}
             onClick={() => Router.navigateToPage("FORGOT_PASSWORD")}
-          >
-            {forgotPasswordText}
-          </button>
+          />
         </div>
       )}
 

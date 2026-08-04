@@ -1,0 +1,47 @@
+/* Shared icon-chip chrome + motion (details accordion source of truth) */
+.ikas-icon-chip {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  box-sizing: border-box;
+  border-radius: 9999px;
+  border: 1.5px solid var(--8ARbeTYsmD, #e4e7e8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--pxNuSoudLn);
+  background-color: transparent;
+  transition:
+    transform 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.24s ease,
+    border-color 0.24s ease,
+    color 0.24s ease;
+}
+
+.ikas-icon-chip--active {
+  transform: rotate(135deg);
+  background-color: var(--sy8ZnXZdoG);
+  border-color: var(--sy8ZnXZdoG);
+  color: var(--vluFeuIeFs, #101418);
+}
+
+.ikas-icon-chip--on-dark {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: var(--24KlcgGmm9, #ffffff);
+}
+
+.ikas-icon-chip--on-dark.ikas-icon-chip--active {
+  background-color: var(--sy8ZnXZdoG);
+  border-color: var(--sy8ZnXZdoG);
+  color: var(--vluFeuIeFs, #101418);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ikas-icon-chip {
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .ikas-icon-chip--active {
+    transform: none;
+  }
+}

@@ -8,6 +8,7 @@ import {
 } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
 import Button from "../Button";
+import TextLink from "../TextLink";
 import ProductCard from "../ProductCard";
 
 export interface Props {
@@ -79,13 +80,12 @@ export function AccountFavoritesPanel({
                 overlayQuickAdd
                 addToCartText={addToCartText}
               />
-              <button
-                type="button"
+              <TextLink
+                tone="LABEL"
                 className="ikas-account-favs__remove"
+                text={removeFavoriteText}
                 onClick={() => void handleRemove(product)}
-              >
-                {removeFavoriteText}
-              </button>
+              />
             </div>
           ))}
         </div>

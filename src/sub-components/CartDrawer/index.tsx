@@ -30,7 +30,9 @@ import {
 } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
 import Button from "../Button";
+import CloseButton from "../CloseButton";
 import PortalScope from "../PortalScope";
+import TextLink from "../TextLink";
 
 export interface Props {
   cartDrawerTitle?: string;
@@ -98,13 +100,12 @@ const CartCouponBlock = observer(function CartCouponBlock({
           <span className="ikas-cart-drawer__promo-code _eZyocyyd0F">
             {appliedCode}
           </span>
-          <button
-            type="button"
+          <TextLink
+            tone="BODY"
             className="ikas-cart-drawer__promo-remove _eZyocyyd0F"
+            text={promoRemoveText}
             onClick={() => removeCouponCodeForm(couponForm)}
-          >
-            {promoRemoveText}
-          </button>
+          />
         </div>
       ) : (
         <form className="ikas-cart-drawer__promo" onSubmit={handleSubmit}>
@@ -487,27 +488,10 @@ export function CartDrawer({
           <h2 className="ikas-cart-drawer__title _AHnMWYqzuI">
             {cartDrawerTitle}
           </h2>
-          <button
-            type="button"
-            className="ikas-cart-drawer__close-btn"
-            aria-label={closeCartLabel}
+          <CloseButton
+            ariaLabel={closeCartLabel}
             onClick={handleClose}
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M3 3l10 10M13 3L3 13"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            </svg>
-          </button>
+          />
         </div>
 
         {isEmpty ? (

@@ -13,6 +13,7 @@ import {
 } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
 import Button from "../../sub-components/Button";
+import TextLink from "../../sub-components/TextLink";
 import { Props } from "./types";
 
 export interface RecoverPasswordSectionProps extends Props {
@@ -138,13 +139,12 @@ const RecoverForm = observer(function RecoverForm({
         </form>
       )}
 
-      <button
-        type="button"
+      <TextLink
+        tone="LABEL"
         className="ikas-recover__back"
+        text={loginLinkText}
         onClick={() => Router.navigateToPage("LOGIN")}
-      >
-        {loginLinkText}
-      </button>
+      />
     </div>
   );
 });

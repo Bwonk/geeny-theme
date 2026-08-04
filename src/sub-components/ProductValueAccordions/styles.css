@@ -1,3 +1,5 @@
+@import "../AccordionToggleIcon/styles.css";
+
 /* ═══════════════════════════════════════════════════════════════════════
  * PRODUCT DETAILS — sticky head + exclusive accordion (UrunDetay)
  * ═══════════════════════════════════════════════════════════════════════ */
@@ -129,30 +131,6 @@
   font-weight: 500;
   font-size: clamp(16px, 1.35vw, 20px);
   letter-spacing: -0.018em;
-}
-
-.ikas-details__icon {
-  flex: 0 0 auto;
-  width: 34px;
-  height: 34px;
-  border-radius: 9999px;
-  border: 1.5px solid var(--8ARbeTYsmD, #e4e7e8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--pxNuSoudLn);
-  transition:
-    transform 0.38s cubic-bezier(0.22, 1, 0.36, 1),
-    background-color 0.24s ease,
-    border-color 0.24s ease,
-    color 0.24s ease;
-}
-
-.ikas-details__icon--open {
-  transform: rotate(135deg);
-  background-color: var(--sy8ZnXZdoG);
-  border-color: var(--sy8ZnXZdoG);
-  color: var(--vluFeuIeFs, #101418);
 }
 
 .ikas-details__panel {

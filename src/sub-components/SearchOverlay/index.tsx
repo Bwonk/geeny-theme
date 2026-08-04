@@ -12,6 +12,7 @@ import {
 } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
 import Button from "../Button";
+import CloseButton from "../CloseButton";
 import PortalScope from "../PortalScope";
 
 export interface Props {
@@ -296,17 +297,11 @@ export function SearchOverlay({
             </button>
           )}
 
-          <button
-            type="button"
-            className="geeny-search-overlay__close-btn"
+          <CloseButton
+            ariaLabel="Aramayı Kapat (ESC)"
             onClick={handleCloseOverlay}
-            aria-label="Aramayı Kapat (ESC)"
-            title="ESC"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="M6 6l12 12M18 6 6 18" />
-            </svg>
-          </button>
+            tone="onDark"
+          />
         </div>
 
         {/* 2. ANA PANEL GÖVDESİ */}

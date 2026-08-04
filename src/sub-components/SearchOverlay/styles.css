@@ -93,26 +93,6 @@
   color: var(--sy8ZnXZdoG);
 }
 
-.geeny-search-overlay__close-btn {
-  flex: 0 0 auto;
-  width: 42px;
-  height: 42px;
-  border: 0;
-  border-radius: 9999px;
-  background: transparent;
-  color: var(--24KlcgGmm9);             /* Saf Beyaz — TOKENS.md satır 14 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.24s ease, color 0.24s ease;
-}
-
-.geeny-search-overlay__close-btn:hover {
-  background-color: rgba(255, 255, 255, 0.12);
-  color: var(--sy8ZnXZdoG);             /* Accent Sarı — TOKENS.md satır 11 */
-}
-
 /* 2. PANEL İÇERİK KARTI */
 .geeny-search-overlay__card-body {
   background-color: var(--24KlcgGmm9);  /* Saf Beyaz — TOKENS.md satır 14 */

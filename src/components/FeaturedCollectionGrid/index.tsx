@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from "preact/hooks";
 import { getThemeSetting, Router } from "@ikas/bp-storefront";
 import ProductCard from "../../sub-components/ProductCard";
+import TextLink from "../../sub-components/TextLink";
 import { Props } from "./types";
 
 export interface FeaturedCollectionGridProps extends Props {
@@ -111,19 +112,18 @@ export function FeaturedCollectionGrid({
           </div>
 
           {showViewAll && (
-            <a
+            <TextLink
+              tone="LABEL"
               href={viewAllHref || "#urunler"}
-              className="ikas-featured-grid__link _eZyocyyd0F"
+              className="ikas-featured-grid__link"
+              text={viewAllButtonText}
               onClick={(e) => {
-                // Merchant bir bağlantı seçmediyse tema kategori sayfasına düşülür.
                 if (!viewAllHref) {
                   e.preventDefault();
                   Router.navigateToPage("CATEGORY");
                 }
               }}
-            >
-              {viewAllButtonText}
-            </a>
+            />
           )}
         </div>
 

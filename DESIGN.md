@@ -203,7 +203,7 @@ Bileşenlerde ölçü/ağırlık elle yazılmaz; ilgili token'ın `className`'i 
 - **Yapı:** Sağdan kayarak açılan panel (`width: min(440px, 100vw)`). Desktop (`≥768px`): kenardan `16px` inset floating panel + `border-radius: 24px` + soft panel shadow. Mobil: full-bleed.
 - **Motion:** `0.42s cubic-bezier(0.32, 0.72, 0, 1)` + backdrop opacity; `prefers-reduced-motion` destekli.
 - **Bileşenler:**
-  - **Header:** Başlık + dairesel soft-surface kapat butonu (`40px`).
+  - **Header:** Başlık + bordered icon-chip kapat butonu (`CloseButton`, 34px; hover’da details-icon motion: rotate 135° + accent fill).
   - **Shipping Notice Chip:** Progress bar yerine ortalanmış notice (`border-radius: 16px`, soft surface). Ücretsiz kargo kazanıldı / kalan tutar (`{amount}` placeholder).
   - **Sepet İtem Listesi:** Grid `88px | 1fr | auto` — görsel link, ürün adı, final + çizili eski fiyat, pill stepper (qty→0 siler; çöp ikonu yok).
   - **Upsell Carousel:** Header’da 4 ayrı `PRODUCT` prop (`cartUpsellProduct1`…`4`) → yatay `scroll-snap` kartlar + “Ekle”.

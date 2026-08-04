@@ -1,3 +1,5 @@
+@import "../../sub-components/TextLink/styles.css";
+
 /* ═══════════════════════════════════════════════════════════════════════
  * FOOTER — 4-Kolonlu Zengin Footer & Site Genel Zemin Uyuşumu
  *
@@ -70,21 +72,10 @@
   max-width: 46ch;
 }
 
+/* Layout only — underline on TextLink */
 .ikas-footer__support-link {
   align-self: flex-start;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-  border-bottom: 2px solid var(--sy8ZnXZdoG); /* Accent Sarı — TOKENS.md satır 11 */
-  padding-bottom: 4px;
-  color: var(--pxNuSoudLn);             /* Ana Lacivert — TOKENS.md satır 10 */
-  text-decoration: none;
-  transition: border-color 0.2s ease;
   margin-top: 2px;
-}
-
-.ikas-footer__support-link:hover {
-  border-color: var(--pxNuSoudLn);
 }
 
 /* 4 LİNK KOLONU IZGARASI */

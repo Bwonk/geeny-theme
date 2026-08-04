@@ -1,4 +1,5 @@
 @import "../../sub-components/Button/styles.css";
+@import "../../sub-components/TextLink/styles.css";
 @import "../../sub-components/ProductCard/styles.css";
 
 .ikas-account {
@@ -403,22 +404,11 @@
   min-width: 0;
 }
 
+/* Layout only — underline on TextLink; muted meta text */
 .ikas-account-favs__remove {
-  border: 0;
-  background: transparent;
-  padding: 6px 0;
   align-self: flex-start;
-  font-family: "Roboto Mono", ui-monospace, monospace;
-  font-size: 10.5px;
-  letter-spacing: 0.12em;
-  color: var(--p6EMJiXye1, #8c97a5);
-  cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.ikas-account-favs__remove:hover {
-  color: var(--pxNuSoudLn);
+  --tl-color: var(--p6EMJiXye1, #8c97a5);
+  --tl-hover-color: var(--pxNuSoudLn);
 }
 
 @media (max-width: 900px) {

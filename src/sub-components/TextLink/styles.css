@@ -1,0 +1,97 @@
+/* ═══════════════════════════════════════════════════════════════════════
+ * TEXT LINK — Site-wide accent-bar underline.
+ *
+ * Theme tokens (prompts/TOKENS.md):
+ *   Renkler / Link Alt Çizgi     → var(--zyuxTzvMuY)
+ *   Link / Alt Çizgi Kalınlığı   → getThemeSetting("_mKSzZQXicb") → --tl-thickness
+ *   Link / Alt Çizgi Offset      → getThemeSetting("_yVBERhD1nQ") → --tl-offset
+ *   Ana Lacivert (metin)         → var(--pxNuSoudLn)
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+.ikas-text-link {
+  display: inline-flex;
+  align-items: baseline;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  padding-bottom: var(--tl-offset, 2px);
+  border: 0;
+  border-bottom: var(--tl-thickness, 2px) solid
+    var(--tl-underline-color, var(--zyuxTzvMuY, var(--sy8ZnXZdoG)));
+  background: transparent;
+  color: var(--tl-color, var(--pxNuSoudLn));
+  text-decoration: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  vertical-align: baseline;
+  max-width: 100%;
+}
+
+a.ikas-text-link {
+  cursor: pointer;
+}
+
+span.ikas-text-link {
+  cursor: inherit;
+}
+
+.ikas-text-link:hover {
+  color: var(--tl-hover-color, var(--vluFeuIeFs, #101418));
+  border-bottom-color: var(
+    --tl-hover-underline,
+    var(--tl-underline-color, var(--zyuxTzvMuY, var(--sy8ZnXZdoG)))
+  );
+}
+
+.ikas-text-link:focus {
+  outline: none;
+}
+
+.ikas-text-link:focus-visible {
+  outline: 2px solid var(--zyuxTzvMuY, var(--sy8ZnXZdoG));
+  outline-offset: 3px;
+}
+
+.ikas-text-link:disabled,
+.ikas-text-link--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* LABEL — mono, küçük, uppercase (size-guide, footer support, hero links) */
+.ikas-text-link--label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+/* BODY — gövde / utility text links */
+.ikas-text-link--body {
+  font-family: var(--font-body);
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  text-transform: none;
+  line-height: inherit;
+}
+
+/* INLINE — satır içi highlight (auth consent) */
+.ikas-text-link--inline {
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: none;
+  line-height: inherit;
+  display: inline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ikas-text-link {
+    transition: none;
+  }
+}

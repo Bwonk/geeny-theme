@@ -164,33 +164,9 @@
   text-transform: uppercase;
 }
 
+/* Layout only — underline styles live on TextLink */
 .ikas-buy-box__size-guide {
-  appearance: none;
-  border: 0;
-  background: transparent;
-  padding: 0 0 2px;
-  margin: 0;
   margin-left: auto;
-  cursor: pointer;
-  font-family: "Roboto Mono", ui-monospace, monospace;
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  color: var(--pxNuSoudLn);
-  border-bottom: 2px solid var(--sy8ZnXZdoG);
-  text-transform: uppercase;
-}
-
-.ikas-buy-box__size-guide:hover {
-  color: var(--vluFeuIeFs, #101418);
-}
-
-.ikas-buy-box__size-guide:focus {
-  outline: none;
-}
-
-.ikas-buy-box__size-guide:focus-visible {
-  outline: 2px solid var(--sy8ZnXZdoG);
-  outline-offset: 3px;
 }
 
 .ikas-buy-box__swatches {

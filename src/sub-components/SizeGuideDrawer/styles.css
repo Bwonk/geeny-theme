@@ -1,3 +1,5 @@
+@import "../CloseButton/styles.css";
+
 /* ═══════════════════════════════════════════════════════════════════════
  * SIZE GUIDE — bottom drawer + blur backdrop
  * ═══════════════════════════════════════════════════════════════════════ */
@@ -84,34 +86,6 @@
   font-size: clamp(20px, 2.2vw, 26px);
   letter-spacing: -0.025em;
   color: var(--pxNuSoudLn);
-}
-
-.ikas-size-guide__close {
-  flex: 0 0 auto;
-  width: 40px;
-  height: 40px;
-  border: 0;
-  border-radius: 9999px;
-  background: transparent;
-  color: var(--pxNuSoudLn);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.ikas-size-guide__close:hover {
-  background-color: var(--wElEhJwjYh, #f4f5f5);
-}
-
-.ikas-size-guide__close:focus {
-  outline: none;
-}
-
-.ikas-size-guide__close:focus-visible {
-  outline: 2px solid var(--sy8ZnXZdoG);
-  outline-offset: 2px;
 }
 
 .ikas-size-guide__body {

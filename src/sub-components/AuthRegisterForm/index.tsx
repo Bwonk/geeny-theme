@@ -11,6 +11,7 @@ import {
 } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
 import Button from "../Button";
+import TextLink from "../TextLink";
 
 export interface Props {
   registerForm: ReturnType<typeof getRegisterForm>;
@@ -42,9 +43,9 @@ function renderConsentText(text: string) {
   const parts = text.split(/(Kullanım koşulları|gizlilik politikasını)/g);
   return parts.map((part, i) =>
     part === "Kullanım koşulları" || part === "gizlilik politikasını" ? (
-      <span key={i} className="ikas-auth__consent-link">
+      <TextLink key={i} tone="INLINE" className="ikas-auth__consent-link">
         {part}
-      </span>
+      </TextLink>
     ) : (
       <span key={i}>{part}</span>
     )

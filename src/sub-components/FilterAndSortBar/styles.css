@@ -1,3 +1,4 @@
+@import "../CloseButton/styles.css";
 
 .ikas-filter-bar {
   width: 100%;
@@ -51,14 +52,10 @@
 }
 
 .ikas-filter-bar__clear {
-  color: #EF4444;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  text-decoration: underline;
-  padding: 0;
   margin-left: 8px;
   font-weight: 500;
+  --tl-color: #ef4444;
+  --tl-hover-color: #c2431b;
 }
 
 .ikas-filter-bar__right {
@@ -138,18 +135,6 @@
 .ikas-filter-drawer__title {
   margin: 0;
   color: var(--pxNuSoudLn);
-}
-
-.ikas-filter-drawer__close {
-  background: transparent;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: var(--pxNuSoudLn);
-  padding: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .ikas-filter-drawer__content {

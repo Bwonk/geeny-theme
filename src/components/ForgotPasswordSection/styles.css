@@ -1,4 +1,5 @@
 @import "../../sub-components/Button/styles.css";
+@import "../../sub-components/TextLink/styles.css";
 
 .ikas-forgot {
   width: 100%;
@@ -117,18 +118,9 @@
   color: #8f1f1f;
 }
 
+/* Layout only — underline on TextLink */
 .ikas-forgot__back {
-  border: 0;
-  background: none;
-  padding: 0;
   align-self: center;
-  font-family: "Roboto Mono", ui-monospace, monospace;
-  font-size: 10.5px;
-  letter-spacing: 0.12em;
-  color: var(--pxNuSoudLn);
-  cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
 @keyframes ikas-forgot-in {

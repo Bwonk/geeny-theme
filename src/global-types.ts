@@ -45,6 +45,8 @@ export type ThemeSettingName =
   | "_lTnQi8nt1z"
   /** Boşluk / Tablet Grid Gap (TEXT) */
   | "_mfIn0YsoTT"
+  /** Link / Alt Çizgi Kalınlığı (TEXT) */
+  | "_mKSzZQXicb"
   /** Boşluk / Yatay Bölüm Padding (TEXT) */
   | "_Nd1XnRyZlx"
   /** Animasyon / Marquee Ticker (TEXT) */
@@ -71,6 +73,8 @@ export type ThemeSettingName =
   | "_YDHxutBHyk"
   /** Radius / Medya (TEXT) */
   | "_YFQAxlLvZl"
+  /** Link / Alt Çizgi Offset (TEXT) */
+  | "_yVBERhD1nQ"
   /** Boşluk / Announcement Bar Yüksekliği (TEXT) */
   | "_YvGykMxQWI"
   /** Gölge / Kart Soft Shadow (SHADOW) */
@@ -100,6 +104,7 @@ type ThemeSettingValueMap = {
   "_l6CcMRzdeZ": string;
   "_lTnQi8nt1z": any;
   "_mfIn0YsoTT": string;
+  "_mKSzZQXicb": string;
   "_Nd1XnRyZlx": string;
   "_NTIrquacoN": string;
   "_NXa706BcQP": string;
@@ -113,6 +118,7 @@ type ThemeSettingValueMap = {
   "_XYyz9eaKGx": string;
   "_YDHxutBHyk": string;
   "_YFQAxlLvZl": string;
+  "_yVBERhD1nQ": string;
   "_YvGykMxQWI": string;
   "_yyUleMlhR4": any;
   "_Z1JfmMfgtb": string;

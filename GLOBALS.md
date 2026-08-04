@@ -67,8 +67,9 @@ mevcut token'ları kopyalar.
 | `Renkler / Sticky Header Çizgisi` | `rgba(0, 0, 0, 0.08)` | Sayfa kaydırıldığında sabit duran header alt ayırıcı çizgisi |
 | `Renkler / Kargo İlerleme Çubuğu` | `#E3E045` | Cart drawer içindeki ücretsiz kargo kalan tutar ilerleme çubuğu dolgu rengi |
 | `Renkler / Koyu Zemin Çizgisi` | `rgba(255, 255, 255, 0.12)` | Footer ve koyu zeminli bölümler için beyaz transparan ayırıcı çizgi |
+| `Renkler / Link Alt Çizgi` | `#E3E045` | TextLink / accent-bar underline rengi (Accent’ten bağımsız değiştirilebilir) |
 
-*Not: CSS `transparent` kelimesi ve mükerrer `#37435B` semantik token'ları (İndirim Rozet Metni, Swatch Ring) kaldırılmış; 10 renk token'ı olarak güncellenmiştir.*
+*Not: CSS `transparent` kelimesi ve mükerrer `#37435B` semantik token'ları (İndirim Rozet Metni, Swatch Ring) kaldırılmış; Link Alt Çizgi ile birlikte renk token sayısı güncellenmiştir.*
 
 ---
 
@@ -153,6 +154,17 @@ mevcut token'ları kopyalar.
 | `Animasyon / Sticky Bar Belirme` | `transform 0.3s ease, opacity 0.3s ease` | PDP scroll edildiğinde sabit alt barın alttan belirmesi geçişi |
 | `Animasyon / Fade Yumuşak` | `opacity 0.3s ease-in-out` | Announcement bar metin değişimi ve thumbnail switch yumuşak görünürlük geçişi |
 | `Animasyon / Marquee Ticker` | `transform 25s linear infinite` | Press ticker kayan marka logoları bandı sonsuz kaydırma geçişi |
+
+---
+
+### B7. Link / Alt Çizgi — `color` + `globalVariable · TEXT` (canlı)
+> **Bağlama Kuralı:** `sub-components/TextLink` `getThemeSetting` ile kalınlık/offset okur; çizgi rengi CSS’te `var(--zyuxTzvMuY)`.
+
+| Ad | Değer | Kullanım |
+| :--- | :--- | :--- |
+| `Renkler / Link Alt Çizgi` | `#E3E045` (`var(--zyuxTzvMuY)`) | Site-wide TextLink accent-bar underline rengi |
+| `Link / Alt Çizgi Kalınlığı` | `2px` (`_mKSzZQXicb`) | border-bottom kalınlığı |
+| `Link / Alt Çizgi Offset` | `2px` (`_yVBERhD1nQ`) | Metin–çizgi padding-bottom boşluğu |
 
 #### Sürekli Keyframe Animasyonları
 - **`Animasyon / Marquee Ticker`**: `transform 25s linear infinite`
