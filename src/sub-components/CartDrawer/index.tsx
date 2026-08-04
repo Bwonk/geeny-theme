@@ -1,39 +1,348 @@
-import { useState, useEffect } from "preact/hooks";
+import { useState, useEffect, useRef } from "preact/hooks";
 import {
   cartStore,
+  customerStore,
   changeItemQuantity,
-  removeItem,
-  getOrderLineItemFormattedFinalPrice,
+  getOrderLineItemFormattedFinalPriceWithQuantity,
+  getOrderLineItemFormattedPriceWithQuantity,
+  hasOrderLineItemDiscount,
   getIkasOrderLineVariantMainImage,
+  getIkasOrderLineVariantHref,
   getIkasOrderFormattedTotalFinalPrice,
+  getIkasOrderCouponAdjustment,
+  getOrderAdjustmentFormattedAmount,
   getDefaultSrc,
   Router,
   getThemeSetting,
+  getCouponCodeForm,
+  initCouponCodeForm,
+  setCouponCodeFormCouponCode,
+  submitCouponCodeForm,
+  removeCouponCodeForm,
+  getSelectedProductVariant,
+  getProductVariantMainImage,
+  getProductVariantFormattedFinalPrice,
+  getProductHref,
+  addItemToCart,
+  findExistingCartItemWithProduct,
+  hasProductVariantStock,
+  IkasProduct,
 } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
 import Button from "../Button";
 import PortalScope from "../PortalScope";
 
 export interface Props {
-  freeShippingThreshold?: number;
+  cartDrawerTitle?: string;
   emptyCartTitle?: string;
   emptyCartButtonText?: string;
+  closeCartLabel?: string;
+  freeShippingAchievedText?: string;
+  freeShippingRemainingText?: string;
+  freeShippingThreshold?: number;
+  upsellTitle?: string;
+  addOfferText?: string;
+  promoTitle?: string;
+  promoPlaceholder?: string;
+  promoApplyText?: string;
+  promoRemoveText?: string;
+  discountsLabel?: string;
+  totalLabel?: string;
+  taxNoteText?: string;
+  checkoutButtonText?: string;
+  decreaseQtyLabel?: string;
+  increaseQtyLabel?: string;
+  prevOfferLabel?: string;
+  nextOfferLabel?: string;
+  cartUpsellProduct1?: IkasProduct | null;
+  cartUpsellProduct2?: IkasProduct | null;
+  cartUpsellProduct3?: IkasProduct | null;
+  cartUpsellProduct4?: IkasProduct | null;
   isOpen?: boolean;
   className?: string;
   onClose?: () => void;
 }
 
+function formatRemainingMessage(template: string, amount: number) {
+  return template.replace(/\{amount\}/g, String(Math.ceil(amount)));
+}
+
+const CartCouponBlock = observer(function CartCouponBlock({
+  promoTitle,
+  promoPlaceholder,
+  promoApplyText,
+  promoRemoveText,
+}: {
+  promoTitle: string;
+  promoPlaceholder: string;
+  promoApplyText: string;
+  promoRemoveText: string;
+}) {
+  const couponForm = getCouponCodeForm(customerStore);
+  const appliedCode = cartStore.cart?.couponCode ?? null;
+
+  useEffect(() => {
+    initCouponCodeForm(couponForm);
+  }, [couponForm]);
+
+  const handleSubmit = async (e: Event) => {
+    e.preventDefault();
+    await submitCouponCodeForm(couponForm);
+  };
+
+  return (
+    <div className="ikas-cart-drawer__promo-wrap">
+      <p className="ikas-cart-drawer__block-title _VcfI5D07Nt">{promoTitle}</p>
+      {appliedCode ? (
+        <div className="ikas-cart-drawer__promo ikas-cart-drawer__promo--applied">
+          <span className="ikas-cart-drawer__promo-code _eZyocyyd0F">
+            {appliedCode}
+          </span>
+          <button
+            type="button"
+            className="ikas-cart-drawer__promo-remove _eZyocyyd0F"
+            onClick={() => removeCouponCodeForm(couponForm)}
+          >
+            {promoRemoveText}
+          </button>
+        </div>
+      ) : (
+        <form className="ikas-cart-drawer__promo" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            className="ikas-cart-drawer__promo-input _eZyocyyd0F"
+            placeholder={promoPlaceholder || couponForm.couponCode?.placeholder}
+            value={couponForm.couponCode?.value ?? ""}
+            onInput={(e) =>
+              setCouponCodeFormCouponCode(
+                couponForm,
+                (e.target as HTMLInputElement).value
+              )
+            }
+          />
+          <button
+            type="submit"
+            className="ikas-cart-drawer__promo-apply _eZyocyyd0F"
+            disabled={
+              couponForm.isSubmitting ||
+              !(couponForm.couponCode?.value ?? "").trim()
+            }
+          >
+            {promoApplyText}
+          </button>
+        </form>
+      )}
+      {couponForm.isFailure && couponForm.responseMessage ? (
+        <p className="ikas-cart-drawer__promo-error _eZyocyyd0F">
+          {couponForm.responseMessage}
+        </p>
+      ) : null}
+    </div>
+  );
+});
+
+const CartUpsellBlock = observer(function CartUpsellBlock({
+  products,
+  title,
+  addOfferText,
+  prevOfferLabel,
+  nextOfferLabel,
+}: {
+  products: IkasProduct[];
+  title: string;
+  addOfferText: string;
+  prevOfferLabel: string;
+  nextOfferLabel: string;
+}) {
+  const [busyId, setBusyId] = useState<string | null>(null);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(false);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const cart = cartStore.cart;
+
+  const updateArrowState = () => {
+    const el = trackRef.current;
+    if (!el) return;
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    setCanPrev(el.scrollLeft > 2);
+    setCanNext(el.scrollLeft < maxScroll - 2);
+  };
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    updateArrowState();
+    el.addEventListener("scroll", updateArrowState, { passive: true });
+    window.addEventListener("resize", updateArrowState);
+    return () => {
+      el.removeEventListener("scroll", updateArrowState);
+      window.removeEventListener("resize", updateArrowState);
+    };
+  }, [products.length]);
+
+  if (!products.length) return null;
+
+  const scrollByCard = (dir: -1 | 1) => {
+    const el = trackRef.current;
+    if (!el) return;
+    const amount = Math.max(el.clientWidth * 0.85, 200);
+    el.scrollBy({ left: dir * amount, behavior: "smooth" });
+  };
+
+  return (
+    <div className="ikas-cart-drawer__block">
+      <p className="ikas-cart-drawer__block-title _VcfI5D07Nt">{title}</p>
+      <div className="ikas-cart-drawer__offers-wrap">
+        <button
+          type="button"
+          className="ikas-cart-drawer__offers-nav ikas-cart-drawer__offers-nav--prev"
+          aria-label={prevOfferLabel}
+          disabled={!canPrev}
+          onClick={() => scrollByCard(-1)}
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M9 3L5 7l4 4"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+
+        <div className="ikas-cart-drawer__offers" ref={trackRef}>
+          {products.map((product) => {
+            const variant = getSelectedProductVariant(product);
+            const mainImage = variant
+              ? getProductVariantMainImage(variant)
+              : null;
+            const imgSrc = mainImage?.image
+              ? getDefaultSrc(mainImage.image)
+              : null;
+            const price = variant
+              ? getProductVariantFormattedFinalPrice(variant)
+              : "";
+            const inCart = cart
+              ? !!findExistingCartItemWithProduct(cart, product)
+              : false;
+            const inStock = variant
+              ? (hasProductVariantStock(variant) as unknown as boolean)
+              : false;
+            const isBusy = busyId === product.id;
+
+            const handleAdd = async () => {
+              if (!variant || inCart || !inStock || isBusy) return;
+              setBusyId(product.id);
+              try {
+                await addItemToCart(variant, product, 1);
+              } finally {
+                setBusyId(null);
+              }
+            };
+
+            return (
+              <div key={product.id} className="ikas-cart-drawer__offer">
+                <a
+                  href={getProductHref(product) || "#"}
+                  className="ikas-cart-drawer__offer-media"
+                >
+                  {imgSrc ? (
+                    <img src={imgSrc} alt={product.name} />
+                  ) : (
+                    <div className="ikas-cart-drawer__offer-placeholder" />
+                  )}
+                </a>
+                <div className="ikas-cart-drawer__offer-body">
+                  <p className="ikas-cart-drawer__offer-name _C0OZ8W7vYS">
+                    {product.name}
+                  </p>
+                  {price ? (
+                    <span className="ikas-cart-drawer__offer-price _eZyocyyd0F">
+                      {price}
+                    </span>
+                  ) : null}
+                </div>
+                <button
+                  type="button"
+                  className="ikas-cart-drawer__offer-add _eZyocyyd0F"
+                  disabled={inCart || !inStock || isBusy}
+                  onClick={handleAdd}
+                >
+                  {addOfferText}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+
+        <button
+          type="button"
+          className="ikas-cart-drawer__offers-nav ikas-cart-drawer__offers-nav--next"
+          aria-label={nextOfferLabel}
+          disabled={!canNext}
+          onClick={() => scrollByCard(1)}
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M5 3l4 4-4 4"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+});
+
 export function CartDrawer({
-  freeShippingThreshold = 500,
-  emptyCartTitle = "Sepetiniz Şu Anda Boş",
+  cartDrawerTitle = "Sepetiniz",
+  emptyCartTitle = "Sepetiniz henüz boş",
   emptyCartButtonText = "Alışverişe Başla",
+  closeCartLabel = "Sepeti Kapat",
+  freeShippingAchievedText = "Ücretsiz kargo!",
+  freeShippingRemainingText = "Ücretsiz kargo için {amount} TL kaldı!",
+  freeShippingThreshold = 500,
+  upsellTitle = "Birlikte Al",
+  addOfferText = "Ekle",
+  promoTitle = "Promosyon Kodu",
+  promoPlaceholder = "Kodu gir",
+  promoApplyText = "Uygula",
+  promoRemoveText = "Kaldır",
+  discountsLabel = "İndirimler",
+  totalLabel = "Toplam",
+  taxNoteText = "Kargo ve vergiler ödeme adımında hesaplanır",
+  checkoutButtonText = "Ödemeye Geç",
+  decreaseQtyLabel = "Adedi azalt",
+  increaseQtyLabel = "Adedi artır",
+  prevOfferLabel = "Önceki öneri",
+  nextOfferLabel = "Sonraki öneri",
+  cartUpsellProduct1,
+  cartUpsellProduct2,
+  cartUpsellProduct3,
+  cartUpsellProduct4,
   isOpen = false,
   className = "",
   onClose,
 }: Props) {
   const [activeOpen, setActiveOpen] = useState(isOpen);
+  const [busyItemId, setBusyItemId] = useState<string | null>(null);
 
-  // Sync prop isOpen with internal state
   useEffect(() => {
     setActiveOpen(isOpen);
   }, [isOpen]);
@@ -43,24 +352,22 @@ export function CartDrawer({
     if (onClose) onClose();
   };
 
-  // Custom Event listeners for inter-component communication (Header, ProductCard, PDP)
   useEffect(() => {
     const handleOpen = () => setActiveOpen(true);
     const handleToggle = () => setActiveOpen((prev: boolean) => !prev);
-    const handleClose = () => setActiveOpen(false);
+    const handleCloseEvent = () => setActiveOpen(false);
 
     window.addEventListener("geeny:cart-drawer:open", handleOpen);
     window.addEventListener("geeny:cart-drawer:toggle", handleToggle);
-    window.addEventListener("geeny:cart-drawer:close", handleClose);
+    window.addEventListener("geeny:cart-drawer:close", handleCloseEvent);
 
     return () => {
       window.removeEventListener("geeny:cart-drawer:open", handleOpen);
       window.removeEventListener("geeny:cart-drawer:toggle", handleToggle);
-      window.removeEventListener("geeny:cart-drawer:close", handleClose);
+      window.removeEventListener("geeny:cart-drawer:close", handleCloseEvent);
     };
   }, []);
 
-  // Keyboard ESC listener for accessibility
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && activeOpen) {
@@ -71,7 +378,6 @@ export function CartDrawer({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [activeOpen]);
 
-  // Body scroll lock when drawer is open
   useEffect(() => {
     if (activeOpen) {
       document.body.style.overflow = "hidden";
@@ -83,36 +389,44 @@ export function CartDrawer({
     };
   }, [activeOpen]);
 
-  // Read live global settings via getThemeSetting using exact variableNames from prompts/TOKENS.md
-  const drawerWidthSetting = getThemeSetting("_YDHxutBHyk"); // Boşluk / Cart Drawer Genişliği (420px)
-  const checkoutBtnHeightSetting = getThemeSetting("_RtoVmtuDGF"); // Boşluk / Checkout Buton Yüksekliği (52px)
-  const itemImgRadiusSetting = getThemeSetting("_0WnqPU26e8"); // Radius / Sepet İtem Görseli (12px)
-  const shippingBarRadiusSetting = getThemeSetting("_6yX0RuKGDr"); // Radius / Kargo İlerleme Çubuğu (4px)
-  const drawerAnimSetting = getThemeSetting("_rTI75Www8J"); // Animasyon / Drawer ve Modal
+  const drawerWidthSetting = getThemeSetting("_YDHxutBHyk");
+  const checkoutBtnHeightSetting = getThemeSetting("_RtoVmtuDGF");
+  const itemImgRadiusSetting = getThemeSetting("_0WnqPU26e8");
+  const drawerAnimSetting = getThemeSetting("_rTI75Www8J");
+  const softShadowSetting = getThemeSetting("_yyUleMlhR4");
+  const shippingBarRadiusSetting = getThemeSetting("_6yX0RuKGDr");
 
-  const drawerWidth = drawerWidthSetting?.value || "420px";
+  const drawerWidth = drawerWidthSetting?.value || "440px";
   const checkoutBtnHeight = checkoutBtnHeightSetting?.value || "52px";
-  const itemImgRadius = itemImgRadiusSetting?.value || "12px";
+  const itemImgRadius = itemImgRadiusSetting?.value || "16px";
+  const drawerAnim =
+    drawerAnimSetting?.value ||
+    "transform 0.42s cubic-bezier(0.32, 0.72, 0, 1)";
+  const panelShadow =
+    softShadowSetting?.value ||
+    "0 24px 60px color-mix(in srgb, var(--pxNuSoudLn) 16%, transparent)";
   const shippingBarRadius = shippingBarRadiusSetting?.value || "4px";
-  const drawerAnim = drawerAnimSetting?.value || "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)";
 
   const inlineStyles = {
     "--drawer-width": drawerWidth,
     "--checkout-btn-height": checkoutBtnHeight,
     "--item-img-radius": itemImgRadius,
-    "--shipping-bar-radius": shippingBarRadius,
     "--drawer-transition": drawerAnim,
+    "--panel-shadow": panelShadow,
+    "--shipping-bar-radius": shippingBarRadius,
   };
 
-  // Cart Data Reads (MobX reactive)
   const cart = cartStore.cart;
   const lineItems = cart?.orderLineItems ?? [];
-  const itemCount = lineItems.reduce((acc, item) => acc + (item.quantity ?? 1), 0);
+  const itemCount = lineItems.reduce(
+    (acc, item) => acc + (item.quantity ?? 1),
+    0
+  );
   const isEmpty = itemCount === 0;
 
-  // Calculate numeric total price for free shipping bar
   const totalAmountNum = lineItems.reduce((acc, item) => {
-    const finalPriceVal = (item as any).finalPrice ?? (item.variant as any)?.finalPrice ?? 0;
+    const finalPriceVal =
+      (item as any).finalPrice ?? (item.variant as any)?.finalPrice ?? 0;
     return acc + finalPriceVal * (item.quantity ?? 1);
   }, 0);
 
@@ -120,12 +434,39 @@ export function CartDrawer({
   const freeShippingPercent = (freeShippingRatio * 100).toFixed(0);
   const remainingAmount = Math.max(0, freeShippingThreshold - totalAmountNum);
   const isFreeShipping = totalAmountNum >= freeShippingThreshold;
+  const shippingNotice = isFreeShipping
+    ? freeShippingAchievedText
+    : formatRemainingMessage(freeShippingRemainingText, remainingAmount);
 
-  const formattedTotal = cart ? getIkasOrderFormattedTotalFinalPrice(cart) : "0 TL";
+  const formattedTotal = cart
+    ? getIkasOrderFormattedTotalFinalPrice(cart)
+    : "0 TL";
+  const couponAdjustment = cart
+    ? getIkasOrderCouponAdjustment(cart)
+    : undefined;
+  const discountFormatted = couponAdjustment
+    ? getOrderAdjustmentFormattedAmount(couponAdjustment)
+    : null;
+
+  const upsellProducts = [
+    cartUpsellProduct1,
+    cartUpsellProduct2,
+    cartUpsellProduct3,
+    cartUpsellProduct4,
+  ].filter((p): p is IkasProduct => !!p);
+
+  const updateQuantity = async (item: (typeof lineItems)[0], next: number) => {
+    if (busyItemId) return;
+    setBusyItemId(item.id);
+    try {
+      await changeItemQuantity(item, Math.max(0, next));
+    } finally {
+      setBusyItemId(null);
+    }
+  };
 
   const content = (
     <>
-      {/* BACKDROP OVERLAY */}
       <div
         className={`ikas-cart-drawer__backdrop ${
           activeOpen ? "ikas-cart-drawer__backdrop--open" : ""
@@ -133,7 +474,6 @@ export function CartDrawer({
         onClick={handleClose}
       />
 
-      {/* DRAWER DIALOG PANEL */}
       <div
         className={`ikas-cart-drawer ${
           activeOpen ? "ikas-cart-drawer--open" : ""
@@ -141,79 +481,43 @@ export function CartDrawer({
         style={inlineStyles}
         role="dialog"
         aria-modal="true"
-        aria-label="Alışveriş Sepeti"
+        aria-label={cartDrawerTitle}
       >
-        {/* 1. HEADER */}
         <div className="ikas-cart-drawer__header">
-          <div className="ikas-cart-drawer__title-group">
-            <h2 className="ikas-cart-drawer__title _AHnMWYqzuI">Sepetiniz</h2>
-            <span className="ikas-cart-drawer__count _C0OZ8W7vYS">
-              ({itemCount} Ürün)
-            </span>
-          </div>
+          <h2 className="ikas-cart-drawer__title _AHnMWYqzuI">
+            {cartDrawerTitle}
+          </h2>
           <button
             type="button"
             className="ikas-cart-drawer__close-btn"
-            aria-label="Sepeti Kapat"
+            aria-label={closeCartLabel}
             onClick={handleClose}
           >
             <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
               fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              aria-hidden="true"
             >
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
+              <path
+                d="M3 3l10 10M13 3L3 13"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
             </svg>
           </button>
         </div>
 
-        {/* 2. FREE SHIPPING PROGRESS BAR */}
-        {!isEmpty && (
-          <div className="ikas-cart-drawer__shipping-bar">
-            <p className="ikas-cart-drawer__shipping-text _eZyocyyd0F">
-              {isFreeShipping
-                ? "Tebrikler! Kargonuz ÜCRETSİZ!"
-                : `Ücretsiz kargo için ${remainingAmount.toFixed(0)} TL kaldı!`}
-            </p>
-            <div className="ikas-cart-drawer__progress-bg">
-              <div
-                className="ikas-cart-drawer__progress-fill"
-                style={{ width: `${freeShippingPercent}%` }}
-              />
-            </div>
-          </div>
-        )}
-
-        {/* 3. ITEM LIST OR EMPTY STATE */}
         {isEmpty ? (
           <div className="ikas-cart-drawer__empty">
-            <svg
-              className="ikas-cart-drawer__empty-icon"
-              width="64"
-              height="64"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <path d="M16 10a4 4 0 0 1-8 0" />
-            </svg>
-            <h3 className="ikas-cart-drawer__empty-title _AHnMWYqzuI">
+            <p className="ikas-cart-drawer__empty-title _VcfI5D07Nt">
               {emptyCartTitle}
-            </h3>
+            </p>
             <Button
               text={emptyCartButtonText}
-              variant="PRIMARY"
+              variant="PILL_PRIMARY"
               size="LARGE"
               onClick={() => {
                 handleClose();
@@ -222,119 +526,203 @@ export function CartDrawer({
             />
           </div>
         ) : (
-          <div className="ikas-cart-drawer__items-container">
-            {lineItems.map((item) => {
-              const variantImage = item.variant
-                ? getIkasOrderLineVariantMainImage(item.variant)
-                : null;
-              const imgObj = (variantImage as any)?.image || variantImage;
-              const imgSrc = imgObj ? getDefaultSrc(imgObj) : null;
+          <>
+            <div className="ikas-cart-drawer__body">
+              <div className="ikas-cart-drawer__notice">
+                <p className="ikas-cart-drawer__notice-text _eZyocyyd0F">
+                  {shippingNotice}
+                </p>
+                <div className="ikas-cart-drawer__progress-bg">
+                  <div
+                    className="ikas-cart-drawer__progress-fill"
+                    style={{ width: `${freeShippingPercent}%` }}
+                  />
+                </div>
+              </div>
 
-              const title = item.variant?.name || "Ürün";
-              const price = getOrderLineItemFormattedFinalPrice(item);
+              <ul className="ikas-cart-drawer__list">
+                {lineItems.map((item) => {
+                  const variantImage = item.variant
+                    ? getIkasOrderLineVariantMainImage(item.variant)
+                    : null;
+                  const imgObj = (variantImage as any)?.image || variantImage;
+                  const imgSrc = imgObj ? getDefaultSrc(imgObj) : null;
+                  const title = item.variant?.name || "Ürün";
+                  const href = item.variant
+                    ? getIkasOrderLineVariantHref(item.variant)
+                    : undefined;
+                  const finalPrice =
+                    getOrderLineItemFormattedFinalPriceWithQuantity(item);
+                  const hasDiscount = hasOrderLineItemDiscount(item);
+                  const originalPrice = hasDiscount
+                    ? getOrderLineItemFormattedPriceWithQuantity(item)
+                    : null;
+                  const isBusy = busyItemId === item.id;
 
-              return (
-                <div key={item.id} className="ikas-cart-drawer__item">
-                  <div className="ikas-cart-drawer__item-img-wrapper">
-                    {imgSrc ? (
-                      <img
-                        src={imgSrc}
-                        alt={title}
-                        className="ikas-cart-drawer__item-img"
-                      />
-                    ) : (
-                      <div className="ikas-cart-drawer__item-img-placeholder" />
-                    )}
-                  </div>
+                  return (
+                    <li
+                      key={item.id}
+                      className={`ikas-cart-drawer__line ${
+                        isBusy ? "ikas-cart-drawer__line--busy" : ""
+                      }`}
+                    >
+                      {href ? (
+                        <a
+                          href={href}
+                          className="ikas-cart-drawer__line-media"
+                        >
+                          {imgSrc ? (
+                            <img
+                              src={imgSrc}
+                              alt={title}
+                              className="ikas-cart-drawer__line-img"
+                            />
+                          ) : (
+                            <div className="ikas-cart-drawer__line-placeholder" />
+                          )}
+                        </a>
+                      ) : (
+                        <div className="ikas-cart-drawer__line-media">
+                          {imgSrc ? (
+                            <img
+                              src={imgSrc}
+                              alt={title}
+                              className="ikas-cart-drawer__line-img"
+                            />
+                          ) : (
+                            <div className="ikas-cart-drawer__line-placeholder" />
+                          )}
+                        </div>
+                      )}
 
-                  <div className="ikas-cart-drawer__item-info">
-                    <h4 className="ikas-cart-drawer__item-title _VcfI5D07Nt">
-                      {title}
-                    </h4>
+                      <div className="ikas-cart-drawer__line-body">
+                        {href ? (
+                          <a
+                            href={href}
+                            className="ikas-cart-drawer__line-name _VcfI5D07Nt"
+                          >
+                            {title}
+                          </a>
+                        ) : (
+                          <span className="ikas-cart-drawer__line-name _VcfI5D07Nt">
+                            {title}
+                          </span>
+                        )}
+                        <div className="ikas-cart-drawer__line-prices">
+                          <span className="ikas-cart-drawer__line-price _VcfI5D07Nt">
+                            {finalPrice}
+                          </span>
+                          {originalPrice ? (
+                            <span className="ikas-cart-drawer__line-old _C0OZ8W7vYS">
+                              {originalPrice}
+                            </span>
+                          ) : null}
+                        </div>
+                      </div>
 
-                    <div className="ikas-cart-drawer__item-bottom">
-                      {/* MİKTAR DEĞİŞTİRME */}
-                      <div className="ikas-cart-drawer__quantity">
+                      <div className="ikas-cart-drawer__stepper">
                         <button
                           type="button"
-                          className="ikas-cart-drawer__qty-btn"
-                          aria-label="Adet Azalt"
-                          disabled={item.quantity <= 1}
+                          aria-label={decreaseQtyLabel}
+                          disabled={isBusy}
                           onClick={() =>
-                            changeItemQuantity(item, Math.max(1, item.quantity - 1))
+                            updateQuantity(item, (item.quantity ?? 1) - 1)
                           }
                         >
-                          -
+                          <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 14 14"
+                            fill="none"
+                            aria-hidden="true"
+                          >
+                            <path
+                              d="M3 7h8"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                            />
+                          </svg>
                         </button>
-                        <span className="ikas-cart-drawer__qty-val _eZyocyyd0F">
+                        <span className="ikas-cart-drawer__stepper-value _eZyocyyd0F">
                           {item.quantity}
                         </span>
                         <button
                           type="button"
-                          className="ikas-cart-drawer__qty-btn"
-                          aria-label="Adet Artır"
+                          aria-label={increaseQtyLabel}
+                          disabled={isBusy}
                           onClick={() =>
-                            changeItemQuantity(item, item.quantity + 1)
+                            updateQuantity(item, (item.quantity ?? 1) + 1)
                           }
                         >
-                          +
+                          <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 14 14"
+                            fill="none"
+                            aria-hidden="true"
+                          >
+                            <path
+                              d="M7 3v8M3 7h8"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                            />
+                          </svg>
                         </button>
                       </div>
+                    </li>
+                  );
+                })}
+              </ul>
 
-                      <span className="ikas-cart-drawer__item-price _VcfI5D07Nt">
-                        {price}
-                      </span>
-
-                      {/* SİL BUTONU */}
-                      <button
-                        type="button"
-                        className="ikas-cart-drawer__item-remove"
-                        aria-label="Ürünü Sepetten Çıkar"
-                        onClick={() => removeItem(item)}
-                      >
-                        <svg
-                          width="18"
-                          height="18"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <polyline points="3 6 5 6 21 6" />
-                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        {/* 4. FOOTER AREA & CHECKOUT */}
-        {!isEmpty && (
-          <div className="ikas-cart-drawer__footer">
-            <div className="ikas-cart-drawer__summary-row _VcfI5D07Nt">
-              <span>Ara Toplam:</span>
-              <span className="ikas-cart-drawer__summary-total">
-                {formattedTotal}
-              </span>
+              {upsellProducts.length > 0 ? (
+                <CartUpsellBlock
+                  products={upsellProducts}
+                  title={upsellTitle}
+                  addOfferText={addOfferText}
+                  prevOfferLabel={prevOfferLabel}
+                  nextOfferLabel={nextOfferLabel}
+                />
+              ) : null}
             </div>
 
-            <Button
-              text="Ödemeye Geç"
-              variant="PRIMARY"
-              fullWidth
-              size="LARGE"
-              onClick={() => {
-                handleClose();
-                Router.navigateToPage("CHECKOUT");
-              }}
+            <CartCouponBlock
+              promoTitle={promoTitle}
+              promoPlaceholder={promoPlaceholder}
+              promoApplyText={promoApplyText}
+              promoRemoveText={promoRemoveText}
             />
-          </div>
+
+            <div className="ikas-cart-drawer__footer">
+              {discountFormatted ? (
+                <div className="ikas-cart-drawer__row _eZyocyyd0F">
+                  <span>{discountsLabel}</span>
+                  <span className="ikas-cart-drawer__discount">
+                    {discountFormatted}
+                  </span>
+                </div>
+              ) : null}
+
+              <div className="ikas-cart-drawer__row ikas-cart-drawer__row--total _AHnMWYqzuI">
+                <span>{totalLabel}</span>
+                <span>{formattedTotal}</span>
+              </div>
+
+              <p className="ikas-cart-drawer__tax _eZyocyyd0F">{taxNoteText}</p>
+
+              <Button
+                text={checkoutButtonText}
+                variant="PILL_ACCENT"
+                fullWidth
+                size="LARGE"
+                onClick={() => {
+                  handleClose();
+                  Router.navigateToPage("CHECKOUT");
+                }}
+              />
+            </div>
+          </>
         )}
       </div>
     </>

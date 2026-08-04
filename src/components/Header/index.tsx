@@ -42,6 +42,31 @@ export function Header({
   searchLabel,
   accountLabel,
   cartLabel,
+  cartDrawerTitle,
+  emptyCartTitle,
+  emptyCartButtonText,
+  closeCartLabel,
+  freeShippingAchievedText,
+  freeShippingRemainingText,
+  freeShippingThreshold,
+  upsellTitle,
+  addOfferText,
+  promoTitle,
+  promoPlaceholder,
+  promoApplyText,
+  promoRemoveText,
+  discountsLabel,
+  totalLabel,
+  taxNoteText,
+  checkoutButtonText,
+  decreaseQtyLabel,
+  increaseQtyLabel,
+  prevOfferLabel,
+  nextOfferLabel,
+  cartUpsellProduct1,
+  cartUpsellProduct2,
+  cartUpsellProduct3,
+  cartUpsellProduct4,
   className = "",
 }: HeaderProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -366,7 +391,33 @@ export function Header({
       </div>
 
       {/* ENTEGRE ALT BİLEŞENLER */}
-      <CartDrawer />
+      <CartDrawer
+        cartDrawerTitle={cartDrawerTitle}
+        emptyCartTitle={emptyCartTitle}
+        emptyCartButtonText={emptyCartButtonText}
+        closeCartLabel={closeCartLabel}
+        freeShippingAchievedText={freeShippingAchievedText}
+        freeShippingRemainingText={freeShippingRemainingText}
+        freeShippingThreshold={freeShippingThreshold}
+        upsellTitle={upsellTitle}
+        addOfferText={addOfferText}
+        promoTitle={promoTitle}
+        promoPlaceholder={promoPlaceholder}
+        promoApplyText={promoApplyText}
+        promoRemoveText={promoRemoveText}
+        discountsLabel={discountsLabel}
+        totalLabel={totalLabel}
+        taxNoteText={taxNoteText}
+        checkoutButtonText={checkoutButtonText}
+        decreaseQtyLabel={decreaseQtyLabel}
+        increaseQtyLabel={increaseQtyLabel}
+        prevOfferLabel={prevOfferLabel}
+        nextOfferLabel={nextOfferLabel}
+        cartUpsellProduct1={cartUpsellProduct1}
+        cartUpsellProduct2={cartUpsellProduct2}
+        cartUpsellProduct3={cartUpsellProduct3}
+        cartUpsellProduct4={cartUpsellProduct4}
+      />
       <SearchOverlay />
     </header>
   );

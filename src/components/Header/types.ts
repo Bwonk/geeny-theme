@@ -1,5 +1,5 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasImage, IkasNavigationLinkList } from "@ikas/bp-storefront";
+import type { IkasImage, IkasNavigationLinkList, IkasProduct } from "@ikas/bp-storefront";
 
 export interface Props {
   /** Header alanında görünecek marka logo görseli */
@@ -17,4 +17,34 @@ export interface Props {
   searchLabel?: string;
   accountLabel?: string;
   cartLabel?: string;
+  cartDrawerTitle?: string;
+  emptyCartTitle?: string;
+  emptyCartButtonText?: string;
+  closeCartLabel?: string;
+  freeShippingAchievedText?: string;
+  /** Use {amount} placeholder for remaining amount */
+  freeShippingRemainingText?: string;
+  freeShippingThreshold?: number;
+  upsellTitle?: string;
+  addOfferText?: string;
+  promoTitle?: string;
+  promoPlaceholder?: string;
+  promoApplyText?: string;
+  promoRemoveText?: string;
+  discountsLabel?: string;
+  totalLabel?: string;
+  taxNoteText?: string;
+  checkoutButtonText?: string;
+  decreaseQtyLabel?: string;
+  increaseQtyLabel?: string;
+  /** Sepet çekmecesinde önerilecek 1. ürün */
+  cartUpsellProduct1?: IkasProduct | null;
+  /** Sepet çekmecesinde önerilecek 2. ürün */
+  cartUpsellProduct2?: IkasProduct | null;
+  /** Sepet çekmecesinde önerilecek 3. ürün */
+  cartUpsellProduct3?: IkasProduct | null;
+  /** Sepet çekmecesinde önerilecek 4. ürün */
+  cartUpsellProduct4?: IkasProduct | null;
+  prevOfferLabel?: string;
+  nextOfferLabel?: string;
 }

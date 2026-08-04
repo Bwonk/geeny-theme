@@ -1,0 +1,50 @@
+// This file is auto-generated — do not edit manually.
+import type { IkasImageList, IkasImage } from "@ikas/bp-storefront";
+import type { ObjectFit } from "../../global-types";
+
+export interface Props {
+  backgroundColor?: string;
+  brandKicker?: string;
+  stageKicker?: string;
+  stageHeading?: string;
+  stageIntro?: string;
+  stageMeta?: string;
+  stageHint?: string;
+  stageHintMobile?: string;
+  barLabels?: string;
+  centerBarLabel?: string;
+  centerBarHint?: string;
+  centerBarAria?: string;
+  barCount?: number;
+  enableMagnify?: boolean;
+  panelBrandKicker?: string;
+  panelBrandTitle?: string;
+  panelBrandMeta?: string;
+  loginTabText?: string;
+  registerTabText?: string;
+  closeButtonLabel?: string;
+  emailLabel?: string;
+  emailPlaceholder?: string;
+  passwordLabel?: string;
+  passwordPlaceholder?: string;
+  forgotPasswordText?: string;
+  loginSubmitText?: string;
+  loginSubmittingText?: string;
+  fullNameLabel?: string;
+  fullNamePlaceholder?: string;
+  passwordConfirmLabel?: string;
+  passwordConfirmPlaceholder?: string;
+  passwordMismatchText?: string;
+  agreementConsentText?: string;
+  registerSubmitText?: string;
+  registerSubmittingText?: string;
+  showPasswordLabel?: string;
+  hidePasswordLabel?: string;
+  barImages?: IkasImageList;
+  centerBarImage?: IkasImage | null;
+  barObjectFit?: ObjectFit;
+  showBarImageOverlay?: boolean;
+  panelBrandImage?: IkasImage | null;
+  panelObjectFit?: ObjectFit;
+  showPanelImageOverlay?: boolean;
+}

@@ -25,3 +25,4 @@ export { AuthSection } from "./AuthSection/index";
 export { ForgotPasswordSection } from "./ForgotPasswordSection/index";
 export { AccountDashboard } from "./AccountDashboard/index";
 export { RecoverPasswordSection } from "./RecoverPasswordSection/index";
+export { MagneticAuthSection } from "./MagneticAuthSection/index";

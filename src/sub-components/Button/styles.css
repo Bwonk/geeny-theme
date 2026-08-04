@@ -25,7 +25,10 @@
   text-decoration: none;
   cursor: pointer;
   border: none;
-  font-family: inherit;
+  /* Klasik variant'lar: gövde fontu. Tipografi class (_VcfI5D07Nt) size/weight
+     ekler. `inherit` kullanma — scoped specificity tipografi class'ını ezer,
+     portal/body'de storefront Inter'ine düşer. Pill'ler kendi fontunu set eder. */
+  font-family: var(--font-body);
   font-size: 18px;
   font-weight: 500;
   letter-spacing: 0.02em;

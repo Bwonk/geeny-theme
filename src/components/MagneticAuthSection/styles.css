@@ -1,0 +1,657 @@
+@import "../../sub-components/Button/styles.css";
+@import "../../sub-components/MagneticAuthBrandSide/styles.css";
+@import "../../sub-components/MagneticAuthRow/styles.css";
+
+/* ══════════════════════════════════════════════════════════════
+   Magnetic Auth Section — Saf Beyaz stage, split layout
+   Left: branding column · Right: magnetic bar dock
+   Saf Beyaz: var(--24KlcgGmm9) — TOKENS.md satır 14
+   ══════════════════════════════════════════════════════════════ */
+
+.ikas-mgauth {
+  /* Dock geometry — JS magnification reads base sizes from here.
+     Single-column stacked layout (matches the iPad view) at all widths ≥768. */
+  --mg-bar-w: 76px;
+  --mg-bar-h: 264px;
+  --mg-bar-cw: 104px;
+  --mg-bar-ch: 288px;
+  --mg-bar-gap: 12px;
+  --mg-bar-radius: 22px;
+  --mg-on-dark: var(--24KlcgGmm9, #fff);
+  --mg-on-dark-soft: color-mix(in srgb, var(--24KlcgGmm9) 62%, transparent);
+  --mg-on-dark-faint: color-mix(in srgb, var(--24KlcgGmm9) 40%, transparent);
+  --mg-line-on-dark: var(--pFqY0XGdSq, rgba(255, 255, 255, 0.12));
+  /* Announcement (~38) + VelocityBelt (~100) — keep belt in first paint */
+  --mg-chrome-reserve: 138px;
+
+  position: relative;
+  width: 100%;
+  min-height: calc(100svh - var(--mg-chrome-reserve));
+  box-sizing: border-box;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  color: var(--pxNuSoudLn, #37435b);
+  background-color: var(--24KlcgGmm9, #ffffff);
+}
+
+.ikas-mgauth__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: center;
+  gap: clamp(36px, 6vh, 56px);
+  width: 100%;
+  max-width: var(--max-site-width, 1560px);
+  margin: 0 auto;
+  padding: clamp(48px, 8vh, 72px) var(--section-px, 20px);
+  box-sizing: border-box;
+}
+
+/* ─── Stage / dock ─── */
+
+.ikas-mgauth__stage {
+  position: relative;
+  min-width: 0;
+}
+
+.ikas-mgauth__dim {
+  transition:
+    filter 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ikas-mgauth__scroll {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  scrollbar-width: none;
+}
+
+.ikas-mgauth__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─── Scrim ───
+   Fixed to the viewport so sibling sections (VelocityBelt, etc.)
+   are covered when the auth panel is open — absolute inset:0 only
+   covered .ikas-mgauth itself. */
+
+.ikas-mgauth__scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: var(--fRUyppFgyp, rgba(55, 67, 91, 0.75));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+}
+
+.ikas-mgauth__scrim[data-open="true"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ─── Morphing panel (dialog) ─── */
+
+.ikas-mgauth__panel {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  z-index: 41;
+  visibility: hidden;
+  overflow: hidden;
+  box-sizing: border-box;
+  border-radius: 26px;
+  background: var(--wElEhJwjYh, #f4f5f5);
+  border: 1.5px solid color-mix(in srgb, var(--sy8ZnXZdoG) 55%, transparent);
+  box-shadow: var(--mg-card-shadow);
+  will-change: left, top, width, height;
+}
+
+.ikas-mgauth__panel-grid {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ikas-mgauth__panel-grid[data-visible="true"] {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* Panel brand column — solid navy (image optional) */
+.ikas-mgauth__panel-brand {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 30px 26px;
+  overflow: hidden;
+  background: var(--pxNuSoudLn, #37435b);
+  color: var(--24KlcgGmm9, #fff);
+}
+
+.ikas-mgauth__panel-brand-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ikas-mgauth__panel-brand-img-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--vluFeuIeFs) 48%, transparent);
+}
+
+.ikas-mgauth__panel-brand-top {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ikas-mgauth__panel-wordmark {
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  color: var(--24KlcgGmm9, #fff);
+}
+
+.ikas-mgauth__panel-kicker {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: color-mix(in srgb, var(--24KlcgGmm9) 50%, transparent);
+}
+
+.ikas-mgauth__panel-brand-bottom {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ikas-mgauth__panel-title {
+  margin: 0;
+  font-family: Onest, system-ui, sans-serif;
+  font-weight: 500;
+  font-size: clamp(17px, 2vw, 21px);
+  line-height: 1.24;
+  letter-spacing: -0.02em;
+  color: var(--24KlcgGmm9, #fff);
+  text-wrap: pretty;
+}
+
+/* Panel reuses brand-side meta layout; keep on-dark text on navy column */
+.ikas-mgauth__panel-brand .ikas-mgauth__meta-text {
+  color: var(--mg-on-dark-soft);
+}
+
+/* Panel form column — light surface */
+.ikas-mgauth__panel-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px 28px;
+  overflow: auto;
+  color: var(--pxNuSoudLn, #37435b);
+}
+
+.ikas-mgauth__panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.ikas-mgauth__panel-form-wordmark {
+  display: none;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  color: var(--pxNuSoudLn, #37435b);
+}
+
+.ikas-mgauth__panel-close {
+  flex: 0 0 auto;
+  margin-left: auto;
+  width: 36px;
+  height: 36px;
+  box-sizing: border-box;
+  border: 1.5px solid var(--0RbHz765Hw, #dce0e1);
+  border-radius: 9999px;
+  background: var(--24KlcgGmm9, #fff);
+  color: var(--pxNuSoudLn, #37435b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.25s ease;
+}
+
+.ikas-mgauth__panel-close:hover {
+  background: var(--pxNuSoudLn, #37435b);
+  border-color: var(--pxNuSoudLn, #37435b);
+  color: var(--24KlcgGmm9, #fff);
+  transform: rotate(90deg);
+}
+
+.ikas-mgauth__panel-close:focus-visible {
+  outline: 2px solid var(--pxNuSoudLn, #37435b);
+  outline-offset: 3px;
+}
+
+.ikas-mgauth__panel-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 0;
+}
+
+/* ─── Login/Register switcher (panel-local, dark indicator) ─── */
+
+.ikas-mgauth__switcher {
+  position: relative;
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 4px;
+  border-radius: 9999px;
+  background: var(--jQs026VIpf, #edeff0);
+}
+
+.ikas-mgauth__switcher-pill {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  border-radius: 9999px;
+  background: var(--pxNuSoudLn, #37435b);
+  transform: translateX(0);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.ikas-mgauth__switcher[data-tab="register"] .ikas-mgauth__switcher-pill {
+  transform: translateX(100%);
+}
+
+.ikas-mgauth__tab {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  border-radius: 9999px;
+  padding: 11px 8px;
+  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+  text-align: center;
+  cursor: pointer;
+  color: var(--p6EMJiXye1, #8c97a5);
+  transition: color 0.3s ease;
+}
+
+.ikas-mgauth__tab[aria-selected="true"] {
+  color: var(--24KlcgGmm9, #fff);
+}
+
+.ikas-mgauth__tab:focus-visible {
+  outline: 2px solid var(--pxNuSoudLn, #37435b);
+  outline-offset: 2px;
+}
+
+/* ─── Embedded auth form styles (AuthLoginForm / AuthRegisterForm class names,
+       tuned for panel density) ─── */
+
+.ikas-mgauth .ikas-auth__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: ikas-mgauth-field-in 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ikas-mgauth .ikas-auth__field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ikas-mgauth .ikas-auth__label {
+  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  color: var(--p6EMJiXye1, #8c97a5);
+}
+
+.ikas-mgauth .ikas-auth__banner {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, #c0392b 35%, transparent);
+  background: color-mix(in srgb, #c0392b 8%, transparent);
+  color: #8f1f1f;
+  font-family: Onest, system-ui, sans-serif;
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+
+.ikas-mgauth .ikas-auth__input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.ikas-mgauth .ikas-auth__input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1.5px solid var(--0RbHz765Hw, #dce0e1);
+  border-radius: 14px;
+  background: var(--24KlcgGmm9, #fff);
+  color: var(--pxNuSoudLn, #37435b);
+  font-family: "Roboto Flex", Onest, system-ui, sans-serif;
+  font-size: 14px;
+  padding: 12px 15px;
+  outline: none;
+  transition:
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.ikas-mgauth .ikas-auth__input-wrap .ikas-auth__input {
+  padding-right: 48px;
+}
+
+.ikas-mgauth .ikas-auth__input:hover {
+  border-color: var(--cdFDkBbKkc, #c8cfd0);
+}
+
+.ikas-mgauth .ikas-auth__input:focus {
+  border-color: var(--pxNuSoudLn, #37435b);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--sy8ZnXZdoG) 45%, transparent);
+}
+
+.ikas-mgauth .ikas-auth__input--error,
+.ikas-mgauth .ikas-auth__input--error:focus {
+  border-color: #b9563f;
+  box-shadow: 0 0 0 3px color-mix(in srgb, #b9563f 28%, transparent);
+}
+
+.ikas-mgauth .ikas-auth__pw-toggle {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 9999px;
+  background: transparent;
+  color: var(--p6EMJiXye1, #8c97a5);
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    background 0.22s ease,
+    color 0.22s ease;
+}
+
+.ikas-mgauth .ikas-auth__pw-toggle:hover {
+  background: var(--jQs026VIpf, #edeff0);
+  color: var(--pxNuSoudLn, #37435b);
+}
+
+.ikas-mgauth .ikas-auth__error {
+  font-family: Onest, system-ui, sans-serif;
+  font-size: 11.5px;
+  color: #8f1f1f;
+}
+
+.ikas-mgauth .ikas-auth__strength {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  margin-top: 2px;
+}
+
+.ikas-mgauth .ikas-auth__strength-bar {
+  height: 3px;
+  border-radius: 9999px;
+  background: var(--8ARbeTYsmD, #e4e7e8);
+}
+
+.ikas-mgauth .ikas-auth__strength-bar--on {
+  background: var(--sy8ZnXZdoG);
+}
+
+.ikas-mgauth .ikas-auth__row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ikas-mgauth .ikas-auth__forgot {
+  border: 0;
+  background: none;
+  padding: 0 0 3px;
+  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--pxNuSoudLn, #37435b);
+  cursor: pointer;
+  border-bottom: 2px solid var(--sy8ZnXZdoG);
+  line-height: 1.2;
+}
+
+.ikas-mgauth .ikas-auth__forgot:hover {
+  color: var(--fcAwzuFj9W, #101418);
+}
+
+.ikas-mgauth .ikas-auth__consent-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ikas-mgauth .ikas-auth__consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-family: "Roboto Flex", Onest, system-ui, sans-serif;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--xGFwg5Zqpf, #6e7a8c);
+  cursor: pointer;
+  transition: color 0.22s ease;
+}
+
+.ikas-mgauth .ikas-auth__consent:hover {
+  color: var(--pxNuSoudLn, #37435b);
+}
+
+.ikas-mgauth .ikas-auth__consent-link {
+  border-bottom: 2px solid var(--sy8ZnXZdoG);
+}
+
+.ikas-mgauth .ikas-auth__checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 19px;
+  height: 19px;
+  margin: 1px 0 0;
+  flex: 0 0 19px;
+  box-sizing: border-box;
+  border: 1.5px solid var(--cdFDkBbKkc, #c8cfd0);
+  border-radius: 6px;
+  background: var(--24KlcgGmm9, #fff);
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+  transition:
+    background 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.ikas-mgauth .ikas-auth__checkbox::after {
+  content: "";
+  width: 9px;
+  height: 5px;
+  border-left: 2.5px solid var(--fcAwzuFj9W, #101418);
+  border-bottom: 2.5px solid var(--fcAwzuFj9W, #101418);
+  transform: rotate(-45deg) translateY(-1px);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.ikas-mgauth .ikas-auth__checkbox:checked {
+  background: var(--sy8ZnXZdoG);
+  border-color: var(--sy8ZnXZdoG);
+}
+
+.ikas-mgauth .ikas-auth__checkbox:checked::after {
+  opacity: 1;
+}
+
+.ikas-mgauth .ikas-auth__checkbox:focus-visible {
+  outline: 2px solid var(--pxNuSoudLn, #37435b);
+  outline-offset: 3px;
+}
+
+.ikas-mgauth .ikas-auth__checkbox[aria-invalid="true"] {
+  border-color: #b9563f;
+}
+
+.ikas-mgauth .ikas-auth__submit {
+  margin-top: 6px;
+}
+
+@keyframes ikas-mgauth-field-in {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ══════════════ Desktop (≥1200): larger dock + first-paint velocity fit ══════════════ */
+
+@media (min-width: 1200px) {
+  .ikas-mgauth {
+    --mg-bar-w: 112px;
+    --mg-bar-h: 360px;
+    --mg-bar-cw: 148px;
+    --mg-bar-ch: 400px;
+    --mg-bar-gap: 16px;
+    --mg-bar-radius: 26px;
+  }
+
+  .ikas-mgauth__inner {
+    padding: clamp(28px, 4vh, 40px) var(--section-px, 20px);
+    gap: clamp(28px, 4vh, 40px);
+  }
+}
+
+/* ══════════════ Tablet (768–1199): panel grid only (dock = base iPad geometry) ══════════════ */
+
+@media (max-width: 1199px) {
+  .ikas-mgauth__panel-grid {
+    grid-template-columns: 34% 66%;
+  }
+
+  .ikas-mgauth__panel-brand {
+    padding: 26px 22px;
+  }
+
+  .ikas-mgauth__panel-form {
+    padding: 22px 24px;
+  }
+}
+
+/* ══════════════ Mobile (≤767): swipe carousel, no magnification ══════════════ */
+
+@media (max-width: 767px) {
+  .ikas-mgauth {
+    --mg-bar-w: 74px;
+    --mg-bar-h: 248px;
+    --mg-bar-cw: 116px;
+    --mg-bar-ch: 278px;
+    --mg-bar-gap: 12px;
+  }
+
+  .ikas-mgauth__inner {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .ikas-mgauth__scroll {
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 8px 0;
+  }
+
+  /* Panel: single column, brand panel hidden, wordmark inside the form */
+  .ikas-mgauth__panel-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ikas-mgauth__panel-brand {
+    display: none;
+  }
+
+  .ikas-mgauth__panel-form {
+    padding: 22px 20px;
+  }
+
+  .ikas-mgauth__panel-form-wordmark {
+    display: block;
+  }
+}
+
+/* ══════════════ Reduced motion ══════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .ikas-mgauth__dim,
+  .ikas-mgauth__scrim,
+  .ikas-mgauth__panel-grid,
+  .ikas-mgauth__switcher-pill,
+  .ikas-mgauth__panel-close {
+    transition: none;
+  }
+
+  .ikas-mgauth .ikas-auth__form {
+    animation: none;
+  }
+}

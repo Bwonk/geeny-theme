@@ -199,15 +199,18 @@ Bileşenlerde ölçü/ağırlık elle yazılmaz; ilgili token'ın `className`'i 
 - **ikas Karşılığı:** ikas `IkasProduct.variantTypes` + `IkasVariantValue` (`isColorVariantValue`), `COMPONENT_LIST` ile akordiyon içerikleri.
 
 ### 6. Slide-Out Cart Drawer & Cart Page (`<cart-drawer>`)
-- **Amaç:** Sepetteki ürünleri göstermek ve hızlı ödemeye yönlendirmek.
-- **Yapı:** Sağdan kayarak açılan panel (`width: 420px` [mobil: `%100` genişlik]).
+- **Amaç:** Sepetteki ürünleri göstermek, AOV artırmak (upsell + kupon) ve hızlı ödemeye yönlendirmek.
+- **Yapı:** Sağdan kayarak açılan panel (`width: min(440px, 100vw)`). Desktop (`≥768px`): kenardan `16px` inset floating panel + `border-radius: 24px` + soft panel shadow. Mobil: full-bleed.
+- **Motion:** `0.42s cubic-bezier(0.32, 0.72, 0, 1)` + backdrop opacity; `prefers-reduced-motion` destekli.
 - **Bileşenler:**
-  - **Free Shipping Bar:** Üstte kalan tutarı gösteren ilerleme çubuğu (`height: 8px`, `border-radius: 4px`, `background: #E3E045`).
-  - **Sepet İtem Listesi:** Görsel (`80x80px`, `radius: 12px`), Ürün Başlığı, Seçili Varyant, Adet Butonları, Fiyat ve Sil İkonu.
-  - **Sipariş Notu (Order Note):** Tıklanınca açılan metin alanı (`textarea`, `border-radius: 8px`).
-  - **Alt Toplam & Checkout Butonu:** Toplam fiyat, "Checkout" butonu (`height: 52px`, `bg: #37435B`, `color: #FFFFFF`, `font-size: 16px`, `uppercase`).
-- **Boş Sepet Durumu (Empty Cart State):** Sepet boşken illüstrasyon/ikon, "Your cart is currently empty" metni ve "Continue Shopping" CTA butonu.
-- **ikas Karşılığı:** `@ikas/bp-storefront` `cartStore` (`addItemToCart`, `changeCartItemQuantity`, `removeItem`).
+  - **Header:** Başlık + dairesel soft-surface kapat butonu (`40px`).
+  - **Shipping Notice Chip:** Progress bar yerine ortalanmış notice (`border-radius: 16px`, soft surface). Ücretsiz kargo kazanıldı / kalan tutar (`{amount}` placeholder).
+  - **Sepet İtem Listesi:** Grid `88px | 1fr | auto` — görsel link, ürün adı, final + çizili eski fiyat, pill stepper (qty→0 siler; çöp ikonu yok).
+  - **Upsell Carousel:** Header’da 4 ayrı `PRODUCT` prop (`cartUpsellProduct1`…`4`) → yatay `scroll-snap` kartlar + “Ekle”.
+  - **Promosyon Kodu:** `getCouponCodeForm` / `submitCouponCodeForm` / `removeCouponCodeForm`.
+  - **Footer:** İndirim chip (varsa) → Toplam → vergi/kargo notu → full-width checkout pill.
+- **Boş Sepet:** Sola hizalı mesaj + CTA (büyük ikon yok).
+- **ikas Karşılığı:** `@ikas/bp-storefront` `cartStore` + coupon form helpers + `addItemToCart`.
 
 ### 7. Customer Account / Login Bileşenleri
 - **Amaç:** Kullanıcı girişi, sipariş geçmişi ve profil yönetimi.
@@ -314,7 +317,7 @@ Sitedeki tüm animasyonlar ve mikro-etkileşimler DOM computed style okumalarıy
 | **Primary Butonlar** | Hover / Focus | `0.3s cubic-bezier(0.4, 0, 0.2, 1)` | `background-color`, `color`, `transform` | Arka plan sarıya/laciverte döner, buton `translateY(-1px)` hafifçe yükselir. |
 | **Ürün Kartı Görseli**| Hover | `0.5s ease-out` | `transform`, `opacity` | Ana görsel `scale(1.05)` büyür, ikincil görsel `opacity: 1` ile görünür. |
 | **Menü Linkleri** | Hover | `0.25s ease` | `color`, `border-bottom` / `scaleX` | Alt çizgi soldan sağa doğru uzayarak belirir (`transform-origin: left`). |
-| **Cart Drawer** | Cart Butonu Tıklama | `0.4s cubic-bezier(0.16, 1, 0.3, 1)` | `transform: translateX(0)` | Panel sağ dışarıdan ekranın içine kayar. Backing overlay `opacity: 1` olur. |
+| **Cart Drawer** | Cart Butonu Tıklama | `0.42s cubic-bezier(0.32, 0.72, 0, 1)` | `transform: translateX(0)` | Floating inset panel (desktop) kayarak açılır. Backdrop opacity 1 olur. |
 | **Mobil Nav Drawer** | Hamburger Tıklama | `0.35s ease-in-out` | `transform: translateX(0)` | Menü soldan kayarak açılır. |
 | **Akordiyon (Collapsible)**| Tıklama | `0.35s ease-in-out` | `max-height`, `opacity`, `rotate` | İçerik alanı aşağı doğru esneyerek açılır, sağdaki `+` ikonu 45/180 derece döner. |
 | **Sticky Add to Cart**| Page Scroll (PDP) | `0.3s ease` | `transform: translateY(0)`, `opacity` | Ana satın alma butonu görüş alanından çıktığında alttan yukarı yumuşakça kayar. |

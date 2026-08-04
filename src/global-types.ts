@@ -2,6 +2,8 @@
 // This file is regenerated automatically — do not edit manually.
 import { getThemeSettingValue as _getThemeSettingValueRaw } from "@ikas/bp-storefront";
 
+/** Enum type: ioDAVKTRZR */
+export type ObjectFit = "Fill" | "Cover" | "Contain";
 /** Enum type: vGqGTFaly1 */
 export type VelocityBeltDirection = "LEFT" | "RIGHT";
 /** Enum type: VWZ4Ci2qHH */

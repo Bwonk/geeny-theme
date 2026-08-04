@@ -1,0 +1,105 @@
+/* Brand column — light section (Saf Beyaz) typography
+ *   Ana Lacivert:  var(--pxNuSoudLn)   TOKENS.md satır 10
+ *   Gövde Metni:   var(--xGFwg5Zqpf)   TOKENS.md satır 21
+ *   Meta Metin:    var(--p6EMJiXye1)   TOKENS.md satır 22
+ *   Sessiz Başlık: var(--u9HctrBrDd)   TOKENS.md satır 23
+ *   Accent Sarı:   var(--sy8ZnXZdoG)   TOKENS.md satır 11
+ */
+
+.ikas-mgauth__brand-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(20px, 4vh, 32px);
+  min-height: 0;
+  min-width: 0;
+  text-align: center;
+  align-items: center;
+}
+
+.ikas-mgauth__brand {
+  color: var(--pxNuSoudLn, #37435b);
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  width: fit-content;
+}
+
+.ikas-mgauth__brand:focus-visible {
+  outline: 2px solid var(--sy8ZnXZdoG);
+  outline-offset: 4px;
+}
+
+.ikas-mgauth__brand-body {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 2vh, 20px);
+  align-items: center;
+}
+
+.ikas-mgauth__kicker {
+  color: var(--p6EMJiXye1, #8c97a5);
+  letter-spacing: 0.22em;
+}
+
+.ikas-mgauth__heading {
+  margin: 0;
+  font-size: clamp(32px, 3.4vw, 52px);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  color: var(--pxNuSoudLn, #37435b);
+  text-wrap: balance;
+}
+
+.ikas-mgauth__intro {
+  margin: 0;
+  max-width: 52ch;
+  font-size: clamp(15px, 1.2vw, 17px);
+  line-height: 1.55;
+  color: var(--xGFwg5Zqpf, #6e7a8c);
+}
+
+.ikas-mgauth__meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.ikas-mgauth__meta-line {
+  width: 26px;
+  height: 1.5px;
+  flex: 0 0 auto;
+  background: var(--sy8ZnXZdoG);
+}
+
+.ikas-mgauth__meta-text {
+  color: var(--p6EMJiXye1, #8c97a5);
+  letter-spacing: 0.18em;
+  font-size: 11px;
+}
+
+.ikas-mgauth__stage-hint {
+  color: var(--u9HctrBrDd, #aeb8c6);
+  letter-spacing: 0.2em;
+  font-size: 10px;
+  order: 4;
+}
+
+.ikas-mgauth__stage-hint--mobile {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .ikas-mgauth__brand-side {
+    padding: 0 var(--mobile-px, 16px);
+  }
+
+  .ikas-mgauth__stage-hint--desktop {
+    display: none;
+  }
+
+  .ikas-mgauth__stage-hint--mobile {
+    display: block;
+  }
+}

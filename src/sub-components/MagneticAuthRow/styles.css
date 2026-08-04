@@ -1,0 +1,191 @@
+/* Magnetic bar dock — navy cards on Saf Beyaz section
+ *   Ana Lacivert: var(--pxNuSoudLn)  TOKENS.md satır 10
+ *   Saf Beyaz:    var(--24KlcgGmm9)  TOKENS.md satır 14
+ *   Saf Siyah:    var(--vluFeuIeFs)  TOKENS.md satır 15
+ *   Accent Sarı:  var(--sy8ZnXZdoG)  TOKENS.md satır 11
+ */
+
+.ikas-mgauth__row {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: var(--mg-bar-gap);
+  will-change: transform;
+}
+
+.ikas-mgauth__bar {
+  position: relative;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: var(--mg-bar-w);
+  height: var(--mg-bar-h);
+  padding: 0;
+  border: 1px solid var(--mg-line-on-dark);
+  border-radius: var(--mg-bar-radius);
+  overflow: hidden;
+  background: var(--pxNuSoudLn, #37435b);
+  box-shadow: var(--mg-card-shadow);
+  scroll-snap-align: center;
+  will-change: width, height, transform;
+}
+
+/* Flat solid tonal ladder — navy mixed toward white/black (no gradients) */
+.ikas-mgauth__bar--t1 {
+  background: color-mix(in srgb, var(--24KlcgGmm9) 26%, var(--pxNuSoudLn));
+}
+.ikas-mgauth__bar--t2 {
+  background: color-mix(in srgb, var(--24KlcgGmm9) 12%, var(--pxNuSoudLn));
+}
+.ikas-mgauth__bar--t3 {
+  background: color-mix(in srgb, var(--vluFeuIeFs) 30%, var(--pxNuSoudLn));
+}
+.ikas-mgauth__bar--t4 {
+  background: color-mix(in srgb, var(--24KlcgGmm9) 19%, var(--pxNuSoudLn));
+}
+.ikas-mgauth__bar--t5 {
+  background: color-mix(in srgb, var(--vluFeuIeFs) 16%, var(--pxNuSoudLn));
+}
+
+.ikas-mgauth__bar--center {
+  width: var(--mg-bar-cw);
+  height: var(--mg-bar-ch);
+  background: color-mix(in srgb, var(--vluFeuIeFs) 42%, var(--pxNuSoudLn));
+  cursor: pointer;
+}
+
+.ikas-mgauth__bar--center:focus-visible {
+  outline: 2px solid var(--sy8ZnXZdoG);
+  outline-offset: 4px;
+}
+
+.ikas-mgauth__bar-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ikas-mgauth__bar-img-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--vluFeuIeFs) 42%, transparent);
+}
+
+.ikas-mgauth__bar-label {
+  position: absolute;
+  left: 50%;
+  top: 16px;
+  z-index: 2;
+  transform: translateX(-50%);
+  writing-mode: vertical-rl;
+  font-size: 9.5px;
+  letter-spacing: 0.24em;
+  color: var(--mg-on-dark-soft);
+  white-space: nowrap;
+  pointer-events: none;
+  text-shadow: 0 1px 8px color-mix(in srgb, var(--vluFeuIeFs) 55%, transparent);
+}
+
+.ikas-mgauth__bar-ring {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: var(--mg-bar-radius);
+  border: 1.5px solid var(--sy8ZnXZdoG);
+  pointer-events: none;
+}
+
+.ikas-mgauth__bar-cta {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 12px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.ikas-mgauth__bar--center:hover .ikas-mgauth__bar-cta,
+.ikas-mgauth__bar--center:focus-visible .ikas-mgauth__bar-cta {
+  opacity: 1;
+  transform: none;
+}
+
+.ikas-mgauth__bar-cta-text {
+  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  line-height: 1.35;
+  color: color-mix(in srgb, var(--24KlcgGmm9) 86%, transparent);
+  text-align: left;
+  text-wrap: balance;
+}
+
+.ikas-mgauth__bar-cta-icon {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  border: 1px solid var(--sy8ZnXZdoG);
+  background: color-mix(in srgb, var(--sy8ZnXZdoG) 14%, transparent);
+  color: var(--sy8ZnXZdoG);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 1200px) {
+  .ikas-mgauth__bar-label {
+    top: 20px;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+  }
+
+  .ikas-mgauth__bar-cta {
+    left: 14px;
+    right: 14px;
+    bottom: 16px;
+  }
+
+  .ikas-mgauth__bar-cta-text {
+    font-size: 11px;
+  }
+
+  .ikas-mgauth__bar-cta-icon {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media (max-width: 767px) {
+  .ikas-mgauth__row {
+    padding: 0 max(24px, calc((100vw - var(--mg-bar-cw)) / 2 - 8px));
+  }
+
+  /* Center card CTA hint is always visible on touch */
+  .ikas-mgauth__bar-cta {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ikas-mgauth__bar-cta {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
