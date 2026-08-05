@@ -1,0 +1,110 @@
+.ikas-filter-chips {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 6px;
+  padding-top: 2px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.ikas-filter-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.ikas-filter-chips__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid color-mix(in srgb, var(--8ARbeTYsmD) 85%, transparent);
+  border-radius: 9999px;
+  background: var(--24KlcgGmm9);
+  color: var(--pxNuSoudLn);
+  cursor: pointer;
+  font-size: 12px;
+  font-family: inherit;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    transform 0.16s ease;
+}
+
+.ikas-filter-chips__chip:hover {
+  border-color: var(--pxNuSoudLn);
+  background: var(--wElEhJwjYh);
+}
+
+.ikas-filter-chips__chip:active {
+  transform: scale(0.97);
+}
+
+.ikas-filter-chips__chip:focus-visible {
+  outline: 2px solid var(--sy8ZnXZdoG);
+  outline-offset: 2px;
+}
+
+.ikas-filter-chips__kind {
+  color: var(--p6EMJiXye1);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: var(--font-mono, "Roboto Mono", monospace);
+  font-size: 10px;
+}
+
+.ikas-filter-chips__label {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ikas-filter-chips__x {
+  display: inline-flex;
+  color: var(--xGFwg5Zqpf);
+  opacity: 0.85;
+}
+
+.ikas-filter-chips__clear {
+  border: 0;
+  background: transparent;
+  color: var(--pxNuSoudLn);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: var(--font-mono, "Roboto Mono", monospace);
+  font-size: 10px;
+  cursor: pointer;
+  padding: 6px 4px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color 0.18s ease;
+}
+
+.ikas-filter-chips__clear:hover {
+  color: var(--fcAwzuFj9W);
+}
+
+.ikas-filter-chips__clear:focus-visible {
+  outline: 2px solid var(--sy8ZnXZdoG);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (min-width: 900px) {
+  .ikas-filter-chips {
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ikas-filter-chips__chip {
+    transition: none;
+  }
+}

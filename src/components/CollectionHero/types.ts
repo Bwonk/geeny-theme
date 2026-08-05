@@ -1,5 +1,5 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasProductList } from "@ikas/bp-storefront";
+import type { IkasProductList, IkasImage } from "@ikas/bp-storefront";
 
 export interface Props {
   /** Koleksiyonun H1 başlık metni */
@@ -10,4 +10,14 @@ export interface Props {
   productList?: IkasProductList;
   /** Bölüm zemin rengi */
   backgroundColor?: string;
+  /** Hero üstündeki küçük etiket */
+  kickLabel?: string;
+  /** Yoksa kategori görseli kullanılır */
+  image?: IkasImage | null;
+  imageAlt?: string;
+  showStats?: boolean;
+  productsStatLabel?: string;
+  categoryStatLabel?: string;
+  customStatLabel?: string;
+  customStatValue?: string;
 }

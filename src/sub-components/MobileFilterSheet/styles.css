@@ -1,0 +1,193 @@
+@import "../CloseButton/styles.css";
+@import "../Button/styles.css";
+
+.ikas-filter-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-index-header-drawer, 800);
+  display: flex;
+  align-items: flex-end;
+  background: color-mix(in srgb, var(--vluFeuIeFs, #131924) 44%, transparent);
+  animation: ikasFilterSheetFade 0.22s ease both;
+}
+
+.ikas-filter-sheet__panel {
+  width: 100%;
+  max-height: 84vh;
+  overflow: auto;
+  background: color-mix(in srgb, var(--24KlcgGmm9) 94%, var(--wElEhJwjYh));
+  border-radius: 24px 24px 0 0;
+  padding: 14px 14px calc(18px + env(safe-area-inset-bottom, 0px));
+  animation: ikasFilterSheetIn 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+  box-sizing: border-box;
+  box-shadow: 0 -8px 32px color-mix(in srgb, var(--vluFeuIeFs, #131924) 10%, transparent);
+}
+
+.ikas-filter-sheet__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 2px 2px 12px;
+}
+
+.ikas-filter-sheet__title {
+  color: var(--p6EMJiXye1);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-family: var(--font-mono, "Roboto Mono", monospace);
+}
+
+.ikas-filter-sheet__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ikas-filter-sheet__group {
+  border-top: 1px solid color-mix(in srgb, var(--8ARbeTYsmD) 80%, transparent);
+  padding: 14px 0 4px;
+}
+
+.ikas-filter-sheet__group-title {
+  color: var(--p6EMJiXye1);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  font-family: var(--font-mono, "Roboto Mono", monospace);
+  font-size: 11px;
+}
+
+.ikas-filter-sheet__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ikas-filter-sheet__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 42px;
+  min-height: 42px;
+  padding: 0 14px;
+  border: 1px solid var(--8ARbeTYsmD);
+  border-radius: 9999px;
+  background: var(--24KlcgGmm9);
+  color: var(--pxNuSoudLn);
+  font-family: var(--font-body, "Roboto Flex", sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease,
+    transform 0.16s ease;
+}
+
+.ikas-filter-sheet__pill:hover {
+  border-color: color-mix(in srgb, var(--pxNuSoudLn) 45%, var(--8ARbeTYsmD));
+  background: var(--wElEhJwjYh);
+}
+
+.ikas-filter-sheet__pill:active {
+  transform: scale(0.97);
+}
+
+.ikas-filter-sheet__pill:focus-visible {
+  outline: 2px solid var(--sy8ZnXZdoG);
+  outline-offset: 2px;
+}
+
+.ikas-filter-sheet__pill--selected {
+  background: var(--pxNuSoudLn);
+  border-color: var(--pxNuSoudLn);
+  color: var(--24KlcgGmm9);
+}
+
+.ikas-filter-sheet__pill--selected:hover {
+  background: var(--pxNuSoudLn);
+  border-color: var(--pxNuSoudLn);
+  color: var(--24KlcgGmm9);
+}
+
+.ikas-filter-sheet__meta {
+  color: var(--p6EMJiXye1);
+  font-family: var(--font-mono, "Roboto Mono", monospace);
+  font-size: 10px;
+}
+
+.ikas-filter-sheet__pill--selected .ikas-filter-sheet__meta {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.ikas-filter-sheet__swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid var(--8ARbeTYsmD);
+  flex-shrink: 0;
+}
+
+.ikas-filter-sheet__swatch-img {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.ikas-filter-sheet__footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 16px;
+}
+
+.ikas-filter-sheet__clear {
+  border: 0;
+  background: transparent;
+  color: var(--pxNuSoudLn);
+  letter-spacing: 0.12em;
+  font-family: var(--font-mono, "Roboto Mono", monospace);
+  font-size: 11px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+
+.ikas-filter-sheet__clear:focus-visible {
+  outline: 2px solid var(--sy8ZnXZdoG);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@keyframes ikasFilterSheetIn {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes ikasFilterSheetFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ikas-filter-sheet,
+  .ikas-filter-sheet__panel {
+    animation: none;
+  }
+
+  .ikas-filter-sheet__pill {
+    transition: none;
+  }
+}

@@ -1,16 +1,17 @@
-@import "../CollectionHero/styles.css";
 @import "../../sub-components/FilterAndSortBar/styles.css";
 @import "../../sub-components/ProductGrid/styles.css";
 @import "../../sub-components/PaginationLoadMore/styles.css";
 @import "../../sub-components/ProductCard/styles.css";
 @import "../../sub-components/Button/styles.css";
 @import "../../sub-components/TextLink/styles.css";
+@import "../../sub-components/CloseButton/styles.css";
 
 .ikas-collection-section {
   width: 100%;
   box-sizing: border-box;
   background-color: var(--24KlcgGmm9);
   color: var(--pxNuSoudLn);
+  overflow: visible;
 }
 
 .ikas-collection-section__container {
@@ -20,4 +21,5 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  overflow: visible;
 }

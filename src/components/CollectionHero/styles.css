@@ -1,44 +1,175 @@
 .ikas-collection-hero {
   width: 100%;
   box-sizing: border-box;
-  background-color: var(--cdFDkBbKkc);
-  color: var(--pxNuSoudLn);
-  padding: var(--section-py, 48px) var(--section-px, 20px);
+  background-color: var(--24KlcgGmm9);
+  color: var(--24KlcgGmm9);
+  /* Alt padding yok — filter dock hero alt kenarına oturur (overlap). */
+  padding: clamp(10px, 1.4vw, 20px) var(--section-px, 20px) 0;
   display: flex;
   justify-content: center;
-  align-items: center;
-  text-align: center;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .ikas-collection-hero__container {
   max-width: var(--max-site-width, 1560px);
   width: 100%;
   margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.ikas-collection-hero__card {
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--media-radius, 32px);
+  overflow: hidden;
+  min-height: clamp(280px, 42vw, 420px);
+  background: var(--pxNuSoudLn);
+  margin-bottom: 0;
+}
+
+.ikas-collection-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.ikas-collection-hero__img,
+.ikas-collection-hero__img-fallback {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ikas-collection-hero__img-fallback {
+  background: var(--pxNuSoudLn);
+}
+
+.ikas-collection-hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(19, 25, 36, 0.55);
+  pointer-events: none;
+}
+
+.ikas-collection-hero__content {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 16px;
+  gap: clamp(16px, 1.8vw, 28px);
+  padding: clamp(28px, 4vw, 64px) clamp(24px, 4vw, 56px);
+  max-width: min(720px, 100%);
   box-sizing: border-box;
+}
+
+.ikas-collection-hero__kick {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  color: var(--sy8ZnXZdoG);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-family: var(--font-mono, "Roboto Mono", monospace);
+}
+
+.ikas-collection-hero__kick-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--sy8ZnXZdoG);
+  flex-shrink: 0;
 }
 
 .ikas-collection-hero__title {
   margin: 0;
-  color: var(--pxNuSoudLn);
+  color: var(--24KlcgGmm9);
+  font-size: clamp(44px, 8.2vw, 112px);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  font-weight: 600;
   word-break: break-word;
+}
+
+.ikas-collection-hero__word-wrap {
+  display: inline;
+}
+
+.ikas-collection-hero__word {
+  display: inline;
 }
 
 .ikas-collection-hero__desc {
   margin: 0;
-  color: var(--pxNuSoudLn);
-  opacity: 0.85;
-  max-width: 680px;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 44ch;
   line-height: 1.6;
+  font-size: clamp(15px, 1.2vw, 18px);
+  word-break: break-word;
+}
+
+.ikas-collection-hero__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(16px, 2vw, 28px);
+  margin-top: clamp(6px, 1vw, 14px);
+}
+
+.ikas-collection-hero__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 clamp(18px, 2.4vw, 40px);
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+  min-width: 0;
+}
+
+.ikas-collection-hero__stat:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.ikas-collection-hero__stat-label {
+  font-family: var(--font-mono, "Roboto Mono", monospace);
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.72);
+  text-transform: uppercase;
+}
+
+.ikas-collection-hero__stat-value {
+  color: var(--24KlcgGmm9);
+  letter-spacing: -0.01em;
   word-break: break-word;
 }
 
 @media (max-width: 767px) {
   .ikas-collection-hero {
-    padding: var(--section-py-mobile, 32px) var(--mobile-px, 16px);
+    padding-left: var(--mobile-px, 16px);
+    padding-right: var(--mobile-px, 16px);
+  }
+
+  .ikas-collection-hero__card {
+    border-radius: calc(var(--media-radius, 32px) * 0.75);
+    min-height: 300px;
+  }
+
+  .ikas-collection-hero__content {
+    padding: 28px 22px 36px;
+    max-width: 100%;
+  }
+
+  .ikas-collection-hero__stats {
+    gap: 14px;
+  }
+
+  .ikas-collection-hero__stat {
+    padding-right: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ikas-collection-hero__img {
+    transition: none;
   }
 }

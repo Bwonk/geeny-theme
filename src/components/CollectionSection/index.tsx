@@ -1,5 +1,5 @@
+import { useState } from "preact/hooks";
 import { getThemeSetting } from "@ikas/bp-storefront";
-import { CollectionHero } from "../CollectionHero";
 import FilterAndSortBar from "../../sub-components/FilterAndSortBar";
 import ProductGrid from "../../sub-components/ProductGrid";
 import PaginationLoadMore from "../../sub-components/PaginationLoadMore";
@@ -9,20 +9,52 @@ export interface CollectionSectionProps extends Props {
   className?: string;
 }
 
+/**
+ * CollectionSection — listing shell only (hero is a separate page section).
+ * Shares one productList instance across filter / grid / pagination.
+ */
 export function CollectionSection({
   productList,
-  title,
-  description,
-  backgroundColor,
+  backgroundColor = "#ffffff",
+  filterTitle = "FİLTRELER",
+  sortTitle = "SIRALA",
+  clearFiltersText = "TEMİZLE",
+  clearAllFiltersText = "FİLTRELERİ TEMİZLE",
+  resultsCountSuffix = "ürün",
+  showResultsText = "GÖSTER",
+  emptyEyebrow = "SONUÇ YOK",
+  emptyTitle = "Bu filtrelerle eşleşen ürün bulamadık.",
+  emptyDescription = "Fiyat aralığını genişletmeyi ya da kategoriyi kaldırmayı deneyin.",
+  emptyClearText = "Filtreleri Temizle",
+  emptyNoProductsEyebrow = "ÜRÜN YOK",
+  emptyNoProductsTitle = "Bu koleksiyonda henüz ürün yok.",
+  emptyNoProductsDescription = "Yeni parçalar eklendiğinde ilk burada görünecek. Bu arada diğer koleksiyonlara göz atabilirsin.",
+  loadMoreText = "Daha Fazla Göster",
+  loadingText = "Yükleniyor...",
+  shownCountLabel = "Gösterilen",
+  densityComfyLabel = "Rahat görünüm",
+  densityDenseLabel = "Sık görünüm",
+  sheetFiltersTitle = "Filtreler",
+  sheetSortTitle = "Sıralama",
+  addToCartText = "SEPETE EKLE",
+  addingToCartText = "EKLENİYOR...",
+  soldOutText = "TÜKENDİ",
   className = "",
 }: CollectionSectionProps) {
-  // Read live theme global settings via getThemeSetting
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1560px)
+  const [density, setDensity] = useState<"comfy" | "dense">("comfy");
+  const [isFading, setIsFading] = useState(false);
+
+  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ");
   const maxSiteWidth = siteWidthSetting?.value || "1560px";
 
   const inlineStyles = {
     backgroundColor: backgroundColor || undefined,
     "--max-site-width": maxSiteWidth,
+  };
+
+  const triggerFade = () => {
+    setIsFading(true);
+    window.setTimeout(() => setIsFading(false), 280);
   };
 
   return (
@@ -31,22 +63,48 @@ export function CollectionSection({
       style={inlineStyles as any}
       lang="tr"
     >
-      {/* 1. KOLEKSİYON HERO BANNER */}
-      <CollectionHero
-        productList={productList || undefined}
-        title={title}
-        description={description}
-      />
-
       <div className="ikas-collection-section__container">
-        {/* 2. FİLTRELEME VE SIRALAMA BARI */}
-        <FilterAndSortBar productList={productList || undefined} />
+        <FilterAndSortBar
+          productList={productList || undefined}
+          filterTitle={filterTitle}
+          sortTitle={sortTitle}
+          clearFiltersText={clearFiltersText}
+          clearAllFiltersText={clearAllFiltersText}
+          resultsCountSuffix={resultsCountSuffix}
+          showResultsText={showResultsText}
+          density={density}
+          onDensityChange={setDensity}
+          densityComfyLabel={densityComfyLabel}
+          densityDenseLabel={densityDenseLabel}
+          sheetFiltersTitle={sheetFiltersTitle}
+          sheetSortTitle={sheetSortTitle}
+          onFilterChange={triggerFade}
+        />
 
-        {/* 3. ÜRÜN IZGARASI (4 KOLON / 2 KOLON + EMPTY STATE) */}
-        <ProductGrid productList={productList || undefined} />
+        <ProductGrid
+          productList={productList || undefined}
+          density={density}
+          fading={isFading}
+          emptyEyebrow={emptyEyebrow}
+          emptyTitle={emptyTitle}
+          emptyMessage={emptyDescription}
+          emptyClearText={emptyClearText}
+          emptyNoProductsEyebrow={emptyNoProductsEyebrow}
+          emptyNoProductsTitle={emptyNoProductsTitle}
+          emptyNoProductsMessage={emptyNoProductsDescription}
+          addToCartText={addToCartText}
+          addingToCartText={addingToCartText}
+          soldOutText={soldOutText}
+          showCategoryLabel
+          showSwatches
+        />
 
-        {/* 4. SAYFALAMA VE DAHA FAZLA YÜKLE CTA */}
-        <PaginationLoadMore productList={productList || undefined} />
+        <PaginationLoadMore
+          productList={productList || undefined}
+          loadMoreText={loadMoreText}
+          loadingText={loadingText}
+          shownCountLabel={shownCountLabel}
+        />
       </div>
     </section>
   );

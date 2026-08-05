@@ -215,7 +215,40 @@
   opacity: 0.55;
 }
 
-/* 8. HIZLI SEPETE EKLE (KLASİK MOD) */
+/* 8. KATEGORİ ETİKETİ + SWATCH (PLP) */
+.ikas-product-card__cat {
+  margin: 0;
+  color: var(--p6EMJiXye1);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-family: var(--font-mono, "Roboto Mono", monospace);
+}
+
+.ikas-product-card__swatches {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.ikas-product-card__swatch {
+  width: 11px;
+  height: 11px;
+  border-radius: var(--swatch-radius, 50%);
+  border: 1px solid var(--8ARbeTYsmD);
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.ikas-product-card__swatch-hint {
+  color: var(--p6EMJiXye1);
+  letter-spacing: 0.1em;
+  margin-left: 2px;
+  font-family: var(--font-mono, "Roboto Mono", monospace);
+}
+
+/* 9. HIZLI SEPETE EKLE (KLASİK MOD) */
 .ikas-product-card__quick-add {
   margin-top: 8px;
   width: 100%;

@@ -27,6 +27,8 @@ import {
 
 /** Hero vb. bileşenlerin kalan viewport hesabı için gerçek header yüksekliği. */
 const HEADER_OFFSET_VAR = "--ikas-header-height";
+/** Sticky chrome (filtre bar) için: header üst kenarından pill alt kenarına ofset. */
+const HEADER_PILL_OFFSET_VAR = "--ikas-header-pill-offset";
 
 function readSelectionThemeSetting(variableName: string, displayName: string) {
   if (variableName) {
@@ -166,16 +168,29 @@ export function Header({
     selectionFgSetting?.value,
   ]);
 
-  // Gerçek layout yüksekliğini yayınla → Hero kalan 100dvh alanını hesaplar
+  // Gerçek layout yüksekliğini + pill alt ofsetini yayınla
+  // → Hero kalan 100dvh; sticky filtre bar navbar pill'inin altına oturur
   useEffect(() => {
     const root = document.documentElement;
     const el = headerRef.current;
     if (!el) return;
 
     const publishHeight = () => {
-      // getBoundingClientRect: padding + border dahil gerçek görsel yükseklik
-      const h = Math.round(el.getBoundingClientRect().height);
+      const headerRect = el.getBoundingClientRect();
+      const h = Math.round(headerRect.height);
       if (h > 0) root.style.setProperty(HEADER_OFFSET_VAR, `${h}px`);
+
+      const pill = el.querySelector(".ikas-header__pill") as HTMLElement | null;
+      if (pill) {
+        const pillRect = pill.getBoundingClientRect();
+        // Header üst kenarından pill alt kenarına — sticky top hesabı için
+        const pillOffset = Math.round(pillRect.bottom - headerRect.top);
+        if (pillOffset > 0) {
+          root.style.setProperty(HEADER_PILL_OFFSET_VAR, `${pillOffset}px`);
+        }
+      } else if (h > 0) {
+        root.style.setProperty(HEADER_PILL_OFFSET_VAR, `${h}px`);
+      }
     };
 
     publishHeight();
@@ -196,6 +211,7 @@ export function Header({
       observer?.disconnect();
       window.removeEventListener("resize", publishHeight);
       root.style.setProperty(HEADER_OFFSET_VAR, "0px");
+      root.style.setProperty(HEADER_PILL_OFFSET_VAR, "0px");
     };
   }, []);
 

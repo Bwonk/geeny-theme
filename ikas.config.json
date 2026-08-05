@@ -2197,28 +2197,120 @@
           "displayName": "Koleksiyon Başlığı",
           "type": "TEXT",
           "required": false,
-          "description": "Koleksiyonun H1 başlık metni"
+          "description": "Koleksiyonun H1 başlık metni",
+          "defaultValue": "",
+          "groupId": "texts"
         },
         {
           "name": "description",
           "displayName": "Açıklama",
           "type": "TEXT",
           "required": false,
-          "description": "Koleksiyonun kısa açıklaması"
+          "description": "Koleksiyonun kısa açıklaması",
+          "defaultValue": "",
+          "groupId": "texts"
         },
         {
           "name": "productList",
           "displayName": "Ürün Listesi / Kategori",
           "type": "PRODUCT_LIST",
           "required": false,
-          "description": "Koleksiyon kategori verisi"
+          "description": "Koleksiyon kategori verisi",
+          "groupId": "content"
         },
         {
           "name": "backgroundColor",
           "displayName": "Arka Plan Rengi",
           "type": "COLOR",
           "required": false,
-          "description": "Bölüm zemin rengi"
+          "description": "Bölüm zemin rengi",
+          "defaultValue": "#ffffff",
+          "groupId": "appearance"
+        },
+        {
+          "name": "kickLabel",
+          "displayName": "Kick Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "description": "Hero üstündeki küçük etiket",
+          "defaultValue": "KOLEKSİYON · 2026",
+          "groupId": "texts"
+        },
+        {
+          "name": "image",
+          "displayName": "Hero Görseli",
+          "type": "IMAGE",
+          "required": false,
+          "description": "Yoksa kategori görseli kullanılır",
+          "groupId": "content"
+        },
+        {
+          "name": "imageAlt",
+          "displayName": "Görsel Alt Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Koleksiyon görseli",
+          "groupId": "texts"
+        },
+        {
+          "name": "showStats",
+          "displayName": "İstatistikleri Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "stats"
+        },
+        {
+          "name": "productsStatLabel",
+          "displayName": "Ürün Sayısı Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ÜRÜN",
+          "groupId": "stats"
+        },
+        {
+          "name": "categoryStatLabel",
+          "displayName": "Kategori Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "KATEGORİ",
+          "groupId": "stats"
+        },
+        {
+          "name": "customStatLabel",
+          "displayName": "Özel Stat Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "TESLİMAT",
+          "groupId": "stats"
+        },
+        {
+          "name": "customStatValue",
+          "displayName": "Özel Stat Değeri",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "1–3 iş günü",
+          "groupId": "stats"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "İçerik",
+          "children": [
+            {
+              "id": "texts",
+              "name": "Metinler"
+            },
+            {
+              "id": "stats",
+              "name": "İstatistikler"
+            }
+          ]
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm"
         }
       ]
     },
@@ -2234,28 +2326,229 @@
           "displayName": "Ürün Listesi / Kategori",
           "type": "PRODUCT_LIST",
           "required": false,
-          "description": "Koleksiyon ikas ürün listesi verisi"
-        },
-        {
-          "name": "title",
-          "displayName": "Özel Başlık",
-          "type": "TEXT",
-          "required": false,
-          "description": "Opsiyonel özel koleksiyon başlığı"
-        },
-        {
-          "name": "description",
-          "displayName": "Özel Açıklama",
-          "type": "TEXT",
-          "required": false,
-          "description": "Opsiyonel özel koleksiyon açıklaması"
+          "description": "Koleksiyon ikas ürün listesi verisi",
+          "groupId": "appearance"
         },
         {
           "name": "backgroundColor",
           "displayName": "Arka Plan Rengi",
           "type": "COLOR",
           "required": false,
-          "description": "Bölüm zemin rengi"
+          "description": "Bölüm zemin rengi",
+          "defaultValue": "#ffffff",
+          "groupId": "appearance"
+        },
+        {
+          "name": "filterTitle",
+          "displayName": "Filtre Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "FİLTRELER",
+          "groupId": "filter_texts"
+        },
+        {
+          "name": "sortTitle",
+          "displayName": "Sırala Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SIRALA",
+          "groupId": "filter_texts"
+        },
+        {
+          "name": "clearFiltersText",
+          "displayName": "Chip Temizle",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "TEMİZLE",
+          "groupId": "filter_texts"
+        },
+        {
+          "name": "clearAllFiltersText",
+          "displayName": "Tüm Filtreleri Temizle",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "FİLTRELERİ TEMİZLE",
+          "groupId": "filter_texts"
+        },
+        {
+          "name": "resultsCountSuffix",
+          "displayName": "Sonuç Sayısı Eki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ürün",
+          "groupId": "filter_texts"
+        },
+        {
+          "name": "showResultsText",
+          "displayName": "Sonuçları Göster",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "GÖSTER",
+          "groupId": "filter_texts"
+        },
+        {
+          "name": "densityComfyLabel",
+          "displayName": "Rahat Görünüm Aria",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Rahat görünüm",
+          "groupId": "filter_texts"
+        },
+        {
+          "name": "densityDenseLabel",
+          "displayName": "Sık Görünüm Aria",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sık görünüm",
+          "groupId": "filter_texts"
+        },
+        {
+          "name": "sheetFiltersTitle",
+          "displayName": "Mobil Filtre Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Filtreler",
+          "groupId": "filter_texts"
+        },
+        {
+          "name": "sheetSortTitle",
+          "displayName": "Mobil Sıralama Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sıralama",
+          "groupId": "filter_texts"
+        },
+        {
+          "name": "emptyEyebrow",
+          "displayName": "Boş Durum Üst Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SONUÇ YOK",
+          "groupId": "empty_texts"
+        },
+        {
+          "name": "emptyTitle",
+          "displayName": "Boş Durum Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bu filtrelerle eşleşen ürün bulamadık.",
+          "groupId": "empty_texts"
+        },
+        {
+          "name": "emptyDescription",
+          "displayName": "Boş Durum Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Fiyat aralığını genişletmeyi ya da kategoriyi kaldırmayı deneyin.",
+          "groupId": "empty_texts"
+        },
+        {
+          "name": "emptyClearText",
+          "displayName": "Boş Durum Temizle Butonu",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Filtreleri Temizle",
+          "groupId": "empty_texts"
+        },
+        {
+          "name": "addToCartText",
+          "displayName": "Sepete Ekle",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SEPETE EKLE",
+          "groupId": "card_texts"
+        },
+        {
+          "name": "addingToCartText",
+          "displayName": "Ekleniyor",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "EKLENİYOR...",
+          "groupId": "card_texts"
+        },
+        {
+          "name": "soldOutText",
+          "displayName": "Tükendi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "TÜKENDİ",
+          "groupId": "card_texts"
+        },
+        {
+          "name": "loadMoreText",
+          "displayName": "Daha Fazla Göster",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Daha Fazla Göster",
+          "groupId": "pagination_texts"
+        },
+        {
+          "name": "loadingText",
+          "displayName": "Yükleniyor",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Yükleniyor...",
+          "groupId": "pagination_texts"
+        },
+        {
+          "name": "shownCountLabel",
+          "displayName": "Gösterilen Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Gösterilen",
+          "groupId": "pagination_texts"
+        },
+        {
+          "name": "emptyNoProductsEyebrow",
+          "displayName": "Ürün Yok Üst Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ÜRÜN YOK",
+          "groupId": "empty_texts"
+        },
+        {
+          "name": "emptyNoProductsTitle",
+          "displayName": "Ürün Yok Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bu koleksiyonda henüz ürün yok.",
+          "groupId": "empty_texts"
+        },
+        {
+          "name": "emptyNoProductsDescription",
+          "displayName": "Ürün Yok Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Yeni parçalar eklendiğinde ilk burada görünecek. Bu arada diğer koleksiyonlara göz atabilirsin.",
+          "groupId": "empty_texts"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "texts",
+          "name": "Metinler",
+          "children": [
+            {
+              "id": "filter_texts",
+              "name": "Filtre & Sıralama"
+            },
+            {
+              "id": "empty_texts",
+              "name": "Boş Durum"
+            },
+            {
+              "id": "card_texts",
+              "name": "Ürün Kartı"
+            },
+            {
+              "id": "pagination_texts",
+              "name": "Sayfalama"
+            }
+          ]
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm"
         }
       ]
     },

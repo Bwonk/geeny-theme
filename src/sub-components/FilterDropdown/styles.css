@@ -1,0 +1,176 @@
+.ikas-filter-dropdown {
+  position: relative;
+}
+
+.ikas-filter-dropdown__trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: var(--filter-chip-h, 40px);
+  padding: 0 6px 0 14px;
+  border: 1px solid var(--8ARbeTYsmD);
+  border-radius: 9999px;
+  background: var(--24KlcgGmm9);
+  color: var(--pxNuSoudLn);
+  font-family: var(--font-body, "Roboto Flex", sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  white-space: nowrap;
+  max-width: max-content;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.16s ease,
+    height var(--filter-morph-duration, 440ms) var(--filter-morph-ease, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+.ikas-filter-dropdown__trigger:hover {
+  border-color: color-mix(in srgb, var(--pxNuSoudLn) 45%, var(--8ARbeTYsmD));
+  background: var(--wElEhJwjYh);
+}
+
+.ikas-filter-dropdown__trigger:active {
+  transform: scale(0.98);
+}
+
+.ikas-filter-dropdown__trigger:focus-visible {
+  outline: 2px solid var(--sy8ZnXZdoG);
+  outline-offset: 2px;
+}
+
+.ikas-filter-dropdown__trigger--active {
+  background: var(--pxNuSoudLn);
+  border-color: var(--pxNuSoudLn);
+  color: var(--24KlcgGmm9);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--vluFeuIeFs) 8%, transparent);
+}
+
+.ikas-filter-dropdown__trigger--active:hover {
+  background: var(--pxNuSoudLn);
+  border-color: var(--pxNuSoudLn);
+  color: var(--24KlcgGmm9);
+}
+
+.ikas-filter-dropdown__chev {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: var(--wElEhJwjYh);
+  flex-shrink: 0;
+  transition: background 0.2s ease, transform 0.22s ease;
+}
+
+.ikas-filter-dropdown__trigger[aria-expanded="true"] .ikas-filter-dropdown__chev {
+  transform: rotate(180deg);
+}
+
+.ikas-filter-dropdown__trigger--active .ikas-filter-dropdown__chev {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.ikas-filter-dropdown__menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 180px;
+  width: max-content;
+  max-width: min(280px, 86vw);
+  max-height: 280px;
+  overflow: auto;
+  z-index: 60;
+  background: var(--24KlcgGmm9);
+  border: 1px solid color-mix(in srgb, var(--8ARbeTYsmD) 80%, transparent);
+  border-radius: 14px;
+  padding: 6px;
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--vluFeuIeFs, #131924) 12%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  transform-origin: top left;
+  animation: ikasFilterMenuIn 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ikas-filter-dropdown__option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--pxNuSoudLn);
+  text-align: left;
+  padding: 9px 11px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+  transition: background 0.16s ease;
+}
+
+.ikas-filter-dropdown__option:hover {
+  background: var(--wElEhJwjYh);
+}
+
+.ikas-filter-dropdown__option:focus-visible {
+  outline: 2px solid var(--sy8ZnXZdoG);
+  outline-offset: -2px;
+}
+
+.ikas-filter-dropdown__option--selected {
+  background: var(--jQs026VIpf);
+  font-weight: 500;
+}
+
+.ikas-filter-dropdown__meta {
+  margin-left: auto;
+  color: var(--p6EMJiXye1);
+  font-family: var(--font-mono, "Roboto Mono", monospace);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}
+
+.ikas-filter-dropdown__swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid var(--8ARbeTYsmD);
+  flex-shrink: 0;
+}
+
+.ikas-filter-dropdown__swatch-img {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+@keyframes ikasFilterMenuIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ikas-filter-dropdown__menu {
+    animation: none;
+  }
+
+  .ikas-filter-dropdown__trigger,
+  .ikas-filter-dropdown__chev {
+    transition: none;
+  }
+}

@@ -10,6 +10,9 @@ import {
   addItemToCart,
   getSelectedProductVariantHref,
   getThemeSetting,
+  getProductFirstCategory,
+  getDisplayedProductVariantTypes,
+  isColorVariantValue,
   IkasProduct,
 } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
@@ -19,9 +22,12 @@ export interface Props {
   product?: IkasProduct | null;
   showRating?: boolean;
   showQuickAdd?: boolean;
-  /** Buton görsel üzerinde slide-up overlay olarak belirsin mi? (Anasayfa.dc.html tasarımı) */
+  /** Buton görsel üzerinde slide-up overlay olarak belirsin mi? */
   overlayQuickAdd?: boolean;
-  /** Buton metinleri — üst section'ın TEXT prop'larından geçirilir. */
+  /** PLP: kategori etiketi */
+  showCategoryLabel?: boolean;
+  /** PLP: renk swatch satırı */
+  showSwatches?: boolean;
   addToCartText?: string;
   addingToCartText?: string;
   soldOutText?: string;
@@ -33,6 +39,8 @@ export function ProductCard({
   showRating = false,
   showQuickAdd = true,
   overlayQuickAdd = true,
+  showCategoryLabel = false,
+  showSwatches = false,
   addToCartText = "SEPETE EKLE",
   addingToCartText = "EKLENİYOR...",
   soldOutText = "TÜKENDİ",
@@ -40,53 +48,85 @@ export function ProductCard({
 }: Props) {
   const [isAdding, setIsAdding] = useState(false);
 
-  // Read live global settings via getThemeSetting using exact variableNames from prompts/TOKENS.md
-  const radiusSetting = getThemeSetting("_WyFUVwOpPk"); // Radius / Kart (24px / 2rem)
-  const hoverAnimSetting = getThemeSetting("_Z1JfmMfgtb"); // Animasyon / Görsel Scale Hover
+  const radiusSetting = getThemeSetting("_WyFUVwOpPk");
+  const hoverAnimSetting = getThemeSetting("_Z1JfmMfgtb");
+  const swatchRadiusSetting = getThemeSetting("_XYyz9eaKGx");
 
   const cardRadius = radiusSetting?.value || "24px";
   const hoverAnim = hoverAnimSetting?.value || "transform 0.5s ease-out";
+  const swatchRadius = swatchRadiusSetting?.value || "50%";
 
   const inlineStyles = {
     "--card-radius": cardRadius,
     "--image-hover-transition": hoverAnim,
+    "--swatch-radius": swatchRadius,
   };
 
-  // Ürün yoksa sahte kart basmak yerine hiç render etme.
   if (!product) return null;
 
   const variant = getSelectedProductVariant(product);
-
-  // Image handling per ikas pattern
   const mainProductImage = variant ? getProductVariantMainImage(variant) : null;
-  const mainImage = mainProductImage?.image ? getDefaultSrc(mainProductImage.image) : null;
+  const mainImage = mainProductImage?.image
+    ? getDefaultSrc(mainProductImage.image)
+    : null;
 
   const secondaryProductImage =
     variant?.images && variant.images.length > 1
       ? variant.images[1]?.image
       : null;
-  const secondaryImage = secondaryProductImage ? getDefaultSrc(secondaryProductImage) : null;
+  const secondaryImage = secondaryProductImage
+    ? getDefaultSrc(secondaryProductImage)
+    : null;
 
   const href = getSelectedProductVariantHref(product) || "#";
-  const title = product.name || "Ürün Adı";
+  const title = product.name || "";
 
-  // Price formatting using verified ikas storefront functions
-  const finalPrice = variant ? (getProductVariantFormattedFinalPrice(variant) as unknown as string) : "";
-  const sellPrice = variant ? (getProductVariantFormattedSellPrice(variant) as unknown as string) : "";
-  const hasDiscount = variant ? (hasProductVariantDiscount(variant) as unknown as boolean) : false;
+  const finalPrice = variant
+    ? (getProductVariantFormattedFinalPrice(variant) as unknown as string)
+    : "";
+  const sellPrice = variant
+    ? (getProductVariantFormattedSellPrice(variant) as unknown as string)
+    : "";
+  const hasDiscount = variant
+    ? (hasProductVariantDiscount(variant) as unknown as boolean)
+    : false;
+  const inStock = variant
+    ? (hasProductVariantStock(variant) as unknown as boolean)
+    : true;
 
-  // Stock check
-  const inStock = variant ? (hasProductVariantStock(variant) as unknown as boolean) : true;
+  const category = showCategoryLabel ? getProductFirstCategory(product) : null;
+  const catLabel = category?.name || null;
 
-  // Rating & Review Count integration
-  const reviews = (product as any).reviews ?? [];
-  const reviewCount = reviews.length;
+  let colorSwatches: { id: string; hex: string; name: string }[] = [];
+  let variantHint = "";
+  if (showSwatches) {
+    const types = getDisplayedProductVariantTypes(product) || [];
+    const colorType = types.find((t) =>
+      t.displayedVariantValues?.some((dvv) => isColorVariantValue(dvv.variantValue))
+    );
+    if (colorType) {
+      colorSwatches = colorType.displayedVariantValues
+        .filter((dvv) => isColorVariantValue(dvv.variantValue))
+        .slice(0, 5)
+        .map((dvv) => ({
+          id: dvv.variantValue.id,
+          hex: dvv.variantValue.colorCode || "var(--pxNuSoudLn)",
+          name: dvv.variantValue.name,
+        }));
+      const extra =
+        colorType.displayedVariantValues.filter((dvv) =>
+          isColorVariantValue(dvv.variantValue)
+        ).length - colorSwatches.length;
+      if (extra > 0) variantHint = `+${extra}`;
+    }
+  }
+
+  const reviewCount = product.reviewCount ?? 0;
   const averageRating =
-    reviewCount > 0
-      ? (reviews.reduce((acc: number, r: any) => acc + (r.star || 5), 0) / reviewCount).toFixed(1)
+    product.averageRating != null && reviewCount > 0
+      ? product.averageRating.toFixed(1)
       : null;
 
-  // Handle Quick Add to Cart
   const handleQuickAdd = async (e: Event) => {
     e.preventDefault();
     e.stopPropagation();
@@ -103,18 +143,21 @@ export function ProductCard({
     }
   };
 
-  const buttonText = isAdding ? addingToCartText : inStock ? addToCartText : soldOutText;
+  const buttonText = isAdding
+    ? addingToCartText
+    : inStock
+      ? addToCartText
+      : soldOutText;
 
   return (
     <article
       className={`ikas-product-card ${overlayQuickAdd ? "ikas-product-card--overlay-mode" : ""} ${className}`.trim()}
-      style={inlineStyles}
+      style={inlineStyles as any}
     >
-      {/* 1. GÖRSEL ALANI, OVERLAY PILL BUTTON & ROZETLER */}
       <a
         href={href}
         className="ikas-product-card__image-wrapper"
-        aria-label={`${title} detaylarını incele`}
+        aria-label={title}
       >
         {mainImage ? (
           <img
@@ -130,28 +173,24 @@ export function ProductCard({
         {secondaryImage && (
           <img
             src={secondaryImage}
-            alt={`${title} - 2`}
+            alt=""
             className="ikas-product-card__image ikas-product-card__image--secondary"
             loading="lazy"
           />
         )}
 
-        {/* ROZETLER (Sol Üst) */}
         <div className="ikas-product-card__badge-wrapper">
           {!inStock ? (
             <span className="ikas-product-card__badge ikas-product-card__badge--out-of-stock">
-              TÜKENDİ
+              {soldOutText}
             </span>
           ) : (
             hasDiscount && (
-              <span className="ikas-product-card__badge">
-                İNDİRİM
-              </span>
+              <span className="ikas-product-card__badge">İNDİRİM</span>
             )
           )}
         </div>
 
-        {/* HOVER SLIDE-UP SEPETE EKLE BUTONU (Merkezi Button sub-component PILL_PRIMARY variant'ı) */}
         {showQuickAdd && overlayQuickAdd && (
           <div
             className="ikas-product-card__overlay-quick-add"
@@ -174,9 +213,7 @@ export function ProductCard({
         )}
       </a>
 
-      {/* 2. KART İÇERİĞİ (BAŞLIK, FİYAT, OPSİYONEL ALT BUTON) */}
       <div className="ikas-product-card__content">
-        {/* YILDIZ DEĞERLENDİRMESİ */}
         {showRating && averageRating && (
           <div className="ikas-product-card__rating">
             <svg
@@ -186,33 +223,46 @@ export function ProductCard({
             >
               <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
             </svg>
-            <span className="ikas-product-card__rating-score">
-              {averageRating}
-            </span>
-            <span className="ikas-product-card__rating-count">
-              ({reviewCount})
-            </span>
+            <span className="ikas-product-card__rating-score">{averageRating}</span>
+            <span className="ikas-product-card__rating-count">({reviewCount})</span>
           </div>
         )}
 
-        {/* ÜRÜN BAŞLIĞI */}
+        {catLabel && (
+          <div className="ikas-product-card__cat _eZyocyyd0F">{catLabel}</div>
+        )}
+
         <h3 className="ikas-product-card__title">
           <a href={href} style={{ color: "inherit", textDecoration: "none" }}>
             {title}
           </a>
         </h3>
 
-        {/* FİYAT ALANI */}
         <div className="ikas-product-card__price-wrapper">
-          <span className="ikas-product-card__final-price">{finalPrice}</span>
           {hasDiscount && sellPrice && (
-            <span className="ikas-product-card__old-price">
-              {sellPrice}
-            </span>
+            <span className="ikas-product-card__old-price">{sellPrice}</span>
           )}
+          <span className="ikas-product-card__final-price">{finalPrice}</span>
         </div>
 
-        {/* KLASİK ALT SEPETE EKLE BUTONU (overlayQuickAdd=false ise gösterilir) */}
+        {colorSwatches.length > 0 && (
+          <div className="ikas-product-card__swatches" aria-hidden="true">
+            {colorSwatches.map((sw) => (
+              <span
+                key={sw.id}
+                className="ikas-product-card__swatch"
+                style={{ backgroundColor: sw.hex }}
+                title={sw.name}
+              />
+            ))}
+            {variantHint && (
+              <span className="ikas-product-card__swatch-hint _eZyocyyd0F">
+                {variantHint}
+              </span>
+            )}
+          </div>
+        )}
+
         {showQuickAdd && !overlayQuickAdd && (
           <div className="ikas-product-card__quick-add">
             <Button
