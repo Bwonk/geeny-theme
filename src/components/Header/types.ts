@@ -47,4 +47,7 @@ export interface Props {
   cartUpsellProduct4?: IkasProduct | null;
   prevOfferLabel?: string;
   nextOfferLabel?: string;
+  enableTextSelectionHighlight?: boolean;
+  selectionBackgroundColor?: string;
+  selectionTextColor?: string;
 }

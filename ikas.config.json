@@ -383,6 +383,30 @@
           "required": false,
           "defaultValue": "Sonraki öneri",
           "groupId": "cart_drawer"
+        },
+        {
+          "name": "enableTextSelectionHighlight",
+          "displayName": "Özel Seçim Rengi",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "text_selection"
+        },
+        {
+          "name": "selectionBackgroundColor",
+          "displayName": "Seçim Arka Planı",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E3E045",
+          "groupId": "text_selection"
+        },
+        {
+          "name": "selectionTextColor",
+          "displayName": "Seçim Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#101418",
+          "groupId": "text_selection"
         }
       ],
       "propGroups": [
@@ -399,6 +423,11 @@
           "id": "cart_drawer",
           "name": "Sepet Çekmecesi",
           "description": "Slide-out cart drawer metinleri ve upsell ürünleri"
+        },
+        {
+          "id": "text_selection",
+          "name": "Metin Seçimi",
+          "description": "Site genelinde metin seçim vurgusu"
         }
       ]
     },

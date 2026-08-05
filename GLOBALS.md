@@ -172,12 +172,35 @@ mevcut token'ları kopyalar.
 
 ---
 
+### B8. Metin Seçimi / Text Selection — `globalVariable` (canlı)
+
+> **Bağlama Kuralı:** Header (`isHeader`) props birincil merchant yüzeyi. Theme Settings, prop boşken
+> fallback. Runtime: `document.documentElement` CSS vars + unscoped `<style id="ikas-text-selection">`
+> (`src/utils/textSelection.ts`). Baseline: `src/global.css` `::selection` kuralları.
+> Öncelik: Header prop → Theme Setting (`getThemeSetting` key) → `#E3E045` / `#101418` / enabled.
+
+| Ad | Tip | Default | `variableName` | Kullanım |
+| :--- | :--- | :--- | :--- | :--- |
+| `Seçim / Etkin` | BOOLEAN | `true` | `_Nj7fGnZidb` | Custom selection boyasını aç/kapa |
+| `Seçim / Arka Plan` | COLOR | `#E3E045` | `_U2NDSSNjOC` | `::selection` background (Accent) |
+| `Seçim / Metin` | COLOR | `#101418` | `_v71Mf9bk7q` | `::selection` color (`Nötr / Mürekkep`) |
+
+**Header props (Metin Seçimi grubu):** `enableTextSelectionHighlight`, `selectionBackgroundColor`, `selectionTextColor`.
+
+Kod sabitleri: `SELECTION_ENABLED_SETTING` / `SELECTION_BG_SETTING` / `SELECTION_FG_SETTING`
+(`src/utils/textSelection.ts`). Canlı eşleşme: `prompts/TOKENS.md` §8.
+
+**Platform notları:** `forced-colors: active` altında custom selection uygulanmaz. iOS Safari /
+bazı WebView’lerde `::selection` kısmen veya hiç uygulanmayabilir (bilinen limit).
+
+---
+
 ## Kapsama Kontrolü (Coverage Audit)
 
 [DESIGN.md](file:///root/geeny/DESIGN.md)'deki Bileşen Envanteri'nde yer alan tüm bileşenlerin kullandığı token'lar eşleştirilmiştir:
 
 - **`<announcement-bar>`** → Kullanılan token'lar: `Renkler / Ana Lacivert`, `Renkler / Saf Beyaz`, `Tipografi / Mobil Duyuru Metni`, `Boşluk / Announcement Bar Yüksekliği`, `Animasyon / Fade Yumuşak`
-- **`<site-header>`** → Kullanılan token'lar: `Renkler / Saf Beyaz`, `Renkler / Ana Lacivert`, `Renkler / Accent Sarı`, `Renkler / Sticky Header Çizgisi`, `Tipografi / İkincil Metin (sm)`, `Boşluk / Header Yüksekliği`, `Boşluk / Mobile Drawer Genişliği`, `Animasyon / Menü Alt Çizgi`, `Animasyon / Drawer ve Modal`, `Gölge / Sticky Header Shadow`
+- **`<site-header>`** → Kullanılan token'lar: `Renkler / Saf Beyaz`, `Renkler / Ana Lacivert`, `Renkler / Accent Sarı`, `Renkler / Sticky Header Çizgisi`, `Tipografi / İkincil Metin (sm)`, `Boşluk / Header Yüksekliği`, `Boşluk / Mobile Drawer Genişliği`, `Animasyon / Menü Alt Çizgi`, `Animasyon / Drawer ve Modal`, `Gölge / Sticky Header Shadow`, `Seçim / Etkin|Arka Plan|Metin` (Text Selection — Header props + Theme Settings)
 - **`<hero-banner>`** → Kullanılan token'lar: `Renkler / Saf Beyaz`, `Renkler / Ana Lacivert`, `Renkler / Accent Sarı`, `Tipografi / Display Hero`, `Tipografi / Başlık H1`, `Tipografi / Gövde Metni (base)`, `Radius / Buton`, `Boşluk / Buton Yüksekliği`, `Animasyon / Buton ve Hover`
 - **`<product-card>`** → Kullanılan token'lar: `Radius / Kart`, `Renkler / Accent Sarı`, `Renkler / Ana Lacivert`, `Renkler / Yıldız Sarısı`, `Tipografi / Gövde Metni (base)`, `Tipografi / Etiket ve Rozet (xs)`, `Boşluk / Grid Gap`, `Animasyon / Görsel Scale Hover`, `Gölge / Kart Soft Shadow`
 - **`<product-detail-page>` (PDP)** → Kullanılan token'lar: `Tipografi / Başlık H2`, `Tipografi / Kart ve Alt Başlık (lg)`, `Renkler / Ana Lacivert`, `Renkler / Accent Sarı`, `Radius / Swatch Dairesel`, `Radius / Medya`, `Boşluk / Buton Yüksekliği`, `Boşluk / Sticky Cart Bar Yüksekliği`, `Animasyon / Sticky Bar Belirme`, `Animasyon / Akordiyon Açılış`, `Gölge / Swatch Odak Gölgesi`
@@ -188,4 +211,4 @@ mevcut token'ları kopyalar.
 - **`<search-and-404-pages>`** → Kullanılan token'lar: `Tipografi / Başlık H2`, `Tipografi / Gövde Metni (base)`, `Renkler / Ana Lacivert`, `Radius / Buton`
 
 ---
-*GLOBALS.md dosyası tam 9 renk token'ı ve toplam 52 token olarak netleştirilmiştir.*
+*GLOBALS.md dosyası renk + spacing + selection token'larıyla güncellenmiştir.*

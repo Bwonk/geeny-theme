@@ -49,6 +49,8 @@ export type ThemeSettingName =
   | "_mKSzZQXicb"
   /** Boşluk / Yatay Bölüm Padding (TEXT) */
   | "_Nd1XnRyZlx"
+  /** Seçim / Etkin (BOOLEAN) */
+  | "_Nj7fGnZidb"
   /** Animasyon / Marquee Ticker (TEXT) */
   | "_NTIrquacoN"
   /** Animasyon / Menü Alt Çizgi (TEXT) */
@@ -63,8 +65,12 @@ export type ThemeSettingName =
   | "_rTI75Www8J"
   /** Boşluk / Checkout Buton Yüksekliği (TEXT) */
   | "_RtoVmtuDGF"
+  /** Seçim / Arka Plan (COLOR) */
+  | "_U2NDSSNjOC"
   /** Boşluk / Mobil Yatay Padding (TEXT) */
   | "_uRDipxnxkx"
+  /** Seçim / Metin (COLOR) */
+  | "_v71Mf9bk7q"
   /** Radius / Kart (TEXT) */
   | "_WyFUVwOpPk"
   /** Radius / Swatch Dairesel (TEXT) */
@@ -106,6 +112,7 @@ type ThemeSettingValueMap = {
   "_mfIn0YsoTT": string;
   "_mKSzZQXicb": string;
   "_Nd1XnRyZlx": string;
+  "_Nj7fGnZidb": boolean;
   "_NTIrquacoN": string;
   "_NXa706BcQP": string;
   "_OQlsoCe9ah": string;
@@ -113,7 +120,9 @@ type ThemeSettingValueMap = {
   "_rEYcHCKRvC": string;
   "_rTI75Www8J": string;
   "_RtoVmtuDGF": string;
+  "_U2NDSSNjOC": string;
   "_uRDipxnxkx": string;
+  "_v71Mf9bk7q": string;
   "_WyFUVwOpPk": string;
   "_XYyz9eaKGx": string;
   "_YDHxutBHyk": string;

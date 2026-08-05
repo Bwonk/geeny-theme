@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "preact/hooks";
+import { useState, useEffect, useLayoutEffect, useRef } from "preact/hooks";
 import {
   getDefaultSrc,
   cartStore,
@@ -6,15 +6,36 @@ import {
   hasCustomer,
   Router,
   getThemeSetting,
+  getThemeSettings,
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
 import CartDrawer from "../../sub-components/CartDrawer";
 import SearchOverlay from "../../sub-components/SearchOverlay";
 import CloseButton from "../../sub-components/CloseButton";
 import { formatShadow } from "../../utils/theme";
+import {
+  applyTextSelectionStyles,
+  clearTextSelectionStyles,
+  resolveTextSelectionConfig,
+  SELECTION_ENABLED_SETTING,
+  SELECTION_BG_SETTING,
+  SELECTION_FG_SETTING,
+  SELECTION_ENABLED_DISPLAY,
+  SELECTION_BG_DISPLAY,
+  SELECTION_FG_DISPLAY,
+} from "../../utils/textSelection";
 
 /** Hero vb. bileşenlerin kalan viewport hesabı için gerçek header yüksekliği. */
 const HEADER_OFFSET_VAR = "--ikas-header-height";
+
+function readSelectionThemeSetting(variableName: string, displayName: string) {
+  if (variableName) {
+    const byKey = getThemeSetting(variableName);
+    if (byKey) return byKey;
+  }
+  const all = getThemeSettings() ?? [];
+  return all.find((s) => s.displayName === displayName);
+}
 
 export interface HeaderProps extends Props {
   className?: string;
@@ -30,6 +51,7 @@ export interface HeaderProps extends Props {
  * - Logo (Onest 700 + tracking), navigasyon linkleri (hover: accent sarı)
  * - İkonlar: Arama, Hesap ve Accent Sarı Sepet — ortak interaction sistemi
  * - Entegre CartDrawer ve SearchOverlay tetikleyicileri
+ * - Site-wide text selection highlight (props → Theme Settings → brand fallback)
  */
 export function Header({
   logo,
@@ -68,6 +90,9 @@ export function Header({
   cartUpsellProduct2,
   cartUpsellProduct3,
   cartUpsellProduct4,
+  enableTextSelectionHighlight,
+  selectionBackgroundColor,
+  selectionTextColor,
   className = "",
 }: HeaderProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -85,6 +110,18 @@ export function Header({
   const stickyShadowSetting = getThemeSetting("_iSJXfL0J5I"); // Gölge / Sticky Header Shadow
   const softShadowSetting = getThemeSetting("_yyUleMlhR4"); // Gölge / Kart Soft Shadow
   const actionAnimSetting = getThemeSetting("_bNtMCrOBsE"); // Animasyon / Buton ve Hover
+  const selectionEnabledSetting = readSelectionThemeSetting(
+    SELECTION_ENABLED_SETTING,
+    SELECTION_ENABLED_DISPLAY
+  );
+  const selectionBgSetting = readSelectionThemeSetting(
+    SELECTION_BG_SETTING,
+    SELECTION_BG_DISPLAY
+  );
+  const selectionFgSetting = readSelectionThemeSetting(
+    SELECTION_FG_SETTING,
+    SELECTION_FG_DISPLAY
+  );
 
   const maxSiteWidth = siteWidthSetting?.value || "1560px";
   const headerHeight = heightSetting?.value || "60px";
@@ -101,6 +138,33 @@ export function Header({
     "0 12px 32px color-mix(in srgb, var(--vluFeuIeFs) 20%, transparent)"
   );
   const actionTransition = actionAnimSetting?.value || "180ms ease";
+
+  // Site-wide brand text selection — props → Theme Settings → fallbacks
+  // useLayoutEffect: paint before first user selection; split ::selection rules live in util.
+  useLayoutEffect(() => {
+    const config = resolveTextSelectionConfig({
+      enabled: enableTextSelectionHighlight,
+      backgroundColor: selectionBackgroundColor,
+      textColor: selectionTextColor,
+      themeEnabled:
+        typeof selectionEnabledSetting?.value === "boolean"
+          ? selectionEnabledSetting.value
+          : undefined,
+      themeBackgroundColor: selectionBgSetting?.value,
+      themeTextColor: selectionFgSetting?.value,
+    });
+    applyTextSelectionStyles(config);
+    return () => {
+      clearTextSelectionStyles();
+    };
+  }, [
+    enableTextSelectionHighlight,
+    selectionBackgroundColor,
+    selectionTextColor,
+    selectionEnabledSetting?.value,
+    selectionBgSetting?.value,
+    selectionFgSetting?.value,
+  ]);
 
   // Gerçek layout yüksekliğini yayınla → Hero kalan 100dvh alanını hesaplar
   useEffect(() => {

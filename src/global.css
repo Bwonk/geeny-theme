@@ -90,6 +90,40 @@
   --cart-item-image-size: 80px;
 }
 
+/*
+ * Brand text selection — baseline before Header JS injects live merchant colors.
+ * CRITICAL: never comma-group ::selection with ::-moz-selection — unknown
+ * selectors in a list invalidate the WHOLE rule (Chrome drops moz; no paint).
+ * Prefer literal hex fallbacks: CSS vars inside ::selection are unreliable in
+ * some engines. Header injects concrete colors via #ikas-text-selection.
+ */
+::selection {
+  background: #E3E045;
+  color: #101418;
+}
+::-moz-selection {
+  background: #E3E045;
+  color: #101418;
+}
+input::selection,
+textarea::selection {
+  background: #E3E045;
+  color: #101418;
+}
+input::-moz-selection,
+textarea::-moz-selection {
+  background: #E3E045;
+  color: #101418;
+}
+@media (forced-colors: active) {
+  ::selection,
+  input::selection,
+  textarea::selection {
+    background: Highlight;
+    color: HighlightText;
+  }
+}
+
 /* Erişilebilir gizleme: ekran okuyucuya açık, görsel layout'tan tamamen çıkar. */
 .visually-hidden {
   position: absolute !important;

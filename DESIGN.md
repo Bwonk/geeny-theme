@@ -60,6 +60,14 @@ aşağıdaki `cssVar` üzerinden okunur.
 Referansta geçen `#5A6472` kodda hiç kullanılmadığı için token açılmadı; gerekirse skalaya
 `Nötr / Mürekkep` ile `Nötr / Gövde Metni` arasına eklenir.
 
+#### Metin Seçimi (Text Selection Highlight)
+Referans `Anasayfa.dc.html` L23: `::selection { background:#E3E045; color:#101418 }`.
+Site-wide brand selection; merchant Header → Metin Seçimi props ile ayarlar
+(`enableTextSelectionHighlight`, `selectionBackgroundColor`, `selectionTextColor`).
+Theme Settings fallback: `Seçim / Etkin`, `Seçim / Arka Plan`, `Seçim / Metin`.
+Tek çift (lime + mürekkep) hem açık hem lacivert zeminlerde okunur. `forced-colors` altında
+OS Highlight’a bırakılır. Detay: `GLOBALS.md` § B8, `src/utils/textSelection.ts`.
+
 #### Color Scheme Yapısı — **uygulanmadı**
 İlk tasarımda 6 şemalı bir `colorScheme` yapısı öngörülmüştü. Canlı temada
 `colorSchemes.schemes` ve `colorSchemes.values` **boştur**; bölüm zeminleri bunun yerine her
