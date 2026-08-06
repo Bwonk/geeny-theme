@@ -102,6 +102,8 @@ export function ProductGrid({
               <ProductCard
                 key={prod.id || idx}
                 product={prod}
+                /* Koleksiyon sayfasında h1 hero başlığıdır → kartlar h2. */
+                headingLevel={2}
                 showCategoryLabel={showCategoryLabel}
                 showSwatches={showSwatches}
                 overlayQuickAdd

@@ -39,6 +39,8 @@ export function CloseButton({
   const isOnDark = tone === "onDark";
   const btnClass = [
     "ikas-close-btn",
+    // Çip 34×34 kalır; dokunmatikte isabet alanı 44×44'e genişler (WCAG 2.5.8).
+    "ikas-tap-44",
     isOnDark ? "ikas-close-btn--on-dark" : "",
     className,
   ]

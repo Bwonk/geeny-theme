@@ -88,6 +88,7 @@
 
 .ikas-header__hamburger {
   display: none;
+  position: relative;
   background: transparent;
   border: none;
   color: var(--24KlcgGmm9);
@@ -96,6 +97,12 @@
   align-items: center;
   justify-content: center;
   transition: color 0.2s ease;
+}
+
+.ikas-header__hamburger:focus-visible {
+  outline: 2px solid var(--sy8ZnXZdoG);
+  outline-offset: 2px;
+  border-radius: 9999px;
 }
 
 .ikas-header__hamburger:hover {
@@ -124,6 +131,16 @@
 .ikas-header__logo-link:hover .ikas-header__logo-text,
 .ikas-header__logo-link:hover {
   color: var(--sy8ZnXZdoG);             /* Accent Sarı — TOKENS.md satır 11 */
+}
+
+/* Klavye odağı ikon butonlarıyla aynı dili konuşur (WCAG 2.4.11 / 2.4.13). */
+.ikas-header__logo-link:focus-visible,
+.ikas-header__menu-link:focus-visible,
+.ikas-header__drawer-link:focus-visible {
+  outline: 2px solid var(--sy8ZnXZdoG);
+  outline-offset: 3px;
+  border-radius: 4px;
+  color: var(--sy8ZnXZdoG);
 }
 
 .ikas-header__logo-img {
@@ -281,6 +298,22 @@
   }
 }
 
+/*
+ * Pill overflow:hidden ::before genişleticisini kırptığı için ikon butonlarının
+ * gerçek kutu boyutunu kaba işaretleyicide 44px'e çıkarırız (WCAG 2.5.8).
+ */
+@media (pointer: coarse) {
+  .ikas-header__icon-btn,
+  .ikas-header__cart-btn {
+    --nav-action-size: 44px;
+  }
+
+  .ikas-header__hamburger {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
 /* Sepet Sayacı Badge'i (Roboto Mono) */
 .ikas-header__cart-badge {
   position: absolute;
@@ -330,7 +363,12 @@
   color: var(--24KlcgGmm9);
   z-index: var(--z-index-header-drawer, 800);
   transform: translateX(-100%);
-  transition: var(--drawer-transition, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1));
+  /* Kapalıyken görsel olarak ekran dışında DEĞİL, tamamen etkisiz olmalı:
+     visibility:hidden içindeki linkleri Tab sırasından da çıkarır (WCAG 2.4.3).
+     Geçiş süresi kadar geciktirilir ki kapanış animasyonu görünür kalsın. */
+  visibility: hidden;
+  transition: var(--drawer-transition, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)),
+    visibility 0s linear 0.4s;
   display: flex;
   flex-direction: column;
   box-shadow: 4px 0 20px rgba(0, 0, 0, 0.25);
@@ -338,6 +376,9 @@
 
 .ikas-header__drawer--open {
   transform: translateX(0);
+  visibility: visible;
+  transition: var(--drawer-transition, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)),
+    visibility 0s;
 }
 
 .ikas-header__drawer-header {
@@ -376,6 +417,13 @@
 
 .ikas-header__drawer-link:hover {
   color: var(--sy8ZnXZdoG);
+}
+
+/* Drawer mobilde açılır → linkler her zaman tam dokunma hedefi (WCAG 2.5.8). */
+.ikas-header__drawer-link {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════

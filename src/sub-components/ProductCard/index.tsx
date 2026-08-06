@@ -31,6 +31,13 @@ export interface Props {
   addToCartText?: string;
   addingToCartText?: string;
   soldOutText?: string;
+  /**
+   * Kartın belge başlık ağacındaki seviyesi. Kart, kapsayan bölümün başlığının
+   * bir alt seviyesinde olmalıdır: sayfa başlığı h1 olan listelerde 2, kendi
+   * h2 başlığı olan bölümlerde (carousel, öneriler) 3. Seviye atlamak
+   * WCAG 1.3.1 ihlalidir.
+   */
+  headingLevel?: 2 | 3 | 4;
   className?: string;
 }
 
@@ -41,6 +48,7 @@ export function ProductCard({
   overlayQuickAdd = true,
   showCategoryLabel = false,
   showSwatches = false,
+  headingLevel = 3,
   addToCartText = "SEPETE EKLE",
   addingToCartText = "EKLENİYOR...",
   soldOutText = "TÜKENDİ",
@@ -149,6 +157,8 @@ export function ProductCard({
       ? addToCartText
       : soldOutText;
 
+  const Heading = `h${headingLevel}` as "h2" | "h3" | "h4";
+
   return (
     <article
       className={`ikas-product-card ${overlayQuickAdd ? "ikas-product-card--overlay-mode" : ""} ${className}`.trim()}
@@ -232,11 +242,11 @@ export function ProductCard({
           <div className="ikas-product-card__cat _eZyocyyd0F">{catLabel}</div>
         )}
 
-        <h3 className="ikas-product-card__title">
-          <a href={href} style={{ color: "inherit", textDecoration: "none" }}>
+        <Heading className="ikas-product-card__title">
+          <a href={href} className="ikas-product-card__title-link">
             {title}
           </a>
-        </h3>
+        </Heading>
 
         <div className="ikas-product-card__price-wrapper">
           {hasDiscount && sellPrice && (

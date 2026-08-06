@@ -114,15 +114,18 @@ export function FeaturedCollectionGrid({
           {showViewAll && (
             <TextLink
               tone="LABEL"
-              href={viewAllHref || "#urunler"}
+              href={viewAllHref || undefined}
               className="ikas-featured-grid__link"
               text={viewAllButtonText}
-              onClick={(e) => {
-                if (!viewAllHref) {
-                  e.preventDefault();
-                  Router.navigateToPage("CATEGORY");
-                }
-              }}
+              onClick={
+                viewAllHref
+                  ? undefined
+                  : () => {
+                      // Merchant henüz viewAllLink bağlamadıysa CATEGORY şablonuna
+                      // git — ölü #urunler hash'i üretme (404/ölü link riski).
+                      Router.navigateToPage("CATEGORY");
+                    }
+              }
             />
           )}
         </div>

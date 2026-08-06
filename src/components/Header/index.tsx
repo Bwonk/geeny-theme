@@ -13,6 +13,7 @@ import CartDrawer from "../../sub-components/CartDrawer";
 import SearchOverlay from "../../sub-components/SearchOverlay";
 import CloseButton from "../../sub-components/CloseButton";
 import { formatShadow } from "../../utils/theme";
+import { useFocusTrap, inertProps } from "../../utils/a11y";
 import {
   applyTextSelectionStyles,
   clearTextSelectionStyles,
@@ -101,6 +102,7 @@ export function Header({
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const headerRef = useRef<HTMLElement | null>(null);
+  const drawerRef = useRef<HTMLDivElement | null>(null);
 
   // Read live global settings via getThemeSetting
   const heightSetting = getThemeSetting("_OQlsoCe9ah");
@@ -251,6 +253,16 @@ export function Header({
     };
   }, [isDrawerOpen]);
 
+  // Drawer modal sözleşmesi: giriş odağı, Tab döngüsü, ESC ve odağın hamburger'a
+  // dönmesi. Drawer header'ın içinde (portal değil) yaşadığı için arka plan inert
+  // yapılmaz; odak döngüsü zaten paneli terk etmeyi engeller.
+  useFocusTrap({
+    active: isDrawerOpen,
+    containerRef: drawerRef,
+    onEscape: () => setIsDrawerOpen(false),
+    skipBackgroundInert: true,
+  });
+
   // Reactive cart item count read
   const cartItems = cartStore.cart?.orderLineItems ?? [];
   const itemCount = cartItems.reduce((acc, item) => acc + (item.quantity ?? 1), 0);
@@ -288,7 +300,7 @@ export function Header({
               {/* Mobil Hamburger Butonu */}
               <button
                 type="button"
-                className="ikas-header__hamburger"
+                className="ikas-header__hamburger ikas-tap-44"
                 aria-label={menuLabel}
                 aria-expanded={isDrawerOpen}
                 aria-controls="mobile-navigation-drawer"
@@ -311,7 +323,11 @@ export function Header({
               </button>
 
               {/* Logo Linki */}
-              <a href="/" className="ikas-header__logo-link" aria-label={brandText}>
+              <a
+                href="/"
+                className="ikas-header__logo-link ikas-tap-44"
+                aria-label={brandText}
+              >
                 {logoSrc ? (
                   <img
                     src={logoSrc}
@@ -347,7 +363,7 @@ export function Header({
               {/* Arama Butonu — açıkken active + X */}
               <button
                 type="button"
-                className={`ikas-header__icon-btn${isSearchOpen ? " ikas-header__icon-btn--active" : ""}`}
+                className={`ikas-header__icon-btn ikas-tap-44${isSearchOpen ? " ikas-header__icon-btn--active" : ""}`}
                 aria-label={searchLabel}
                 aria-expanded={isSearchOpen}
                 title={searchLabel}
@@ -374,7 +390,7 @@ export function Header({
               {/* Müşteri Hesabı / Giriş */}
               <button
                 type="button"
-                className="ikas-header__icon-btn"
+                className="ikas-header__icon-btn ikas-tap-44"
                 aria-label={accountLabel}
                 title={accountLabel}
                 onClick={() =>
@@ -392,7 +408,7 @@ export function Header({
               {/* Accent Sarı Sepet Butonu */}
               <button
                 type="button"
-                className="ikas-header__cart-btn"
+                className="ikas-header__cart-btn ikas-tap-44"
                 aria-label={`${cartLabel} (${itemCount})`}
                 title={cartLabel}
                 onClick={() => {
@@ -421,11 +437,16 @@ export function Header({
         onClick={() => setIsDrawerOpen(false)}
       />
       <div
+        ref={drawerRef}
         id="mobile-navigation-drawer"
         className={`ikas-header__drawer ${
           isDrawerOpen ? "ikas-header__drawer--open" : ""
         }`}
+        role="dialog"
+        aria-modal="true"
+        aria-label={mobileMenuTitle || menuLabel}
         aria-hidden={!isDrawerOpen}
+        {...inertProps(!isDrawerOpen)}
       >
         <div className="ikas-header__drawer-header">
           <span className="ikas-header__logo-text">{mobileMenuTitle}</span>

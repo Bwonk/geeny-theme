@@ -33,6 +33,7 @@ import Button from "../Button";
 import CloseButton from "../CloseButton";
 import PortalScope from "../PortalScope";
 import TextLink from "../TextLink";
+import { useFocusTrap, inertProps } from "../../utils/a11y";
 
 export interface Props {
   cartDrawerTitle?: string;
@@ -343,6 +344,7 @@ export function CartDrawer({
 }: Props) {
   const [activeOpen, setActiveOpen] = useState(isOpen);
   const [busyItemId, setBusyItemId] = useState<string | null>(null);
+  const panelRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setActiveOpen(isOpen);
@@ -369,15 +371,14 @@ export function CartDrawer({
     };
   }, []);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && activeOpen) {
-        handleClose();
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [activeOpen]);
+  // Modal sözleşmesi: açılışta odak panele girer, Tab panelde döner, ESC kapatır
+  // ve kapanışta odak sepet butonuna geri verilir. Panel body portalında
+  // olduğu için arka plan `inert` ile ekran okuyucudan da çıkarılır.
+  useFocusTrap({
+    active: activeOpen,
+    containerRef: panelRef,
+    onEscape: handleClose,
+  });
 
   useEffect(() => {
     if (activeOpen) {
@@ -473,9 +474,11 @@ export function CartDrawer({
           activeOpen ? "ikas-cart-drawer__backdrop--open" : ""
         }`}
         onClick={handleClose}
+        aria-hidden="true"
       />
 
       <div
+        ref={panelRef}
         className={`ikas-cart-drawer ${
           activeOpen ? "ikas-cart-drawer--open" : ""
         } ${className}`.trim()}
@@ -483,6 +486,8 @@ export function CartDrawer({
         role="dialog"
         aria-modal="true"
         aria-label={cartDrawerTitle}
+        aria-hidden={!activeOpen}
+        {...inertProps(!activeOpen)}
       >
         <div className="ikas-cart-drawer__header">
           <h2 className="ikas-cart-drawer__title _AHnMWYqzuI">

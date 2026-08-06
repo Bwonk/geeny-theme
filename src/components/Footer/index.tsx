@@ -137,7 +137,7 @@ export function Footer({
             {supportBadgeText && (
               <TextLink
                 tone="LABEL"
-                href={supportHref || "#"}
+                href={supportHref || undefined}
                 className="ikas-footer__support-link"
                 text={supportBadgeText}
               />
@@ -208,7 +208,7 @@ export function Footer({
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className="ikas-footer__social-btn"
+                  className="ikas-footer__social-btn ikas-tap-44"
                 >
                   <svg
                     width="16"

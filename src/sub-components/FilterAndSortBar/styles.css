@@ -305,3 +305,20 @@
     display: none;
   }
 }
+
+/*
+ * Dokunmatik hedefler (WCAG 2.2 · 2.5.8): filtre/sırala chip'leri parmakla
+ * kullanılan ana kontroller. Kaba işaretleyicide chip yüksekliği 44px'e çıkar;
+ * fare ile 40/36px kompakt tasarım korunur.
+ */
+@media (pointer: coarse) {
+  .ikas-filter-bar,
+  .ikas-filter-bar--slim {
+    --filter-chip-h: 44px;
+  }
+
+  .ikas-filter-bar__chip,
+  .ikas-filter-bar__mob-btn {
+    min-height: 44px;
+  }
+}

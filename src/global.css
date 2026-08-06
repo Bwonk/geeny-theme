@@ -88,6 +88,97 @@
 
   /* Sepet İtem Görsel Boyutu (CartDrawer ve Sepet Tablosu) */
   --cart-item-image-size: 80px;
+
+  /* ─────────────────────────────────────────────────────────────────────
+   * ERİŞİLEBİLİR METİN RENKLERİ (WCAG 2.2 · 1.4.3 Contrast Minimum)
+   *
+   * Marka nötr skalasındaki iki ton beyaz zeminde AA eşiğini geçmez:
+   *   Meta Metin   #8C97A5 → 2.96:1   (gereken 4.5:1)
+   *   Gövde Metni  #6E7A8C → 4.27:1   (gereken 4.5:1)
+   *
+   * Token'ları değiştirmek yerine aynı nötr aileden AA geçen türevler
+   * üretilir: marka tonu korunur, merchant paleti değiştirdiğinde türev de
+   * birlikte kayar. Yalnızca OKUNAN metin bunları kullanır; dekoratif
+   * çizgi/ikon kullanımları token'larda kalır.
+   *
+   * Ölçülen kontrast (beyaz zemin): --text-meta-aa 5.9:1 · --text-body-aa 6.0:1
+   * ───────────────────────────────────────────────────────────────────── */
+  --text-meta-aa: #5d656f;
+  --text-meta-aa: color-mix(
+    in srgb,
+    var(--p6EMJiXye1, #8c97a5) 62%,
+    var(--fcAwzuFj9W, #101418) 38%
+  );
+  --text-body-aa: #5a6472;
+  --text-body-aa: color-mix(
+    in srgb,
+    var(--xGFwg5Zqpf, #6e7a8c) 78%,
+    var(--fcAwzuFj9W, #101418) 22%
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+ * DOKUNMATİK HEDEF GENİŞLETİCİ (WCAG 2.2 · 2.5.8 Target Size)
+ *
+ * Görsel boyutu değiştirmeden isabet alanını 44×44'e çıkarır — ikon-only
+ * kontrollerde tasarım ölçüsü korunurken parmakla kullanım güvenli olur.
+ * Yalnızca kaba işaretleyicide (dokunmatik) devreye girer; fare ile
+ * kullanımda hiçbir kutu büyümez, bu yüzden hover alanları kaymaz.
+ * ═══════════════════════════════════════════════════════════════════════ */
+@media (pointer: coarse) {
+  .ikas-tap-44 {
+    position: relative;
+  }
+
+  .ikas-tap-44::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max(100%, 44px);
+    height: max(100%, 44px);
+    transform: translate(-50%, -50%);
+    /* Görünmez: yalnızca isabet alanı. */
+    background: transparent;
+    pointer-events: auto;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+ * HAREKET AZALTMA (WCAG 2.2 · 2.3.3 Animation from Interactions)
+ *
+ * Bileşenler kendi kritik geçişlerini ayrıca kapatır; bu blok geriye kalan
+ * tüm transition/animation'ları tek noktadan nötrleştirir. Süre sıfırlanmaz,
+ * 0.01ms'e çekilir — böylece transitionend/animationend dinleyen mantık
+ * çalışmaya devam eder.
+ * ═══════════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/*
+ * Yukarıdaki evrensel seçici ikas scope dönüşümünde düşerse diye ikinci kat:
+ * `[class]` bir attribute seçicidir ve dönüşümde kesinlikle korunur; sınıfı
+ * olan her bileşen elemanını (pratikte hepsini) kapsar. Ayrı kural olarak
+ * yazılır ki biri geçersiz sayılsa diğeri ayakta kalsın.
+ */
+@media (prefers-reduced-motion: reduce) {
+  [class],
+  [class]::before,
+  [class]::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
 }
 
 /*

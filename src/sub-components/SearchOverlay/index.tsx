@@ -14,6 +14,7 @@ import { observer } from "@ikas/component-utils";
 import Button from "../Button";
 import CloseButton from "../CloseButton";
 import PortalScope from "../PortalScope";
+import { useFocusTrap } from "../../utils/a11y";
 
 export interface Props {
   isOpen?: boolean;
@@ -43,6 +44,7 @@ export function SearchOverlay({
   const [totalCount, setTotalCount] = useState(0);
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const debounceTimerRef = useRef<any>(null);
 
   // Read live global settings via getThemeSetting
@@ -71,15 +73,10 @@ export function SearchOverlay({
     };
   }, []);
 
-  // Body scroll lock & focus management when open
+  // Body scroll lock when open — odak yönetimi useFocusTrap'e ait.
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
-      setTimeout(() => {
-        if (inputRef.current) {
-          inputRef.current.focus();
-        }
-      }, 120);
     } else {
       document.body.style.overflow = "";
     }
@@ -220,16 +217,22 @@ export function SearchOverlay({
     }
   };
 
-  // Keyboard events (ESC, Enter)
+  // Enter → tüm sonuçlar. ESC ve Tab döngüsü useFocusTrap tarafından yönetilir.
   const handleKeyDown = (e: any) => {
-    if (e.key === "Escape") {
-      e.preventDefault();
-      handleCloseOverlay();
-    } else if (e.key === "Enter") {
+    if (e.key === "Enter") {
       e.preventDefault();
       handleViewAllResults();
     }
   };
+
+  // Modal sözleşmesi: odak arama girdisine iner, Tab panelde döner, arka plan
+  // `inert` olur ve kapanışta odak arama butonuna geri döner.
+  useFocusTrap({
+    active: isOpen,
+    containerRef: panelRef,
+    onEscape: handleCloseOverlay,
+    initialFocusRef: inputRef,
+  });
 
   if (!isOpen) {
     return null;
@@ -256,6 +259,7 @@ export function SearchOverlay({
 
       {/* ARAMA PANELİ KONTEYNERİ */}
       <div
+        ref={panelRef}
         className="geeny-search-overlay__panel"
         role="dialog"
         aria-modal="true"

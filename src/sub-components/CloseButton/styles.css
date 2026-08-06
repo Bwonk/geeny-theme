@@ -23,6 +23,14 @@
   border-radius: 9999px;
 }
 
+/* Çip 34×34 kalır; butonun kendisi dokunmatikte 44×44 isabet alanı sağlar. */
+@media (pointer: coarse) {
+  .ikas-close-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
 .ikas-close-btn:hover .ikas-icon-chip,
 .ikas-close-btn:focus-visible .ikas-icon-chip {
   transform: rotate(135deg);

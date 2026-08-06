@@ -87,7 +87,9 @@ export function TextLink({
     );
   }
 
-  if (tone === "INLINE" && !onClick) {
+  // Hedefi de eylemi de olmayan bir metin interaktif olamaz: ölü link/buton
+  // yerine düz metin basılır (WCAG 2.4.4 · 4.1.2).
+  if (!onClick && type === "button") {
     return (
       <span className={combinedClassName} style={inlineStyles} lang="tr">
         {content}

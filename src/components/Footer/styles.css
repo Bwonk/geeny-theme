@@ -68,7 +68,7 @@
   font-family: var(--font-body);
   font-size: clamp(14.5px, 1.1vw, 16.5px);
   line-height: 1.6;
-  color: var(--xGFwg5Zqpf);
+  color: var(--text-body-aa);           /* AA türevi — global.css */
   max-width: 46ch;
 }
 
@@ -99,7 +99,7 @@
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.18em;
-  color: var(--p6EMJiXye1);
+  color: var(--text-meta-aa);           /* AA türevi — global.css */
   text-transform: uppercase;
   background: none;
   border: none;
@@ -153,7 +153,7 @@
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.12em;
-  color: var(--p6EMJiXye1);
+  color: var(--text-meta-aa);           /* AA türevi — global.css */
 }
 
 /* SOSYAL MEDYA PİLL İKONLARI */
@@ -228,7 +228,9 @@
   .ikas-footer__col-header {
     cursor: pointer;
     width: 100%;
-    padding: 10px 0;
+    /* Akordeon başlığı mobilde tek dokunma hedefi → min 44px yükseklik. */
+    min-height: 44px;
+    padding: 12px 0;
     border-bottom: 1px solid var(--8ARbeTYsmD);
   }
 
