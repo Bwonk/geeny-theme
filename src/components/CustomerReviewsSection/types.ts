@@ -13,4 +13,5 @@ export interface Props {
   verifiedBuyerText?: string;
   emptyText?: string;
   loadingText?: string;
+  errorText?: string;
 }

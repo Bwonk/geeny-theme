@@ -1,4 +1,4 @@
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import { getThemeSetting } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
 import CloseButton from "../CloseButton";
@@ -17,6 +17,8 @@ export interface Props {
   rows?: SizeGuideRow[];
   note?: string;
   closeLabel?: string;
+  /** Trigger element to restore focus on close */
+  returnFocusRef?: { current: HTMLElement | null };
 }
 
 export function SizeGuideDrawer({
@@ -27,18 +29,37 @@ export function SizeGuideDrawer({
   rows = [],
   note = "Emin değilsen Standart ile başla; Mini çocuk ve dar koltuklar için.",
   closeLabel = "Kapat",
+  returnFocusRef,
 }: Props) {
   const [mounted, setMounted] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const closeBtnWrapRef = useRef<HTMLDivElement>(null);
+  const wasOpenRef = useRef(false);
   const drawerAnimSetting = getThemeSetting("_rTI75Www8J");
   const drawerAnim =
-    drawerAnimSetting?.value || "transform 0.42s cubic-bezier(0.22, 1, 0.36, 1)";
+    drawerAnimSetting?.value ||
+    "transform 0.42s cubic-bezier(0.32, 0.72, 0, 1)";
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
   useEffect(() => {
-    if (!open) return;
+    if (!open) {
+      if (wasOpenRef.current) {
+        // Odak, kapanış animasyonu (~420ms) bittikten sonra dönsün
+        const target = returnFocusRef?.current;
+        const t = window.setTimeout(() => {
+          if (target && typeof target.focus === "function") target.focus();
+        }, 420);
+        wasOpenRef.current = false;
+        return () => window.clearTimeout(t);
+      }
+      wasOpenRef.current = false;
+      return;
+    }
+
+    wasOpenRef.current = true;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
@@ -47,11 +68,18 @@ export function SizeGuideDrawer({
     };
     window.addEventListener("keydown", onKey);
 
+    window.requestAnimationFrame(() => {
+      const btn = closeBtnWrapRef.current?.querySelector(
+        "button"
+      ) as HTMLButtonElement | null;
+      btn?.focus();
+    });
+
     return () => {
       document.body.style.overflow = prev;
       window.removeEventListener("keydown", onKey);
     };
-  }, [open, onClose]);
+  }, [open, onClose, returnFocusRef]);
 
   const visibleRows = (rows || []).filter((r) => r.label && r.value);
 
@@ -70,6 +98,7 @@ export function SizeGuideDrawer({
       />
 
       <div
+        ref={panelRef}
         className="ikas-size-guide__panel"
         role="dialog"
         aria-modal="true"
@@ -84,7 +113,9 @@ export function SizeGuideDrawer({
               {title}
             </h2>
           )}
-          <CloseButton ariaLabel={closeLabel} onClick={onClose} />
+          <div ref={closeBtnWrapRef}>
+            <CloseButton ariaLabel={closeLabel} onClick={onClose} />
+          </div>
         </div>
 
         <div className="ikas-size-guide__body">

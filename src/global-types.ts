@@ -85,6 +85,8 @@ export type ThemeSettingName =
   | "_YvGykMxQWI"
   /** Gölge / Kart Soft Shadow (SHADOW) */
   | "_yyUleMlhR4"
+  /** Animasyon / Adet Stepper (TEXT) */
+  | "_yz57pYGBUf"
   /** Animasyon / Görsel Scale Hover (TEXT) */
   | "_Z1JfmMfgtb"
   /** Animasyon / Sticky Bar Belirme (TEXT) */
@@ -130,6 +132,7 @@ type ThemeSettingValueMap = {
   "_yVBERhD1nQ": string;
   "_YvGykMxQWI": string;
   "_yyUleMlhR4": any;
+  "_yz57pYGBUf": string;
   "_Z1JfmMfgtb": string;
   "_z2WqA2GtRY": string;
   "_ZaLXoaaaAA": string;

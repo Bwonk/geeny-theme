@@ -1,4 +1,6 @@
-@import "../Button/styles.css";
+/* Button stilleri parent section CSS'ten gelir
+   (CollectionSection, SearchPageSection). Nested @import
+   diamond path → "Circular CSS import" uyarısına yol açar. */
 
 .ikas-pagination {
   width: 100%;

@@ -1760,6 +1760,14 @@
           "required": false,
           "defaultValue": "Yorumlar yükleniyor...",
           "groupId": "reviews_content"
+        },
+        {
+          "name": "errorText",
+          "displayName": "Hata Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Yorumlar yüklenemedi. Lütfen tekrar deneyin.",
+          "groupId": "reviews_content"
         }
       ],
       "propGroups": [
@@ -1830,6 +1838,22 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "TÜKENDİ",
+          "groupId": "related_content"
+        },
+        {
+          "name": "prevAriaLabel",
+          "displayName": "Önceki Aria",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Önceki ürünler",
+          "groupId": "related_content"
+        },
+        {
+          "name": "nextAriaLabel",
+          "displayName": "Sonraki Aria",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sonraki ürünler",
           "groupId": "related_content"
         }
       ],
@@ -2156,6 +2180,46 @@
           "required": false,
           "defaultValue": "Seçildi",
           "groupId": "crossSell"
+        },
+        {
+          "name": "galleryPrevAriaLabel",
+          "displayName": "Önceki Görsel Aria",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Önceki görsel",
+          "groupId": "gallery"
+        },
+        {
+          "name": "galleryNextAriaLabel",
+          "displayName": "Sonraki Görsel Aria",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sonraki görsel",
+          "groupId": "gallery"
+        },
+        {
+          "name": "galleryThumbsUpAriaLabel",
+          "displayName": "Thumb Yukarı Aria",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Yukarı kaydır",
+          "groupId": "gallery"
+        },
+        {
+          "name": "galleryThumbsDownAriaLabel",
+          "displayName": "Thumb Aşağı Aria",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Aşağı kaydır",
+          "groupId": "gallery"
+        },
+        {
+          "name": "detailsAnchorLabel",
+          "displayName": "Detaylar Bağlantı Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ürün detaylarına git",
+          "groupId": "buybox"
         }
       ],
       "propGroups": [
@@ -2182,6 +2246,11 @@
           "id": "crossSell",
           "name": "Cross Sell",
           "description": "Kampanya teklifi ürünleri"
+        },
+        {
+          "id": "gallery",
+          "name": "Galeri",
+          "description": "Medya galerisi erişilebilirlik etiketleri"
         }
       ]
     },

@@ -10,21 +10,23 @@
   z-index: 70;
   width: 100%;
   box-sizing: border-box;
-  background-color: color-mix(in srgb, var(--24KlcgGmm9) 94%, transparent);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background-color: var(--24KlcgGmm9);
   border-top: 1px solid var(--8ARbeTYsmD, #e4e7e8);
-  box-shadow: 0 -12px 34px rgba(19, 25, 36, 0.1);
+  box-shadow: 0 -8px 24px rgba(19, 25, 36, 0.08);
   transform: translateY(110%);
+  opacity: 0;
   transition: var(
     --sticky-bar-transition,
-    transform 0.42s cubic-bezier(0.22, 1, 0.36, 1)
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.3s ease
   );
   pointer-events: none;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 .ikas-sticky-cart--visible {
   transform: translateY(0);
+  opacity: 1;
   pointer-events: auto;
 }
 

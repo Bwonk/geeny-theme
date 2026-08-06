@@ -43,4 +43,9 @@ export interface Props {
   crossSellAddedText?: string;
   crossSellSelectLabel?: string;
   crossSellSelectedLabel?: string;
+  galleryPrevAriaLabel?: string;
+  galleryNextAriaLabel?: string;
+  galleryThumbsUpAriaLabel?: string;
+  galleryThumbsDownAriaLabel?: string;
+  detailsAnchorLabel?: string;
 }

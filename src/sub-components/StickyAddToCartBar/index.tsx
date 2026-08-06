@@ -69,7 +69,8 @@ export function StickyAddToCartBar({
   const mobilePxSetting = getThemeSetting("_uRDipxnxkx");
 
   const stickyAnim =
-    stickyAnimSetting?.value || "transform 0.42s cubic-bezier(0.22, 1, 0.36, 1)";
+    stickyAnimSetting?.value ||
+    "transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease";
   const maxSiteWidth = siteWidthSetting?.value || "1560px";
   const sectionPx = sectionPxSetting?.value || "20px";
   const mobilePx = mobilePxSetting?.value || "16px";
@@ -95,12 +96,12 @@ export function StickyAddToCartBar({
         (entries) => {
           const entry = entries[0];
           if (!entry) return;
-          // Referans: yalnızca ana CTA viewport üstünden geçince göster
+          // Ana CTA viewport üstünden geçince göster — hafif rootMargin flicker azaltır
           const scrolledPast =
             !entry.isIntersecting && entry.boundingClientRect.top < 0;
           setIsVisible(scrolledPast);
         },
-        { threshold: 0 }
+        { threshold: 0, rootMargin: "0px 0px 24px 0px" }
       );
       observer.observe(targetEl);
     } else {
@@ -165,6 +166,7 @@ export function StickyAddToCartBar({
       style={inlineStyles}
       lang="tr"
       aria-hidden={!isVisible}
+      {...(!isVisible ? ({ inert: "" } as any) : {})}
     >
       <div className="ikas-sticky-cart__container">
         <div className="ikas-sticky-cart__thumb">
@@ -191,10 +193,10 @@ export function StickyAddToCartBar({
             text={ctaLabel}
             variant="PILL_PRIMARY"
             size="NORMAL"
-            disabled={!canAddToCart}
+            disabled={!canAddToCart || !isVisible}
             loading={isAdding}
             onClick={handleAddToCart}
-            className="ikas-sticky-cart__btn"
+            className="ikas-sticky-cart__btn ikas-tap-44"
           />
         </div>
       </div>

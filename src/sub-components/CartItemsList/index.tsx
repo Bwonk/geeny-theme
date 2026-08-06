@@ -9,18 +9,27 @@ import {
   getThemeSetting,
 } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
+import QuantityStepper from "../QuantityStepper";
 
 export interface Props {
   cart?: any;
   className?: string;
+  decreaseQtyLabel?: string;
+  increaseQtyLabel?: string;
+  removeItemLabel?: string;
 }
 
-export function CartItemsList({ cart, className = "" }: Props) {
+export function CartItemsList({
+  cart,
+  className = "",
+  decreaseQtyLabel = "Miktarı Azalt",
+  increaseQtyLabel = "Miktarı Artır",
+  removeItemLabel = "Ürünü Sepetten Çıkar",
+}: Props) {
   const [updatingId, setUpdatingId] = useState<string | null>(null);
 
-  // Read live global settings via getThemeSetting
-  const itemImgRadiusSetting = getThemeSetting("_0WnqPU26e8"); // Radius / Sepet İtem Görseli (12px)
-  const formRadiusSetting = getThemeSetting("_iI8H4rllzj"); // Radius / Input ve Form (8px)
+  const itemImgRadiusSetting = getThemeSetting("_0WnqPU26e8");
+  const formRadiusSetting = getThemeSetting("_iI8H4rllzj");
 
   const itemImgRadius = itemImgRadiusSetting?.value || "12px";
   const formRadius = formRadiusSetting?.value || "8px";
@@ -78,7 +87,6 @@ export function CartItemsList({ cart, className = "" }: Props) {
 
         return (
           <div key={item.id} className="ikas-cart-table__item">
-            {/* ÜRÜN GÖRSELİ */}
             <div className="ikas-cart-table__img-wrapper">
               {imgSrc ? (
                 <img
@@ -91,46 +99,26 @@ export function CartItemsList({ cart, className = "" }: Props) {
               )}
             </div>
 
-            {/* ÜRÜN BİLGİSİ */}
             <div className="ikas-cart-table__info">
-              <h3 className="ikas-cart-table__name _VcfI5D07Nt">
-                {title}
-              </h3>
-              <p className="ikas-cart-table__price _VcfI5D07Nt">
-                {priceText}
-              </p>
+              <h3 className="ikas-cart-table__name _VcfI5D07Nt">{title}</h3>
+              <p className="ikas-cart-table__price _VcfI5D07Nt">{priceText}</p>
             </div>
 
-            {/* MİKTAR VE SİLME BUTONLARI */}
             <div className="ikas-cart-table__actions">
-              <div className="ikas-cart-table__qty">
-                <button
-                  type="button"
-                  className="ikas-cart-table__qty-btn"
-                  aria-label="Miktarı Azalt"
-                  disabled={item.quantity <= 1 || isUpdating}
-                  onClick={() => handleQtyChange(item, item.quantity - 1)}
-                >
-                  -
-                </button>
-                <span className="ikas-cart-table__qty-val _eZyocyyd0F">
-                  {item.quantity}
-                </span>
-                <button
-                  type="button"
-                  className="ikas-cart-table__qty-btn"
-                  aria-label="Miktarı Artır"
-                  disabled={isUpdating}
-                  onClick={() => handleQtyChange(item, item.quantity + 1)}
-                >
-                  +
-                </button>
-              </div>
+              <QuantityStepper
+                value={item.quantity ?? 1}
+                onChange={(next) => handleQtyChange(item, next)}
+                min={1}
+                disabled={isUpdating}
+                decreaseLabel={decreaseQtyLabel}
+                increaseLabel={increaseQtyLabel}
+                size="sm"
+              />
 
               <button
                 type="button"
                 className="ikas-cart-table__remove"
-                aria-label="Ürünü Sepetten Çıkar"
+                aria-label={removeItemLabel}
                 disabled={isUpdating}
                 onClick={() => handleRemove(item)}
               >

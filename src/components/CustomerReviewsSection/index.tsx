@@ -1,4 +1,4 @@
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import {
   getThemeSetting,
   getProductCustomerReviews,
@@ -31,6 +31,7 @@ export function CustomerReviewsSection({
   verifiedBuyerText = "Doğrulanmış alıcı",
   emptyText = "Bu ürün için henüz yorum yok.",
   loadingText = "Yorumlar yükleniyor...",
+  errorText = "Yorumlar yüklenemedi. Lütfen tekrar deneyin.",
   product,
   backgroundColor,
   className = "",
@@ -38,6 +39,9 @@ export function CustomerReviewsSection({
   const [reviews, setReviews] = useState<IkasCustomerReview[]>([]);
   const [listCount, setListCount] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [cardsVisible, setCardsVisible] = useState(false);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ");
   const fadeAnimSetting = getThemeSetting("_AwVN6G9Zib");
@@ -51,10 +55,12 @@ export function CustomerReviewsSection({
       if (!product) {
         setReviews([]);
         setListCount(0);
+        setError(false);
         return;
       }
 
       setLoading(true);
+      setError(false);
       try {
         const list = await getProductCustomerReviews(product, 6, 1);
         if (cancelled) return;
@@ -65,6 +71,7 @@ export function CustomerReviewsSection({
         if (!cancelled) {
           setReviews([]);
           setListCount(0);
+          setError(true);
         }
       } finally {
         if (!cancelled) setLoading(false);
@@ -76,6 +83,29 @@ export function CustomerReviewsSection({
       cancelled = true;
     };
   }, [product?.id]);
+
+  useEffect(() => {
+    const el = gridRef.current;
+    if (!el || reviews.length === 0) return;
+
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
+      setCardsVisible(true);
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          setCardsVisible(true);
+          io.disconnect();
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -4% 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [reviews.length]);
 
   const avgRating =
     typeof product?.averageRating === "number" && product.averageRating > 0
@@ -134,24 +164,44 @@ export function CustomerReviewsSection({
           )}
         </header>
 
-        {loading && loadingText && (
-          <p className="ikas-reviews__status">{loadingText}</p>
+        {loading && (
+          <div className="ikas-reviews__loading" aria-live="polite">
+            <div className="ikas-reviews__skeleton" aria-hidden="true" />
+            <div className="ikas-reviews__skeleton" aria-hidden="true" />
+            <div className="ikas-reviews__skeleton" aria-hidden="true" />
+            {loadingText && <p className="ikas-reviews__status">{loadingText}</p>}
+          </div>
         )}
 
-        {!loading && reviews.length === 0 && emptyText && (
+        {!loading && error && errorText && (
+          <p className="ikas-reviews__status ikas-reviews__status--error" role="alert">
+            {errorText}
+          </p>
+        )}
+
+        {!loading && !error && reviews.length === 0 && emptyText && (
           <p className="ikas-reviews__status">{emptyText}</p>
         )}
 
-        {!loading && reviews.length > 0 && (
-          <div className="ikas-reviews__grid">
-            {reviews.map((rev) => {
+        {!loading && !error && reviews.length > 0 && (
+          <div
+            ref={gridRef}
+            className={`ikas-reviews__grid${
+              cardsVisible ? " ikas-reviews__grid--inview" : ""
+            }`}
+          >
+            {reviews.map((rev, idx) => {
               const author = authorLabel(rev);
               const verified = isVerified(rev);
               const dateStr = getIkasCustomerReviewFormattedDate(rev);
               const rating = Math.min(5, Math.max(0, Math.round(rev.star || 0)));
 
               return (
-                <article key={rev.id} className="ikas-reviews__card">
+                <article
+                  key={rev.id}
+                  className="ikas-reviews__card"
+                  style={{ "--stagger": `${idx * 70}ms` } as any}
+                >
                   <div className="ikas-reviews__card-top">
                     {author && <span className="ikas-reviews__author">{author}</span>}
                     {verified && verifiedBuyerText && (

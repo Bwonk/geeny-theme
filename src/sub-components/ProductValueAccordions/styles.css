@@ -113,8 +113,10 @@
   transition: color 0.22s ease;
 }
 
-.ikas-details__btn:hover {
-  color: var(--vluFeuIeFs, #101418);
+@media (hover: hover) and (pointer: fine) {
+  .ikas-details__btn:hover {
+    color: var(--vluFeuIeFs, #101418);
+  }
 }
 
 .ikas-details__btn:focus {
@@ -134,12 +136,22 @@
 }
 
 .ikas-details__panel {
-  overflow: hidden;
-  max-height: 0;
+  display: grid;
+  grid-template-rows: 0fr;
   opacity: 0;
   transition:
-    var(--accordion-transition, max-height 0.44s cubic-bezier(0.22, 1, 0.36, 1)),
-    opacity 0.34s ease;
+    grid-template-rows 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.32s ease;
+}
+
+.ikas-details__item--open .ikas-details__panel {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.ikas-details__panel-inner {
+  overflow: hidden;
+  min-height: 0;
 }
 
 .ikas-details__body {
@@ -148,6 +160,16 @@
   gap: 14px;
   padding-bottom: clamp(20px, 2.2vw, 30px);
   max-width: 60ch;
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.32s ease 40ms,
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1) 40ms;
+}
+
+.ikas-details__item--open .ikas-details__body {
+  opacity: 1;
+  transform: none;
 }
 
 .ikas-details__text {
@@ -225,12 +247,18 @@
   .ikas-details__reveal,
   .ikas-details__icon,
   .ikas-details__panel,
+  .ikas-details__body,
   .ikas-details__btn {
     transition: none !important;
   }
 
-  .ikas-details__reveal {
+  .ikas-details__reveal,
+  .ikas-details__body {
     opacity: 1;
     transform: none;
+  }
+
+  .ikas-details__item--open .ikas-details__panel {
+    opacity: 1;
   }
 }

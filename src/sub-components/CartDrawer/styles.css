@@ -1,3 +1,5 @@
+@import "../QuantityStepper/styles.css";
+
 /* BACKDROP */
 .ikas-cart-drawer__backdrop {
   position: fixed;
@@ -200,54 +202,7 @@
   text-decoration: line-through;
 }
 
-/* PILL STEPPER */
-.ikas-cart-drawer__stepper {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 4px;
-  border: 1px solid var(--gzj8Nhz1Gb);
-  border-radius: 1000px;
-}
-
-.ikas-cart-drawer__stepper button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border: 0;
-  border-radius: 50%;
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
-  transition: background-color 0.2s ease-out;
-}
-
-.ikas-cart-drawer__stepper button:hover:not(:disabled) {
-  background-color: var(--wElEhJwjYh, var(--cdFDkBbKkc));
-}
-
-.ikas-cart-drawer__stepper button:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
-
-.ikas-cart-drawer__stepper button:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 2px;
-}
-
-.ikas-cart-drawer__stepper button svg {
-  width: 14px;
-  height: 14px;
-}
-
-.ikas-cart-drawer__stepper-value {
-  min-width: 16px;
-  text-align: center;
-  font-weight: 500;
-}
+/* PILL STEPPER — styles live in QuantityStepper */
 
 /* BLOCKS (upsell) */
 .ikas-cart-drawer__block {
@@ -564,7 +519,7 @@
     height: 68px;
   }
 
-  .ikas-cart-drawer__stepper {
+  .ikas-cart-drawer__line > .ikas-qty-stepper {
     grid-column: 2;
     justify-self: start;
   }
@@ -587,7 +542,6 @@
   .ikas-cart-drawer,
   .ikas-cart-drawer__backdrop,
   .ikas-cart-drawer__line,
-  .ikas-cart-drawer__stepper button,
   .ikas-cart-drawer__offer-add,
   .ikas-cart-drawer__promo-apply,
   .ikas-cart-drawer__progress-fill,

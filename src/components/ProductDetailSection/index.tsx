@@ -38,6 +38,7 @@ export function ProductDetailSection({
   soldOutText = "TÜKENDİ",
   discountBadgeLabel = "İNDİRİM",
   reviewLabel = "DEĞERLENDİRME",
+  detailsAnchorLabel = "Ürün detaylarına git",
   qtyDecreaseLabel = "Adet azalt",
   qtyIncreaseLabel = "Adet artır",
   trustShippingText = "500 ₺ ÜZERİ ÜCRETSİZ KARGO",
@@ -56,6 +57,10 @@ export function ProductDetailSection({
   crossSellAddedText = "Sepete eklendi",
   crossSellSelectLabel = "Birlikte ekle",
   crossSellSelectedLabel = "Seçildi",
+  galleryPrevAriaLabel = "Önceki görsel",
+  galleryNextAriaLabel = "Sonraki görsel",
+  galleryThumbsUpAriaLabel = "Yukarı kaydır",
+  galleryThumbsDownAriaLabel = "Aşağı kaydır",
   className = "",
 }: ProductDetailSectionProps) {
   const verticalPySetting = getThemeSetting("_Kl0my3VVMA");
@@ -92,7 +97,13 @@ export function ProductDetailSection({
       <div className="ikas-pdp__container">
         <div className="ikas-pdp__main-grid">
           <div className="ikas-pdp__left">
-            <ProductMediaGallery product={product} />
+            <ProductMediaGallery
+              product={product}
+              galleryPrevAriaLabel={galleryPrevAriaLabel}
+              galleryNextAriaLabel={galleryNextAriaLabel}
+              galleryThumbsUpAriaLabel={galleryThumbsUpAriaLabel}
+              galleryThumbsDownAriaLabel={galleryThumbsDownAriaLabel}
+            />
           </div>
 
           <div className="ikas-pdp__right" id="product-buy-box-target">
@@ -118,6 +129,7 @@ export function ProductDetailSection({
               soldOutText={soldOutText}
               discountBadgeLabel={discountBadgeLabel}
               reviewLabel={reviewLabel}
+              detailsAnchorLabel={detailsAnchorLabel}
               qtyDecreaseLabel={qtyDecreaseLabel}
               qtyIncreaseLabel={qtyIncreaseLabel}
               trustShippingText={trustShippingText}

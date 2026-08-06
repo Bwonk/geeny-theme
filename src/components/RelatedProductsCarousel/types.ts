@@ -12,4 +12,6 @@ export interface Props {
   addToCartText?: string;
   addingToCartText?: string;
   soldOutText?: string;
+  prevAriaLabel?: string;
+  nextAriaLabel?: string;
 }

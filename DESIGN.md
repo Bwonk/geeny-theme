@@ -332,6 +332,16 @@ Sitedeki tüm animasyonlar ve mikro-etkileşimler DOM computed style okumalarıy
 | **Logo Ticker (Marquee)**| Otomatik (Continuous)| `25s linear infinite` | `transform: translateX(-100%)` | Basın/Medya logoları kesintisiz olarak soldan sağa akar. |
 | **Thumbnail Switch** | Thumbnail Tıklama | `0.2s ease-in-out` | `opacity`, `border-color` | Seçilen küçük görsel etrafında belirgin çerçeve oluşur, ana görsel `opacity` ile güncellenir. |
 | **OTP Code Input Focus**| Focus / Input | `0.2s ease` | `border-color`, `box-shadow` | Girdi kutusu etrafında lacivert odaklama halkası oluşur. |
+| **PDP Gallery Crossfade** | Thumb / ok / story | `~0.55s cubic-bezier(0.22, 1, 0.36, 1)` | `opacity`, `translateX(±8px)` | Ana görsel yumuşak crossfade + hafif yön ipucu; mobilde snap (motion yok). |
+| **PDP Swatch Select** | Varyant tıklama | `180ms ease` | `transform: scale(1.08)`, ring opacity | Seçili swatch hafif büyür; hover yalnızca fine pointer. |
+| **PDP ATC Success** | Sepete ekle OK | `220ms` | chip `scale` + check ikon | CTA chip success feedback; metin prop’tan. |
+| **PDP Trust Stagger** | Scroll (once) | `0.5s` + 70ms stagger | `opacity`, `translateY` | Trust satırları bir kez fade-up. |
+| **PDP Size Guide** | Drawer aç/kapa | `0.42s cubic-bezier(0.32, 0.72, 0, 1)` | `translateY` | CartDrawer easing ailesi; focus return. |
+| **PDP Sticky Bar** | CTA viewport dışı | `~0.3s` | `translateY` + `opacity` | Solid yüzey + safe-area; inert gizliyken. |
+| **PDP Accordion** | Panel toggle | `~0.35s` | `grid-template-rows 0fr→1fr`, body fade | max-height yerine grid; ikon rotate AccordionToggleIcon. |
+| **PDP Reviews Cards** | Scroll (once) | `~0.55s` + stagger | `opacity`, `translateY` | Yorum kartları bir kez reveal; skeleton loading. |
+| **PDP Related Header** | Scroll (once) | `~0.55s` | `opacity`, `translateY` | Mono etiket + H2 fade-up; >4 üründe peek carousel. |
+| **Quantity Stepper** | Qty +/- tıklama | `0.35s cubic-bezier(0.34, 1.56, 0.64, 1)` | `transform: scale` | Değer `scale(1.3)` bump; buton `:active scale(0.9)`; token `Animasyon / Adet Stepper`; `prefers-reduced-motion` kapalı. |
 
 ---
 

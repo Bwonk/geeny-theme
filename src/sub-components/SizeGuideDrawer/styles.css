@@ -1,36 +1,45 @@
 @import "../CloseButton/styles.css";
 
 /* ═══════════════════════════════════════════════════════════════════════
- * SIZE GUIDE — bottom drawer + blur backdrop
+ * SIZE GUIDE — bottom drawer
+ * Açılış: alttan yukarı (translateY 110% → 0)
+ * Kapanış: aynı sürede tersi (0 → 110%) — visibility gecikmeli ki animasyon görünsün
  * ═══════════════════════════════════════════════════════════════════════ */
 
 .ikas-size-guide {
   position: fixed;
   inset: 0;
-  /* Search overlay / CartDrawer ile aynı katman — sticky header üstünde */
   z-index: var(--z-index-modal, 10000);
   pointer-events: none;
   visibility: hidden;
+  /* Kapanırken: önce panel kayar, sonra visibility kapanır */
+  transition: visibility 0s linear 0.42s;
 }
 
 .ikas-size-guide--open {
   pointer-events: auto;
   visibility: visible;
+  /* Açılırken: visibility hemen açık */
+  transition: visibility 0s;
 }
 
-/* Search overlay backdrop ile birebir: Overlay Siyah + blur(4px) */
 .ikas-size-guide__backdrop {
   position: fixed;
   inset: 0;
   background-color: var(--fRUyppFgyp, rgba(55, 67, 91, 0.75));
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition:
+    opacity 0.42s cubic-bezier(0.32, 0.72, 0, 1),
+    visibility 0s linear 0.42s;
+  visibility: hidden;
 }
 
 .ikas-size-guide--open .ikas-size-guide__backdrop {
   opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.42s cubic-bezier(0.32, 0.72, 0, 1),
+    visibility 0s;
 }
 
 .ikas-size-guide__panel {
@@ -48,7 +57,7 @@
   transform: translateY(110%);
   transition: var(
     --size-guide-transition,
-    transform 0.42s cubic-bezier(0.22, 1, 0.36, 1)
+    transform 0.42s cubic-bezier(0.32, 0.72, 0, 1)
   );
   box-sizing: border-box;
   padding:
@@ -150,7 +159,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .ikas-size-guide,
+  .ikas-size-guide--open,
   .ikas-size-guide__backdrop,
+  .ikas-size-guide--open .ikas-size-guide__backdrop,
   .ikas-size-guide__panel {
     transition: none !important;
   }

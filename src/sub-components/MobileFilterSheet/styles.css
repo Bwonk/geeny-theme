@@ -1,5 +1,6 @@
-@import "../CloseButton/styles.css";
-@import "../Button/styles.css";
+/* Button / CloseButton stilleri parent section CSS'ten gelir
+   (CollectionSection). Burada @import etmek diamond path →
+   "Circular CSS import" uyarısına yol açar. */
 
 .ikas-filter-sheet {
   position: fixed;

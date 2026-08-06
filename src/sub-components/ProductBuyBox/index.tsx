@@ -1,4 +1,4 @@
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import {
   getThemeSetting,
   getSelectedProductVariant,
@@ -21,6 +21,7 @@ import { observer } from "@ikas/component-utils";
 import Button from "../Button";
 import SizeGuideDrawer from "../SizeGuideDrawer";
 import ProductCrossSellOffers from "../ProductCrossSellOffers";
+import QuantityStepper from "../QuantityStepper";
 import TextLink from "../TextLink";
 
 export interface Props {
@@ -45,6 +46,7 @@ export interface Props {
   soldOutText?: string;
   discountBadgeLabel?: string;
   reviewLabel?: string;
+  detailsAnchorLabel?: string;
   qtyDecreaseLabel?: string;
   qtyIncreaseLabel?: string;
   trustShippingText?: string;
@@ -79,6 +81,14 @@ function CartIcon() {
   );
 }
 
+function CheckIcon() {
+  return (
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
+      <path d="M5 12.5l4.2 4.2L19 7.5" />
+    </svg>
+  );
+}
+
 export function ProductBuyBox({
   product,
   seriesTag = "SS26 · SEYAHAT SERİSİ",
@@ -101,6 +111,7 @@ export function ProductBuyBox({
   soldOutText = "TÜKENDİ",
   discountBadgeLabel = "İNDİRİM",
   reviewLabel = "DEĞERLENDİRME",
+  detailsAnchorLabel = "Ürün detaylarına git",
   qtyDecreaseLabel = "Adet azalt",
   qtyIncreaseLabel = "Adet artır",
   trustShippingText = "500 ₺ ÜZERİ ÜCRETSİZ KARGO",
@@ -120,6 +131,9 @@ export function ProductBuyBox({
   const [isAdding, setIsAdding] = useState(false);
   const [justAdded, setJustAdded] = useState(false);
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
+  const [trustVisible, setTrustVisible] = useState(false);
+  const trustRef = useRef<HTMLUListElement>(null);
+  const sizeGuideTriggerRef = useRef<HTMLElement | null>(null);
 
   const actionAnimSetting = getThemeSetting("_bNtMCrOBsE"); // Animasyon / Buton ve Hover
   const swatchRadiusSetting = getThemeSetting("_XYyz9eaKGx"); // Radius / Swatch
@@ -132,6 +146,43 @@ export function ProductBuyBox({
     const t = window.setTimeout(() => setJustAdded(false), 1800);
     return () => window.clearTimeout(t);
   }, [justAdded]);
+
+  useEffect(() => {
+    const el = trustRef.current;
+    if (!el) return;
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
+      setTrustVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          setTrustVisible(true);
+          io.disconnect();
+        });
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -4% 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const openSizeGuide = (e?: Event) => {
+    const fromEvent = e?.currentTarget as HTMLElement | null;
+    const active = document.activeElement as HTMLElement | null;
+    sizeGuideTriggerRef.current =
+      fromEvent || (active && active !== document.body ? active : null);
+    setSizeGuideOpen(true);
+  };
+
+  const scrollToDetails = (e: Event) => {
+    e.preventDefault();
+    const target = document.getElementById("detaylar");
+    if (!target) return;
+    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    target.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  };
 
   if (!product) return null;
 
@@ -222,7 +273,12 @@ export function ProductBuyBox({
         <h1 className="ikas-buy-box__title _DusX6I08Pv">{product.name}</h1>
 
         {rating != null && (
-          <div className="ikas-buy-box__rating">
+          <a
+            href="#detaylar"
+            className="ikas-buy-box__rating"
+            onClick={scrollToDetails as any}
+            aria-label={detailsAnchorLabel}
+          >
             <span
               className="ikas-buy-box__stars"
               aria-label={`${rating.toLocaleString("tr-TR")} / 5`}
@@ -240,7 +296,7 @@ export function ProductBuyBox({
                 </>
               )}
             </span>
-          </div>
+          </a>
         )}
       </div>
 
@@ -280,7 +336,10 @@ export function ProductBuyBox({
                 <div className="ikas-buy-box__variant-head">
                   <span className="ikas-buy-box__variant-label">{vType.name}</span>
                   {isColorType && selected?.name && (
-                    <span className="ikas-buy-box__variant-value">
+                    <span
+                      className="ikas-buy-box__variant-value"
+                      aria-live="polite"
+                    >
                       {selected.name.toLocaleUpperCase("tr-TR")}
                     </span>
                   )}
@@ -289,7 +348,7 @@ export function ProductBuyBox({
                       tone="LABEL"
                       className="ikas-buy-box__size-guide"
                       text={sizeGuideText}
-                      onClick={() => setSizeGuideOpen(true)}
+                      onClick={openSizeGuide as any}
                     />
                   )}
                 </div>
@@ -351,30 +410,15 @@ export function ProductBuyBox({
 
       {/* Adet + stok */}
       <div className="ikas-buy-box__qty-row">
-        <div className="ikas-buy-box__qty">
-          <button
-            type="button"
-            className="ikas-buy-box__qty-btn"
-            onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-            disabled={quantity <= 1}
-            aria-label={qtyDecreaseLabel}
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-              <path d="M5 12h14" />
-            </svg>
-          </button>
-          <span className="ikas-buy-box__qty-value">{quantity}</span>
-          <button
-            type="button"
-            className="ikas-buy-box__qty-btn"
-            onClick={() => setQuantity((q) => Math.min(9, q + 1))}
-            aria-label={qtyIncreaseLabel}
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-              <path d="M12 5v14M5 12h14" />
-            </svg>
-          </button>
-        </div>
+        <QuantityStepper
+          value={quantity}
+          onChange={setQuantity}
+          min={1}
+          max={9}
+          decreaseLabel={qtyDecreaseLabel}
+          increaseLabel={qtyIncreaseLabel}
+          size="md"
+        />
 
         <div
           className={`ikas-buy-box__stock${
@@ -405,10 +449,10 @@ export function ProductBuyBox({
         disabled={!canAddToCart}
         loading={isAdding}
         onClick={handleAddToCart}
-        className="ikas-buy-box__cta"
+        className={`ikas-buy-box__cta${justAdded ? " ikas-buy-box__cta--success" : ""}`}
         icon={
           <span className="ikas-buy-box__cta-chip" aria-hidden="true">
-            <CartIcon />
+            {justAdded ? <CheckIcon /> : <CartIcon />}
           </span>
         }
       />
@@ -426,7 +470,12 @@ export function ProductBuyBox({
 
       {/* Trust satırları */}
       {(trustShippingText || trustReturnText || trustWarrantyText) && (
-        <ul className="ikas-buy-box__trust">
+        <ul
+          ref={trustRef}
+          className={`ikas-buy-box__trust${
+            trustVisible ? " ikas-buy-box__trust--inview" : ""
+          }`}
+        >
           {trustShippingText && (
             <li className="ikas-buy-box__trust-item">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
@@ -462,6 +511,7 @@ export function ProductBuyBox({
       <SizeGuideDrawer
         open={sizeGuideOpen}
         onClose={() => setSizeGuideOpen(false)}
+        returnFocusRef={sizeGuideTriggerRef}
         title={sizeGuideDrawerTitle}
         intro={sizeGuideIntro}
         rows={[

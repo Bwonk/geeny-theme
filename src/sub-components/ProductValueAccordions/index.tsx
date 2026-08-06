@@ -65,12 +65,12 @@ export function ProductValueAccordions({
   const [openId, setOpenId] = useState<string>("acc1");
   const [headVisible, setHeadVisible] = useState(false);
   const rootRef = useRef<HTMLElement>(null);
-  const bodyRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const accordionAnimSetting = getThemeSetting("_QzHzEnrknJ");
   const fadeAnimSetting = getThemeSetting("_AwVN6G9Zib");
   const accordionTransition =
-    accordionAnimSetting?.value || "max-height 0.44s cubic-bezier(0.22, 1, 0.36, 1)";
+    accordionAnimSetting?.value ||
+    "grid-template-rows 0.35s cubic-bezier(0.22, 1, 0.36, 1)";
   const fadeEase = fadeAnimSetting?.value || "0.6s cubic-bezier(0.22, 1, 0.36, 1)";
 
   const bullets = [acc1Bullet1, acc1Bullet2, acc1Bullet3].filter(Boolean) as string[];
@@ -111,22 +111,6 @@ export function ProductValueAccordions({
     io.observe(el);
     return () => io.disconnect();
   }, []);
-
-  // Açık panel yüksekliğini ölç
-  useEffect(() => {
-    const apply = () => {
-      items.forEach((item) => {
-        const panel = bodyRefs.current[item.id];
-        if (!panel) return;
-        const open = openId === item.id;
-        panel.style.maxHeight = open ? `${panel.scrollHeight + 40}px` : "0px";
-        panel.style.opacity = open ? "1" : "0";
-      });
-    };
-    apply();
-    window.addEventListener("resize", apply);
-    return () => window.removeEventListener("resize", apply);
-  }, [openId, items.length, acc1Body, acc3Body, acc4Body]);
 
   const toggle = (id: string) => {
     setOpenId((prev) => (prev === id ? "" : id));
@@ -169,7 +153,9 @@ export function ProductValueAccordions({
             return (
               <div
                 key={item.id}
-                className={`ikas-details__item${isLast ? " ikas-details__item--last" : ""}`}
+                className={`ikas-details__item${isLast ? " ikas-details__item--last" : ""}${
+                  isOpen ? " ikas-details__item--open" : ""
+                }`}
               >
                 <button
                   type="button"
@@ -188,38 +174,37 @@ export function ProductValueAccordions({
                   role="region"
                   aria-labelledby={`details-btn-${item.id}`}
                   className="ikas-details__panel"
-                  ref={(el) => {
-                    bodyRefs.current[item.id] = el;
-                  }}
                 >
-                  <div className="ikas-details__body">
-                    {item.kind === "bullets" && (
-                      <>
-                        {acc1Body && <p className="ikas-details__text">{acc1Body}</p>}
-                        {bullets.length > 0 && (
-                          <ul className="ikas-details__bullets">
-                            {bullets.map((b) => (
-                              <li key={b}>{b}</li>
-                            ))}
-                          </ul>
-                        )}
-                      </>
-                    )}
+                  <div className="ikas-details__panel-inner">
+                    <div className="ikas-details__body">
+                      {item.kind === "bullets" && (
+                        <>
+                          {acc1Body && <p className="ikas-details__text">{acc1Body}</p>}
+                          {bullets.length > 0 && (
+                            <ul className="ikas-details__bullets">
+                              {bullets.map((b) => (
+                                <li key={b}>{b}</li>
+                              ))}
+                            </ul>
+                          )}
+                        </>
+                      )}
 
-                    {item.kind === "specs" && specs.length > 0 && (
-                      <dl className="ikas-details__specs">
-                        {specs.map((row) => (
-                          <div key={row.label} className="ikas-details__spec-row">
-                            <dt>{row.label}</dt>
-                            <dd>{row.value}</dd>
-                          </div>
-                        ))}
-                      </dl>
-                    )}
+                      {item.kind === "specs" && specs.length > 0 && (
+                        <dl className="ikas-details__specs">
+                          {specs.map((row) => (
+                            <div key={row.label} className="ikas-details__spec-row">
+                              <dt>{row.label}</dt>
+                              <dd>{row.value}</dd>
+                            </div>
+                          ))}
+                        </dl>
+                      )}
 
-                    {item.kind === "text" && item.body && (
-                      <p className="ikas-details__text">{item.body}</p>
-                    )}
+                      {item.kind === "text" && item.body && (
+                        <p className="ikas-details__text">{item.body}</p>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

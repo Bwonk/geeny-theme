@@ -32,6 +32,7 @@ import { observer } from "@ikas/component-utils";
 import Button from "../Button";
 import CloseButton from "../CloseButton";
 import PortalScope from "../PortalScope";
+import QuantityStepper from "../QuantityStepper";
 import TextLink from "../TextLink";
 import { useFocusTrap, inertProps } from "../../utils/a11y";
 
@@ -609,57 +610,15 @@ export function CartDrawer({
                         </div>
                       </div>
 
-                      <div className="ikas-cart-drawer__stepper">
-                        <button
-                          type="button"
-                          aria-label={decreaseQtyLabel}
-                          disabled={isBusy}
-                          onClick={() =>
-                            updateQuantity(item, (item.quantity ?? 1) - 1)
-                          }
-                        >
-                          <svg
-                            width="14"
-                            height="14"
-                            viewBox="0 0 14 14"
-                            fill="none"
-                            aria-hidden="true"
-                          >
-                            <path
-                              d="M3 7h8"
-                              stroke="currentColor"
-                              strokeWidth="1.5"
-                              strokeLinecap="round"
-                            />
-                          </svg>
-                        </button>
-                        <span className="ikas-cart-drawer__stepper-value _eZyocyyd0F">
-                          {item.quantity}
-                        </span>
-                        <button
-                          type="button"
-                          aria-label={increaseQtyLabel}
-                          disabled={isBusy}
-                          onClick={() =>
-                            updateQuantity(item, (item.quantity ?? 1) + 1)
-                          }
-                        >
-                          <svg
-                            width="14"
-                            height="14"
-                            viewBox="0 0 14 14"
-                            fill="none"
-                            aria-hidden="true"
-                          >
-                            <path
-                              d="M7 3v8M3 7h8"
-                              stroke="currentColor"
-                              strokeWidth="1.5"
-                              strokeLinecap="round"
-                            />
-                          </svg>
-                        </button>
-                      </div>
+                      <QuantityStepper
+                        value={item.quantity ?? 1}
+                        onChange={(next) => updateQuantity(item, next)}
+                        min={0}
+                        disabled={isBusy}
+                        decreaseLabel={decreaseQtyLabel}
+                        increaseLabel={increaseQtyLabel}
+                        size="sm"
+                      />
                     </li>
                   );
                 })}

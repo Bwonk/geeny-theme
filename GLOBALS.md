@@ -7,7 +7,7 @@ Bu dosya, ikas MCP ile hangi global'in hangi değerle, hangi araçla oluşturula
 
 Aşağıdaki tabloların tamamı ikas temasında **canlı olarak kuruludur**
 (`list_theme_globals` ile doğrulanmıştır): 10 renk, 10 tipografi, 15 boşluk, 7 radius, 4 gölge,
-8 animasyon token'ı.
+9 animasyon token'ı.
 
 > **Bileşen kodlarken bu dosyayı değil `prompts/TOKENS.md`'yi referans alın.** Bu doküman token'ların
 > *niyetini ve değerini* anlatır; canlı `id` / `cssVar` / `className` / `variableName` eşleşmelerinin
@@ -141,7 +141,7 @@ mevcut token'ları kopyalar.
 
 ---
 
-### B6. Animasyon — `globalVariable` · `TEXT` (8 Token · canlı)
+### B6. Animasyon — `globalVariable` · `TEXT` (9 Token · canlı)
 > **Bağlama Kuralı:** Bileşenlerde `transition` CSS özelliğine veya `style={{ transition: setting.value }}` şeklinde uygulanır.
 
 | Ad | Değer | Kullanım |
@@ -154,6 +154,7 @@ mevcut token'ları kopyalar.
 | `Animasyon / Sticky Bar Belirme` | `transform 0.3s ease, opacity 0.3s ease` | PDP scroll edildiğinde sabit alt barın alttan belirmesi geçişi |
 | `Animasyon / Fade Yumuşak` | `opacity 0.3s ease-in-out` | Announcement bar metin değişimi ve thumbnail switch yumuşak görünürlük geçişi |
 | `Animasyon / Marquee Ticker` | `transform 25s linear infinite` | Press ticker kayan marka logoları bandı sonsuz kaydırma geçişi |
+| `Animasyon / Adet Stepper` | `transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)` | QuantityStepper değer bump (`scale(1.3)`) ve buton press transition |
 
 ---
 
@@ -203,8 +204,8 @@ bazı WebView’lerde `::selection` kısmen veya hiç uygulanmayabilir (bilinen 
 - **`<site-header>`** → Kullanılan token'lar: `Renkler / Saf Beyaz`, `Renkler / Ana Lacivert`, `Renkler / Accent Sarı`, `Renkler / Sticky Header Çizgisi`, `Tipografi / İkincil Metin (sm)`, `Boşluk / Header Yüksekliği`, `Boşluk / Mobile Drawer Genişliği`, `Animasyon / Menü Alt Çizgi`, `Animasyon / Drawer ve Modal`, `Gölge / Sticky Header Shadow`, `Seçim / Etkin|Arka Plan|Metin` (Text Selection — Header props + Theme Settings)
 - **`<hero-banner>`** → Kullanılan token'lar: `Renkler / Saf Beyaz`, `Renkler / Ana Lacivert`, `Renkler / Accent Sarı`, `Tipografi / Display Hero`, `Tipografi / Başlık H1`, `Tipografi / Gövde Metni (base)`, `Radius / Buton`, `Boşluk / Buton Yüksekliği`, `Animasyon / Buton ve Hover`
 - **`<product-card>`** → Kullanılan token'lar: `Radius / Kart`, `Renkler / Accent Sarı`, `Renkler / Ana Lacivert`, `Renkler / Yıldız Sarısı`, `Tipografi / Gövde Metni (base)`, `Tipografi / Etiket ve Rozet (xs)`, `Boşluk / Grid Gap`, `Animasyon / Görsel Scale Hover`, `Gölge / Kart Soft Shadow`
-- **`<product-detail-page>` (PDP)** → Kullanılan token'lar: `Tipografi / Başlık H2`, `Tipografi / Kart ve Alt Başlık (lg)`, `Renkler / Ana Lacivert`, `Renkler / Accent Sarı`, `Radius / Swatch Dairesel`, `Radius / Medya`, `Boşluk / Buton Yüksekliği`, `Boşluk / Sticky Cart Bar Yüksekliği`, `Animasyon / Sticky Bar Belirme`, `Animasyon / Akordiyon Açılış`, `Gölge / Swatch Odak Gölgesi`
-- **`<cart-drawer>`** → Kullanılan token'lar: `Boşluk / Cart Drawer Genişliği`, `Renkler / Kargo İlerleme Çubuğu`, `Radius / Kargo İlerleme Çubuğu`, `Radius / Sepet İtem Görseli`, `Boşluk / Checkout Buton Yüksekliği`, `Renkler / Overlay Siyah`, `Animasyon / Drawer ve Modal`
+- **`<product-detail-page>` (PDP)** → Kullanılan token'lar: `Tipografi / Başlık H2`, `Tipografi / Kart ve Alt Başlık (lg)`, `Renkler / Ana Lacivert`, `Renkler / Accent Sarı`, `Radius / Swatch Dairesel`, `Radius / Medya`, `Boşluk / Buton Yüksekliği`, `Boşluk / Sticky Cart Bar Yüksekliği`, `Animasyon / Sticky Bar Belirme`, `Animasyon / Akordiyon Açılış`, `Animasyon / Adet Stepper`, `Gölge / Swatch Odak Gölgesi`
+- **`<cart-drawer>`** → Kullanılan token'lar: `Boşluk / Cart Drawer Genişliği`, `Renkler / Kargo İlerleme Çubuğu`, `Radius / Kargo İlerleme Çubuğu`, `Radius / Sepet İtem Görseli`, `Boşluk / Checkout Buton Yüksekliği`, `Renkler / Overlay Siyah`, `Animasyon / Drawer ve Modal`, `Animasyon / Adet Stepper`
 - **`<customer-account-login>`** → Kullanılan token'lar: `Renkler / Açık Gri Mavi`, `Renkler / Ana Lacivert`, `Radius / Input ve Form`, `Boşluk / Buton Yüksekliği`, `Tipografi / İkincil Metin (sm)`, `Gölge / Swatch Odak Gölgesi`
 - **`<site-footer>`** → Kullanılan token'lar: `Renkler / Ana Lacivert`, `Renkler / Saf Beyaz`, `Renkler / Açık Gri Mavi`, `Tipografi / İkincil Metin (sm)`, `Radius / Input ve Form`, `Boşluk / Yatay Bölüm Padding`
 - **`<press-ticker>`** → Kullanılan token'lar: `Animasyon / Marquee Ticker`, `Boşluk / Yatay Bölüm Padding`

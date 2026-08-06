@@ -20,7 +20,15 @@ export interface Props {
   product?: IkasProduct | null;
   /** Story süresi (ms) — Instagram fill süresi */
   storyDurationMs?: number;
+  galleryPrevAriaLabel?: string;
+  galleryNextAriaLabel?: string;
+  galleryThumbsUpAriaLabel?: string;
+  galleryThumbsDownAriaLabel?: string;
   className?: string;
+}
+
+function isVideoMedia(img: IkasImage | null | undefined): boolean {
+  return !!(img as any)?.isVideo;
 }
 
 const DEFAULT_STORY_MS = 5000;
@@ -115,17 +123,24 @@ function indexForSelectedVariant(
 export function ProductMediaGallery({
   product,
   storyDurationMs = DEFAULT_STORY_MS,
+  galleryPrevAriaLabel = "Önceki görsel",
+  galleryNextAriaLabel = "Sonraki görsel",
+  galleryThumbsUpAriaLabel = "Yukarı kaydır",
+  galleryThumbsDownAriaLabel = "Aşağı kaydır",
   className = "",
 }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   /** Story animasyonunu restart etmek için (thumb seçiminde) */
   const [storyTick, setStoryTick] = useState(0);
+  const [slideDir, setSlideDir] = useState<"next" | "prev" | "none">("none");
   const [thumbsOverflow, setThumbsOverflow] = useState(false);
   const [thumbsFade, setThumbsFade] = useState({ top: false, bottom: false });
+  const [mediaReady, setMediaReady] = useState<Record<string, boolean>>({});
   const stageRef = useRef<HTMLDivElement>(null);
   const thumbsRailRef = useRef<HTMLDivElement>(null);
   const thumbsRef = useRef<HTMLDivElement>(null);
   const reduceMotionRef = useRef(false);
+  const prevIndexRef = useRef(0);
   /** Autoplay sırasında variant sync'i atlamak için */
   const skipVariantSyncRef = useRef(false);
 
@@ -269,6 +284,8 @@ export function ProductMediaGallery({
     const next = indexForSelectedVariant(product, items);
     setSelectedIndex((prev) => {
       if (prev === next) return prev;
+      setSlideDir(next > prev ? "next" : "prev");
+      prevIndexRef.current = next;
       setStoryTick((t) => t + 1);
       return next;
     });
@@ -342,6 +359,11 @@ export function ProductMediaGallery({
   const goToIndex = (i: number, opts?: { syncVariant?: boolean }) => {
     const next = Math.max(0, Math.min(imageCount - 1, i));
     const syncVariant = opts?.syncVariant !== false;
+    const prev = prevIndexRef.current;
+    if (next !== prev) {
+      setSlideDir(next > prev || (prev === imageCount - 1 && next === 0) ? "next" : "prev");
+      prevIndexRef.current = next;
+    }
     setSelectedIndex(next);
     setStoryTick((t) => t + 1);
 
@@ -374,7 +396,18 @@ export function ProductMediaGallery({
     } else if (e.key === "ArrowRight") {
       e.preventDefault();
       goRelative(1);
+    } else if (e.key === "Home") {
+      e.preventDefault();
+      goToIndex(0, { syncVariant: true });
+    } else if (e.key === "End") {
+      e.preventDefault();
+      goToIndex(imageCount - 1, { syncVariant: true });
     }
+  };
+
+  const markMediaReady = (id: string) => {
+    if (!id) return;
+    setMediaReady((prev) => (prev[id] ? prev : { ...prev, [id]: true }));
   };
 
   const scrollThumbsBy = (dir: 1 | -1) => {
@@ -398,16 +431,17 @@ export function ProductMediaGallery({
     "--story-duration": `${storyMs}ms`,
   } as any;
 
-  const prevStoryLabel = `${product.name} — önceki görsel`;
-  const nextStoryLabel = `${product.name} — sonraki görsel`;
-  const thumbsUpLabel = `${product.name} — yukarı kaydır`;
-  const thumbsDownLabel = `${product.name} — aşağı kaydır`;
+  const prevStoryLabel = galleryPrevAriaLabel;
+  const nextStoryLabel = galleryNextAriaLabel;
+  const thumbsUpLabel = galleryThumbsUpAriaLabel;
+  const thumbsDownLabel = galleryThumbsDownAriaLabel;
 
   return (
     <div
       className={`ikas-media-gallery ${className}`.trim()}
       style={galleryStyle}
       lang="tr"
+      data-slide-dir={slideDir}
     >
       <div className="ikas-media-gallery__wrap">
         {imageCount > 1 && (
@@ -422,7 +456,7 @@ export function ProductMediaGallery({
             {thumbsOverflow && thumbsFade.top && (
               <button
                 type="button"
-                className="ikas-media-gallery__thumbs-nav ikas-media-gallery__thumbs-nav--prev"
+                className="ikas-media-gallery__thumbs-nav ikas-media-gallery__thumbs-nav--prev ikas-tap-44"
                 onClick={() => scrollThumbsBy(-1)}
                 aria-label={thumbsUpLabel}
               >
@@ -455,19 +489,24 @@ export function ProductMediaGallery({
                     type="button"
                     role="tab"
                     aria-selected={isActive}
+                    tabIndex={isActive ? 0 : -1}
                     className={`ikas-media-gallery__thumb${
                       isActive ? " ikas-media-gallery__thumb--active" : ""
                     }`}
                     onClick={() => goToIndex(idx, { syncVariant: true })}
                     aria-label={label}
                   >
-                    {thumbSrc && (
+                    {thumbSrc && !isVideoMedia(img) && (
                       <img
                         src={thumbSrc}
                         alt=""
                         className="ikas-media-gallery__thumb-img"
                         draggable={false}
+                        loading="lazy"
                       />
+                    )}
+                    {isVideoMedia(img) && (
+                      <span className="ikas-media-gallery__thumb-video" aria-hidden="true" />
                     )}
                     <span className="ikas-media-gallery__thumb-ring" aria-hidden="true" />
                   </button>
@@ -478,7 +517,7 @@ export function ProductMediaGallery({
             {thumbsOverflow && thumbsFade.bottom && (
               <button
                 type="button"
-                className="ikas-media-gallery__thumbs-nav ikas-media-gallery__thumbs-nav--next"
+                className="ikas-media-gallery__thumbs-nav ikas-media-gallery__thumbs-nav--next ikas-tap-44"
                 onClick={() => scrollThumbsBy(1)}
                 aria-label={thumbsDownLabel}
               >
@@ -543,7 +582,7 @@ export function ProductMediaGallery({
 
             {imageCount === 0 ? (
               <div className="ikas-media-gallery__slide ikas-media-gallery__slide--active">
-                <div className="ikas-media-gallery__placeholder" />
+                <div className="ikas-media-gallery__placeholder ikas-media-gallery__skeleton" />
               </div>
             ) : (
               items.map((item, idx) => {
@@ -551,18 +590,37 @@ export function ProductMediaGallery({
                 const src = getDefaultSrc(img);
                 const srcSet = createMediaSrcset?.(img);
                 const isActive = idx === activeIndex;
+                const mediaId = String((img as any).id || idx);
+                const ready = !!mediaReady[mediaId];
                 const label =
                   item.variantValue?.name || imageLabel(img, product.name);
+                const isVideo = isVideoMedia(img);
 
                 return (
                   <div
-                    key={(img as any).id || idx}
+                    key={mediaId}
                     className={`ikas-media-gallery__slide${
                       isActive ? " ikas-media-gallery__slide--active" : ""
-                    }`}
+                    }${ready ? " ikas-media-gallery__slide--ready" : ""}`}
                     aria-hidden={!isActive}
+                    data-dir={isActive ? slideDir : undefined}
                   >
-                    {src ? (
+                    {!ready && (
+                      <div
+                        className="ikas-media-gallery__skeleton"
+                        aria-hidden="true"
+                      />
+                    )}
+                    {src && isVideo ? (
+                      <video
+                        src={src}
+                        className="ikas-media-gallery__img"
+                        muted
+                        playsInline
+                        preload={isActive ? "metadata" : "none"}
+                        onLoadedData={() => markMediaReady(mediaId)}
+                      />
+                    ) : src ? (
                       <img
                         src={src}
                         srcSet={srcSet || undefined}
@@ -570,6 +628,11 @@ export function ProductMediaGallery({
                         alt={label || product.name || ""}
                         className="ikas-media-gallery__img"
                         draggable={false}
+                        loading={isActive ? "eager" : "lazy"}
+                        {...({
+                          fetchpriority: isActive ? "high" : "auto",
+                        } as any)}
+                        onLoad={() => markMediaReady(mediaId)}
                       />
                     ) : (
                       <div className="ikas-media-gallery__placeholder" />
