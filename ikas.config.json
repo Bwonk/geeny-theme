@@ -407,6 +407,15 @@
           "required": false,
           "defaultValue": "#101418",
           "groupId": "text_selection"
+        },
+        {
+          "name": "viewCartButtonText",
+          "displayName": "Sepeti Görüntüle",
+          "type": "TEXT",
+          "required": false,
+          "description": "Drawer footer ikincil CTA — sepet sayfasına gider",
+          "defaultValue": "Sepeti Görüntüle",
+          "groupId": "cart_drawer"
         }
       ],
       "propGroups": [
@@ -2220,6 +2229,130 @@
           "required": false,
           "defaultValue": "Ürün detaylarına git",
           "groupId": "buybox"
+        },
+        {
+          "name": "favoriteAriaLabel",
+          "displayName": "Favori Aria",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Favorilere ekle",
+          "groupId": "buybox"
+        },
+        {
+          "name": "favoriteRemoveAriaLabel",
+          "displayName": "Favori Kaldır Aria",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Favorilerden çıkar",
+          "groupId": "buybox"
+        },
+        {
+          "name": "shareAriaLabel",
+          "displayName": "Paylaş Aria",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bağlantıyı kopyala",
+          "groupId": "buybox"
+        },
+        {
+          "name": "linkCopiedText",
+          "displayName": "Link Kopyalandı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bağlantı kopyalandı",
+          "groupId": "buybox"
+        },
+        {
+          "name": "showPromotionCountdown",
+          "displayName": "Geri Sayımı Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "promotion"
+        },
+        {
+          "name": "promotionLabel",
+          "displayName": "Kampanya Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SINIRLI SÜRE",
+          "groupId": "promotion"
+        },
+        {
+          "name": "promotionEndDate",
+          "displayName": "Bitiş Tarihi",
+          "type": "DATE",
+          "required": false,
+          "groupId": "promotion",
+          "defaultValue": "2026-08-20"
+        },
+        {
+          "name": "promotionEndTime",
+          "displayName": "Bitiş Saati (HH:mm)",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "23:59",
+          "groupId": "promotion"
+        },
+        {
+          "name": "dayUnitLabel",
+          "displayName": "Gün Birimi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "GÜN",
+          "groupId": "promotion"
+        },
+        {
+          "name": "hourUnitLabel",
+          "displayName": "Saat Birimi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SAAT",
+          "groupId": "promotion"
+        },
+        {
+          "name": "minuteUnitLabel",
+          "displayName": "Dakika Birimi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "DK",
+          "groupId": "promotion"
+        },
+        {
+          "name": "secondUnitLabel",
+          "displayName": "Saniye Birimi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SN",
+          "groupId": "promotion"
+        },
+        {
+          "name": "promotionExpiredText",
+          "displayName": "Süre Bitti Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "promotion"
+        },
+        {
+          "name": "promotionBackgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "promotionStyle"
+        },
+        {
+          "name": "promotionTextColor",
+          "displayName": "Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "promotionStyle"
+        },
+        {
+          "name": "promotionAccentColor",
+          "displayName": "Accent Çizgi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "promotionStyle"
         }
       ],
       "propGroups": [
@@ -2251,6 +2384,18 @@
           "id": "gallery",
           "name": "Galeri",
           "description": "Medya galerisi erişilebilirlik etiketleri"
+        },
+        {
+          "id": "promotion",
+          "name": "Promosyon Geri Sayım",
+          "description": "Kampanya süresi ve etiket metinleri",
+          "children": [
+            {
+              "id": "promotionStyle",
+              "name": "Promosyon Görünüm",
+              "description": "Geri sayım renkleri"
+            }
+          ]
         }
       ]
     },
@@ -2634,7 +2779,8 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Alışveriş Sepetiniz",
-          "description": "Sepet sayfasının ana başlığı"
+          "description": "Sepet sayfasının ana başlığı",
+          "groupId": "page"
         },
         {
           "name": "emptyCartTitle",
@@ -2642,7 +2788,8 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Sepetiniz Şu Anda Boş",
-          "description": "Sepet boşken gösterilecek başlık"
+          "description": "Sepet boşken gösterilecek başlık",
+          "groupId": "page"
         },
         {
           "name": "emptyCartButtonText",
@@ -2650,14 +2797,221 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Alışverişe Başla",
-          "description": "Sepet boşken gösterilecek buton metni"
+          "description": "Sepet boşken gösterilecek buton metni",
+          "groupId": "page"
         },
         {
           "name": "backgroundColor",
           "displayName": "Arka Plan Rengi",
           "type": "COLOR",
           "required": false,
-          "description": "Bölüm zemin rengi"
+          "description": "Bölüm zemin rengi",
+          "defaultValue": "#ffffff"
+        },
+        {
+          "name": "itemsText",
+          "displayName": "Ürün Sayısı Metni",
+          "type": "TEXT",
+          "required": false,
+          "description": "Başlıkta adet yanında gösterilir",
+          "defaultValue": "ürün",
+          "groupId": "page"
+        },
+        {
+          "name": "decreaseQtyLabel",
+          "displayName": "Adet Azalt Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Adedi azalt",
+          "groupId": "page"
+        },
+        {
+          "name": "increaseQtyLabel",
+          "displayName": "Adet Artır Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Adedi artır",
+          "groupId": "page"
+        },
+        {
+          "name": "loadingText",
+          "displayName": "Yükleniyor Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sepet yükleniyor…",
+          "groupId": "page"
+        },
+        {
+          "name": "orderSummaryTitle",
+          "displayName": "Özet Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sipariş Özeti",
+          "groupId": "summary"
+        },
+        {
+          "name": "subtotalLabel",
+          "displayName": "Ara Toplam Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ara Toplam",
+          "groupId": "summary"
+        },
+        {
+          "name": "shippingLabel",
+          "displayName": "Kargo Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Kargo Ücreti",
+          "groupId": "summary"
+        },
+        {
+          "name": "shippingCalculatedText",
+          "displayName": "Kargo Hesaplanır Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ödeme adımında hesaplanır",
+          "groupId": "summary"
+        },
+        {
+          "name": "freeShippingLabel",
+          "displayName": "Ücretsiz Kargo Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ücretsiz",
+          "groupId": "summary"
+        },
+        {
+          "name": "totalLabel",
+          "displayName": "Toplam Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Genel Toplam",
+          "groupId": "summary"
+        },
+        {
+          "name": "taxNoteText",
+          "displayName": "Vergi / Kargo Notu",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Kargo ve vergiler ödeme adımında hesaplanır",
+          "groupId": "summary"
+        },
+        {
+          "name": "checkoutButtonText",
+          "displayName": "Checkout Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ödemeye Geç",
+          "groupId": "summary"
+        },
+        {
+          "name": "discountsLabel",
+          "displayName": "İndirimler Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İndirimler",
+          "groupId": "summary"
+        },
+        {
+          "name": "freeShippingAchievedText",
+          "displayName": "Ücretsiz Kargo Kazanıldı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ücretsiz kargo!",
+          "groupId": "shipping"
+        },
+        {
+          "name": "freeShippingRemainingText",
+          "displayName": "Ücretsiz Kargo Kalan",
+          "type": "TEXT",
+          "required": false,
+          "description": "{amount} yer tutucusu kullanılır",
+          "defaultValue": "Ücretsiz kargo için {amount} TL kaldı!",
+          "groupId": "shipping"
+        },
+        {
+          "name": "freeShippingThreshold",
+          "displayName": "Ücretsiz Kargo Eşiği",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 500,
+          "groupId": "shipping"
+        },
+        {
+          "name": "promoTitle",
+          "displayName": "Promosyon Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Promosyon Kodu",
+          "groupId": "coupon"
+        },
+        {
+          "name": "promoPlaceholder",
+          "displayName": "Promosyon Placeholder",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Kodu gir",
+          "groupId": "coupon"
+        },
+        {
+          "name": "promoApplyText",
+          "displayName": "Uygula Butonu",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Uygula",
+          "groupId": "coupon"
+        },
+        {
+          "name": "promoRemoveText",
+          "displayName": "Kaldır Butonu",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Kaldır",
+          "groupId": "coupon"
+        },
+        {
+          "name": "orderNoteLabel",
+          "displayName": "Not Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sipariş Notu Ekleyin",
+          "groupId": "note"
+        },
+        {
+          "name": "orderNotePlaceholder",
+          "displayName": "Not Placeholder",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Hediyelik paket talebi veya kargo teslimat notlarınızı buraya yazabilirsiniz...",
+          "groupId": "note"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "page",
+          "name": "Sayfa",
+          "description": "Başlık, boş sepet ve adet etiketleri"
+        },
+        {
+          "id": "summary",
+          "name": "Sipariş Özeti",
+          "description": "Özet etiketleri ve checkout"
+        },
+        {
+          "id": "shipping",
+          "name": "Ücretsiz Kargo",
+          "description": "Kargo eşiği ve bildirim metinleri"
+        },
+        {
+          "id": "coupon",
+          "name": "Promosyon Kodu",
+          "description": "Kupon formu metinleri"
+        },
+        {
+          "id": "note",
+          "name": "Sipariş Notu",
+          "description": "Sipariş notu alanı"
         }
       ]
     },

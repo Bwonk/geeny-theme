@@ -1,6 +1,8 @@
 @import "../SizeGuideDrawer/styles.css";
 @import "../ProductCrossSellOffers/styles.css";
 @import "../QuantityStepper/styles.css";
+@import "../ProductSocialActions/styles.css";
+@import "../PromotionCountdownBar/styles.css";
 
 /* ═══════════════════════════════════════════════════════════════════════
  * PRODUCT BUY BOX — referans UrunDetay bilgi paneli
@@ -49,7 +51,17 @@
   text-transform: uppercase;
 }
 
+.ikas-buy-box__title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
 .ikas-buy-box__title {
+  flex: 1 1 auto;
+  min-width: 0;
   margin: 0;
   font-family: Onest, system-ui, sans-serif;
   font-weight: 600;

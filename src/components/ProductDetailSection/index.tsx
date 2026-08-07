@@ -11,7 +11,7 @@ export interface ProductDetailSectionProps extends Props {
 
 /**
  * Product Detail Section — çekirdek PDP:
- * Breadcrumb + Gallery | BuyBox + Sticky ATC
+ * Breadcrumb + Gallery | BuyBox (+ Promotion Countdown) + Sticky ATC
  *
  * Features / Details / Reviews / Related ayrı section olarak
  * editörde drag-drop ile yerleştirilir.
@@ -61,6 +61,22 @@ export function ProductDetailSection({
   galleryNextAriaLabel = "Sonraki görsel",
   galleryThumbsUpAriaLabel = "Yukarı kaydır",
   galleryThumbsDownAriaLabel = "Aşağı kaydır",
+  favoriteAriaLabel = "Favorilere ekle",
+  favoriteRemoveAriaLabel = "Favorilerden çıkar",
+  shareAriaLabel = "Bağlantıyı kopyala",
+  linkCopiedText = "Bağlantı kopyalandı",
+  showPromotionCountdown = true,
+  promotionLabel = "SINIRLI SÜRE",
+  promotionEndDate,
+  promotionEndTime = "23:59",
+  dayUnitLabel = "GÜN",
+  hourUnitLabel = "SAAT",
+  minuteUnitLabel = "DK",
+  secondUnitLabel = "SN",
+  promotionExpiredText = "",
+  promotionBackgroundColor,
+  promotionTextColor,
+  promotionAccentColor,
   className = "",
 }: ProductDetailSectionProps) {
   const verticalPySetting = getThemeSetting("_Kl0my3VVMA");
@@ -143,6 +159,22 @@ export function ProductDetailSection({
               crossSellAddedText={crossSellAddedText}
               crossSellSelectLabel={crossSellSelectLabel}
               crossSellSelectedLabel={crossSellSelectedLabel}
+              favoriteAriaLabel={favoriteAriaLabel}
+              favoriteRemoveAriaLabel={favoriteRemoveAriaLabel}
+              shareAriaLabel={shareAriaLabel}
+              linkCopiedText={linkCopiedText}
+              showPromotionCountdown={showPromotionCountdown}
+              promotionLabel={promotionLabel}
+              promotionEndDate={promotionEndDate}
+              promotionEndTime={promotionEndTime}
+              dayUnitLabel={dayUnitLabel}
+              hourUnitLabel={hourUnitLabel}
+              minuteUnitLabel={minuteUnitLabel}
+              secondUnitLabel={secondUnitLabel}
+              promotionExpiredText={promotionExpiredText}
+              promotionBackgroundColor={promotionBackgroundColor}
+              promotionTextColor={promotionTextColor}
+              promotionAccentColor={promotionAccentColor}
             />
           </div>
         </div>

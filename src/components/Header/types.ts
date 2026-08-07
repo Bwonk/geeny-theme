@@ -50,4 +50,6 @@ export interface Props {
   enableTextSelectionHighlight?: boolean;
   selectionBackgroundColor?: string;
   selectionTextColor?: string;
+  /** Drawer footer ikincil CTA — sepet sayfasına gider */
+  viewCartButtonText?: string;
 }

@@ -1,56 +1,108 @@
 import {
   cartStore,
   getIkasOrderFormattedTotalFinalPrice,
+  getIkasOrderFormattedTotalPrice,
+  getIkasOrderCouponAdjustment,
+  getOrderAdjustmentFormattedAmount,
   Router,
   getThemeSetting,
 } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
 import Button from "../Button";
+import CartShippingNotice from "../CartShippingNotice";
+import CartCouponForm from "../CartCouponForm";
 
 export interface Props {
   cart?: any;
   freeShippingThreshold?: number;
+  freeShippingAchievedText?: string;
+  freeShippingRemainingText?: string;
+  orderSummaryTitle?: string;
+  subtotalLabel?: string;
+  shippingLabel?: string;
+  shippingCalculatedText?: string;
+  freeShippingLabel?: string;
+  totalLabel?: string;
+  taxNoteText?: string;
+  checkoutButtonText?: string;
+  discountsLabel?: string;
+  promoTitle?: string;
+  promoPlaceholder?: string;
+  promoApplyText?: string;
+  promoRemoveText?: string;
   className?: string;
+}
+
+function formatRemainingMessage(template: string, amount: number) {
+  return template.replace(/\{amount\}/g, String(Math.ceil(amount)));
 }
 
 export function CartSummaryCard({
   cart,
   freeShippingThreshold = 500,
+  freeShippingAchievedText = "Ücretsiz kargo!",
+  freeShippingRemainingText = "Ücretsiz kargo için {amount} TL kaldı!",
+  orderSummaryTitle = "Sipariş Özeti",
+  subtotalLabel = "Ara Toplam",
+  shippingLabel = "Kargo Ücreti",
+  shippingCalculatedText = "Ödeme adımında hesaplanır",
+  freeShippingLabel = "Ücretsiz",
+  totalLabel = "Genel Toplam",
+  taxNoteText = "Kargo ve vergiler ödeme adımında hesaplanır",
+  checkoutButtonText = "Ödemeye Geç",
+  discountsLabel = "İndirimler",
+  promoTitle = "Promosyon Kodu",
+  promoPlaceholder = "Kodu gir",
+  promoApplyText = "Uygula",
+  promoRemoveText = "Kaldır",
   className = "",
 }: Props) {
-  // Read live global settings via getThemeSetting
-  const checkoutBtnHeightSetting = getThemeSetting("_RtoVmtuDGF"); // Boşluk / Checkout Buton Yüksekliği (52px)
-  const shippingBarRadiusSetting = getThemeSetting("_6yX0RuKGDr"); // Radius / Kargo İlerleme Çubuğu (4px)
-  const mediaRadiusSetting = getThemeSetting("_YFQAxlLvZl"); // Radius / Medya (24px)
+  const checkoutBtnHeightSetting = getThemeSetting("_RtoVmtuDGF");
+  const softShadowSetting = getThemeSetting("_yyUleMlhR4");
+  const cardRadiusSetting = getThemeSetting("_WyFUVwOpPk");
 
   const checkoutBtnHeight = checkoutBtnHeightSetting?.value || "52px";
-  const shippingBarRadius = shippingBarRadiusSetting?.value || "4px";
-  const mediaRadius = mediaRadiusSetting?.value || "24px";
+  const cardShadow = softShadowSetting?.value || "none";
+  const cardRadius = cardRadiusSetting?.value || "32px";
 
   const inlineStyles = {
     "--checkout-btn-height": checkoutBtnHeight,
-    "--shipping-bar-radius": shippingBarRadius,
-    "--media-radius": mediaRadius,
+    "--card-shadow": cardShadow,
+    "--card-radius": cardRadius,
   };
 
   const activeCart = cart || cartStore.cart;
   const lineItems = activeCart?.orderLineItems ?? [];
   const isEmpty = lineItems.length === 0;
 
-  // Numeric subtotal calculation for free shipping bar
   const totalAmountNum = lineItems.reduce((acc: number, item: any) => {
     const finalPriceVal = item.finalPrice ?? item.variant?.finalPrice ?? 0;
     return acc + finalPriceVal * (item.quantity ?? 1);
   }, 0);
 
-  const freeShippingRatio = Math.min(1, totalAmountNum / freeShippingThreshold);
-  const freeShippingPercent = (freeShippingRatio * 100).toFixed(0);
+  const freeShippingRatio = Math.min(
+    1,
+    freeShippingThreshold > 0 ? totalAmountNum / freeShippingThreshold : 1
+  );
+  const freeShippingPercent = Number((freeShippingRatio * 100).toFixed(0));
   const remainingAmount = Math.max(0, freeShippingThreshold - totalAmountNum);
   const isFreeShipping = totalAmountNum >= freeShippingThreshold;
+  const shippingNotice = isFreeShipping
+    ? freeShippingAchievedText
+    : formatRemainingMessage(freeShippingRemainingText, remainingAmount);
 
+  const formattedSubtotal = activeCart
+    ? getIkasOrderFormattedTotalPrice(activeCart)
+    : "0 TL";
   const formattedTotal = activeCart
     ? getIkasOrderFormattedTotalFinalPrice(activeCart)
     : "0 TL";
+  const couponAdjustment = activeCart
+    ? getIkasOrderCouponAdjustment(activeCart)
+    : undefined;
+  const discountFormatted = couponAdjustment
+    ? getOrderAdjustmentFormattedAmount(couponAdjustment)
+    : null;
 
   return (
     <div
@@ -58,48 +110,58 @@ export function CartSummaryCard({
       style={inlineStyles as any}
       lang="tr"
     >
-      <h3 className="ikas-cart-summary__title _AZR1yL8GrK">
-        Sipariş Özeti
-      </h3>
+      <h2 className="ikas-cart-summary__title _AZR1yL8GrK">
+        {orderSummaryTitle}
+      </h2>
 
-      {/* ÜCRETSİZ KARGO İLERLEME BARI */}
-      {!isEmpty && (
-        <div className="ikas-cart-summary__shipping-bar">
-          <p className="ikas-cart-summary__shipping-text _eZyocyyd0F">
-            {isFreeShipping
-              ? "Tebrikler! Kargonuz ÜCRETSİZ!"
-              : `Ücretsiz kargo için ${remainingAmount.toFixed(0)} TL kaldı!`}
-          </p>
-          <div className="ikas-cart-summary__progress-bg">
-            <div
-              className="ikas-cart-summary__progress-fill"
-              style={{ width: `${freeShippingPercent}%` }}
-            />
-          </div>
-        </div>
-      )}
+      {!isEmpty ? (
+        <CartShippingNotice
+          notice={shippingNotice}
+          progressPercent={freeShippingPercent}
+        />
+      ) : null}
 
-      {/* TUTAR DETAYLARI */}
       <div className="ikas-cart-summary__rows">
         <div className="ikas-cart-summary__row _VcfI5D07Nt">
-          <span>Ara Toplam</span>
-          <span>{formattedTotal}</span>
+          <span>{subtotalLabel}</span>
+          <span>{formattedSubtotal}</span>
         </div>
         <div className="ikas-cart-summary__row _VcfI5D07Nt">
-          <span>Kargo Ücreti</span>
-          <span>{isFreeShipping ? "Ücretsiz" : "Ödeme Adımında Hesaplanır"}</span>
+          <span>{shippingLabel}</span>
+          <span>
+            {isFreeShipping ? freeShippingLabel : shippingCalculatedText}
+          </span>
         </div>
+        {discountFormatted ? (
+          <div className="ikas-cart-summary__row _eZyocyyd0F">
+            <span>{discountsLabel}</span>
+            <span className="ikas-cart-summary__discount">
+              {discountFormatted}
+            </span>
+          </div>
+        ) : null}
         <div className="ikas-cart-summary__row ikas-cart-summary__row--total _AZR1yL8GrK">
-          <span>Genel Toplam</span>
+          <span>{totalLabel}</span>
           <span className="ikas-cart-summary__total">{formattedTotal}</span>
         </div>
       </div>
 
-      {/* ÖDEMEYE GEÇ PRIMARY CTA BUTONU */}
+      {!isEmpty ? (
+        <CartCouponForm
+          promoTitle={promoTitle}
+          promoPlaceholder={promoPlaceholder}
+          promoApplyText={promoApplyText}
+          promoRemoveText={promoRemoveText}
+        />
+      ) : null}
+
+      <p className="ikas-cart-summary__tax _eZyocyyd0F">{taxNoteText}</p>
+
       <Button
-        text="Ödemeye Geç"
-        variant="PRIMARY"
+        text={checkoutButtonText}
+        variant="PILL_ACCENT"
         size="LARGE"
+        fullWidth
         disabled={isEmpty}
         onClick={() => {
           Router.navigateToPage("CHECKOUT");

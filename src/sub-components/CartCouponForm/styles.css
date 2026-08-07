@@ -1,0 +1,75 @@
+.ikas-cart-coupon {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ikas-cart-coupon__title {
+  margin: 0;
+  color: var(--pxNuSoudLn);
+}
+
+.ikas-cart-coupon__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 4px 4px 4px 16px;
+  border: 1.5px solid var(--pxNuSoudLn);
+  border-radius: 1000px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.ikas-cart-coupon__row--applied {
+  justify-content: space-between;
+  padding-right: 16px;
+}
+
+.ikas-cart-coupon__input {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  outline: 0;
+  font: inherit;
+}
+
+.ikas-cart-coupon__input:focus-visible {
+  outline: none;
+}
+
+/*
+ * Button sets --btn-height inline (theme 48px). Nested slot is
+ * 48 - 3 (borders) - 8 (padding) = 37px — force that height.
+ */
+.ikas-cart-coupon__row .ikas-cart-coupon__apply.ikas-btn {
+  flex: 0 0 auto;
+  align-self: center;
+  height: 37px !important;
+  min-height: 37px !important;
+  max-height: 37px !important;
+  padding: 0 18px;
+  font-size: 11px;
+  line-height: 1;
+  box-sizing: border-box;
+}
+
+.ikas-cart-coupon__remove {
+  flex: 0 0 auto;
+}
+
+.ikas-cart-coupon__code {
+  font-weight: 500;
+  color: var(--pxNuSoudLn);
+}
+
+.ikas-cart-coupon__error {
+  margin: 0;
+  color: var(--pxNuSoudLn);
+  opacity: 0.75;
+}

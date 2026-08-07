@@ -23,6 +23,8 @@ import SizeGuideDrawer from "../SizeGuideDrawer";
 import ProductCrossSellOffers from "../ProductCrossSellOffers";
 import QuantityStepper from "../QuantityStepper";
 import TextLink from "../TextLink";
+import ProductSocialActions from "../ProductSocialActions";
+import PromotionCountdownBar from "../PromotionCountdownBar";
 
 export interface Props {
   product?: IkasProduct | null;
@@ -60,6 +62,22 @@ export interface Props {
   crossSellAddedText?: string;
   crossSellSelectLabel?: string;
   crossSellSelectedLabel?: string;
+  favoriteAriaLabel?: string;
+  favoriteRemoveAriaLabel?: string;
+  shareAriaLabel?: string;
+  linkCopiedText?: string;
+  showPromotionCountdown?: boolean;
+  promotionLabel?: string;
+  promotionEndDate?: Date | string | null;
+  promotionEndTime?: string;
+  dayUnitLabel?: string;
+  hourUnitLabel?: string;
+  minuteUnitLabel?: string;
+  secondUnitLabel?: string;
+  promotionExpiredText?: string;
+  promotionBackgroundColor?: string;
+  promotionTextColor?: string;
+  promotionAccentColor?: string;
   className?: string;
 }
 
@@ -125,6 +143,22 @@ export function ProductBuyBox({
   crossSellAddedText = "Sepete eklendi",
   crossSellSelectLabel = "Birlikte ekle",
   crossSellSelectedLabel = "Seçildi",
+  favoriteAriaLabel = "Favorilere ekle",
+  favoriteRemoveAriaLabel = "Favorilerden çıkar",
+  shareAriaLabel = "Bağlantıyı kopyala",
+  linkCopiedText = "Bağlantı kopyalandı",
+  showPromotionCountdown = true,
+  promotionLabel = "SINIRLI SÜRE",
+  promotionEndDate,
+  promotionEndTime = "23:59",
+  dayUnitLabel = "GÜN",
+  hourUnitLabel = "SAAT",
+  minuteUnitLabel = "DK",
+  secondUnitLabel = "SN",
+  promotionExpiredText = "",
+  promotionBackgroundColor,
+  promotionTextColor,
+  promotionAccentColor,
   className = "",
 }: Props) {
   const [quantity, setQuantity] = useState(1);
@@ -270,7 +304,16 @@ export function ProductBuyBox({
           )}
         </div>
 
-        <h1 className="ikas-buy-box__title _DusX6I08Pv">{product.name}</h1>
+        <div className="ikas-buy-box__title-row">
+          <h1 className="ikas-buy-box__title _DusX6I08Pv">{product.name}</h1>
+          <ProductSocialActions
+            product={product}
+            favoriteAriaLabel={favoriteAriaLabel}
+            favoriteRemoveAriaLabel={favoriteRemoveAriaLabel}
+            shareAriaLabel={shareAriaLabel}
+            linkCopiedText={linkCopiedText}
+          />
+        </div>
 
         {rating != null && (
           <a
@@ -312,6 +355,21 @@ export function ProductBuyBox({
           </span>
         )}
       </div>
+
+      <PromotionCountdownBar
+        showPromotionCountdown={showPromotionCountdown}
+        promotionLabel={promotionLabel}
+        promotionEndDate={promotionEndDate}
+        promotionEndTime={promotionEndTime}
+        dayUnitLabel={dayUnitLabel}
+        hourUnitLabel={hourUnitLabel}
+        minuteUnitLabel={minuteUnitLabel}
+        secondUnitLabel={secondUnitLabel}
+        promotionExpiredText={promotionExpiredText}
+        promotionBackgroundColor={promotionBackgroundColor}
+        promotionTextColor={promotionTextColor}
+        promotionAccentColor={promotionAccentColor}
+      />
 
       {/* Kısa özet — ürün açıklamasından */}
       {summary && <p className="ikas-buy-box__summary">{summary}</p>}

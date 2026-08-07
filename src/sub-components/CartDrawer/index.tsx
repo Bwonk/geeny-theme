@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "preact/hooks";
 import {
   cartStore,
-  customerStore,
   changeItemQuantity,
   getOrderLineItemFormattedFinalPriceWithQuantity,
   getOrderLineItemFormattedPriceWithQuantity,
@@ -14,11 +13,6 @@ import {
   getDefaultSrc,
   Router,
   getThemeSetting,
-  getCouponCodeForm,
-  initCouponCodeForm,
-  setCouponCodeFormCouponCode,
-  submitCouponCodeForm,
-  removeCouponCodeForm,
   getSelectedProductVariant,
   getProductVariantMainImage,
   getProductVariantFormattedFinalPrice,
@@ -33,7 +27,8 @@ import Button from "../Button";
 import CloseButton from "../CloseButton";
 import PortalScope from "../PortalScope";
 import QuantityStepper from "../QuantityStepper";
-import TextLink from "../TextLink";
+import CartShippingNotice from "../CartShippingNotice";
+import CartCouponForm from "../CartCouponForm";
 import { useFocusTrap, inertProps } from "../../utils/a11y";
 
 export interface Props {
@@ -54,6 +49,7 @@ export interface Props {
   totalLabel?: string;
   taxNoteText?: string;
   checkoutButtonText?: string;
+  viewCartButtonText?: string;
   decreaseQtyLabel?: string;
   increaseQtyLabel?: string;
   prevOfferLabel?: string;
@@ -70,79 +66,6 @@ export interface Props {
 function formatRemainingMessage(template: string, amount: number) {
   return template.replace(/\{amount\}/g, String(Math.ceil(amount)));
 }
-
-const CartCouponBlock = observer(function CartCouponBlock({
-  promoTitle,
-  promoPlaceholder,
-  promoApplyText,
-  promoRemoveText,
-}: {
-  promoTitle: string;
-  promoPlaceholder: string;
-  promoApplyText: string;
-  promoRemoveText: string;
-}) {
-  const couponForm = getCouponCodeForm(customerStore);
-  const appliedCode = cartStore.cart?.couponCode ?? null;
-
-  useEffect(() => {
-    initCouponCodeForm(couponForm);
-  }, [couponForm]);
-
-  const handleSubmit = async (e: Event) => {
-    e.preventDefault();
-    await submitCouponCodeForm(couponForm);
-  };
-
-  return (
-    <div className="ikas-cart-drawer__promo-wrap">
-      <p className="ikas-cart-drawer__block-title _VcfI5D07Nt">{promoTitle}</p>
-      {appliedCode ? (
-        <div className="ikas-cart-drawer__promo ikas-cart-drawer__promo--applied">
-          <span className="ikas-cart-drawer__promo-code _eZyocyyd0F">
-            {appliedCode}
-          </span>
-          <TextLink
-            tone="BODY"
-            className="ikas-cart-drawer__promo-remove _eZyocyyd0F"
-            text={promoRemoveText}
-            onClick={() => removeCouponCodeForm(couponForm)}
-          />
-        </div>
-      ) : (
-        <form className="ikas-cart-drawer__promo" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            className="ikas-cart-drawer__promo-input _eZyocyyd0F"
-            placeholder={promoPlaceholder || couponForm.couponCode?.placeholder}
-            value={couponForm.couponCode?.value ?? ""}
-            onInput={(e) =>
-              setCouponCodeFormCouponCode(
-                couponForm,
-                (e.target as HTMLInputElement).value
-              )
-            }
-          />
-          <button
-            type="submit"
-            className="ikas-cart-drawer__promo-apply _eZyocyyd0F"
-            disabled={
-              couponForm.isSubmitting ||
-              !(couponForm.couponCode?.value ?? "").trim()
-            }
-          >
-            {promoApplyText}
-          </button>
-        </form>
-      )}
-      {couponForm.isFailure && couponForm.responseMessage ? (
-        <p className="ikas-cart-drawer__promo-error _eZyocyyd0F">
-          {couponForm.responseMessage}
-        </p>
-      ) : null}
-    </div>
-  );
-});
 
 const CartUpsellBlock = observer(function CartUpsellBlock({
   products,
@@ -331,6 +254,7 @@ export function CartDrawer({
   totalLabel = "Toplam",
   taxNoteText = "Kargo ve vergiler ödeme adımında hesaplanır",
   checkoutButtonText = "Ödemeye Geç",
+  viewCartButtonText = "Sepeti Görüntüle",
   decreaseQtyLabel = "Adedi azalt",
   increaseQtyLabel = "Adedi artır",
   prevOfferLabel = "Önceki öneri",
@@ -397,7 +321,6 @@ export function CartDrawer({
   const itemImgRadiusSetting = getThemeSetting("_0WnqPU26e8");
   const drawerAnimSetting = getThemeSetting("_rTI75Www8J");
   const softShadowSetting = getThemeSetting("_yyUleMlhR4");
-  const shippingBarRadiusSetting = getThemeSetting("_6yX0RuKGDr");
 
   const drawerWidth = drawerWidthSetting?.value || "440px";
   const checkoutBtnHeight = checkoutBtnHeightSetting?.value || "52px";
@@ -408,7 +331,6 @@ export function CartDrawer({
   const panelShadow =
     softShadowSetting?.value ||
     "0 24px 60px color-mix(in srgb, var(--pxNuSoudLn) 16%, transparent)";
-  const shippingBarRadius = shippingBarRadiusSetting?.value || "4px";
 
   const inlineStyles = {
     "--drawer-width": drawerWidth,
@@ -416,7 +338,6 @@ export function CartDrawer({
     "--item-img-radius": itemImgRadius,
     "--drawer-transition": drawerAnim,
     "--panel-shadow": panelShadow,
-    "--shipping-bar-radius": shippingBarRadius,
   };
 
   const cart = cartStore.cart;
@@ -518,17 +439,11 @@ export function CartDrawer({
         ) : (
           <>
             <div className="ikas-cart-drawer__body">
-              <div className="ikas-cart-drawer__notice">
-                <p className="ikas-cart-drawer__notice-text _eZyocyyd0F">
-                  {shippingNotice}
-                </p>
-                <div className="ikas-cart-drawer__progress-bg">
-                  <div
-                    className="ikas-cart-drawer__progress-fill"
-                    style={{ width: `${freeShippingPercent}%` }}
-                  />
-                </div>
-              </div>
+              <CartShippingNotice
+                notice={shippingNotice}
+                progressPercent={Number(freeShippingPercent)}
+                className="ikas-cart-drawer__notice"
+              />
 
               <ul className="ikas-cart-drawer__list">
                 {lineItems.map((item) => {
@@ -635,12 +550,14 @@ export function CartDrawer({
               ) : null}
             </div>
 
-            <CartCouponBlock
-              promoTitle={promoTitle}
-              promoPlaceholder={promoPlaceholder}
-              promoApplyText={promoApplyText}
-              promoRemoveText={promoRemoveText}
-            />
+            <div className="ikas-cart-drawer__promo-wrap">
+              <CartCouponForm
+                promoTitle={promoTitle}
+                promoPlaceholder={promoPlaceholder}
+                promoApplyText={promoApplyText}
+                promoRemoveText={promoRemoveText}
+              />
+            </div>
 
             <div className="ikas-cart-drawer__footer">
               {discountFormatted ? (
@@ -669,6 +586,31 @@ export function CartDrawer({
                   Router.navigateToPage("CHECKOUT");
                 }}
               />
+              <button
+                type="button"
+                className="ikas-cart-drawer__view-cart _eZyocyyd0F"
+                onClick={() => {
+                  handleClose();
+                  Router.navigateToPage("CART");
+                }}
+              >
+                <span>{viewCartButtonText}</span>
+                <svg
+                  viewBox="0 0 16 16"
+                  width="14"
+                  height="14"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M3.5 8h9M8.75 4.25 12.5 8l-3.75 3.75"
+                    stroke="currentColor"
+                    strokeWidth="1.35"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
             </div>
           </>
         )}

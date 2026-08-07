@@ -13,6 +13,7 @@ export interface Props {
   onClick?: (e: any) => void;
   children?: any;
   ariaLabel?: string;
+  type?: "button" | "submit" | "reset";
   /** Opsiyonel ikon — buton metninin sağına eklenir (SVG element) */
   icon?: any;
 }
@@ -40,6 +41,7 @@ export function Button({
   onClick,
   children,
   ariaLabel,
+  type = "button",
   icon,
 }: Props) {
   // Read live global settings via getThemeSetting — TOKENS.md variableName'leri
@@ -115,7 +117,7 @@ export function Button({
   // Otherwise render as standard <button> element
   return (
     <button
-      type="button"
+      type={type}
       className={combinedClassName}
       style={inlineStyles}
       lang="tr"

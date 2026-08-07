@@ -85,6 +85,7 @@ export function Header({
   totalLabel,
   taxNoteText,
   checkoutButtonText,
+  viewCartButtonText,
   decreaseQtyLabel,
   increaseQtyLabel,
   prevOfferLabel,
@@ -496,6 +497,7 @@ export function Header({
         totalLabel={totalLabel}
         taxNoteText={taxNoteText}
         checkoutButtonText={checkoutButtonText}
+        viewCartButtonText={viewCartButtonText}
         decreaseQtyLabel={decreaseQtyLabel}
         increaseQtyLabel={increaseQtyLabel}
         prevOfferLabel={prevOfferLabel}

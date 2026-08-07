@@ -17,8 +17,7 @@ export function CartOrderNote({
 }: Props) {
   const [note, setNote] = useState<string>("");
 
-  // Read live theme global setting via getThemeSetting
-  const formRadiusSetting = getThemeSetting("_iI8H4rllzj"); // Radius / Input ve Form (8px)
+  const formRadiusSetting = getThemeSetting("_iI8H4rllzj");
   const formRadius = formRadiusSetting?.value || "8px";
 
   const handleChange = (e: any) => {
@@ -33,7 +32,10 @@ export function CartOrderNote({
       style={{ "--form-radius": formRadius } as any}
       lang="tr"
     >
-      <label htmlFor="ikas-cart-note-input" className="ikas-cart-note__label _VcfI5D07Nt">
+      <label
+        htmlFor="ikas-cart-note-input"
+        className="ikas-cart-note__label _VcfI5D07Nt"
+      >
         {label}
       </label>
       <textarea

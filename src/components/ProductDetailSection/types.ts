@@ -48,4 +48,20 @@ export interface Props {
   galleryThumbsUpAriaLabel?: string;
   galleryThumbsDownAriaLabel?: string;
   detailsAnchorLabel?: string;
+  favoriteAriaLabel?: string;
+  favoriteRemoveAriaLabel?: string;
+  shareAriaLabel?: string;
+  linkCopiedText?: string;
+  showPromotionCountdown?: boolean;
+  promotionLabel?: string;
+  promotionEndDate?: Date | string;
+  promotionEndTime?: string;
+  dayUnitLabel?: string;
+  hourUnitLabel?: string;
+  minuteUnitLabel?: string;
+  secondUnitLabel?: string;
+  promotionExpiredText?: string;
+  promotionBackgroundColor?: string;
+  promotionTextColor?: string;
+  promotionAccentColor?: string;
 }
