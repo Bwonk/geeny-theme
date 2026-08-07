@@ -8,6 +8,8 @@ import {
   getThumbnailSrc,
   createMediaSrcset,
   selectVariantValue,
+  hasBundleSettings,
+  initBundleProducts,
   IkasImage,
   IkasProduct,
   IkasProductVariant,
@@ -68,11 +70,11 @@ function imagesFromVariant(variant: IkasProductVariant | null | undefined): Ikas
 }
 
 /**
- * Galeri kaynağı:
+ * Galeri kaynağı (ikas default):
  * - Seçili varyantta 2+ görsel varsa → yalnızca onlar (klasik PDP)
  * - Yoksa (renk başına 1 görsel) → tüm varyantların benzersiz görselleri
  */
-function collectGalleryItems(product: IkasProduct): GalleryItem[] {
+function collectOwnGalleryItems(product: IkasProduct): GalleryItem[] {
   const selected = getSelectedProductVariant(product);
   const selectedImages = imagesFromVariant(selected);
 
@@ -100,6 +102,44 @@ function collectGalleryItems(product: IkasProduct): GalleryItem[] {
   }
 
   return items;
+}
+
+/**
+ * Fallback: paketin kendi Medya’sı boşsa, bundle child ürünlerinin
+ * seçili varyant main image’larını stage’de göster (order sırasıyla).
+ */
+function collectBundleFallbackItems(product: IkasProduct): GalleryItem[] {
+  const selected = getSelectedProductVariant(product);
+  if (!selected || !hasBundleSettings(selected)) return [];
+
+  const bundleProducts = (selected.bundleSettings?.products || [])
+    .slice()
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+
+  const items: GalleryItem[] = [];
+  const seen = new Set<string>();
+
+  for (const bp of bundleProducts) {
+    const nested = bp?.product;
+    if (!nested) continue;
+    const nestedVariant = getSelectedProductVariant(nested);
+    if (!nestedVariant) continue;
+    const mainProductImage = getProductVariantMainImage(nestedVariant);
+    const image: IkasImage | null =
+      (mainProductImage as any)?.image || (mainProductImage as any) || null;
+    const id = image ? ((image as any).id as string) : "";
+    if (!image || !id || seen.has(id)) continue;
+    seen.add(id);
+    items.push({ image, variantValue: null });
+  }
+
+  return items;
+}
+
+function collectGalleryItems(product: IkasProduct): GalleryItem[] {
+  const own = collectOwnGalleryItems(product);
+  if (own.length > 0) return own;
+  return collectBundleFallbackItems(product);
 }
 
 function imageLabel(img: IkasImage | null | undefined, productName?: string): string {
@@ -187,6 +227,14 @@ export function ProductMediaGallery({
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     );
   }, []);
+
+  // Kendi Medya boş + bundle → child ürünleri yükle (fallback galeri için)
+  useEffect(() => {
+    if (!product || !variant) return;
+    if (!hasBundleSettings(variant)) return;
+    if (collectOwnGalleryItems(product).length > 0) return;
+    void initBundleProducts(product);
+  }, [product, variantKey]);
 
   // Thumb rail yüksekliği = ana görsel; taşınca dikey slider
   useEffect(() => {

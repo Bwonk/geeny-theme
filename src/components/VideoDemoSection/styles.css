@@ -104,7 +104,7 @@
 }
 
 /* RESPONSIVE BREAKPOINT (<768px DESIGN.md) */
-@media (max-width: 767px) {
+@media (max-width: bp(HDRapYMzn7)) {
   .ikas-video-demo {
     padding: var(--section-py-mobile, 32px) var(--mobile-px, 16px);
   }

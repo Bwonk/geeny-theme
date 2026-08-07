@@ -52,4 +52,5 @@ export interface Props {
   selectionTextColor?: string;
   /** Drawer footer ikincil CTA — sepet sayfasına gider */
   viewCartButtonText?: string;
+  bundleQtyLabel?: string;
 }

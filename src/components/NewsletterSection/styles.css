@@ -241,7 +241,7 @@
 }
 
 /* RESPONSIVE (<768px) */
-@media (max-width: 767px) {
+@media (max-width: bp(HDRapYMzn7)) {
   /* Mobilde alt padding 40px binişmeyi 10px'e düşürüyordu → kart footer'dan
      kopuk görünüyordu. Padding sıfırlandı, ofset dar ekrana göre kısaldı. */
   .ikas-newsletter {

@@ -21,7 +21,7 @@
   box-sizing: border-box;
   background-color: var(--24KlcgGmm9);  /* Saf Beyaz / Site Genel Zemini — TOKENS.md satır 14 (KESİNTİSİZ AKIŞ) */
   color: var(--pxNuSoudLn);             /* Ana Lacivert — TOKENS.md satır 10 */
-  padding: clamp(65px, 6vw, 95px) 0 clamp(22px, 2.6vw, 34px) 0;
+  padding: var(--section-py, clamp(65px, 6vw, 95px)) 0 clamp(22px, 2.6vw, 34px) 0;
   position: relative;
   border-top: 1px solid var(--8ARbeTYsmD);
   z-index: 1;
@@ -209,9 +209,9 @@
 }
 
 /* RESPONSIVE (<768px AKORDEON DÜZENİ) */
-@media (max-width: 767px) {
+@media (max-width: bp(HDRapYMzn7)) {
   .ikas-footer {
-    padding: 32px 0 24px 0;
+    padding: var(--section-py-mobile, 32px) 0 24px 0;
   }
 
   .ikas-footer__container {

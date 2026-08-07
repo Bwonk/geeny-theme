@@ -90,7 +90,7 @@
   display: none;
 }
 
-@media (max-width: 767px) {
+@media (max-width: bp(HDRapYMzn7)) {
   .ikas-mgauth__brand-side {
     padding: 0 var(--mobile-px, 16px);
   }

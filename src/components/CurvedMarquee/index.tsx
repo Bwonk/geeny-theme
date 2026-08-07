@@ -105,7 +105,7 @@ export function CurvedMarquee({
         />
         <text
           className="ikas-curved-marquee__text"
-          fontFamily="Onest, var(--font-heading), sans-serif"
+          fontFamily="var(--font-heading)"
           fontSize={numFontSize}
           fontWeight="600"
           dominantBaseline="central"

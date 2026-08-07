@@ -15,7 +15,7 @@
   padding-right: var(--mobile-px, 16px);
 }
 
-@media (min-width: 768px) {
+@media (min-width: calc(bp(HDRapYMzn7) + 1px)) {
   .geeny-search-page {
     padding-top: var(--section-py, 48px);
     padding-bottom: var(--section-py, 48px);

@@ -1,3 +1,4 @@
+import { applyLayoutTokens } from "../../utils/themeTokens";
 import ProductValueAccordions from "../../sub-components/ProductValueAccordions";
 import { Props } from "./types";
 
@@ -37,7 +38,10 @@ export function ProductDetailsSection({
     <section
       id="detaylar"
       className={`ikas-product-details ${className}`.trim()}
-      style={backgroundColor ? { backgroundColor } : undefined}
+      style={{
+        ...applyLayoutTokens(),
+        ...(backgroundColor ? { backgroundColor } : undefined),
+      }}
       lang="tr"
       aria-label={detailsTitle || product?.name || undefined}
     >

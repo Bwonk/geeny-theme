@@ -115,6 +115,15 @@
     var(--xGFwg5Zqpf, #6e7a8c) 78%,
     var(--fcAwzuFj9W, #101418) 22%
   );
+
+  /* Semantic status + pastel aliases (theme color ids from prompts/TOKENS.md) */
+  --color-danger: var(--7Ls1T8VoDv, #c0392b);
+  --color-danger-text: var(--pAKfHnke8M, #8f1f1f);
+  --color-success: var(--0WGsScIzza, #2d6a4f);
+  --color-warning-focus: var(--ptWug34Oil, #b9563f);
+  --pastel-warm-sand: var(--hBlDr8T9HW, #f5e8c7);
+  --pastel-soft-blue: var(--ygqeR7MkUt, #d8e4f0);
+  --pastel-soft-sage: var(--uWb6FwHvvw, #d5e0da);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════

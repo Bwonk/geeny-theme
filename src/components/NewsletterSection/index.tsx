@@ -5,9 +5,9 @@ import {
   initNewsletterSubscriptionForm,
   setNewsletterSubscriptionFormEmail,
   submitNewsletterSubscriptionForm,
-  getThemeSetting,
   getDefaultSrc,
 } from "@ikas/bp-storefront";
+import { applyLayoutTokens } from "../../utils/themeTokens";
 import Button from "../../sub-components/Button";
 import { Props } from "./types";
 
@@ -81,13 +81,11 @@ export function NewsletterSection({
       observer.disconnect();
     };
   }, []);
-
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ");
-  const maxSiteWidth = siteWidthSetting?.value || "1560px";
+  const layoutTokens = applyLayoutTokens({ includePy: true, includePx: true, includeSiteWidth: true });
 
   const inlineStyles = {
     backgroundColor: backgroundColor || undefined,
-    "--max-site-width": maxSiteWidth,
+    ...layoutTokens,
   };
 
   const handleSubmit = async (e: Event) => {

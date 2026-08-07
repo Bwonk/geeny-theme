@@ -41,7 +41,7 @@ export function CartSummaryCard({
   cart,
   freeShippingThreshold = 500,
   freeShippingAchievedText = "Ücretsiz kargo!",
-  freeShippingRemainingText = "Ücretsiz kargo için {amount} TL kaldı!",
+  freeShippingRemainingText = "Ücretsiz kargo için ₺ {amount} kaldı!",
   orderSummaryTitle = "Sipariş Özeti",
   subtotalLabel = "Ara Toplam",
   shippingLabel = "Kargo Ücreti",
@@ -93,10 +93,10 @@ export function CartSummaryCard({
 
   const formattedSubtotal = activeCart
     ? getIkasOrderFormattedTotalPrice(activeCart)
-    : "0 TL";
+    : "₺ 0";
   const formattedTotal = activeCart
     ? getIkasOrderFormattedTotalFinalPrice(activeCart)
-    : "0 TL";
+    : "₺ 0";
   const couponAdjustment = activeCart
     ? getIkasOrderCouponAdjustment(activeCart)
     : undefined;
@@ -124,7 +124,7 @@ export function CartSummaryCard({
       <div className="ikas-cart-summary__rows">
         <div className="ikas-cart-summary__row _VcfI5D07Nt">
           <span>{subtotalLabel}</span>
-          <span>{formattedSubtotal}</span>
+          <span className="ikas-cart-summary__price">{formattedSubtotal}</span>
         </div>
         <div className="ikas-cart-summary__row _VcfI5D07Nt">
           <span>{shippingLabel}</span>
@@ -135,14 +135,16 @@ export function CartSummaryCard({
         {discountFormatted ? (
           <div className="ikas-cart-summary__row _eZyocyyd0F">
             <span>{discountsLabel}</span>
-            <span className="ikas-cart-summary__discount">
+            <span className="ikas-cart-summary__discount ikas-cart-summary__price">
               {discountFormatted}
             </span>
           </div>
         ) : null}
         <div className="ikas-cart-summary__row ikas-cart-summary__row--total _AZR1yL8GrK">
           <span>{totalLabel}</span>
-          <span className="ikas-cart-summary__total">{formattedTotal}</span>
+          <span className="ikas-cart-summary__total ikas-cart-summary__price">
+            {formattedTotal}
+          </span>
         </div>
       </div>
 

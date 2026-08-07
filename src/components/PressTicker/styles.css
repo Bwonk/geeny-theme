@@ -35,8 +35,8 @@
   align-items: center;
   gap: 48px;
   width: max-content;
-  animation: ikas-marquee 25s linear infinite;
-  animation-name: ikas-marquee;
+  /* Studio: Animasyon / Marquee Scroll — ThemeKeyframeRef.marquee */
+  animation-name: _Ao32QtjFEN;
   animation-duration: var(--marquee-duration, 25s);
   animation-timing-function: linear;
   animation-iteration-count: infinite;
@@ -77,17 +77,18 @@
   white-space: nowrap;
 }
 
-@keyframes ikas-marquee {
-  0% {
-    transform: translateX(0);
+@media (prefers-reduced-motion: reduce) {
+  .ikas-press-ticker__track {
+    animation: none !important;
   }
-  100% {
-    transform: translateX(-50%);
+
+  .ikas-press-ticker__logo-item {
+    transition: none;
   }
 }
 
 /* RESPONSIVE BREAKPOINT (<768px DESIGN.md) */
-@media (max-width: 767px) {
+@media (max-width: bp(HDRapYMzn7)) {
   .ikas-press-ticker {
     padding: var(--section-py-mobile, 16px) 0;
     gap: 12px;

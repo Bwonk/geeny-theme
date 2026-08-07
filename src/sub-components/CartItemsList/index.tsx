@@ -12,12 +12,14 @@ import {
 } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
 import QuantityStepper from "../QuantityStepper";
+import CartLineBundleChildren from "../CartLineBundleChildren";
 
 export interface Props {
   cart?: any;
   className?: string;
   decreaseQtyLabel?: string;
   increaseQtyLabel?: string;
+  bundleQtyLabel?: string;
 }
 
 export function CartItemsList({
@@ -25,6 +27,7 @@ export function CartItemsList({
   className = "",
   decreaseQtyLabel = "Adedi azalt",
   increaseQtyLabel = "Adedi artır",
+  bundleQtyLabel = "adet",
 }: Props) {
   const [updatingId, setUpdatingId] = useState<string | null>(null);
 
@@ -119,6 +122,10 @@ export function CartItemsList({
                   </span>
                 ) : null}
               </div>
+              <CartLineBundleChildren
+                variant={item.variant}
+                qtyLabel={bundleQtyLabel}
+              />
             </div>
 
             <QuantityStepper

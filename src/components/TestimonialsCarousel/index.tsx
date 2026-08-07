@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from "preact/hooks";
-import { getThemeSetting, getDefaultSrc, IkasImage } from "@ikas/bp-storefront";
+import { getDefaultSrc, IkasImage } from "@ikas/bp-storefront";
+import { applyLayoutTokens } from "../../utils/themeTokens";
 import TextLink from "../../sub-components/TextLink";
 import { Props } from "./types";
 
@@ -14,7 +15,7 @@ export interface TestimonialsCarouselProps extends Props {
  * Referans Tasarım Özellikleri:
  * 1. Konuşan Avatar Bütünlüğü: Avatar kartın tam DIŞ KENARINDA (solunda veya sağında) yarı yarıya dışa taşarak konumlanır. Kart, avatardan çıkan organik bir konuşma balonu hissi verir.
  * 2. Gerçek Yüz Portreleri: Merchant `reviewXAvatar` (IMAGE) yüklediyse o gösterilir, yoksa yüksek çözünürlüklü gerçek yüz portresi gösterilir.
- * 3. Soft Renkli Zemin Daireleri: Referanstaki gibi her avatar yumuşak pastel tonlu dairesel zemin içinde (Sarı #F5E8C7, Mavi #D8E4F0, Gri #D5E0DA).
+ * 3. Soft Renkli Zemin Daireleri: Referanstaki gibi her avatar yumuşak pastel tonlu dairesel zemin içinde (Sarı var(--pastel-warm-sand), Mavi var(--pastel-soft-blue), Gri var(--pastel-soft-sage)).
  * 4. Ortada Gömülü İki Tonlu Başlık: "Gerçek yolcular" + 3'lü Avatar Stack + "Gerçek uyku".
  * 5. prefers-reduced-motion Erişilebilirlik Desteği.
  */
@@ -69,13 +70,11 @@ export function TestimonialsCarousel({
       observer.disconnect();
     };
   }, []);
-
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ");
-  const maxSiteWidth = siteWidthSetting?.value || "1560px";
+  const layoutTokens = applyLayoutTokens({ includePy: true, includePx: true, includeSiteWidth: true });
 
   const inlineStyles = {
     backgroundColor: backgroundColor || undefined,
-    "--max-site-width": maxSiteWidth,
+    ...layoutTokens,
   };
 
   const visibleClass = isVisible ? "ikas-testimonials--visible" : "";

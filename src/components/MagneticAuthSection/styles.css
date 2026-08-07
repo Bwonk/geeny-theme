@@ -193,7 +193,7 @@
 
 .ikas-mgauth__panel-title {
   margin: 0;
-  font-family: Onest, system-ui, sans-serif;
+  font-family: var(--font-heading);
   font-weight: 500;
   font-size: clamp(17px, 2vw, 21px);
   line-height: 1.24;
@@ -284,7 +284,7 @@
   background: transparent;
   border-radius: 9999px;
   padding: 11px 8px;
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 10.5px;
   letter-spacing: 0.14em;
   white-space: nowrap;
@@ -320,7 +320,7 @@
 }
 
 .ikas-mgauth .ikas-auth__label {
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 9.5px;
   letter-spacing: 0.18em;
   color: var(--p6EMJiXye1, #8c97a5);
@@ -329,10 +329,10 @@
 .ikas-mgauth .ikas-auth__banner {
   padding: 10px 14px;
   border-radius: 12px;
-  border: 1px solid color-mix(in srgb, #c0392b 35%, transparent);
-  background: color-mix(in srgb, #c0392b 8%, transparent);
-  color: #8f1f1f;
-  font-family: Onest, system-ui, sans-serif;
+  border: 1px solid color-mix(in srgb, var(--color-danger) 35%, transparent);
+  background: color-mix(in srgb, var(--color-danger) 8%, transparent);
+  color: var(--color-danger-text);
+  font-family: var(--font-heading);
   font-size: 12.5px;
   line-height: 1.4;
 }
@@ -350,7 +350,7 @@
   border-radius: 14px;
   background: var(--24KlcgGmm9, #fff);
   color: var(--pxNuSoudLn, #37435b);
-  font-family: "Roboto Flex", Onest, system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: 14px;
   padding: 12px 15px;
   outline: none;
@@ -374,8 +374,8 @@
 
 .ikas-mgauth .ikas-auth__input--error,
 .ikas-mgauth .ikas-auth__input--error:focus {
-  border-color: #b9563f;
-  box-shadow: 0 0 0 3px color-mix(in srgb, #b9563f 28%, transparent);
+  border-color: var(--color-warning-focus);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-warning-focus) 28%, transparent);
 }
 
 .ikas-mgauth .ikas-auth__pw-toggle {
@@ -405,9 +405,9 @@
 }
 
 .ikas-mgauth .ikas-auth__error {
-  font-family: Onest, system-ui, sans-serif;
+  font-family: var(--font-heading);
   font-size: 11.5px;
-  color: #8f1f1f;
+  color: var(--color-danger-text);
 }
 
 .ikas-mgauth .ikas-auth__strength {
@@ -442,7 +442,7 @@
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  font-family: "Roboto Flex", Onest, system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: 12.5px;
   line-height: 1.5;
   color: var(--xGFwg5Zqpf, #6e7a8c);
@@ -499,7 +499,7 @@
 }
 
 .ikas-mgauth .ikas-auth__checkbox[aria-invalid="true"] {
-  border-color: #b9563f;
+  border-color: var(--color-warning-focus);
 }
 
 .ikas-mgauth .ikas-auth__submit {
@@ -553,7 +553,7 @@
 
 /* ══════════════ Mobile (≤767): swipe carousel, no magnification ══════════════ */
 
-@media (max-width: 767px) {
+@media (max-width: bp(HDRapYMzn7)) {
   .ikas-mgauth {
     --mg-bar-w: 74px;
     --mg-bar-h: 248px;

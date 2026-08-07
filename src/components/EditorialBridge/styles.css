@@ -13,7 +13,7 @@
   width: 100%;
   box-sizing: border-box;
   background-color: var(--24KlcgGmm9);  /* Saf Beyaz — TOKENS.md satır 14 */
-  padding: clamp(16px, 2vw, 32px) 0 clamp(32px, 4vw, 60px);
+  padding: var(--section-py-mobile, clamp(16px, 2vw, 32px)) 0 var(--section-py, clamp(32px, 4vw, 60px));
   /* Dikey boşluk yalnızca padding'den gelir — margin collapse ile Hero'ya
      binmesin diye margin'ler açıkça sıfırlanır. */
   margin-block: 0;
@@ -97,7 +97,7 @@
 }
 
 /* RESPONSIVE (<768px) */
-@media (max-width: 767px) {
+@media (max-width: bp(HDRapYMzn7)) {
   .ikas-editorial-bridge {
     padding: 0 16px 32px;
   }

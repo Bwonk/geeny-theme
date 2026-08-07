@@ -46,6 +46,10 @@
   color: var(--pxNuSoudLn);
 }
 
+.ikas-cart-summary__price {
+  font-family: var(--font-mono, "Roboto Mono", ui-monospace, monospace);
+}
+
 .ikas-cart-summary__discount {
   padding: 0 8px;
   border-radius: 8px;

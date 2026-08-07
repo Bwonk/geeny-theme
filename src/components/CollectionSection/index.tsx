@@ -1,5 +1,5 @@
 import { useState } from "preact/hooks";
-import { getThemeSetting } from "@ikas/bp-storefront";
+import { applyLayoutTokens } from "../../utils/themeTokens";
 import FilterAndSortBar from "../../sub-components/FilterAndSortBar";
 import ProductGrid from "../../sub-components/ProductGrid";
 import PaginationLoadMore from "../../sub-components/PaginationLoadMore";
@@ -43,13 +43,11 @@ export function CollectionSection({
 }: CollectionSectionProps) {
   const [density, setDensity] = useState<"comfy" | "dense">("comfy");
   const [isFading, setIsFading] = useState(false);
-
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ");
-  const maxSiteWidth = siteWidthSetting?.value || "1560px";
+  const layoutTokens = applyLayoutTokens({ includePy: true, includePx: true, includeSiteWidth: true });
 
   const inlineStyles = {
     backgroundColor: backgroundColor || undefined,
-    "--max-site-width": maxSiteWidth,
+    ...layoutTokens,
   };
 
   const triggerFade = () => {

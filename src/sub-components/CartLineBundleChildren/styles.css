@@ -1,0 +1,62 @@
+/* Cart line — read-only bundle children summary */
+
+.ikas-cart-bundle {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+}
+
+.ikas-cart-bundle__item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.ikas-cart-bundle__media {
+  display: block;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: color-mix(in srgb, var(--pxNuSoudLn) 6%, transparent);
+}
+
+.ikas-cart-bundle__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ikas-cart-bundle__media-fallback {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ikas-cart-bundle__name {
+  font-size: 12px;
+  line-height: 1.3;
+  color: var(--p6EMJiXye1, #8c97a5);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.ikas-cart-bundle__qty {
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--p6EMJiXye1, #8c97a5);
+  white-space: nowrap;
+  flex-shrink: 0;
+}

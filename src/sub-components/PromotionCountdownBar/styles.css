@@ -45,7 +45,7 @@
 }
 
 .ikas-promo-countdown__label {
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -55,7 +55,7 @@
 }
 
 .ikas-promo-countdown__expired {
-  font-family: "Roboto Flex", system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 400;
   color: var(--promo-meta);
@@ -78,7 +78,7 @@
 }
 
 .ikas-promo-countdown__sep {
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 14px;
   line-height: 32px;
   color: var(--promo-meta);
@@ -88,7 +88,7 @@
 }
 
 .ikas-promo-countdown__unit-label {
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 9px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -108,7 +108,7 @@
   background-color: var(--promo-chip);
   border: 1px solid var(--promo-line);
   border-radius: 6px;
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 15px;
   font-variant-numeric: tabular-nums;
   font-weight: 400;
@@ -154,7 +154,7 @@
   border: 0;
 }
 
-@media (max-width: 767px) {
+@media (max-width: bp(HDRapYMzn7)) {
   .ikas-promo-countdown {
     padding: 10px 12px;
     gap: 10px 12px;

@@ -75,7 +75,7 @@
   min-width: 2ch;
   text-align: center;
   font-variant-numeric: tabular-nums;
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 14px;
   font-weight: 500;
   color: var(--pxNuSoudLn);

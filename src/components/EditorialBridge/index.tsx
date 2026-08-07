@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "preact/hooks";
-import { getThemeSetting } from "@ikas/bp-storefront";
+import { applyLayoutTokens } from "../../utils/themeTokens";
 import { Props } from "./types";
 
 export interface EditorialBridgeProps extends Props {
@@ -52,13 +52,11 @@ export function EditorialBridge({
       observer.disconnect();
     };
   }, []);
-
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ");
-  const maxSiteWidth = siteWidthSetting?.value || "1560px";
+  const layoutTokens = applyLayoutTokens({ includePy: true, includePx: true, includeSiteWidth: true });
 
   const inlineStyles = {
     backgroundColor: backgroundColor || undefined,
-    "--max-site-width": maxSiteWidth,
+    ...layoutTokens,
   };
 
   const visibleClass = isVisible ? "ikas-editorial-bridge--visible" : "";

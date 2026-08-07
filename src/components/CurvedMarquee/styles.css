@@ -43,7 +43,7 @@
 
 /* SVG Metin Stili (Harf Geometrisinin Bozulmaması İçin Nötr Letter Spacing) */
 .ikas-curved-marquee__text {
-  font-family: Onest, var(--font-heading), sans-serif;
+  font-family: var(--font-heading);
   font-weight: 600;
   font-size: var(--marquee-font-size, 38px);
   letter-spacing: 0;
@@ -58,7 +58,7 @@
 }
 
 /* RESPONSIVE (<768px) */
-@media (max-width: 767px) {
+@media (max-width: bp(HDRapYMzn7)) {
   .ikas-curved-marquee {
     padding: 16px 0;
   }

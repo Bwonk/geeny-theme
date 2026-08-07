@@ -1,5 +1,9 @@
-import { getThemeSetting, getDefaultSrc, Router } from "@ikas/bp-storefront";
-import { formatShadow } from "../../utils/theme";
+import { getDefaultSrc, Router } from "@ikas/bp-storefront";
+import {
+  applyLayoutTokens,
+  ThemeColor,
+  ThemeType,
+} from "../../utils/themeTokens";
 import Button from "../../sub-components/Button";
 import { Props } from "./types";
 
@@ -18,22 +22,13 @@ export function ImageWithTextBlock({
   backgroundColor,
   className = "",
 }: ImageWithTextBlockProps) {
-  // Read live global settings via getThemeSetting using exact variableNames from prompts/TOKENS.md
-  const verticalPySetting = getThemeSetting("_Kl0my3VVMA"); // Boşluk / Masaüstü Dikey Spacing (48px)
-  const verticalPyMobileSetting = getThemeSetting("_5Fdl1j6UHQ"); // Boşluk / Dikey Bölüm Spacing (2rem / 32px)
-  const sectionPxSetting = getThemeSetting("_Nd1XnRyZlx"); // Boşluk / Masaüstü Yatay Bölüm Padding (20px)
-  const mobilePxSetting = getThemeSetting("_uRDipxnxkx"); // Boşluk / Mobil Yatay Padding (16px)
-  const mediaRadiusSetting = getThemeSetting("_YFQAxlLvZl"); // Radius / Medya (2rem / 32px)
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Boşluk / Site Maksimum Genişliği (1560px)
-  const cardShadowSetting = getThemeSetting("_yyUleMlhR4"); // Gölge / Kart Soft Shadow
-
-  const sectionPy = verticalPySetting?.value || "48px";
-  const sectionPyMobile = verticalPyMobileSetting?.value || "32px";
-  const sectionPx = sectionPxSetting?.value || "20px";
-  const mobilePx = mobilePxSetting?.value || "16px";
-  const mediaRadius = mediaRadiusSetting?.value || "32px";
-  const maxSiteWidth = siteWidthSetting?.value || "1560px";
-  const cardShadow = formatShadow(cardShadowSetting?.value, "0 4px 20px rgba(55, 67, 91, 0.08)");
+  const layoutTokens = applyLayoutTokens({
+    includePy: true,
+    includePx: true,
+    includeSiteWidth: true,
+    includeMediaRadius: true,
+    includeCardShadow: true,
+  });
 
   // Dark background check helper for automatic high contrast readability
   const isDarkBg = Boolean(
@@ -46,17 +41,11 @@ export function ImageWithTextBlock({
 
   const inlineStyles = {
     backgroundColor: backgroundColor || undefined,
-    color: isDarkBg ? "var(--24KlcgGmm9)" : "var(--pxNuSoudLn)",
-    "--section-py": sectionPy,
-    "--section-py-mobile": sectionPyMobile,
-    "--section-px": sectionPx,
-    "--mobile-px": mobilePx,
-    "--media-radius": mediaRadius,
-    "--max-site-width": maxSiteWidth,
-    "--card-shadow": cardShadow,
-    "--text-color": isDarkBg ? "var(--24KlcgGmm9)" : "var(--pxNuSoudLn)",
-    "--badge-bg": isDarkBg ? "var(--24KlcgGmm9)" : "var(--pxNuSoudLn)",
-    "--badge-color": isDarkBg ? "var(--pxNuSoudLn)" : "var(--sy8ZnXZdoG)",
+    color: isDarkBg ? ThemeColor.white : ThemeColor.navy,
+    ...layoutTokens,
+    "--text-color": isDarkBg ? ThemeColor.white : ThemeColor.navy,
+    "--badge-bg": isDarkBg ? ThemeColor.white : ThemeColor.navy,
+    "--badge-color": isDarkBg ? ThemeColor.navy : ThemeColor.accent,
   };
 
   const imgSrc = image ? getDefaultSrc(image) : null;
@@ -91,17 +80,17 @@ export function ImageWithTextBlock({
         {/* METİN KOLONU */}
         <div className="ikas-image-text__content">
           {badgeText && (
-            <span className="ikas-image-text__badge _eZyocyyd0F" lang="tr">
+            <span className={`ikas-image-text__badge ${ThemeType.label}`} lang="tr">
               {typeof badgeText === "string" ? badgeText.toLocaleUpperCase("tr-TR") : badgeText}
             </span>
           )}
 
           {title && (
-            <h2 className="ikas-image-text__title _sKAMD8d1LA">{title}</h2>
+            <h2 className={`ikas-image-text__title ${ThemeType.h2}`}>{title}</h2>
           )}
 
           {description && (
-            <p className="ikas-image-text__desc _VcfI5D07Nt">{description}</p>
+            <p className={`ikas-image-text__desc ${ThemeType.body}`}>{description}</p>
           )}
 
           {buttonText && (

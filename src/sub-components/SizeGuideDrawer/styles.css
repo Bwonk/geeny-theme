@@ -90,7 +90,7 @@
 
 .ikas-size-guide__title {
   margin: 0;
-  font-family: Onest, system-ui, sans-serif;
+  font-family: var(--font-heading);
   font-weight: 600;
   font-size: clamp(20px, 2.2vw, 26px);
   letter-spacing: -0.025em;
@@ -136,7 +136,7 @@
 
 .ikas-size-guide__row dt {
   margin: 0;
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 10.5px;
   letter-spacing: 0.16em;
   color: var(--p6EMJiXye1, #8c97a5);

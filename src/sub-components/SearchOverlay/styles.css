@@ -26,7 +26,11 @@
   inset: 0;
   background-color: var(--fRUyppFgyp, rgba(55, 67, 91, 0.75));
   backdrop-filter: blur(4px);
-  animation: searchOverlayFadeIn 0.3s ease both;
+  /* Studio: Animasyon / Fade In Overlay — ThemeKeyframeRef.fadeIn */
+  animation-name: _Hhau5gD4Y3;
+  animation-duration: 0.3s;
+  animation-timing-function: ease;
+  animation-fill-mode: both;
 }
 
 /* Panel Konteyneri */
@@ -39,7 +43,11 @@
   flex-direction: column;
   gap: 10px;
   will-change: transform, opacity;
-  animation: searchPanelDrop 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+  /* Studio: Animasyon / Panel Drop — ThemeKeyframeRef.panelDrop */
+  animation-name: _UbKxtmawyJ;
+  animation-duration: 0.38s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: both;
 }
 
 /* 1. ÜST PILL ARAMA BARI */
@@ -141,7 +149,11 @@
   padding: 9px 10px;
   cursor: pointer;
   transition: background 0.22s cubic-bezier(0.2, 0.8, 0.25, 1), transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
-  animation: searchFadeUp 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+  /* Studio: Animasyon / Fade Up Enter — ThemeKeyframeRef.fadeUp */
+  animation-name: _2wIPGJlyTg;
+  animation-duration: 0.38s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: both;
 }
 
 .geeny-search-overlay__result-item:hover {
@@ -315,35 +327,9 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
- * ANIMASYONLAR
+ * ANIMASYONLAR — enter keyframes Studio’da (ThemeKeyframeRef);
+ * searchShimmer lokal kalır (loading micro).
  * ═══════════════════════════════════════════════════════════════════════ */
-@keyframes searchOverlayFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes searchPanelDrop {
-  from {
-    opacity: 0;
-    transform: translateY(-16px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes searchFadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes searchShimmer {
   0%, 100% { opacity: 0.45; }
   50% { opacity: 0.85; }

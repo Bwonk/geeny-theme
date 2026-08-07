@@ -1,4 +1,4 @@
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import {
   getDefaultSrc,
   getSelectedProductVariant,
@@ -7,6 +7,8 @@ import {
   getProductVariantFormattedSellPrice,
   hasProductVariantDiscount,
   hasProductVariantStock,
+  hasBundleSettings,
+  getBundleProductsOfVariant,
   addItemToCart,
   getSelectedProductVariantHref,
   getThemeSetting,
@@ -14,9 +16,41 @@ import {
   getDisplayedProductVariantTypes,
   isColorVariantValue,
   IkasProduct,
+  IkasProductVariant,
 } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
 import Button from "../Button";
+
+/** Paketin kendi Medya’sı; yoksa null (ikas default). */
+function ownMainImageSrc(variant: IkasProductVariant | null | undefined): string | null {
+  if (!variant) return null;
+  const main = getProductVariantMainImage(variant);
+  if (main?.image) return getDefaultSrc(main.image);
+  const first = variant.images?.[0]?.image;
+  return first ? getDefaultSrc(first) : null;
+}
+
+/**
+ * Fallback: Medya boş + bundle → child ürünlerin order sırasındaki
+ * ilk main image (liste kartı / featured grid).
+ */
+function bundleFallbackImageSrc(
+  variant: IkasProductVariant | null | undefined
+): string | null {
+  if (!variant || !hasBundleSettings(variant)) return null;
+  const products = (variant.bundleSettings?.products || [])
+    .slice()
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+
+  for (const bp of products) {
+    const nested = bp?.product;
+    if (!nested) continue;
+    const nestedVariant = getSelectedProductVariant(nested);
+    const src = ownMainImageSrc(nestedVariant);
+    if (src) return src;
+  }
+  return null;
+}
 
 export interface Props {
   product?: IkasProduct | null;
@@ -70,16 +104,24 @@ export function ProductCard({
     "--swatch-radius": swatchRadius,
   };
 
+  const variant = product ? getSelectedProductVariant(product) : null;
+  const ownImage = ownMainImageSrc(variant);
+  const mainImage = ownImage || bundleFallbackImageSrc(variant);
+  const variantId = variant?.id;
+
+  // Kendi Medya boş + bundle → child ürünleri yükle (kart görseli fallback)
+  useEffect(() => {
+    if (!product || !variant) return;
+    if (!hasBundleSettings(variant)) return;
+    if (ownMainImageSrc(variant)) return;
+    if (bundleFallbackImageSrc(variant)) return;
+    void getBundleProductsOfVariant(product, variant);
+  }, [product, variantId]);
+
   if (!product) return null;
 
-  const variant = getSelectedProductVariant(product);
-  const mainProductImage = variant ? getProductVariantMainImage(variant) : null;
-  const mainImage = mainProductImage?.image
-    ? getDefaultSrc(mainProductImage.image)
-    : null;
-
   const secondaryProductImage =
-    variant?.images && variant.images.length > 1
+    ownImage && variant?.images && variant.images.length > 1
       ? variant.images[1]?.image
       : null;
   const secondaryImage = secondaryProductImage

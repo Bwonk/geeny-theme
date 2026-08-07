@@ -48,7 +48,7 @@
   transition: width 0.3s ease;
 }
 
-@media (max-width: 767px) {
+@media (max-width: bp(HDRapYMzn7)) {
   .ikas-pagination {
     padding-left: var(--mobile-px, 16px);
     padding-right: var(--mobile-px, 16px);

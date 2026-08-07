@@ -1,6 +1,7 @@
 @import "../QuantityStepper/styles.css";
 @import "../CartShippingNotice/styles.css";
 @import "../CartCouponForm/styles.css";
+@import "../CartLineBundleChildren/styles.css";
 @import "../TextLink/styles.css";
 @import "../Button/styles.css";
 @import "../CloseButton/styles.css";
@@ -172,6 +173,10 @@
 .ikas-cart-drawer__line-price {
   font-weight: 600;
   color: var(--pxNuSoudLn);
+}
+
+.ikas-cart-drawer__price {
+  font-family: var(--font-mono, "Roboto Mono", ui-monospace, monospace);
 }
 
 .ikas-cart-drawer__line-old {
@@ -356,15 +361,18 @@
 .ikas-cart-drawer__empty {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
   gap: 16px;
   padding: 40px 24px;
   flex: 1;
+  text-align: center;
 }
 
 .ikas-cart-drawer__empty-title {
   margin: 0;
   color: var(--pxNuSoudLn);
+  text-align: center;
 }
 
 /* FOOTER */
@@ -430,7 +438,7 @@
 }
 
 /* RESPONSIVE */
-@media (max-width: 767px) {
+@media (max-width: bp(HDRapYMzn7)) {
   .ikas-cart-drawer {
     width: 100vw;
   }
@@ -464,7 +472,7 @@
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: calc(bp(HDRapYMzn7) + 1px)) {
   .ikas-cart-drawer {
     top: 16px;
     right: 16px;

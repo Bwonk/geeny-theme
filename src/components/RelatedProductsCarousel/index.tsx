@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "preact/hooks";
-import { getThemeSetting, IkasProduct } from "@ikas/bp-storefront";
+import { IkasProduct } from "@ikas/bp-storefront";
+import { applyLayoutTokens, ThemeSetting, readSetting } from "../../utils/themeTokens";
 import ProductCard from "../../sub-components/ProductCard";
 import { Props } from "./types";
 
@@ -23,10 +24,12 @@ export function RelatedProductsCarousel({
   backgroundColor,
   className = "",
 }: RelatedProductsCarouselProps) {
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ");
-  const fadeAnimSetting = getThemeSetting("_AwVN6G9Zib");
-  const maxSiteWidth = siteWidthSetting?.value || "1560px";
-  const fadeEase = fadeAnimSetting?.value || "0.55s cubic-bezier(0.22, 1, 0.36, 1)";
+  const layoutTokens = applyLayoutTokens({
+    includePy: true,
+    includePx: true,
+    includeSiteWidth: true,
+  });
+  const fadeEase = readSetting(ThemeSetting.fade, "0.55s cubic-bezier(0.22, 1, 0.36, 1)");
 
   const trackRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
@@ -97,7 +100,7 @@ export function RelatedProductsCarousel({
 
   const inlineStyles = {
     backgroundColor: backgroundColor || undefined,
-    "--max-site-width": maxSiteWidth,
+    ...layoutTokens,
     "--related-fade": fadeEase,
   } as any;
 

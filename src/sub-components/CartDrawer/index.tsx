@@ -29,6 +29,7 @@ import PortalScope from "../PortalScope";
 import QuantityStepper from "../QuantityStepper";
 import CartShippingNotice from "../CartShippingNotice";
 import CartCouponForm from "../CartCouponForm";
+import CartLineBundleChildren from "../CartLineBundleChildren";
 import { useFocusTrap, inertProps } from "../../utils/a11y";
 
 export interface Props {
@@ -54,6 +55,7 @@ export interface Props {
   increaseQtyLabel?: string;
   prevOfferLabel?: string;
   nextOfferLabel?: string;
+  bundleQtyLabel?: string;
   cartUpsellProduct1?: IkasProduct | null;
   cartUpsellProduct2?: IkasProduct | null;
   cartUpsellProduct3?: IkasProduct | null;
@@ -190,7 +192,7 @@ const CartUpsellBlock = observer(function CartUpsellBlock({
                     {product.name}
                   </p>
                   {price ? (
-                    <span className="ikas-cart-drawer__offer-price _eZyocyyd0F">
+                    <span className="ikas-cart-drawer__offer-price ikas-cart-drawer__price _eZyocyyd0F">
                       {price}
                     </span>
                   ) : null}
@@ -242,7 +244,7 @@ export function CartDrawer({
   emptyCartButtonText = "Alışverişe Başla",
   closeCartLabel = "Sepeti Kapat",
   freeShippingAchievedText = "Ücretsiz kargo!",
-  freeShippingRemainingText = "Ücretsiz kargo için {amount} TL kaldı!",
+  freeShippingRemainingText = "Ücretsiz kargo için ₺ {amount} kaldı!",
   freeShippingThreshold = 500,
   upsellTitle = "Birlikte Al",
   addOfferText = "Ekle",
@@ -259,6 +261,7 @@ export function CartDrawer({
   increaseQtyLabel = "Adedi artır",
   prevOfferLabel = "Önceki öneri",
   nextOfferLabel = "Sonraki öneri",
+  bundleQtyLabel = "adet",
   cartUpsellProduct1,
   cartUpsellProduct2,
   cartUpsellProduct3,
@@ -364,7 +367,7 @@ export function CartDrawer({
 
   const formattedTotal = cart
     ? getIkasOrderFormattedTotalFinalPrice(cart)
-    : "0 TL";
+    : "₺ 0";
   const couponAdjustment = cart
     ? getIkasOrderCouponAdjustment(cart)
     : undefined;
@@ -514,15 +517,19 @@ export function CartDrawer({
                           </span>
                         )}
                         <div className="ikas-cart-drawer__line-prices">
-                          <span className="ikas-cart-drawer__line-price _VcfI5D07Nt">
+                          <span className="ikas-cart-drawer__line-price ikas-cart-drawer__price _VcfI5D07Nt">
                             {finalPrice}
                           </span>
                           {originalPrice ? (
-                            <span className="ikas-cart-drawer__line-old _C0OZ8W7vYS">
+                            <span className="ikas-cart-drawer__line-old ikas-cart-drawer__price _C0OZ8W7vYS">
                               {originalPrice}
                             </span>
                           ) : null}
                         </div>
+                        <CartLineBundleChildren
+                          variant={item.variant}
+                          qtyLabel={bundleQtyLabel}
+                        />
                       </div>
 
                       <QuantityStepper
@@ -563,7 +570,7 @@ export function CartDrawer({
               {discountFormatted ? (
                 <div className="ikas-cart-drawer__row _eZyocyyd0F">
                   <span>{discountsLabel}</span>
-                  <span className="ikas-cart-drawer__discount">
+                  <span className="ikas-cart-drawer__discount ikas-cart-drawer__price">
                     {discountFormatted}
                   </span>
                 </div>
@@ -571,7 +578,7 @@ export function CartDrawer({
 
               <div className="ikas-cart-drawer__row ikas-cart-drawer__row--total _AHnMWYqzuI">
                 <span>{totalLabel}</span>
-                <span>{formattedTotal}</span>
+                <span className="ikas-cart-drawer__price">{formattedTotal}</span>
               </div>
 
               <p className="ikas-cart-drawer__tax _eZyocyyd0F">{taxNoteText}</p>

@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "preact/hooks";
-import { getThemeSetting } from "@ikas/bp-storefront";
+import { applyLayoutTokens, ThemeSetting, readSetting } from "../../utils/themeTokens";
 import { Props } from "./types";
 
 export interface ProductFeaturesIconsProps extends Props {
@@ -101,10 +101,12 @@ export function ProductFeaturesIcons({
     return () => observer.disconnect();
   }, []);
 
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ");
-  const fadeAnimSetting = getThemeSetting("_AwVN6G9Zib");
-  const maxSiteWidth = siteWidthSetting?.value || "1560px";
-  const fadeEase = fadeAnimSetting?.value || "0.6s cubic-bezier(0.22, 1, 0.36, 1)";
+  const layoutTokens = applyLayoutTokens({
+    includePy: true,
+    includePx: true,
+    includeSiteWidth: true,
+  });
+  const fadeEase = readSetting(ThemeSetting.fade, "0.6s cubic-bezier(0.22, 1, 0.36, 1)");
 
   const icons =
     usePdpIcons || iconsPreset === "pdp"
@@ -120,7 +122,7 @@ export function ProductFeaturesIcons({
 
   const inlineStyles = {
     backgroundColor: backgroundColor || undefined,
-    "--max-site-width": maxSiteWidth,
+    ...layoutTokens,
     "--features-fade": fadeEase,
   } as any;
 

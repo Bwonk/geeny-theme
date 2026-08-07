@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import {
-  getThemeSetting,
   getProductCustomerReviews,
   getIkasCustomerReviewFormattedDate,
   IkasCustomerReview,
 } from "@ikas/bp-storefront";
+import { applyLayoutTokens, ThemeSetting, readSetting } from "../../utils/themeTokens";
 import { Props } from "./types";
 
 export interface CustomerReviewsSectionProps extends Props {
@@ -43,10 +43,12 @@ export function CustomerReviewsSection({
   const [cardsVisible, setCardsVisible] = useState(false);
   const gridRef = useRef<HTMLDivElement>(null);
 
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ");
-  const fadeAnimSetting = getThemeSetting("_AwVN6G9Zib");
-  const maxSiteWidth = siteWidthSetting?.value || "1560px";
-  const fadeEase = fadeAnimSetting?.value || "0.6s cubic-bezier(0.22, 1, 0.36, 1)";
+  const layoutTokens = applyLayoutTokens({
+    includePy: true,
+    includePx: true,
+    includeSiteWidth: true,
+  });
+  const fadeEase = readSetting(ThemeSetting.fade, "0.6s cubic-bezier(0.22, 1, 0.36, 1)");
 
   useEffect(() => {
     let cancelled = false;
@@ -119,7 +121,7 @@ export function CustomerReviewsSection({
 
   const inlineStyles = {
     backgroundColor: backgroundColor || undefined,
-    "--max-site-width": maxSiteWidth,
+    ...layoutTokens,
     "--reviews-fade": fadeEase,
   } as any;
 

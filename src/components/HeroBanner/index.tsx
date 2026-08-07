@@ -1,5 +1,6 @@
 import { useRef, useEffect } from "preact/hooks";
-import { getThemeSetting, getDefaultSrc, Router } from "@ikas/bp-storefront";
+import { getDefaultSrc, Router } from "@ikas/bp-storefront";
+import { applyLayoutTokens } from "../../utils/themeTokens";
 import Button from "../../sub-components/Button";
 import TextLink from "../../sub-components/TextLink";
 import { Props } from "./types";
@@ -78,13 +79,15 @@ export function HeroBanner({
     };
   }, []);
 
-  // Live global settings
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ"); // Site Maksimum Genişliği (1560px)
-  const maxSiteWidth = siteWidthSetting?.value || "1560px";
+  const layoutTokens = applyLayoutTokens({
+    includePy: true,
+    includePx: true,
+    includeSiteWidth: true,
+  });
 
   const inlineStyles = {
     backgroundColor: backgroundColor || undefined,
-    "--max-site-width": maxSiteWidth,
+    ...layoutTokens,
   };
 
   const imgSrc = image ? getDefaultSrc(image) : null;

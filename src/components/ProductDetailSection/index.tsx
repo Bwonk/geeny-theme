@@ -51,6 +51,9 @@ export function ProductDetailSection({
   showStickyBar = true,
   stickyQtyUnitText = "ADET",
   stickyImageAlt = "Ürün görseli",
+  bundleTitle = "Paket içeriği",
+  bundleSubtitle = "Bu pakette yer alan ürünler.",
+  bundleQtyLabel = "adet",
   showCrossSell = true,
   crossSellTitle = "Birlikte Al",
   crossSellSubtitle = "Bu ürünle birlikte sık alınanlar.",
@@ -153,6 +156,9 @@ export function ProductDetailSection({
               trustWarrantyText={trustWarrantyText}
               showBuyNow={showBuyNow}
               buyNowText={buyNowText}
+              bundleTitle={bundleTitle}
+              bundleSubtitle={bundleSubtitle}
+              bundleQtyLabel={bundleQtyLabel}
               showCrossSell={showCrossSell}
               crossSellTitle={crossSellTitle}
               crossSellSubtitle={crossSellSubtitle}

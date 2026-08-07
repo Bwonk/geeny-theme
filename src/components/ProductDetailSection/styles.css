@@ -50,7 +50,7 @@
   min-width: 0;
 }
 
-@media (min-width: 992px) {
+@media (min-width: calc(bp(kmfaNJ5hH8) + 1px)) {
   .ikas-pdp__right {
     position: sticky;
     top: calc(
@@ -60,7 +60,7 @@
   }
 }
 
-@media (max-width: 991px) {
+@media (max-width: bp(kmfaNJ5hH8)) {
   .ikas-pdp__main-grid {
     grid-template-columns: 1fr;
     gap: clamp(22px, 3.5vw, 36px);
@@ -84,7 +84,7 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: bp(HDRapYMzn7)) {
   .ikas-pdp__container {
     padding-top: 8px;
   }

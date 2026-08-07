@@ -32,4 +32,5 @@ export interface Props {
   promoRemoveText?: string;
   orderNoteLabel?: string;
   orderNotePlaceholder?: string;
+  bundleQtyLabel?: string;
 }

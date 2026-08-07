@@ -20,7 +20,7 @@
   box-sizing: border-box;
   background-color: var(--24KlcgGmm9);  /* Saf Beyaz — TOKENS.md satır 14 */
   color: var(--pxNuSoudLn);             /* Ana Lacivert — TOKENS.md satır 10 */
-  padding: clamp(32px, 4vw, 60px) 0;
+  padding: var(--section-py, clamp(32px, 4vw, 60px)) 0;
   /* Alttaki StorySection ile dikey margin çakışmasını engeller. */
   margin-block: 0;
   overflow: hidden;
@@ -121,14 +121,14 @@
 }
 
 /* RESPONSIVE BREAKPOINTS (<1024px & <768px) */
-@media (max-width: 1023px) {
+@media (max-width: bp(VzlJkKlXGT)) {
   .ikas-featured-grid__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 20px;
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: bp(HDRapYMzn7)) {
   .ikas-featured-grid {
     padding: 32px 16px;
   }

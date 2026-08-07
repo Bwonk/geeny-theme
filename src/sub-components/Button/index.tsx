@@ -1,5 +1,7 @@
-import { getThemeSetting, IkasNavigationLink } from "@ikas/bp-storefront";
+import { IkasNavigationLink } from "@ikas/bp-storefront";
 import { observer } from "@ikas/component-utils";
+import { ThemeSetting, readSetting } from "../../utils/themeTokens";
+import { ThemeType } from "../../utils/themeTokens";
 
 export interface Props {
   text?: string;
@@ -44,21 +46,21 @@ export function Button({
   type = "button",
   icon,
 }: Props) {
-  // Read live global settings via getThemeSetting — TOKENS.md variableName'leri
-  const heightSetting = getThemeSetting(
-    size === "LARGE" ? "_RtoVmtuDGF" : "_2xLGYXCG2n"
+  const btnHeight = readSetting(
+    size === "LARGE" ? ThemeSetting.checkoutBtnHeight : ThemeSetting.buttonHeight,
+    size === "LARGE" ? "52px" : "48px"
   );
-  const radiusSetting = getThemeSetting("_ZaLXoaaaAA");
-  const transitionSetting = getThemeSetting("_bNtMCrOBsE");
-
-  const btnHeight = heightSetting?.value || (size === "LARGE" ? "52px" : "48px");
-  const btnTransition = transitionSetting?.value || "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)";
+  const tokenRadius = readSetting(ThemeSetting.buttonRadius, "0.5rem");
+  const btnTransition = readSetting(
+    ThemeSetting.buttonTransition,
+    "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+  );
 
   const variantStr = typeof variant === "string" ? variant : "PRIMARY";
   const isPill = variantStr.startsWith("PILL_");
 
   // Pill variant'ları border-radius'u CSS'ten alır (9999px), klasikler token'dan
-  const btnRadius = isPill ? "9999px" : (radiusSetting?.value || "0.5rem");
+  const btnRadius = isPill ? "9999px" : tokenRadius;
 
   const variantClass = `ikas-btn--${variantStr.toLowerCase()}`;
   const fullWidthClass = fullWidth ? "ikas-btn--full-width" : "";
@@ -67,7 +69,7 @@ export function Button({
 
   // Tipografi: pill butonlar kendi font/size/weight'ini CSS'ten alır,
   // klasikler Gövde Metni className'ini kullanır
-  const typoClass = isPill ? "" : "_VcfI5D07Nt";
+  const typoClass = isPill ? "" : ThemeType.body;
 
   const combinedClassName = [
     "ikas-btn",

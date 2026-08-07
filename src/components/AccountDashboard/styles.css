@@ -35,7 +35,7 @@
 }
 
 .ikas-account__welcome-kicker {
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 10.5px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -43,7 +43,7 @@
 }
 
 .ikas-account__welcome-name {
-  font-family: Onest, system-ui, sans-serif;
+  font-family: var(--font-heading);
   font-weight: 600;
   font-size: 22px;
   letter-spacing: -0.02em;
@@ -61,7 +61,7 @@
   text-align: left;
   padding: 12px 14px;
   border-radius: 12px;
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.12em;
   color: var(--p6EMJiXye1, #8c97a5);
@@ -97,7 +97,7 @@
 
 .ikas-account__title {
   margin: 0;
-  font-family: Onest, system-ui, sans-serif;
+  font-family: var(--font-heading);
   font-weight: 600;
   font-size: clamp(24px, 3vw, 34px);
   letter-spacing: -0.03em;
@@ -105,7 +105,7 @@
 
 .ikas-account__empty {
   margin: 0;
-  font-family: Onest, system-ui, sans-serif;
+  font-family: var(--font-heading);
   font-size: 15px;
   color: var(--p6EMJiXye1, #8c97a5);
 }
@@ -113,7 +113,7 @@
 .ikas-account__banner {
   padding: 12px 14px;
   border-radius: 12px;
-  font-family: Onest, system-ui, sans-serif;
+  font-family: var(--font-heading);
   font-size: 13px;
 }
 
@@ -123,8 +123,8 @@
 }
 
 .ikas-account__banner--err {
-  background: color-mix(in srgb, #c0392b 8%, transparent);
-  color: #8f1f1f;
+  background: color-mix(in srgb, var(--color-danger) 8%, transparent);
+  color: var(--color-danger-text);
 }
 
 .ikas-account__form {
@@ -147,7 +147,7 @@
 }
 
 .ikas-account__label {
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 10.5px;
   letter-spacing: 0.14em;
   color: var(--p6EMJiXye1, #8c97a5);
@@ -160,7 +160,7 @@
   border-radius: var(--input-radius, 14px);
   background: var(--24KlcgGmm9, #fff);
   color: var(--pxNuSoudLn);
-  font-family: "Roboto Flex", Onest, system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: 15px;
   padding: 14px 16px;
   outline: none;
@@ -176,12 +176,12 @@
 }
 
 .ikas-account__input--error {
-  border-color: color-mix(in srgb, #c0392b 70%, transparent);
+  border-color: color-mix(in srgb, var(--color-danger) 70%, transparent);
 }
 
 .ikas-account__error {
   font-size: 12px;
-  color: #8f1f1f;
+  color: var(--color-danger-text);
 }
 
 .ikas-account__actions {
@@ -237,13 +237,13 @@
 }
 
 .ikas-account-orders__no {
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.1em;
 }
 
 .ikas-account-orders__date {
-  font-family: Onest, system-ui, sans-serif;
+  font-family: var(--font-heading);
   font-size: 13px;
   color: var(--p6EMJiXye1, #8c97a5);
 }
@@ -256,14 +256,14 @@
 }
 
 .ikas-account-orders__status {
-  font-family: Onest, system-ui, sans-serif;
+  font-family: var(--font-heading);
   font-weight: 600;
   font-size: 14px;
 }
 
 .ikas-account-orders__count,
 .ikas-account-orders__price {
-  font-family: Onest, system-ui, sans-serif;
+  font-family: var(--font-heading);
   font-size: 14px;
   color: var(--p6EMJiXye1, #8c97a5);
 }
@@ -299,7 +299,7 @@
 }
 
 .ikas-account-addrs__title {
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 10.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -308,7 +308,7 @@
 
 .ikas-account-addrs__text {
   margin: 0;
-  font-family: Onest, system-ui, sans-serif;
+  font-family: var(--font-heading);
   font-size: 14px;
   line-height: 1.5;
 }
@@ -360,7 +360,7 @@
 
 .ikas-addr-modal__title {
   margin: 0;
-  font-family: Onest, system-ui, sans-serif;
+  font-family: var(--font-heading);
   font-weight: 600;
   font-size: 22px;
   letter-spacing: -0.02em;

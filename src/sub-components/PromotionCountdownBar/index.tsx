@@ -46,70 +46,70 @@ function parseEndTime(raw?: string): { h: number; m: number } {
   return { h, m };
 }
 
-function unwrapDateInput(
-  endDate?: Date | string | number | null | { value?: unknown }
-): Date | string | number | null {
-  if (endDate == null || endDate === "") return null;
-  if (
-    typeof endDate === "object" &&
-    !(endDate instanceof Date) &&
-    "value" in endDate
-  ) {
-    const inner = (endDate as { value?: unknown }).value;
-    if (inner == null || inner === "") return null;
+  function unwrapDateInput(
+    endDate?: Date | string | number | null | { value?: unknown }
+  ): Date | string | number | null {
+    if (endDate == null || endDate === "") return null;
     if (
-      typeof inner === "string" ||
-      typeof inner === "number" ||
-      inner instanceof Date
+      typeof endDate === "object" &&
+      !(endDate instanceof Date) &&
+      "value" in endDate
     ) {
-      return inner as Date | string | number;
+      const inner = (endDate as { value?: unknown }).value;
+      if (inner == null || inner === "") return null;
+      if (
+        typeof inner === "string" ||
+        typeof inner === "number" ||
+        inner instanceof Date
+      ) {
+        return inner as Date | string | number;
+      }
+      return String(inner);
     }
-    return String(inner);
+    return endDate as Date | string | number;
   }
-  return endDate as Date | string | number;
-}
 
-function resolveEndMs(
-  endDate?: Date | string | number | null | { value?: unknown },
-  endTime?: string
-): number | null {
-  const rawInput = unwrapDateInput(endDate);
-  if (rawInput == null || rawInput === "") return null;
+  function resolveEndMs(
+    endDate?: Date | string | number | null | { value?: unknown },
+    endTime?: string
+  ): number | null {
+    const rawInput = unwrapDateInput(endDate);
+    if (rawInput == null || rawInput === "") return null;
 
-  let base: Date;
-  if (rawInput instanceof Date) {
-    if (Number.isNaN(rawInput.getTime())) return null;
-    base = new Date(rawInput.getTime());
-  } else if (typeof rawInput === "number") {
-    const n = rawInput < 1e12 ? rawInput * 1000 : rawInput;
-    base = new Date(n);
-    if (Number.isNaN(base.getTime())) return null;
-  } else {
-    const raw = String(rawInput).trim();
-    // Prefer local calendar date for YYYY-MM-DD (avoid UTC midnight shift)
-    const dayOnly = raw.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-    if (dayOnly) {
-      base = new Date(
-        Number(dayOnly[1]),
-        Number(dayOnly[2]) - 1,
-        Number(dayOnly[3]),
-        0,
-        0,
-        0,
-        0
-      );
+    let base: Date;
+    if (rawInput instanceof Date) {
+      if (Number.isNaN(rawInput.getTime())) return null;
+      base = new Date(rawInput.getTime());
+    } else if (typeof rawInput === "number") {
+      const n = rawInput < 1e12 ? rawInput * 1000 : rawInput;
+      base = new Date(n);
+      if (Number.isNaN(base.getTime())) return null;
     } else {
-      const parsed = new Date(raw);
-      if (Number.isNaN(parsed.getTime())) return null;
-      base = parsed;
+      const raw = String(rawInput).trim();
+      // Prefer local calendar date for YYYY-MM-DD (avoid UTC midnight shift)
+      const dayOnly = raw.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+      if (dayOnly) {
+        base = new Date(
+          Number(dayOnly[1]),
+          Number(dayOnly[2]) - 1,
+          Number(dayOnly[3]),
+          0,
+          0,
+          0,
+          0
+        );
+      } else {
+        const parsed = new Date(raw);
+        if (Number.isNaN(parsed.getTime())) return null;
+        base = parsed;
+      }
     }
-  }
 
-  const hasEmbeddedTime =
-    typeof rawInput === "string" && /T\d{1,2}:\d{2}/.test(rawInput);
+    const hasEmbeddedTime =
+      typeof rawInput === "string" && /T\d{1,2}:\d{2}/.test(rawInput);
 
-  if (!hasEmbeddedTime) {
-    const { h, m } = parseEndTime(endTime);
+    if (!hasEmbeddedTime) {
+      const { h, m } = parseEndTime(endTime);
     base.setHours(h, m, 59, 999);
   }
 

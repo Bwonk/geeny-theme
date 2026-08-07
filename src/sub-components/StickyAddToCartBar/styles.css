@@ -67,7 +67,7 @@
 }
 
 .ikas-sticky-cart__name {
-  font-family: Onest, system-ui, sans-serif;
+  font-family: var(--font-heading);
   font-weight: 500;
   font-size: 14.5px;
   letter-spacing: -0.01em;
@@ -78,7 +78,7 @@
 }
 
 .ikas-sticky-cart__variants {
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.12em;
   color: var(--p6EMJiXye1, #8c97a5);
@@ -89,7 +89,7 @@
 
 .ikas-sticky-cart__price {
   flex: 0 0 auto;
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 15px;
   color: var(--pxNuSoudLn);
   white-space: nowrap;
@@ -109,7 +109,7 @@
   letter-spacing: 0.12em;
 }
 
-@media (max-width: 767px) {
+@media (max-width: bp(HDRapYMzn7)) {
   .ikas-sticky-cart__container {
     padding: 10px var(--mobile-px, 16px);
     gap: 10px;

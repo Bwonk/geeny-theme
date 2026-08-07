@@ -26,7 +26,11 @@
 }
 
 .ikas-product-grid__list > * {
-  animation: ikasProductCardIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  /* Studio: Animasyon / Product Card In — ThemeKeyframeRef.productCardIn */
+  animation-name: _ASNBy3QLpK;
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: both;
 }
 
 .ikas-product-grid__list > *:nth-child(4n + 2) {
@@ -39,17 +43,6 @@
 
 .ikas-product-grid__list > *:nth-child(4n + 4) {
   animation-delay: 210ms;
-}
-
-@keyframes ikasProductCardIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
 }
 
 .ikas-product-grid__empty {
@@ -100,7 +93,7 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: bp(HDRapYMzn7)) {
   .ikas-product-grid {
     padding-left: var(--mobile-px, 16px);
     padding-right: var(--mobile-px, 16px);

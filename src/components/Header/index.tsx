@@ -90,6 +90,7 @@ export function Header({
   increaseQtyLabel,
   prevOfferLabel,
   nextOfferLabel,
+  bundleQtyLabel,
   cartUpsellProduct1,
   cartUpsellProduct2,
   cartUpsellProduct3,
@@ -104,6 +105,8 @@ export function Header({
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const headerRef = useRef<HTMLElement | null>(null);
   const drawerRef = useRef<HTMLDivElement | null>(null);
+  const cartBadgeRef = useRef<HTMLSpanElement | null>(null);
+  const prevItemCountRef = useRef<number | null>(null);
 
   // Read live global settings via getThemeSetting
   const heightSetting = getThemeSetting("_OQlsoCe9ah");
@@ -268,6 +271,30 @@ export function Header({
   const cartItems = cartStore.cart?.orderLineItems ?? [];
   const itemCount = cartItems.reduce((acc, item) => acc + (item.quantity ?? 1), 0);
 
+  // Sepet badge spring-pop — adet artınca .pop, ~320ms sonra geri
+  useEffect(() => {
+    const prev = prevItemCountRef.current;
+    prevItemCountRef.current = itemCount;
+    if (prev === null || itemCount <= 0 || itemCount <= prev) return;
+
+    const badge = cartBadgeRef.current;
+    if (!badge) return;
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
+
+    badge.classList.remove("pop");
+    void badge.offsetWidth;
+    badge.classList.add("pop");
+    const timer = window.setTimeout(() => {
+      badge.classList.remove("pop");
+    }, 320);
+    return () => window.clearTimeout(timer);
+  }, [itemCount]);
+
   const logoSrc = logo ? getDefaultSrc(logo) : null;
   const links = (navigation?.links ?? []).filter(
     (item: any) => Boolean(item?.label || item?.title)
@@ -421,7 +448,9 @@ export function Header({
                   <path d="M9.2 7.5a2.8 2.8 0 0 1 5.6 0" />
                 </svg>
                 {itemCount > 0 && (
-                  <span className="ikas-header__cart-badge">{itemCount}</span>
+                  <span ref={cartBadgeRef} className="ikas-header__cart-badge">
+                    {itemCount}
+                  </span>
                 )}
               </button>
             </div>
@@ -502,6 +531,7 @@ export function Header({
         increaseQtyLabel={increaseQtyLabel}
         prevOfferLabel={prevOfferLabel}
         nextOfferLabel={nextOfferLabel}
+        bundleQtyLabel={bundleQtyLabel}
         cartUpsellProduct1={cartUpsellProduct1}
         cartUpsellProduct2={cartUpsellProduct2}
         cartUpsellProduct3={cartUpsellProduct3}

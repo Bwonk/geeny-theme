@@ -400,7 +400,7 @@
   align-items: center;
   justify-content: flex-end;
   gap: 14px;
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.16em;
   color: var(--p6EMJiXye1, #8c97a5);
@@ -412,7 +412,7 @@
   color: var(--pxNuSoudLn);
 }
 
-@media (max-width: 991px) {
+@media (max-width: bp(kmfaNJ5hH8)) {
   .ikas-media-gallery__wrap {
     flex-direction: column-reverse;
     gap: 12px;

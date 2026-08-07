@@ -229,7 +229,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Use {amount} placeholder for remaining amount",
-          "defaultValue": "Ücretsiz kargo için {amount} TL kaldı!",
+          "defaultValue": "Ücretsiz kargo için ₺ {amount} kaldı!",
           "groupId": "cart_drawer"
         },
         {
@@ -415,6 +415,14 @@
           "required": false,
           "description": "Drawer footer ikincil CTA — sepet sayfasına gider",
           "defaultValue": "Sepeti Görüntüle",
+          "groupId": "cart_drawer"
+        },
+        {
+          "name": "bundleQtyLabel",
+          "displayName": "Paket Adet Birimi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "adet",
           "groupId": "cart_drawer"
         }
       ],
@@ -2353,6 +2361,30 @@
           "type": "COLOR",
           "required": false,
           "groupId": "promotionStyle"
+        },
+        {
+          "name": "bundleTitle",
+          "displayName": "Paket Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Paket içeriği",
+          "groupId": "bundle"
+        },
+        {
+          "name": "bundleSubtitle",
+          "displayName": "Paket Alt Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bu pakette yer alan ürünler.",
+          "groupId": "bundle"
+        },
+        {
+          "name": "bundleQtyLabel",
+          "displayName": "Paket Adet Birimi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "adet",
+          "groupId": "bundle"
         }
       ],
       "propGroups": [
@@ -2396,6 +2428,11 @@
               "description": "Geri sayım renkleri"
             }
           ]
+        },
+        {
+          "id": "bundle",
+          "name": "Paket Ürünler",
+          "description": "Bundle / paket içeriği metinleri"
         }
       ]
     },
@@ -2927,7 +2964,7 @@
           "type": "TEXT",
           "required": false,
           "description": "{amount} yer tutucusu kullanılır",
-          "defaultValue": "Ücretsiz kargo için {amount} TL kaldı!",
+          "defaultValue": "Ücretsiz kargo için ₺ {amount} kaldı!",
           "groupId": "shipping"
         },
         {
@@ -2985,6 +3022,14 @@
           "required": false,
           "defaultValue": "Hediyelik paket talebi veya kargo teslimat notlarınızı buraya yazabilirsiniz...",
           "groupId": "note"
+        },
+        {
+          "name": "bundleQtyLabel",
+          "displayName": "Paket Adet Birimi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "adet",
+          "groupId": "page"
         }
       ],
       "propGroups": [

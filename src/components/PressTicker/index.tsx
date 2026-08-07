@@ -1,8 +1,20 @@
-import { getThemeSetting, getDefaultSrc } from "@ikas/bp-storefront";
+import { getDefaultSrc } from "@ikas/bp-storefront";
 import { Props } from "./types";
+import {
+  ThemeSetting,
+  ThemeKeyframeRef,
+  readSetting,
+} from "../../utils/themeTokens";
 
 export interface PressTickerProps extends Props {
   className?: string;
+}
+
+function resolveMarqueeDuration(speed: number, marqueeSetting: string): string {
+  // TEXT setting shape: "transform 25s linear infinite" — keep prop `speed` as override source of truth when set.
+  if (typeof speed === "number" && speed > 0) return `${speed}s`;
+  const match = marqueeSetting.match(/(\d+(?:\.\d+)?)s/);
+  return match ? `${match[1]}s` : "25s";
 }
 
 export function PressTicker({
@@ -12,22 +24,23 @@ export function PressTicker({
   backgroundColor,
   className = "",
 }: PressTickerProps) {
-  // Read live global settings via getThemeSetting using exact variableNames from prompts/TOKENS.md
-  const verticalPySetting = getThemeSetting("_5Fdl1j6UHQ"); // Boşluk / Dikey Bölüm Spacing (2rem / 32px)
-  const marqueeAnimSetting = getThemeSetting("_NTIrquacoN"); // Animasyon / Marquee Ticker
-  const hoverAnimSetting = getThemeSetting("_bNtMCrOBsE"); // Animasyon / Buton ve Hover
-
-  const sectionPy = verticalPySetting?.value || "24px";
-  const marqueeAnim = marqueeAnimSetting?.value || `transform ${speed}s linear infinite`;
-  const hoverAnim = hoverAnimSetting?.value || "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)";
+  const sectionPy = readSetting(ThemeSetting.sectionPyMobile, "24px");
+  const marqueeAnim = readSetting(
+    ThemeSetting.marquee,
+    `transform ${speed}s linear infinite`
+  );
+  const hoverAnim = readSetting(
+    ThemeSetting.buttonTransition,
+    "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+  );
 
   const inlineStyles = {
     backgroundColor: backgroundColor || undefined,
     "--section-py": sectionPy,
     "--section-py-mobile": "16px",
-    "--marquee-animation": marqueeAnim,
+    "--marquee-duration": resolveMarqueeDuration(speed, marqueeAnim),
     "--hover-transition": hoverAnim,
-  };
+  } as Record<string, string | undefined>;
 
   const defaultPressLogos = [
     "FORBES",
@@ -60,7 +73,10 @@ export function PressTicker({
       )}
 
       <div className="ikas-press-ticker__track-wrapper">
-        <div className="ikas-press-ticker__track">
+        <div
+          className="ikas-press-ticker__track"
+          style={{ animationName: ThemeKeyframeRef.marquee }}
+        >
           {displayItems.map((item, idx) => {
             if (hasLogos && typeof item !== "string") {
               const src = getDefaultSrc(item);

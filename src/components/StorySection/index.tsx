@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "preact/hooks";
-import { getThemeSetting } from "@ikas/bp-storefront";
+import { applyLayoutTokens } from "../../utils/themeTokens";
 import { Props } from "./types";
 
 export interface StorySectionProps extends Props {
@@ -166,13 +166,11 @@ export function StorySection({
     observer.observe(el);
     return () => observer.disconnect();
   }, [counter1Val, counter2Val, counter3Val, counter4Val]);
-
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ");
-  const maxSiteWidth = siteWidthSetting?.value || "1560px";
+  const layoutTokens = applyLayoutTokens({ includePy: true, includePx: true, includeSiteWidth: true });
 
   const inlineStyles = {
     backgroundColor: backgroundColor || undefined,
-    "--max-site-width": maxSiteWidth,
+    ...layoutTokens,
   };
 
   return (

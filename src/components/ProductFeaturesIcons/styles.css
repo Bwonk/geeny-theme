@@ -80,7 +80,7 @@
 }
 
 .ikas-features__tag {
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.18em;
   color: var(--p6EMJiXye1, #8c97a5);
@@ -89,7 +89,7 @@
 }
 
 .ikas-features__title {
-  font-family: Onest, system-ui, sans-serif;
+  font-family: var(--font-heading);
   font-weight: 500;
   font-size: clamp(14.5px, 1.1vw, 17px);
   letter-spacing: -0.01em;
@@ -98,7 +98,7 @@
   text-wrap: balance;
 }
 
-@media (max-width: 767px) {
+@media (max-width: bp(HDRapYMzn7)) {
   .ikas-features__col {
     border-left: 0;
     border-top: 1px solid var(--8ARbeTYsmD, #e4e7e8);

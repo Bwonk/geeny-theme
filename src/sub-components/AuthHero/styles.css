@@ -74,7 +74,7 @@
 
 .ikas-auth-hero__tag {
   margin: 0;
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -83,7 +83,7 @@
 
 .ikas-auth-hero__title {
   margin: 0;
-  font-family: Onest, system-ui, sans-serif;
+  font-family: var(--font-heading);
   font-weight: 600;
   font-size: clamp(28px, 3.4vw, 44px);
   line-height: 1.05;
@@ -94,7 +94,7 @@
 .ikas-auth-hero__subtitle {
   margin: 0;
   max-width: 34ch;
-  font-family: Onest, system-ui, sans-serif;
+  font-family: var(--font-heading);
   font-size: 15px;
   line-height: 1.45;
   color: rgba(255, 255, 255, 0.78);
@@ -139,13 +139,13 @@
 }
 
 .ikas-auth-hero__proof-title {
-  font-family: Onest, system-ui, sans-serif;
+  font-family: var(--font-heading);
   font-weight: 600;
   font-size: 13px;
 }
 
 .ikas-auth-hero__proof-sub {
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 9.5px;
   letter-spacing: 0.1em;
   color: rgba(255, 255, 255, 0.7);

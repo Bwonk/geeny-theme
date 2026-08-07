@@ -125,7 +125,7 @@
 }
 
 .ikas-mgauth__bar-cta-text {
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 9px;
   letter-spacing: 0.12em;
   line-height: 1.35;
@@ -170,7 +170,7 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: bp(HDRapYMzn7)) {
   .ikas-mgauth__row {
     padding: 0 max(24px, calc((100vw - var(--mg-bar-cw)) / 2 - 8px));
   }

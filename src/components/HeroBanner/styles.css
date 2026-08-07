@@ -56,7 +56,11 @@
   align-items: center;
   flex: 1 1 auto;
   min-height: 0;
-  animation: heroFadeUp 0.7s cubic-bezier(0.2, 0.8, 0.25, 1) both;
+  /* Studio: Animasyon / Fade Up Enter — ThemeKeyframeRef.fadeUp */
+  animation-name: _2wIPGJlyTg;
+  animation-duration: 0.7s;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.25, 1);
+  animation-fill-mode: both;
 }
 
 /* 1. SOL KOLON */
@@ -117,14 +121,14 @@
   margin-top: 0;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: calc(bp(VzlJkKlXGT) + 1px)) {
   .ikas-hero__actions {
     flex-wrap: nowrap;
   }
 }
 
 /* Laptop: gap sıkılsın, kolon oranı bozulmasın (metin sıkışmasın) */
-@media (min-width: 1024px) and (max-width: 1439px) {
+@media (min-width: calc(bp(VzlJkKlXGT) + 1px)) and (max-width: 1439px) {
   .ikas-hero__container {
     gap: clamp(16px, 2.2vw, 36px);
   }
@@ -270,7 +274,7 @@
 /* ═══════════════════════════════════════════════════════════════════════
  * KISA MASAÜSTÜ (yükseklik baskısı) — yatay padding EKLEME
  * ═══════════════════════════════════════════════════════════════════════ */
-@media (min-width: 1024px) and (max-height: 920px) {
+@media (min-width: calc(bp(VzlJkKlXGT) + 1px)) and (max-height: 920px) {
   .ikas-hero {
     --hero-pad-block: clamp(6px, 1.2vh, 14px);
   }
@@ -304,7 +308,7 @@
 /* ═══════════════════════════════════════════════════════════════════════
  * TABLET (768–1023)
  * ═══════════════════════════════════════════════════════════════════════ */
-@media (min-width: 768px) and (max-width: 1023px) {
+@media (min-width: calc(bp(HDRapYMzn7) + 1px)) and (max-width: bp(VzlJkKlXGT)) {
   .ikas-hero {
     --hero-pad-block: clamp(10px, 1.5vh, 18px);
   }
@@ -347,7 +351,7 @@
 /* ═══════════════════════════════════════════════════════════════════════
  * MOBİL (<768)
  * ═══════════════════════════════════════════════════════════════════════ */
-@media (max-width: 767px) {
+@media (max-width: bp(HDRapYMzn7)) {
   .ikas-hero {
     --hero-pad-block: clamp(6px, 1.2vh, 14px);
     justify-content: flex-start;
@@ -438,7 +442,7 @@
 }
 
 /* Çok kısa mobil (ör. 375×667) — tipografi + medya sıkıştır */
-@media (max-width: 767px) and (max-height: 720px) {
+@media (max-width: bp(HDRapYMzn7)) and (max-height: 720px) {
   .ikas-hero {
     --hero-pad-block: 6px;
   }
@@ -478,17 +482,6 @@
   to {
     transform: translateY(0);
     filter: blur(0);
-    opacity: 1;
-  }
-}
-
-@keyframes heroFadeUp {
-  from {
-    transform: translateY(18px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
     opacity: 1;
   }
 }

@@ -8,7 +8,7 @@
   background-color: var(--24KlcgGmm9);
   color: var(--pxNuSoudLn);
   border-top: 1px solid var(--8ARbeTYsmD, #e4e7e8);
-  padding: clamp(46px, 5vw, 80px) 0 clamp(40px, 4.5vw, 72px);
+  padding: var(--section-py, clamp(46px, 5vw, 80px)) 0 clamp(40px, 4.5vw, 72px);
 }
 
 .ikas-reviews__container {
@@ -41,7 +41,7 @@
 }
 
 .ikas-reviews__tag {
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.2em;
   color: var(--p6EMJiXye1, #8c97a5);
@@ -50,7 +50,7 @@
 
 .ikas-reviews__heading {
   margin: 0;
-  font-family: Onest, system-ui, sans-serif;
+  font-family: var(--font-heading);
   font-weight: 600;
   font-size: clamp(26px, 2.8vw, 42px);
   letter-spacing: -0.03em;
@@ -67,7 +67,7 @@
 }
 
 .ikas-reviews__score {
-  font-family: Onest, system-ui, sans-serif;
+  font-family: var(--font-heading);
   font-weight: 600;
   font-size: clamp(22px, 2vw, 28px);
   letter-spacing: -0.02em;
@@ -85,7 +85,7 @@
 }
 
 .ikas-reviews__count {
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 10.5px;
   letter-spacing: 0.12em;
   color: var(--xGFwg5Zqpf, #6e7a8c);
@@ -178,7 +178,7 @@
 }
 
 .ikas-reviews__author {
-  font-family: Onest, system-ui, sans-serif;
+  font-family: var(--font-heading);
   font-weight: 500;
   font-size: 14.5px;
   letter-spacing: -0.01em;
@@ -186,7 +186,7 @@
 }
 
 .ikas-reviews__badge {
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 9.5px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -206,7 +206,7 @@
 
 .ikas-reviews__card-title {
   margin: 0;
-  font-family: Onest, system-ui, sans-serif;
+  font-family: var(--font-heading);
   font-weight: 500;
   font-size: 15.5px;
   letter-spacing: -0.015em;
@@ -224,21 +224,21 @@
 
 .ikas-reviews__card-date {
   margin-top: auto;
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.12em;
   color: var(--p6EMJiXye1, #8c97a5);
   text-transform: uppercase;
 }
 
-@media (max-width: 991px) {
+@media (max-width: bp(kmfaNJ5hH8)) {
   .ikas-reviews__grid,
   .ikas-reviews__loading {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: bp(HDRapYMzn7)) {
   .ikas-reviews {
     padding:
       clamp(36px, 6vw, 56px)

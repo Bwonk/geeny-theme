@@ -20,6 +20,7 @@ import {
 import { observer } from "@ikas/component-utils";
 import Button from "../Button";
 import SizeGuideDrawer from "../SizeGuideDrawer";
+import ProductBundleProducts from "../ProductBundleProducts";
 import ProductCrossSellOffers from "../ProductCrossSellOffers";
 import QuantityStepper from "../QuantityStepper";
 import TextLink from "../TextLink";
@@ -56,6 +57,9 @@ export interface Props {
   trustWarrantyText?: string;
   showBuyNow?: boolean;
   buyNowText?: string;
+  bundleTitle?: string;
+  bundleSubtitle?: string;
+  bundleQtyLabel?: string;
   showCrossSell?: boolean;
   crossSellTitle?: string;
   crossSellSubtitle?: string;
@@ -137,6 +141,9 @@ export function ProductBuyBox({
   trustWarrantyText = "2 YIL DEĞİŞİM GARANTİSİ",
   showBuyNow = false,
   buyNowText = "HEMEN SATIN AL",
+  bundleTitle = "Paket içeriği",
+  bundleSubtitle = "Bu pakette yer alan ürünler.",
+  bundleQtyLabel = "adet",
   showCrossSell = true,
   crossSellTitle = "Birlikte Al",
   crossSellSubtitle = "Bu ürünle birlikte sık alınanlar.",
@@ -465,6 +472,15 @@ export function ProductBuyBox({
           })}
         </div>
       )}
+
+      <ProductBundleProducts
+        product={product}
+        title={bundleTitle}
+        subtitle={bundleSubtitle}
+        qtyDecreaseLabel={qtyDecreaseLabel}
+        qtyIncreaseLabel={qtyIncreaseLabel}
+        qtyLabel={bundleQtyLabel}
+      />
 
       {/* Adet + stok */}
       <div className="ikas-buy-box__qty-row">

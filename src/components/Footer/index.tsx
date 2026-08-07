@@ -1,5 +1,5 @@
 import { useState } from "preact/hooks";
-import { getThemeSetting } from "@ikas/bp-storefront";
+import { applyLayoutTokens } from "../../utils/themeTokens";
 import TextLink from "../../sub-components/TextLink";
 import { Props } from "./types";
 
@@ -50,13 +50,11 @@ export function Footer({
       [colId]: !prev[colId],
     }));
   };
-
-  const siteWidthSetting = getThemeSetting("_l6CcMRzdeZ");
-  const maxSiteWidth = siteWidthSetting?.value || "1560px";
+  const layoutTokens = applyLayoutTokens({ includePy: true, includePx: true, includeSiteWidth: true });
 
   const inlineStyles = {
     backgroundColor: backgroundColor || undefined,
-    "--max-site-width": maxSiteWidth,
+    ...layoutTokens,
   };
 
   const supportLinkObj = supportBadgeLink as any;

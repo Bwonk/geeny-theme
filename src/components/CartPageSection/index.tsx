@@ -25,6 +25,7 @@ export function CartPageSection({
   loadingText = "Sepet yükleniyor…",
   decreaseQtyLabel = "Adedi azalt",
   increaseQtyLabel = "Adedi artır",
+  bundleQtyLabel = "adet",
   orderSummaryTitle = "Sipariş Özeti",
   subtotalLabel = "Ara Toplam",
   shippingLabel = "Kargo Ücreti",
@@ -35,7 +36,7 @@ export function CartPageSection({
   checkoutButtonText = "Ödemeye Geç",
   discountsLabel = "İndirimler",
   freeShippingAchievedText = "Ücretsiz kargo!",
-  freeShippingRemainingText = "Ücretsiz kargo için {amount} TL kaldı!",
+  freeShippingRemainingText = "Ücretsiz kargo için ₺ {amount} kaldı!",
   freeShippingThreshold = 500,
   promoTitle = "Promosyon Kodu",
   promoPlaceholder = "Kodu gir",
@@ -110,6 +111,7 @@ export function CartPageSection({
                 cart={activeCart}
                 decreaseQtyLabel={decreaseQtyLabel}
                 increaseQtyLabel={increaseQtyLabel}
+                bundleQtyLabel={bundleQtyLabel}
               />
               <CartOrderNote
                 label={orderNoteLabel}

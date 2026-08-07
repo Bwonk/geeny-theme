@@ -1,0 +1,218 @@
+/* Bundle products — paket içeriği (variant.bundleSettings) */
+
+.ikas-bundle {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+}
+
+.ikas-bundle__header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ikas-bundle__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--pxNuSoudLn);
+}
+
+.ikas-bundle__subtitle {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--p6EMJiXye1, #8c97a5);
+}
+
+.ikas-bundle__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: min(320px, 46vh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.ikas-bundle__item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--pxNuSoudLn) 12%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--pxNuSoudLn) 2%, transparent);
+  box-sizing: border-box;
+}
+
+.ikas-bundle__row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.ikas-bundle__media {
+  display: block;
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: color-mix(in srgb, var(--pxNuSoudLn) 6%, transparent);
+}
+
+.ikas-bundle__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ikas-bundle__media-fallback {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ikas-bundle__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.ikas-bundle__name {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 13.5px;
+  line-height: 1.3;
+  color: var(--pxNuSoudLn);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ikas-bundle__price {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--pxNuSoudLn);
+}
+
+.ikas-bundle__qty-static {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--p6EMJiXye1, #8c97a5);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.ikas-bundle__variants {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 64px;
+}
+
+.ikas-bundle__variant-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.ikas-bundle__variant-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--p6EMJiXye1, #8c97a5);
+}
+
+.ikas-bundle__swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ikas-bundle__swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--swatch-radius, 50%);
+  border: 1.5px solid color-mix(in srgb, var(--pxNuSoudLn) 18%, transparent);
+  padding: 0;
+  cursor: pointer;
+  box-sizing: border-box;
+  box-shadow: inset 0 0 0 2px var(--24KlcgGmm9, #fff);
+}
+
+.ikas-bundle__swatch--selected {
+  border-color: var(--pxNuSoudLn);
+}
+
+.ikas-bundle__swatch:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ikas-bundle__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ikas-bundle__pill {
+  margin: 0;
+  padding: 5px 10px;
+  border: 1px solid color-mix(in srgb, var(--pxNuSoudLn) 18%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--pxNuSoudLn);
+  font-family: var(--font-heading);
+  font-size: 12px;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.ikas-bundle__pill--selected {
+  background: var(--pxNuSoudLn);
+  border-color: var(--pxNuSoudLn);
+  color: var(--24KlcgGmm9, #fff);
+}
+
+.ikas-bundle__pill:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .ikas-bundle__row {
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    gap: 10px 12px;
+  }
+
+  .ikas-bundle__qty,
+  .ikas-bundle__qty-static {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .ikas-bundle__variants {
+    padding-left: 0;
+  }
+}

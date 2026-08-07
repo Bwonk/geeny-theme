@@ -64,4 +64,7 @@ export interface Props {
   promotionBackgroundColor?: string;
   promotionTextColor?: string;
   promotionAccentColor?: string;
+  bundleTitle?: string;
+  bundleSubtitle?: string;
+  bundleQtyLabel?: string;
 }
