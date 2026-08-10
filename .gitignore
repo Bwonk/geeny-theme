@@ -16,10 +16,9 @@ scripts/
 *.jpeg
 *.png
 
-# Yerel API/payload taslakları, promptlar, audit ve Playwright çıktıları
+# Yerel API/payload taslakları, audit ve Playwright çıktıları
 create_product_input.json
 create_variant_input.json
 all_mutations.json
-prompts/
 .playwright-mcp/
 .tmp/
