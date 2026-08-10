@@ -26,3 +26,5 @@ export { ForgotPasswordSection } from "./ForgotPasswordSection/index";
 export { AccountDashboard } from "./AccountDashboard/index";
 export { RecoverPasswordSection } from "./RecoverPasswordSection/index";
 export { MagneticAuthSection } from "./MagneticAuthSection/index";
+export { FaqAccordionItem } from "./FaqAccordionItem/index";
+export { FaqBouncyAccordion } from "./FaqBouncyAccordion/index";

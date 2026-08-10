@@ -4734,6 +4734,107 @@
           "name": "Erişilebilirlik Metinleri"
         }
       ]
+    },
+    {
+      "id": "e1iohf8g-dXdCatm0dJ",
+      "name": "FaqAccordionItem",
+      "entry": "./src/components/FaqAccordionItem/index.tsx",
+      "styles": "./src/components/FaqAccordionItem/styles.css",
+      "props": [
+        {
+          "name": "icon",
+          "displayName": "İkon",
+          "type": "SVG",
+          "required": false
+        },
+        {
+          "name": "question",
+          "displayName": "Soru",
+          "type": "TEXT",
+          "required": true,
+          "defaultValue": "Kargo süresi ne kadar?"
+        },
+        {
+          "name": "answer",
+          "displayName": "Cevap",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>500 ₺ üzeri siparişlerde kargo ücretsiz; 2–4 iş günü içinde teslim.</p>"
+        }
+      ]
+    },
+    {
+      "id": "e1iohf8g-QFHGqGfTuN",
+      "name": "FaqBouncyAccordion",
+      "entry": "./src/components/FaqBouncyAccordion/index.tsx",
+      "styles": "./src/components/FaqBouncyAccordion/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "tag",
+          "displayName": "Üst Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SSS",
+          "groupId": "content"
+        },
+        {
+          "name": "title",
+          "displayName": "Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sıkça sorulan sorular",
+          "groupId": "content"
+        },
+        {
+          "name": "subtitle",
+          "displayName": "Alt Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sipariş, kargo ve ürün hakkında merak edilenler.",
+          "groupId": "content"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#ffffff",
+          "groupId": "appearance"
+        },
+        {
+          "name": "items",
+          "displayName": "FAQ Öğeleri",
+          "type": "COMPONENT_LIST",
+          "required": false,
+          "filteredComponentIds": [
+            "e1iohf8g-dXdCatm0dJ"
+          ],
+          "groupId": "content"
+        },
+        {
+          "name": "emptyStateText",
+          "displayName": "Boş Durum Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Henüz soru eklenmedi.",
+          "groupId": "texts"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "İçerik"
+        },
+        {
+          "id": "texts",
+          "name": "Metinler"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm"
+        }
+      ]
     }
   ],
   "customTypes": [
